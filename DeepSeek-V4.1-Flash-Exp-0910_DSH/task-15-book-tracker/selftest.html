@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Shelf — browser self-test</title>
+<style>
+  html, body { margin: 0; background: #0b1120; color: #e9eefb; font: 13px/1.5 -apple-system, system-ui, sans-serif; }
+  #report { padding: 14px; }
+  #report .pass { color: #3ddc97; }
+  #report .fail { color: #ff6b81; }
+  #app { position: fixed; left: 0; top: 0; width: 1280px; height: 900px; border: 0; opacity: 0.001; pointer-events: none; }
+  pre { white-space: pre-wrap; }
+</style>
+<script>
+  // The test drives a real app instance; start from a clean browser profile.
+  try { localStorage.clear(); } catch (err) { /* ignore */ }
+</script>
+</head>
+<body>
+<div id="report">running…</div>
+<script src="selftest.js"></script>
+</body>
+</html>

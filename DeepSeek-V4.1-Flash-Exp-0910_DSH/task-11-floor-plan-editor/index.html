@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Floor Plan Editor</title>
+<style>
+  :root {
+    --bg: #0f1216;
+    --panel: rgba(23, 28, 35, 0.94);
+    --line: #2a323d;
+    --line-2: #38434f;
+    --txt: #e6edf3;
+    --mut: #8b98a5;
+    --acc: #4c9aff;
+    --acc-dim: #1d3a5c;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--txt);
+    font: 13px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  #cv { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+
+  .panel {
+    position: fixed; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* ---------- toolbar ---------- */
+  #toolbar {
+    top: 10px; left: 10px; right: 10px; padding: 7px 8px;
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap; z-index: 5;
+  }
+  .sep { width: 1px; height: 22px; background: var(--line); margin: 0 3px; flex: none; }
+  .spacer { flex: 1 1 auto; }
+
+  button {
+    font: inherit; color: #cdd6e0; background: #1b222b; border: 1px solid var(--line-2);
+    border-radius: 8px; padding: 6px 9px; cursor: pointer; display: inline-flex;
+    align-items: center; gap: 6px; white-space: nowrap; line-height: 1;
+  }
+  button:hover { background: #232c37; color: #fff; }
+  button:active { transform: translateY(1px); }
+  button.active { background: var(--acc-dim); border-color: #3f7fd0; color: #eaf3ff; }
+  button.icon { padding: 7px; }
+  button.ghost { background: transparent; }
+  button svg { width: 16px; height: 16px; display: block; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  button .sw { width: 11px; height: 11px; border-radius: 3px; border: 1px solid rgba(0, 0, 0, 0.45); flex: none; }
+  .toolbtn span { font-size: 12px; }
+
+  /* ---------- properties ---------- */
+  #props { top: 64px; right: 10px; width: 236px; padding: 11px 12px 12px; z-index: 5; }
+  #props h3 {
+    margin: 0 0 9px; font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--mut); font-weight: 600;
+  }
+  #props .empty { color: var(--mut); font-size: 12px; margin: 2px 0 0; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 7px 0; }
+  .row > label { color: var(--mut); font-size: 12px; }
+  .row input[type=number], .row input[type=text] {
+    width: 92px; background: #131920; border: 1px solid var(--line-2); color: var(--txt);
+    border-radius: 6px; padding: 4px 6px; font: inherit; font-variant-numeric: tabular-nums;
+  }
+  .row input:focus { outline: none; border-color: var(--acc); }
+  .row .val { font-variant-numeric: tabular-nums; color: #cdd6e0; }
+  .readout {
+    margin: 0 0 9px; padding: 8px 9px; background: #131920; border: 1px solid var(--line);
+    border-radius: 8px; font-variant-numeric: tabular-nums; line-height: 1.6;
+  }
+  .readout b { color: #fff; font-weight: 600; }
+  .readout .k { color: var(--mut); }
+  .btnrow { display: flex; gap: 6px; margin-top: 10px; }
+  .btnrow button { flex: 1; justify-content: center; }
+  .danger { border-color: #5a2b2b; color: #ffb4b4; background: #2a1a1a; }
+  .danger:hover { background: #3a2020; color: #ffd6d6; }
+
+  /* ---------- status ---------- */
+  #status {
+    left: 10px; bottom: 10px; padding: 7px 11px; display: flex; gap: 14px;
+    align-items: center; color: #9aa7b4; font-variant-numeric: tabular-nums; z-index: 5;
+    max-width: calc(100vw - 20px);
+  }
+  #status .hint { color: #7f8c99; }
+  #status b { color: #cdd6e0; font-weight: 500; }
+
+  /* ---------- help ---------- */
+  #help {
+    right: 10px; bottom: 10px; width: 268px; padding: 11px 13px 13px; z-index: 6; display: none;
+  }
+  #help.open { display: block; }
+  #help h3 { margin: 0 0 8px; font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--mut); }
+  #help dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 5px 10px; }
+  #help dt { color: #cdd6e0; font-size: 12px; white-space: nowrap; }
+  #help dd { margin: 0; color: var(--mut); font-size: 12px; }
+  kbd {
+    background: #131920; border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 5px;
+    padding: 1px 5px; font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color: #cdd6e0;
+  }
+  @media (max-width: 760px) {
+    #props { display: none; }
+    .toolbtn span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="cv"></canvas>
+
+<div id="toolbar" class="panel">
+  <button class="toolbtn active" data-tool="select" title="Select / move (V)">
+    <svg viewBox="0 0 24 24"><path d="M5 3l13 8.2-5.6 1.3L9.8 19z" fill="currentColor" stroke="none"/></svg>
+    <span>Select</span>
+  </button>
+  <button class="toolbtn" data-tool="wall" title="Draw walls (W)">
+    <svg viewBox="0 0 24 24"><path d="M2 7h20v4H2z" fill="currentColor" stroke="none"/><path d="M2 13h10v4H2z" fill="currentColor" stroke="none" opacity=".5"/></svg>
+    <span>Wall</span>
+  </button>
+  <button class="toolbtn" data-tool="door" title="Add door (D)">
+    <svg viewBox="0 0 24 24"><path d="M4 3h10v18H4z"/><path d="M14 4a10 10 0 0 1 6 9" stroke-dasharray="2.5 2.5"/><path d="M14 12v9"/></svg>
+    <span>Door</span>
+  </button>
+  <button class="toolbtn" data-tool="window" title="Add window (N)">
+    <svg viewBox="0 0 24 24"><path d="M3 7h18v10H3z"/><path d="M3 12h18"/></svg>
+    <span>Window</span>
+  </button>
+
+  <div class="sep"></div>
+
+  <div id="palette" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+
+  <div class="sep"></div>
+
+  <button id="btn-undo" class="icon ghost" title="Undo (Ctrl+Z)">
+    <svg viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h9a6 6 0 0 1 0 12H8"/></svg>
+  </button>
+  <button id="btn-redo" class="icon ghost" title="Redo (Ctrl+Shift+Z)">
+    <svg viewBox="0 0 24 24"><path d="M15 14l5-5-5-5"/><path d="M20 9h-9a6 6 0 0 0 0 12h5"/></svg>
+  </button>
+  <button id="btn-fit" class="icon ghost" title="Fit plan to view (F)">
+    <svg viewBox="0 0 24 24"><path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/></svg>
+  </button>
+
+  <div class="sep"></div>
+
+  <button id="btn-dims" class="active ghost" title="Show room dimensions">Dims</button>
+  <button id="btn-grid" class="active ghost" title="Snap to grid">Snap</button>
+
+  <div class="spacer"></div>
+
+  <button id="btn-new" class="ghost" title="Start an empty plan">New</button>
+  <button id="btn-save" class="ghost" title="Download plan as JSON">Save</button>
+  <button id="btn-load" class="ghost" title="Open a plan JSON">Load</button>
+  <button id="btn-png" class="ghost" title="Export a PNG image">PNG</button>
+  <button id="btn-help" class="icon ghost" title="Keyboard shortcuts">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.9.6c0 1.6-2.5 2-2.5 3.4"/><path d="M12 17h.01"/></svg>
+  </button>
+  <input id="file" type="file" accept="application/json,.json" style="display:none">
+</div>
+
+<aside id="props" class="panel">
+  <h3>Properties</h3>
+  <div id="props-body"><p class="empty">Nothing selected.</p></div>
+</aside>
+
+<div id="status" class="panel">
+  <span id="st-coords">0.00, 0.00 m</span>
+  <span class="hint" id="st-hint">Drag to move · drag empty space to select</span>
+</div>
+
+<div id="help" class="panel">
+  <h3>Shortcuts</h3>
+  <dl>
+    <dt><kbd>V</kbd> <kbd>W</kbd> <kbd>D</kbd> <kbd>N</kbd></dt><dd>Select · Wall · Door · Window</dd>
+    <dt><kbd>Shift</kbd> + drag</dt><dd>Constrain wall to 45° steps</dd>
+    <dt><kbd>Alt</kbd> + drag</dt><dd>Temporarily ignore snapping</dd>
+    <dt><kbd>Esc</kbd></dt><dd>End wall chain / clear selection</dd>
+    <dt><kbd>Del</kbd></dt><dd>Delete selection</dd>
+    <dt><kbd>Ctrl</kbd>+<kbd>Z</kbd></dt><dd>Undo &nbsp;·&nbsp; <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> redo</dd>
+    <dt><kbd>F</kbd></dt><dd>Fit plan to view</dd>
+    <dt><kbd>Shift</kbd>+<kbd>F</kbd></dt><dd>Flip the selected door</dd>
+    <dt>wheel</dt><dd>Zoom &nbsp;·&nbsp; <kbd>space</kbd>/middle drag to pan</dd>
+    <dt><kbd>R</kbd></dt><dd>Rotate selected object 15°</dd>
+    <dt><kbd>Ctrl</kbd>+<kbd>D</kbd></dt><dd>Duplicate selected object</dd>
+  </dl>
+</div>
+
+<script src="geometry.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "shelf-book-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shelf — a book tracker. A dependency-free web app with a pure domain engine (reading status machine, ISBN checksums, search, statistics, import/export) plus a DOM UI, unit-tested under Node and end-to-end tested in headless Chromium.",
+  "scripts": {
+    "start": "node serve.js",
+    "test": "node run-tests.js",
+    "test:engine": "node test-engine.js"
+  },
+  "keywords": ["books", "reading", "tracker", "library", "vanilla-js"],
+  "license": "MIT"
+}

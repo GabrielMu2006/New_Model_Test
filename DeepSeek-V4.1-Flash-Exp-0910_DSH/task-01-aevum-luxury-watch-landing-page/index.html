@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aevum - Automatique 39 | Maison Aevum, Geneve</title>
+<meta name="description" content="Aevum Automatique 39. An in-house calibre with 70 hours of reserve, hand-finished in a single atelier above Lake Geneva.">
+<meta name="theme-color" content="#07080a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2307080a'/%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23c9a86a' stroke-width='1.4'/%3E%3Cpath d='M10 22.5 L16 9.5 L22 22.5 M12.6 18.6 H19.4' fill='none' stroke='%23c9a86a' stroke-width='1.6'/%3E%3C/svg%3E">
+<style>
+/* ============================================================
+   AEVUM - design tokens
+   ============================================================ */
+:root{
+  --ink:#07080a;
+  --ink-1:#0a0c10;
+  --ink-2:#101318;
+  --ink-3:#171a20;
+  --line:rgba(255,255,255,.08);
+  --line-2:rgba(255,255,255,.16);
+  --paper:#f4f1ea;
+  --muted:#9ea1a9;
+  --muted-2:#6f737c;
+  --gold:#c9a86a;
+  --gold-2:#e8d5aa;
+  --gold-3:#8c7340;
+
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,"Helvetica Neue",Helvetica,Arial,sans-serif;
+
+  --fs-display:clamp(2.9rem,8.4vw,7.6rem);
+  --fs-h2:clamp(1.9rem,4.2vw,3.4rem);
+  --fs-h3:clamp(1.15rem,1.6vw,1.5rem);
+  --fs-body:clamp(1rem,1.06vw,1.075rem);
+
+  --pad-y:clamp(78px,11vw,168px);
+  --ease:cubic-bezier(.22,.72,.18,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--sans);
+  font-size:var(--fs-body);
+  line-height:1.72;
+  letter-spacing:.005em;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+::selection{background:var(--gold);color:#0a0b0e}
+
+:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+
+/* scrollbar */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#0a0b0e}
+::-webkit-scrollbar-thumb{background:#2a2d34;border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-3)}
+
+/* ============================================================
+   primitives
+   ============================================================ */
+.wrap{width:min(1240px,100% - clamp(36px,8vw,120px));margin-inline:auto}
+.wrap--narrow{width:min(940px,100% - clamp(36px,8vw,120px));margin-inline:auto}
+
+.kicker{
+  font-size:.66rem;
+  text-transform:uppercase;
+  letter-spacing:.34em;
+  color:var(--gold);
+  font-weight:600;
+  margin:0 0 22px;
+}
+.kicker--muted{color:var(--muted-2)}
+
+h1,h2,h3,h4{font-family:var(--serif);font-weight:400;letter-spacing:-.015em;margin:0}
+h2{font-size:var(--fs-h2);line-height:1.1}
+h3{font-size:var(--fs-h3);line-height:1.3}
+p{margin:0}
+.lede{color:var(--muted);font-size:clamp(1.02rem,1.25vw,1.16rem);line-height:1.8}
+em{font-style:italic;color:var(--gold-2)}
+
+.rule{height:1px;background:linear-gradient(90deg,var(--line-2),transparent);border:0;margin:0}
+
+.btn{
+  --bg:transparent;
+  position:relative;
+  display:inline-flex;align-items:center;gap:12px;
+  padding:17px 30px;
+  border:1px solid var(--line-2);
+  border-radius:2px;
+  font-size:.7rem;
+  text-transform:uppercase;
+  letter-spacing:.24em;
+  font-weight:600;
+  cursor:pointer;
+  overflow:hidden;
+  background:var(--bg);
+  transition:border-color .5s var(--ease),color .5s var(--ease);
+  isolation:isolate;
+}
+.btn::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(120deg,var(--gold-3),var(--gold) 42%,var(--gold-2));
+  transform:translateY(101%);
+  transition:transform .6s var(--ease);
+}
+.btn:hover::before,.btn:focus-visible::before{transform:translateY(0)}
+.btn:hover,.btn:focus-visible{border-color:var(--gold);color:#0a0b0e}
+.btn--solid{background:linear-gradient(120deg,var(--gold-3),var(--gold) 45%,var(--gold-2));color:#0a0b0e;border-color:transparent}
+.btn--solid::before{background:linear-gradient(120deg,var(--gold-2),#fff8e6 50%,var(--gold))}
+.btn--solid:hover,.btn--solid:focus-visible{color:#0a0b0e}
+.btn--full{width:100%;justify-content:center}
+.btn .arw{transition:transform .5s var(--ease)}
+.btn:hover .arw{transform:translateX(5px)}
+
+.link-arrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:.68rem;text-transform:uppercase;letter-spacing:.22em;
+  color:var(--gold);font-weight:600;
+  padding-bottom:4px;
+  border-bottom:1px solid rgba(201,168,106,.3);
+  transition:border-color .5s var(--ease),gap .5s var(--ease);
+}
+.link-arrow:hover{border-color:var(--gold);gap:15px}
+
+/* ============================================================
+   scroll progress + grain
+   ============================================================ */
+.progress{position:fixed;top:0;left:0;right:0;height:1.5px;z-index:120;background:transparent;pointer-events:none}
+.progress span{
+  display:block;height:100%;width:0%;
+  background:linear-gradient(90deg,var(--gold-3),var(--gold),var(--gold-2));
+  box-shadow:0 0 14px rgba(201,168,106,.55);
+}
+.grain{
+  position:fixed;inset:0;width:100%;height:100%;
+  z-index:110;pointer-events:none;opacity:.05;mix-blend-mode:soft-light;
+}
+
+/* ============================================================
+   nav
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:26px 0;
+  transition:padding .55s var(--ease),background .55s var(--ease),border-color .55s var(--ease),backdrop-filter .55s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.nav.is-stuck{
+  padding:13px 0;
+  background:rgba(7,8,10,.82);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-bottom-color:var(--line);
+}
+.nav__inner{display:flex;align-items:center;justify-content:space-between;gap:30px}
+.brand{display:flex;align-items:center;gap:13px;color:var(--gold)}
+.brand .mark{width:30px;height:30px;color:var(--gold);flex:none}
+.brand__txt{display:flex;flex-direction:column;line-height:1}
+.brand__name{
+  font-family:var(--serif);font-size:1.32rem;letter-spacing:.34em;
+  color:var(--paper);text-indent:.34em;
+}
+.brand__sub{font-size:.53rem;letter-spacing:.42em;color:var(--muted-2);margin-top:5px;text-indent:.42em}
+
+.nav__links{display:flex;align-items:center;gap:clamp(20px,2.4vw,40px)}
+.nav__links a{
+  position:relative;
+  font-size:.68rem;text-transform:uppercase;letter-spacing:.2em;
+  color:var(--muted);padding:6px 0;
+  transition:color .45s var(--ease);
+}
+.nav__links a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
+  background:var(--gold);transition:width .5s var(--ease);
+}
+.nav__links a:hover{color:var(--paper)}
+.nav__links a:hover::after{width:100%}
+.nav__cta{padding:13px 22px;font-size:.63rem}
+
+.burger{
+  display:none;width:44px;height:44px;border:1px solid var(--line-2);background:none;
+  border-radius:2px;cursor:pointer;position:relative;
+}
+.burger span{
+  position:absolute;left:12px;right:12px;height:1px;background:var(--paper);
+  transition:transform .5s var(--ease),opacity .3s var(--ease);
+}
+.burger span:nth-child(1){top:17px}
+.burger span:nth-child(2){top:22px}
+.burger span:nth-child(3){top:27px}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+
+.drawer{
+  position:fixed;inset:0;z-index:99;
+  background:rgba(7,8,10,.97);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  display:flex;flex-direction:column;justify-content:center;gap:6px;
+  padding:0 clamp(30px,9vw,70px);
+  opacity:0;visibility:hidden;transform:translateY(-14px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease),visibility .5s;
+}
+.drawer.is-open{opacity:1;visibility:visible;transform:none}
+.drawer a{
+  font-family:var(--serif);font-size:clamp(1.8rem,7vw,2.6rem);
+  padding:14px 0;border-bottom:1px solid var(--line);
+  display:flex;align-items:baseline;gap:16px;
+}
+.drawer a i{font-size:.6rem;letter-spacing:.3em;color:var(--gold-3);font-style:normal;font-family:var(--sans)}
+
+/* ============================================================
+   hero
+   ============================================================ */
+.hero{position:relative;padding:150px 0 90px;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(58% 46% at 74% 40%,rgba(201,168,106,.15),transparent 68%),
+    radial-gradient(42% 38% at 12% 8%,rgba(80,110,160,.12),transparent 70%),
+    linear-gradient(180deg,#07080a 0%,#08090c 60%,#07080a 100%);
+}
+.hero::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:340px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(7,8,10,.92) 78%);
+}
+.hero__grid{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  gap:clamp(40px,5vw,80px);align-items:center;
+  min-height:min(78vh,760px);
+}
+.hero__copy{max-width:610px}
+.hero h1{
+  font-size:var(--fs-display);
+  line-height:.94;
+  margin:0 0 30px;
+  letter-spacing:-.03em;
+}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line > span{
+  display:block;transform:translateY(105%);
+  animation:rise 1.25s var(--ease) forwards;
+}
+.hero h1 .line:nth-child(2) > span{animation-delay:.11s}
+@keyframes rise{to{transform:none}}
+.hero h1 em{
+  font-style:italic;
+  background:linear-gradient(100deg,var(--gold-3),var(--gold-2) 45%,var(--gold));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:var(--gold-2);
+}
+.hero__lede{max-width:520px;margin-bottom:40px}
+.hero__actions{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:46px}
+.hero__meta{
+  display:flex;flex-wrap:wrap;gap:0 clamp(24px,3vw,44px);
+  padding-top:26px;border-top:1px solid var(--line);
+}
+.hero__meta div{display:flex;flex-direction:column;gap:3px}
+.hero__meta dt,.hero__meta .k{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted-2)}
+.hero__meta .v{font-family:var(--serif);font-size:1.02rem;color:var(--paper)}
+
+/* the watch stage */
+.stage{
+  position:relative;display:grid;place-items:center;
+  perspective:1200px;
+}
+.stage__glow{
+  position:absolute;width:88%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,106,.26),rgba(201,168,106,.06) 46%,transparent 70%);
+  filter:blur(14px);
+  animation:pulse 7s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.75;transform:scale(.97)}50%{opacity:1;transform:scale(1.03)}}
+.stage__ring{
+  position:absolute;width:min(86%,460px);aspect-ratio:1;border-radius:50%;
+  border:1px solid rgba(201,168,106,.16);
+}
+.stage__ring::after{
+  content:"";position:absolute;inset:9%;border-radius:50%;
+  border:1px dashed rgba(201,168,106,.12);
+  animation:spin 60s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.watch{
+  position:relative;z-index:2;
+  width:min(100%,430px);height:auto;
+  filter:drop-shadow(0 46px 60px rgba(0,0,0,.75));
+  transform:rotateX(calc(var(--ty,0) * -1deg)) rotateY(calc(var(--tx,0) * 1deg)) translate3d(calc(var(--px,0) * 12px),calc(var(--py,0) * 12px),0);
+  transition:transform .5s var(--ease);
+  will-change:transform;
+}
+.scroll-cue{
+  position:relative;z-index:2;
+  display:flex;align-items:center;gap:14px;
+  margin-top:clamp(30px,5vw,60px);
+  font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted-2);
+}
+.scroll-cue i{display:block;width:56px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);position:relative;overflow:hidden}
+.scroll-cue i::after{
+  content:"";position:absolute;inset:0;background:var(--gold-2);
+  animation:cue 2.6s var(--ease) infinite;
+}
+@keyframes cue{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+
+/* ============================================================
+   marquee
+   ============================================================ */
+.marquee{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:22px 0;overflow:hidden;background:#08090c;
+}
+.marquee__track{display:flex;width:max-content;animation:slide 42s linear infinite}
+.marquee:hover .marquee__track{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-50%)}}
+.marquee__set{display:flex;align-items:center}
+.marquee__set span{
+  font-size:.66rem;text-transform:uppercase;letter-spacing:.34em;color:var(--muted-2);
+  padding:0 30px;white-space:nowrap;
+}
+.marquee__set b{color:var(--gold);font-weight:400}
+
+/* ============================================================
+   section shell
+   ============================================================ */
+.section{position:relative;padding:var(--pad-y) 0}
+.section--alt{background:linear-gradient(180deg,#08090c,#0b0d11 50%,#08090c)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:clamp(46px,6vw,86px)}
+.sec-head__l{max-width:640px}
+.sec-head h2 + p{margin-top:22px}
+
+/* ============================================================
+   calibre
+   ============================================================ */
+.calibre{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,6vw,90px);align-items:center}
+.calibre__list{list-style:none;margin:38px 0 0;padding:0;display:grid;gap:0}
+.calibre__list li{
+  display:grid;grid-template-columns:38px 1fr;gap:20px;
+  padding:24px 0;border-top:1px solid var(--line);
+}
+.calibre__list li:last-child{border-bottom:1px solid var(--line)}
+.calibre__list .n{font-family:var(--serif);color:var(--gold-3);font-size:.86rem;padding-top:4px}
+.calibre__list h4{font-family:var(--sans);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;color:var(--paper)}
+.calibre__list p{color:var(--muted);font-size:.94rem;line-height:1.7}
+
+.movement{
+  position:relative;border:1px solid var(--line);border-radius:3px;
+  background:
+    radial-gradient(120% 90% at 30% 15%,rgba(201,168,106,.12),transparent 62%),
+    linear-gradient(160deg,#0e1014,#08090c 70%);
+  padding:26px;overflow:hidden;
+}
+.movement::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.055) 50%,transparent 58%);
+}
+.movement__cap{
+  position:absolute;top:22px;left:26px;right:26px;display:flex;justify-content:space-between;
+  font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);z-index:2;
+}
+.movement svg{width:100%;height:auto}
+.gear{transform-box:fill-box;transform-origin:50% 50%}
+.gear--a{animation:spin 26s linear infinite}
+.gear--b{animation:spin 15s linear infinite reverse}
+.gear--c{animation:spin 9.5s linear infinite}
+.gear--d{animation:spin 40s linear infinite reverse}
+.balance{transform-box:fill-box;transform-origin:50% 50%;animation:balance 1.7s cubic-bezier(.42,0,.58,1) infinite alternate}
+@keyframes balance{from{transform:rotate(-19deg)}to{transform:rotate(19deg)}}
+.screw{transform-box:fill-box;transform-origin:50% 50%;animation:spin 30s linear infinite}
+
+/* ============================================================
+   collection
+   ============================================================ */
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(18px,2vw,28px)}
+.card{
+  position:relative;
+  border:1px solid var(--line);border-radius:3px;
+  background:linear-gradient(180deg,#0c0e12,#08090c);
+  padding:26px 26px 30px;
+  overflow:hidden;
+  transition:transform .7s var(--ease),border-color .7s var(--ease),background .7s var(--ease);
+}
+.card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .9s var(--ease);
+}
+.card:hover{transform:translateY(-7px);border-color:rgba(201,168,106,.32);background:linear-gradient(180deg,#101318,#08090c)}
+.card:hover::before{transform:scaleX(1)}
+.card__media{
+  position:relative;display:grid;place-items:center;margin:8px 0 26px;
+  background:radial-gradient(circle at 50% 42%,rgba(201,168,106,.13),transparent 66%);
+}
+.card__media svg{width:min(100%,264px);height:auto;transition:transform .9s var(--ease)}
+.card:hover .card__media svg{transform:scale(1.045) rotate(-2deg)}
+.card__tag{
+  position:absolute;top:0;right:0;
+  font-size:.54rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);
+  border:1px solid rgba(201,168,106,.3);padding:5px 10px;border-radius:2px;
+}
+.card__no{font-size:.58rem;letter-spacing:.28em;color:var(--muted-2);margin-bottom:10px}
+.card h3{margin-bottom:10px}
+.card__desc{color:var(--muted);font-size:.93rem;min-height:76px}
+.card__spec{
+  display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px;
+}
+.card__spec span{
+  font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--line);padding:5px 9px;border-radius:2px;
+}
+.card__foot{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding-top:20px;border-top:1px solid var(--line)}
+.card__price{font-family:var(--serif);font-size:1.32rem}
+.card__price small{display:block;font-family:var(--sans);font-size:.55rem;letter-spacing:.24em;color:var(--muted-2);margin-top:4px}
+
+/* ============================================================
+   configurator
+   ============================================================ */
+.config{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(40px,6vw,90px);align-items:center}
+.cfg-stage{
+  position:relative;display:grid;place-items:center;
+  border:1px solid var(--line);border-radius:3px;padding:26px;
+  background:radial-gradient(70% 60% at 50% 34%,rgba(201,168,106,.14),transparent 68%),linear-gradient(180deg,#0b0d11,#07080a);
+}
+.cfg-stage__label{
+  position:absolute;bottom:18px;left:0;right:0;text-align:center;
+  font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted-2);
+}
+.cfg-watch{width:min(100%,330px);height:auto;filter:drop-shadow(0 30px 40px rgba(0,0,0,.7));transition:filter .6s var(--ease)}
+.cfg-watch [data-fill="case"]{fill:var(--cfg-case-a)}
+.cfg-watch [data-fill="case2"]{fill:var(--cfg-case-b)}
+.cfg-watch [data-fill="dial"]{fill:var(--cfg-dial-a)}
+.cfg-watch [data-fill="strap"]{fill:var(--cfg-strap-a)}
+.cfg-watch [data-fill="strap2"]{fill:var(--cfg-strap-b)}
+.cfg-watch [data-fill="marker"]{fill:var(--cfg-marker)}
+.cfg-watch [data-fill="hand"]{fill:var(--cfg-hand)}
+.cfg-watch [data-fill="stitch"]{fill:none;stroke:var(--cfg-stitch)}
+.cfg-watch [data-fill="tick"]{stroke:var(--cfg-tick)}
+.cfg-watch [data-fill="dial2"]{fill:var(--cfg-dial-b)}
+
+/* case presets */
+.cfg-watch[data-case="steel"]{--cfg-case-a:#eceef2;--cfg-case-b:#8d939d;--cfg-marker:#dfe4ec;--cfg-hand:#f2f5fa;--cfg-tick:rgba(226,232,242,.55)}
+.cfg-watch[data-case="rose"]{--cfg-case-a:#f7dfc0;--cfg-case-b:#bd8659;--cfg-marker:#f4dcc0;--cfg-hand:#ffeccf;--cfg-tick:rgba(244,220,192,.55)}
+.cfg-watch[data-case="platinum"]{--cfg-case-a:#f4f6fa;--cfg-case-b:#9aa3b2;--cfg-marker:#eef2f8;--cfg-hand:#ffffff;--cfg-tick:rgba(238,242,248,.6)}
+/* dial presets */
+.cfg-watch[data-dial="obsidian"]{--cfg-dial-a:#20242b;--cfg-dial-b:#06070a}
+.cfg-watch[data-dial="champagne"]{--cfg-dial-a:#e2cda3;--cfg-dial-b:#a8894f}
+.cfg-watch[data-dial="midnight"]{--cfg-dial-a:#1d3a63;--cfg-dial-b:#08132a}
+.cfg-watch[data-dial="champagne"] [data-fill="marker"],
+.cfg-watch[data-dial="champagne"] [data-fill="hand"]{fill:#2b2418}
+.cfg-watch[data-dial="champagne"] [data-fill="tick"]{stroke:rgba(43,36,24,.55)}
+/* strap presets */
+.cfg-watch[data-strap="noir"]{--cfg-strap-a:#1b1d22;--cfg-strap-b:#0a0b0e;--cfg-stitch:rgba(240,235,225,.42)}
+.cfg-watch[data-strap="cognac"]{--cfg-strap-a:#8a5a2f;--cfg-strap-b:#4a2c14;--cfg-stitch:rgba(255,240,220,.5)}
+.cfg-watch[data-strap="navy"]{--cfg-strap-a:#24344f;--cfg-strap-b:#0d1626;--cfg-stitch:rgba(226,236,255,.45)}
+
+.cfg-group{margin-bottom:34px}
+.cfg-group__t{
+  display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+  font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted-2);
+  padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:18px;
+}
+.cfg-group__t b{color:var(--gold);font-weight:500;letter-spacing:.14em}
+.swatches{display:flex;flex-wrap:wrap;gap:12px}
+.swatch{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 16px 10px 11px;
+  border:1px solid var(--line);border-radius:2px;background:none;cursor:pointer;
+  font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+  transition:border-color .45s var(--ease),color .45s var(--ease),background .45s var(--ease);
+}
+.swatch:hover{border-color:var(--line-2);color:var(--paper)}
+.swatch[aria-pressed="true"]{border-color:var(--gold);color:var(--paper);background:rgba(201,168,106,.07)}
+.swatch i{
+  width:16px;height:16px;border-radius:50%;flex:none;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.45),inset 0 -4px 6px rgba(0,0,0,.35);
+}
+.cfg-total{
+  display:flex;align-items:baseline;justify-content:space-between;gap:20px;
+  padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:26px;
+}
+.cfg-total .k{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted-2)}
+.cfg-total .v{font-family:var(--serif);font-size:clamp(1.6rem,2.4vw,2.1rem)}
+.cfg-summary{font-size:.82rem;color:var(--muted);margin-bottom:26px;min-height:22px}
+
+/* ============================================================
+   specs
+   ============================================================ */
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:1px solid var(--line)}
+.spec{padding:44px clamp(18px,2.4vw,40px) 44px 0;border-right:1px solid var(--line)}
+.spec:last-child{border-right:0}
+.spec .num{
+  font-family:var(--serif);font-size:clamp(2.4rem,4.6vw,3.7rem);line-height:1;
+  display:flex;align-items:baseline;gap:6px;margin-bottom:16px;
+}
+.spec .num sup{font-size:.36em;color:var(--gold);top:-.7em;position:relative}
+.spec .k{font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.spec p{color:var(--muted);font-size:.9rem;max-width:30ch}
+
+/* ============================================================
+   atelier
+   ============================================================ */
+.atelier{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(40px,6vw,90px);align-items:center}
+.blueprint{
+  position:relative;border:1px solid var(--line);border-radius:3px;padding:22px;
+  background:
+    linear-gradient(rgba(201,168,106,.055) 1px,transparent 1px) 0 0/34px 34px,
+    linear-gradient(90deg,rgba(201,168,106,.055) 1px,transparent 1px) 0 0/34px 34px,
+    linear-gradient(160deg,#0b0d11,#07080a);
+}
+.blueprint svg{width:100%;height:auto;overflow:visible}
+.bp-draw{stroke:rgba(201,168,106,.5);fill:none;stroke-width:1}
+.bp-draw--dim{stroke:rgba(201,168,106,.22)}
+.bp-draw--thin{stroke:rgba(255,255,255,.14)}
+.bp-fill{fill:rgba(201,168,106,.05);stroke:rgba(201,168,106,.32)}
+.bp-txt{fill:var(--muted-2);font-size:8px;letter-spacing:.22em;font-family:var(--sans);text-transform:uppercase}
+.bp-txt--g{fill:var(--gold)}
+.reveal .draw{stroke-dasharray:1400;stroke-dashoffset:1400;transition:stroke-dashoffset 2.4s var(--ease)}
+.reveal.in .draw{stroke-dashoffset:0}
+
+.quote{
+  border-left:1px solid rgba(201,168,106,.4);
+  padding-left:clamp(22px,2.6vw,38px);
+  margin:40px 0 0;
+  font-family:var(--serif);font-size:clamp(1.16rem,1.9vw,1.5rem);line-height:1.6;
+  color:var(--paper);
+}
+.quote cite{
+  display:block;margin-top:20px;font-family:var(--sans);font-style:normal;
+  font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);
+}
+.atelier__stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:26px;margin-top:44px}
+.atelier__stats div{padding-top:18px;border-top:1px solid var(--line)}
+.atelier__stats .v{font-family:var(--serif);font-size:1.7rem;line-height:1}
+.atelier__stats .k{font-size:.56rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-2);margin-top:9px}
+
+/* ============================================================
+   press
+   ============================================================ */
+.press{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(20px,3vw,46px)}
+.press blockquote{
+  margin:0;padding:0;
+  font-family:var(--serif);font-size:clamp(1.05rem,1.5vw,1.28rem);line-height:1.62;color:var(--paper);
+}
+.press blockquote::before{content:"";display:block;width:26px;height:1px;background:var(--gold);margin-bottom:24px}
+.press cite{display:block;margin-top:22px;font-family:var(--sans);font-style:normal;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2)}
+
+/* ============================================================
+   reserve
+   ============================================================ */
+.reserve{position:relative;overflow:hidden}
+.reserve::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(70% 60% at 50% 100%,rgba(201,168,106,.16),transparent 70%);
+}
+.reserve__box{
+  position:relative;z-index:2;
+  border:1px solid var(--line);border-radius:3px;
+  background:linear-gradient(180deg,rgba(16,19,24,.9),rgba(8,9,12,.9));
+  padding:clamp(30px,5vw,70px);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,5vw,70px);
+}
+.field{margin-bottom:22px}
+.field label{
+  display:block;font-size:.58rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--muted-2);margin-bottom:11px;
+}
+.field input,.field select{
+  width:100%;padding:15px 4px;
+  background:none;border:0;border-bottom:1px solid var(--line-2);
+  color:var(--paper);font-family:var(--serif);font-size:1.06rem;
+  border-radius:0;appearance:none;-webkit-appearance:none;
+  transition:border-color .45s var(--ease);
+}
+.field select{background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);background-position:calc(100% - 12px) 22px,calc(100% - 7px) 22px;background-size:5px 5px,5px 5px;background-repeat:no-repeat;cursor:pointer}
+.field select option{background:#0b0d11;color:var(--paper)}
+.field input:focus,.field select:focus{outline:none;border-bottom-color:var(--gold)}
+.field input::placeholder{color:#4b4f57}
+.form__note{font-size:.74rem;color:var(--muted-2);margin-top:18px;line-height:1.6}
+.form__msg{margin-top:16px;font-size:.78rem;color:#e08b8b;min-height:20px}
+.form__ok{
+  display:none;padding:26px;border:1px solid rgba(201,168,106,.4);border-radius:2px;
+  background:rgba(201,168,106,.07);
+}
+.form__ok.is-on{display:block}
+.form__ok h4{font-size:1.24rem;margin-bottom:12px}
+.form__ok p{color:var(--muted);font-size:.92rem}
+
+/* ============================================================
+   footer
+   ============================================================ */
+.footer{border-top:1px solid var(--line);padding:clamp(56px,7vw,96px) 0 34px;background:#06070a}
+.footer__top{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:clamp(30px,4vw,60px);padding-bottom:clamp(44px,5vw,72px)}
+.footer h5{font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin:0 0 20px;font-weight:600;font-family:var(--sans)}
+.footer ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.footer ul a{font-size:.86rem;color:var(--muted);transition:color .4s var(--ease)}
+.footer ul a:hover{color:var(--gold-2)}
+.footer__brand p{color:var(--muted);font-size:.9rem;max-width:34ch;margin-top:22px}
+.footer__bot{display:flex;flex-wrap:wrap;gap:16px 30px;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--line);font-size:.66rem;letter-spacing:.12em;color:var(--muted-2)}
+.footer__bot .disc{letter-spacing:.04em;font-size:.72rem}
+
+/* ============================================================
+   reveal
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0ms)}
+.reveal.in{opacity:1;transform:none}
+.card.reveal.in:hover{transform:translateY(-7px)}
+
+/* ============================================================
+   responsive
+   ============================================================ */
+@media (max-width:1080px){
+  .hero__grid{grid-template-columns:1fr;gap:52px;min-height:0}
+  .hero{padding-top:132px}
+  .stage{order:-1}
+  .watch{width:min(78%,360px)}
+  .calibre,.config,.atelier,.reserve__box{grid-template-columns:1fr;gap:44px}
+  .footer__top{grid-template-columns:1fr 1fr}
+}
+@media (max-width:820px){
+  .nav__links{display:none}
+  .burger{display:block}
+  .nav__cta{display:none}
+  .spec{border-right:0;border-bottom:1px solid var(--line);padding-right:0}
+  .spec:last-child{border-bottom:0}
+  .hero__meta{gap:20px 30px}
+}
+@media (max-width:560px){
+  .footer__top{grid-template-columns:1fr}
+  .hero__actions .btn{width:100%;justify-content:center}
+  .card__foot{flex-direction:column;align-items:flex-start}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+  .hero h1 .line > span{transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<svg class="grain" aria-hidden="true" focusable="false">
+  <filter id="grainFx"><feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#grainFx)"/>
+</svg>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#top" aria-label="Aevum, home">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="14.4" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M9.6 22.6 L16 8.4 L22.4 22.6" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/>
+        <path d="M12.5 18.6 H19.5" stroke="currentColor" stroke-width="1.35"/>
+      </svg>
+      <span class="brand__txt">
+        <span class="brand__name">AEVUM</span>
+        <span class="brand__sub">GEN&#200;VE</span>
+      </span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#collection">Collection</a>
+      <a href="#calibre">Calibre</a>
+      <a href="#configure">Configure</a>
+      <a href="#atelier">Atelier</a>
+      <a href="#reserve">Contact</a>
+    </nav>
+
+    <a class="btn nav__cta" href="#reserve">Reserve <span class="arw">&#8594;</span></a>
+
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <a href="#collection"><i>01</i> Collection</a>
+  <a href="#calibre"><i>02</i> Calibre</a>
+  <a href="#configure"><i>03</i> Configure</a>
+  <a href="#atelier"><i>04</i> Atelier</a>
+  <a href="#reserve"><i>05</i> Reserve</a>
+</div>
+
+<!-- ============================ HERO ============================ -->
+<main id="top">
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="kicker">Maison Aevum &#183; Est. MMXI</p>
+      <h1>
+        <span class="line"><span>Eternity,</span></span>
+        <span class="line"><span>worn <em>quietly</em>.</span></span>
+      </h1>
+      <p class="lede hero__lede">
+        The Automatique 39. An in-house calibre, seventy hours of reserve, and a dial
+        engine-turned by hand. Built one at a time in a single atelier above Lake Geneva.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="#reserve">Reserve a private viewing <span class="arw">&#8594;</span></a>
+        <a class="btn" href="#calibre">Explore the calibre</a>
+      </div>
+      <div class="hero__meta">
+        <div><span class="k">Case</span><span class="v">39 mm</span></div>
+        <div><span class="k">Metal</span><span class="v">18k rose gold</span></div>
+        <div><span class="k">Reserve</span><span class="v">70 hours</span></div>
+        <div><span class="k">Production</span><span class="v">240 a year</span></div>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="stage__glow" aria-hidden="true"></div>
+      <div class="stage__ring" aria-hidden="true"></div>
+
+      <!-- ================= HAND-BUILT WATCH ================= -->
+      <svg class="watch" id="heroWatch" viewBox="0 0 420 640" role="img"
+           aria-label="Aevum Automatique 39 wristwatch: rose gold case, black guilloche dial, black alligator strap, showing the current time.">
+        <defs>
+          <linearGradient id="hCase" x1=".12" y1="0" x2=".88" y2="1">
+            <stop offset="0" stop-color="#f9efd8"/>
+            <stop offset=".2" stop-color="#dcbf85"/>
+            <stop offset=".46" stop-color="#8f7440"/>
+            <stop offset=".58" stop-color="#eddab0"/>
+            <stop offset=".8" stop-color="#9c8047"/>
+            <stop offset="1" stop-color="#57451f"/>
+          </linearGradient>
+          <linearGradient id="hBezel" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#e8d3a6"/>
+            <stop offset=".5" stop-color="#8a7040"/>
+            <stop offset="1" stop-color="#d9c191"/>
+          </linearGradient>
+          <radialGradient id="hDial" cx=".35" cy=".26" r=".92">
+            <stop offset="0" stop-color="#272b33"/>
+            <stop offset=".5" stop-color="#14171c"/>
+            <stop offset="1" stop-color="#050609"/>
+          </radialGradient>
+          <linearGradient id="hMarker" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fdf3dd"/>
+            <stop offset=".5" stop-color="#c9a86a"/>
+            <stop offset="1" stop-color="#6d5726"/>
+          </linearGradient>
+          <linearGradient id="hHand" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fdf4e2"/>
+            <stop offset=".55" stop-color="#c9a86a"/>
+            <stop offset="1" stop-color="#7a6229"/>
+          </linearGradient>
+          <linearGradient id="hStrap" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#0b0c0f"/>
+            <stop offset=".34" stop-color="#22252b"/>
+            <stop offset=".62" stop-color="#14161a"/>
+            <stop offset="1" stop-color="#08090b"/>
+          </linearGradient>
+          <linearGradient id="hStrapV" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0a0b0e"/>
+            <stop offset=".5" stop-color="#1d2026"/>
+            <stop offset="1" stop-color="#0a0b0e"/>
+          </linearGradient>
+          <radialGradient id="hGlare" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#ffffff" stop-opacity=".5"/>
+            <stop offset=".55" stop-color="#cfe3ff" stop-opacity=".12"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="hSheen" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset=".5" stop-color="#ffffff" stop-opacity=".14"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+          </linearGradient>
+          <clipPath id="hCaseClip"><circle cx="210" cy="300" r="150"/></clipPath>
+          <clipPath id="hDialClip"><circle cx="210" cy="300" r="128"/></clipPath>
+          <filter id="hShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="9"/>
+          </filter>
+        </defs>
+
+        <!-- strap -->
+        <g class="strap">
+          <path d="M152 2 H268 L274 170 H146 Z" fill="url(#hStrapV)"/>
+          <path d="M146 300 H274 L268 638 H152 Z" fill="url(#hStrapV)"/>
+          <path d="M152 2 H268 L274 170 H146 Z M146 300 H274 L268 638 H152 Z"
+                fill="none" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+          <g fill="none" stroke="rgba(236,226,205,.26)" stroke-width="1.3"
+             stroke-dasharray="5 7" stroke-linecap="round">
+            <path d="M161 14 V160 M259 14 V160"/>
+            <path d="M159 460 V624 M261 460 V624"/>
+          </g>
+          <g fill="rgba(0,0,0,.5)">
+            <ellipse cx="210" cy="524" rx="3.8" ry="5.4"/>
+            <ellipse cx="210" cy="552" rx="3.8" ry="5.4"/>
+            <ellipse cx="210" cy="580" rx="3.8" ry="5.4"/>
+          </g>
+        </g>
+
+        <!-- lugs -->
+        <g>
+          <rect x="137" y="112" width="27" height="72" rx="12" fill="url(#hCase)"/>
+          <rect x="256" y="112" width="27" height="72" rx="12" fill="url(#hCase)"/>
+          <rect x="137" y="416" width="27" height="72" rx="12" fill="url(#hCase)"/>
+          <rect x="256" y="416" width="27" height="72" rx="12" fill="url(#hCase)"/>
+        </g>
+
+        <!-- crown -->
+        <g>
+          <rect x="352" y="280" width="26" height="40" rx="7" fill="url(#hCase)"/>
+          <path d="M357 284 V316 M362 284 V316 M367 284 V316 M372 284 V316" stroke="rgba(0,0,0,.35)" stroke-width="1.4"/>
+          <rect x="374" y="288" width="10" height="24" rx="4" fill="url(#hBezel)"/>
+        </g>
+
+        <!-- case -->
+        <ellipse cx="210" cy="316" rx="148" ry="144" fill="#000" opacity=".55" filter="url(#hShadow)"/>
+        <circle cx="210" cy="300" r="150" fill="url(#hCase)"/>
+        <circle cx="210" cy="300" r="150" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
+        <circle cx="210" cy="300" r="140" fill="url(#hBezel)"/>
+        <circle cx="210" cy="300" r="133" fill="#0b0c0f"/>
+        <circle cx="210" cy="300" r="130" fill="url(#hDial)"/>
+
+        <!-- dial texture (generated) -->
+        <g id="heroSun" clip-path="url(#hDialClip)" opacity=".9"></g>
+        <g id="heroRings" clip-path="url(#hDialClip)"></g>
+
+        <!-- chapter ring + indices (generated) -->
+        <g id="heroTicks"></g>
+        <g id="heroMarkers"></g>
+
+        <!-- date window -->
+        <g>
+          <rect x="297" y="288" width="26" height="24" rx="3" fill="#e9e4d8"/>
+          <rect x="297" y="288" width="26" height="24" rx="3" fill="none" stroke="rgba(201,168,106,.9)" stroke-width="1"/>
+          <text id="dateNum" x="310" y="305" text-anchor="middle" fill="#14161a"
+                style="font-family:var(--serif);font-size:15px;letter-spacing:0">19</text>
+        </g>
+
+        <!-- power reserve subdial -->
+        <g>
+          <circle cx="210" cy="372" r="30" fill="rgba(0,0,0,.32)"/>
+          <circle cx="210" cy="372" r="30" fill="none" stroke="rgba(201,168,106,.35)" stroke-width="1"/>
+          <path d="M190.9 361 A22 22 0 0 1 229.1 361" fill="none" stroke="rgba(201,168,106,.55)" stroke-width="1.4"/>
+          <path d="M191 361 A22 22 0 0 1 217.5 353.5" fill="none" stroke="url(#hMarker)" stroke-width="2.6"/>
+          <g stroke="rgba(232,213,168,.4)" stroke-width="1">
+            <line x1="190.9" y1="361" x2="187.5" y2="358.5"/>
+            <line x1="210" y1="350" x2="210" y2="346"/>
+            <line x1="229.1" y1="361" x2="232.5" y2="358.5"/>
+          </g>
+          <line x1="210" y1="372" x2="217.6" y2="353.6" stroke="url(#hHand)" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="210" cy="372" r="3" fill="url(#hMarker)"/>
+          <text x="210" y="392" text-anchor="middle" fill="rgba(232,213,168,.62)"
+                style="font-family:var(--sans);font-size:7px;letter-spacing:2px">70 H</text>
+        </g>
+
+        <!-- wordmark -->
+        <g>
+          <text x="210" y="243" text-anchor="middle" fill="#e8d5aa"
+                style="font-family:var(--serif);font-size:19px;letter-spacing:7px;text-indent:7px">AEVUM</text>
+          <text x="210" y="259" text-anchor="middle" fill="rgba(232,213,168,.45)"
+                style="font-family:var(--sans);font-size:6.4px;letter-spacing:4.6px">GEN&#200;VE</text>
+          <text x="210" y="424" text-anchor="middle" fill="rgba(232,213,168,.42)"
+                style="font-family:var(--sans);font-size:6.2px;letter-spacing:4.4px">SWISS MADE</text>
+        </g>
+
+        <!-- hands -->
+        <g id="hands">
+          <g id="handHour" transform="rotate(0 210 300)">
+            <path d="M210 224 L217.6 288 L210 300 L202.4 288 Z" fill="url(#hHand)"/>
+            <path d="M210 226 V296" stroke="rgba(0,0,0,.28)" stroke-width="1"/>
+          </g>
+          <g id="handMin" transform="rotate(0 210 300)">
+            <path d="M210 186 L216.4 290 L210 302 L203.6 290 Z" fill="url(#hHand)"/>
+            <path d="M210 188 V298" stroke="rgba(0,0,0,.28)" stroke-width="1"/>
+          </g>
+          <g id="handSec" transform="rotate(0 210 300)">
+            <line x1="210" y1="178" x2="210" y2="334" stroke="url(#hHand)" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M210 176 L213.6 184 L206.4 184 Z" fill="url(#hMarker)"/>
+            <circle cx="210" cy="318" r="5.6" fill="url(#hMarker)"/>
+          </g>
+          <circle cx="210" cy="300" r="8.4" fill="url(#hBezel)"/>
+          <circle cx="210" cy="300" r="3.4" fill="url(#hMarker)"/>
+        </g>
+
+        <!-- crystal -->
+        <g clip-path="url(#hCaseClip)" pointer-events="none">
+          <ellipse class="glare" cx="146" cy="196" rx="132" ry="104" fill="url(#hGlare)" opacity=".55"/>
+          <path class="sheen" d="M-140 0 L-60 0 L-190 640 L-270 640 Z" fill="url(#hSheen)"/>
+          <path d="M96 216 A150 150 0 0 1 250 168" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.2"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="scroll-cue"><i aria-hidden="true"></i> Scroll to discover</div>
+  </div>
+</section>
+
+<!-- ============================ MARQUEE ============================ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <div class="marquee__set">
+      <span><b>&#9670;</b></span><span>In-house calibre AE-39</span>
+      <span><b>&#9670;</b></span><span>Engine-turned dial</span>
+      <span><b>&#9670;</b></span><span>70-hour power reserve</span>
+      <span><b>&#9670;</b></span><span>Double sapphire</span>
+      <span><b>&#9670;</b></span><span>Free-sprung balance</span>
+      <span><b>&#9670;</b></span><span>Hand-bevelled bridges</span>
+      <span><b>&#9670;</b></span><span>Geneva Seal</span>
+      <span><b>&#9670;</b></span><span>240 pieces a year</span>
+    </div>
+    <div class="marquee__set">
+      <span><b>&#9670;</b></span><span>In-house calibre AE-39</span>
+      <span><b>&#9670;</b></span><span>Engine-turned dial</span>
+      <span><b>&#9670;</b></span><span>70-hour power reserve</span>
+      <span><b>&#9670;</b></span><span>Double sapphire</span>
+      <span><b>&#9670;</b></span><span>Free-sprung balance</span>
+      <span><b>&#9670;</b></span><span>Hand-bevelled bridges</span>
+      <span><b>&#9670;</b></span><span>Geneva Seal</span>
+      <span><b>&#9670;</b></span><span>240 pieces a year</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ CALIBRE ============================ -->
+<section class="section section--alt" id="calibre">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-head__l reveal">
+        <p class="kicker">Calibre AE-39</p>
+        <h2>Three hundred and forty-two parts,<br>and not one of them hurried.</h2>
+      </div>
+      <div class="reveal" style="--d:120ms">
+        <p class="lede" style="max-width:38ch">
+          Designed in-house, decorated by hand, and regulated in six positions
+          over eleven days before it is allowed to leave the atelier.
+        </p>
+      </div>
+    </div>
+
+    <div class="calibre">
+      <div class="reveal">
+        <ul class="calibre__list">
+          <li>
+            <span class="n">01</span>
+            <div>
+              <h4>Free-sprung balance</h4>
+              <p>No regulator index. Rate is set by four solid gold timing screws, which keeps the amplitude stable as the reserve falls.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">02</span>
+            <div>
+              <h4>Seventy hours</h4>
+              <p>A single barrel, wound by a tungsten micro-rotor, holds three days of running - long enough to set the watch down on Friday.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">03</span>
+            <div>
+              <h4>Anglage by hand</h4>
+              <p>Every bridge is bevelled on a rotating wooden lap, then black-polished at the steel. Eleven hours per movement.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">04</span>
+            <div>
+              <h4>Finished twice</h4>
+              <p>Assembled to prove the geometry, disassembled, cleaned, and assembled again for the client. Nothing is shipped on a first build.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="reveal movement" style="--d:140ms">
+        <div class="movement__cap"><span>Calibre AE-39</span><span>Reverse</span></div>
+        <svg viewBox="0 0 520 520" role="img" aria-label="Illustration of the AE-39 movement: bridges, gear train, balance wheel and jewels.">
+          <defs>
+            <linearGradient id="movBrass" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#e6cf9d"/>
+              <stop offset=".45" stop-color="#b08f4f"/>
+              <stop offset="1" stop-color="#6d5525"/>
+            </linearGradient>
+            <linearGradient id="movSteel" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#dfe4ec"/>
+              <stop offset=".45" stop-color="#8d949f"/>
+              <stop offset="1" stop-color="#4a4f58"/>
+            </linearGradient>
+            <linearGradient id="movBridge" x1=".1" y1="0" x2=".9" y2="1">
+              <stop offset="0" stop-color="#2a2e36"/>
+              <stop offset=".5" stop-color="#16191f"/>
+              <stop offset="1" stop-color="#0b0d11"/>
+            </linearGradient>
+            <radialGradient id="movJewel" cx=".35" cy=".3" r=".8">
+              <stop offset="0" stop-color="#ff8fa3"/>
+              <stop offset=".55" stop-color="#b0233c"/>
+              <stop offset="1" stop-color="#5c0d1d"/>
+            </radialGradient>
+          </defs>
+
+          <rect x="10" y="10" width="500" height="500" rx="6" fill="#0a0b0e" stroke="rgba(255,255,255,.06)"/>
+
+          <!-- main plate -->
+          <circle cx="260" cy="260" r="232" fill="none" stroke="rgba(201,168,106,.12)"/>
+          <circle cx="260" cy="260" r="222" fill="none" stroke="rgba(255,255,255,.04)"/>
+
+          <!-- bridges -->
+          <path d="M104 176 C150 108 250 84 330 106 C372 118 396 148 392 186 C388 224 348 240 300 236 C240 231 176 232 140 214 C118 203 96 194 104 176 Z"
+                fill="url(#movBridge)" stroke="rgba(201,168,106,.28)"/>
+          <path d="M112 356 C160 400 236 424 312 414 C356 408 384 386 380 360 C376 334 340 324 292 330 C232 338 168 336 132 346 C114 351 100 350 112 356 Z"
+                fill="url(#movBridge)" stroke="rgba(201,168,106,.28)"/>
+          <path d="M372 150 C420 190 436 250 428 312 C424 344 408 356 392 348 C376 340 372 316 372 286 C372 240 356 196 340 168 Z"
+                fill="url(#movBridge)" stroke="rgba(201,168,106,.22)"/>
+
+          <!-- gear train (generated) -->
+          <g id="movGears"></g>
+
+          <!-- balance assembly -->
+          <g class="balance" id="movBalance">
+            <circle cx="378" cy="384" r="52" fill="none" stroke="url(#movBrass)" stroke-width="2.6"/>
+            <circle cx="378" cy="384" r="46" fill="none" stroke="rgba(201,168,106,.28)" stroke-width="1"/>
+            <g stroke="url(#movBrass)" stroke-width="2.2">
+              <line x1="378" y1="334" x2="378" y2="434"/>
+              <line x1="328" y1="384" x2="428" y2="384"/>
+              <line x1="342.7" y1="348.7" x2="413.3" y2="419.3"/>
+              <line x1="413.3" y1="348.7" x2="342.7" y2="419.3"/>
+            </g>
+            <circle cx="378" cy="384" r="7" fill="url(#movSteel)"/>
+            <circle cx="378" cy="384" r="3" fill="#0a0b0e"/>
+          </g>
+          <path id="movSpring" class="bp-draw--thin" fill="none" stroke="rgba(232,213,168,.5)" stroke-width="1.1"/>
+
+          <!-- jewels + screws (generated) -->
+          <g id="movJewels"></g>
+          <g id="movScrews"></g>
+
+          <!-- engraving -->
+          <text x="42" y="484" fill="rgba(232,213,168,.5)" style="font-family:var(--serif);font-size:13px;letter-spacing:4px">AE-39</text>
+          <text x="42" y="500" fill="rgba(255,255,255,.22)" style="font-family:var(--sans);font-size:7.5px;letter-spacing:3px">21&#8217;600 A/H &#183; 342 PARTS &#183; GEN&#200;VE</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ COLLECTION ============================ -->
+<section class="section" id="collection">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-head__l reveal">
+        <p class="kicker">The collection</p>
+        <h2>Three dials.<br>One obsession.</h2>
+      </div>
+      <div class="reveal" style="--d:120ms">
+        <p class="lede" style="max-width:36ch">
+          Each reference shares the AE-39 movement and differs only in metal,
+          dial finish and strap. Nothing is seasonal. Nothing is discontinued.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <article class="card reveal">
+        <span class="card__tag">Reference 01</span>
+        <div class="card__media" data-dial="nocturne" aria-hidden="true"></div>
+        <p class="card__no">AE 39.01 &#183; Steel</p>
+        <h3>Nocturne</h3>
+        <p class="card__desc">A black grand feu dial with a sunray-brushed centre and rhodium indices. The quietest watch in the room, and the one people ask about.</p>
+        <div class="card__spec"><span>39 mm</span><span>Steel</span><span>Alligator noir</span></div>
+        <div class="card__foot">
+          <span class="card__price">$18,400<small>Incl. duties</small></span>
+          <a class="link-arrow" href="#reserve">Reserve &#8594;</a>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--d:110ms">
+        <span class="card__tag">Reference 02</span>
+        <div class="card__media" data-dial="solstice" aria-hidden="true"></div>
+        <p class="card__no">AE 39.02 &#183; Rose gold</p>
+        <h3>Solstice</h3>
+        <p class="card__desc">Champagne engine-turned dial, 18k rose gold case, and a hand-sewn cognac strap that darkens with the years you wear it.</p>
+        <div class="card__spec"><span>39 mm</span><span>18k rose gold</span><span>Cognac</span></div>
+        <div class="card__foot">
+          <span class="card__price">$24,900<small>Incl. duties</small></span>
+          <a class="link-arrow" href="#reserve">Reserve &#8594;</a>
+        </div>
+      </article>
+
+      <article class="card reveal" style="--d:220ms">
+        <span class="card__tag">Limited to 50</span>
+        <div class="card__media" data-dial="meridian" aria-hidden="true"></div>
+        <p class="card__no">AE 39.03 &#183; Platinum</p>
+        <h3>Meridian</h3>
+        <p class="card__desc">A midnight blue sunburst dial under a domed sapphire, set in 950 platinum. Fifty pieces, allocated once a year.</p>
+        <div class="card__spec"><span>39 mm</span><span>950 platinum</span><span>Navy</span></div>
+        <div class="card__foot">
+          <span class="card__price">$32,500<small>By allocation</small></span>
+          <a class="link-arrow" href="#reserve">Enquire &#8594;</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CONFIGURATOR ============================ -->
+<section class="section section--alt" id="configure">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-head__l reveal">
+        <p class="kicker">Compose yours</p>
+        <h2>Metal, dial, strap.<br>Chosen in that order.</h2>
+      </div>
+      <div class="reveal" style="--d:120ms">
+        <p class="lede" style="max-width:36ch">
+          Nine hundred and eighteen combinations, each built to order in eleven to fourteen weeks.
+        </p>
+      </div>
+    </div>
+
+    <div class="config">
+      <div class="cfg-stage reveal">
+        <div class="cfg-watch" id="cfgWatch" data-case="rose" data-dial="obsidian" data-strap="noir">
+          <svg viewBox="0 0 320 430" role="img" aria-label="Your configured Aevum Automatique 39.">
+            <defs>
+              <linearGradient id="cfgCase" x1=".12" y1="0" x2=".88" y2="1">
+                <stop offset="0" style="stop-color:var(--cfg-case-a)"/>
+                <stop offset=".5" style="stop-color:var(--cfg-case-b)"/>
+                <stop offset="1" style="stop-color:var(--cfg-case-a)"/>
+              </linearGradient>
+              <radialGradient id="cfgDial" cx=".35" cy=".26" r=".92">
+                <stop offset="0" style="stop-color:var(--cfg-dial-a)"/>
+                <stop offset="1" style="stop-color:var(--cfg-dial-b)"/>
+              </radialGradient>
+              <linearGradient id="cfgStrap" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" style="stop-color:var(--cfg-strap-b)"/>
+                <stop offset=".5" style="stop-color:var(--cfg-strap-a)"/>
+                <stop offset="1" style="stop-color:var(--cfg-strap-b)"/>
+              </linearGradient>
+              <clipPath id="cfgClip"><circle cx="160" cy="215" r="122"/></clipPath>
+            </defs>
+
+            <rect x="95" y="0" width="130" height="112" rx="9" fill="url(#cfgStrap)"/>
+            <rect x="95" y="318" width="130" height="112" rx="9" fill="url(#cfgStrap)"/>
+            <path d="M104 12 V104 M216 12 V104 M104 326 V418 M216 326 V418"
+                  data-fill="stitch" stroke-width="1.2" stroke-dasharray="5 7" stroke-linecap="round" opacity=".8"/>
+
+            <rect x="122" y="84" width="22" height="54" rx="10" data-fill="case"/>
+            <rect x="176" y="84" width="22" height="54" rx="10" data-fill="case"/>
+            <rect x="122" y="292" width="22" height="54" rx="10" data-fill="case"/>
+            <rect x="176" y="292" width="22" height="54" rx="10" data-fill="case"/>
+
+            <rect x="290" y="198" width="20" height="34" rx="6" data-fill="case"/>
+
+            <circle cx="160" cy="215" r="140" fill="url(#cfgCase)"/>
+            <circle cx="160" cy="215" r="140" fill="none" stroke="rgba(255,255,255,.2)"/>
+            <circle cx="160" cy="215" r="130" data-fill="case2"/>
+            <circle cx="160" cy="215" r="122" fill="url(#cfgDial)"/>
+
+            <g id="cfgTicks" clip-path="url(#cfgClip)"></g>
+            <g id="cfgMarkers"></g>
+
+            <text x="160" y="152" text-anchor="middle" data-fill="marker"
+                  style="font-family:var(--serif);font-size:16px;letter-spacing:6px">AEVUM</text>
+            <text x="160" y="308" text-anchor="middle" data-fill="marker" opacity=".5"
+                  style="font-family:var(--sans);font-size:6px;letter-spacing:4px">SWISS MADE</text>
+
+            <!-- hands at 10:10 -->
+            <g transform="rotate(-60 160 215)" data-fill="hand">
+              <path d="M160 152 L166 204 L160 215 L154 204 Z"/>
+            </g>
+            <g transform="rotate(60 160 215)" data-fill="hand">
+              <path d="M160 118 L165.6 205 L160 216 L154.4 205 Z"/>
+            </g>
+            <line x1="160" y1="110" x2="160" y2="242" style="stroke:var(--cfg-hand)" stroke-width="1.6" opacity=".85"/>
+            <circle cx="160" cy="215" r="7" data-fill="case"/>
+            <circle cx="160" cy="215" r="2.8" data-fill="marker"/>
+
+            <g clip-path="url(#cfgClip)">
+              <ellipse cx="112" cy="150" rx="96" ry="76" fill="rgba(255,255,255,.09)"/>
+            </g>
+          </svg>
+        </div>
+        <span class="cfg-stage__label" id="cfgLabel">Reference AE 39 &#183; Rose gold &#183; Obsidian</span>
+      </div>
+
+      <div class="reveal" style="--d:120ms">
+        <div class="cfg-group">
+          <p class="cfg-group__t"><span>01 - Case</span><b id="cfgCaseName">18k Rose Gold</b></p>
+          <div class="swatches" data-group="case" role="group" aria-label="Case metal">
+            <button class="swatch" data-value="steel" aria-pressed="false"><i style="background:linear-gradient(135deg,#eceef2,#8d939d)"></i>Steel</button>
+            <button class="swatch" data-value="rose" aria-pressed="true"><i style="background:linear-gradient(135deg,#f7dfc0,#bd8659)"></i>Rose gold</button>
+            <button class="swatch" data-value="platinum" aria-pressed="false"><i style="background:linear-gradient(135deg,#f4f6fa,#9aa3b2)"></i>Platinum</button>
+          </div>
+        </div>
+
+        <div class="cfg-group">
+          <p class="cfg-group__t"><span>02 - Dial</span><b id="cfgDialName">Obsidian</b></p>
+          <div class="swatches" data-group="dial" role="group" aria-label="Dial finish">
+            <button class="swatch" data-value="obsidian" aria-pressed="true"><i style="background:linear-gradient(135deg,#2a2f38,#06070a)"></i>Obsidian</button>
+            <button class="swatch" data-value="champagne" aria-pressed="false"><i style="background:linear-gradient(135deg,#e8d6ae,#a8894f)"></i>Champagne</button>
+            <button class="swatch" data-value="midnight" aria-pressed="false"><i style="background:linear-gradient(135deg,#26497a,#08132a)"></i>Midnight</button>
+          </div>
+        </div>
+
+        <div class="cfg-group">
+          <p class="cfg-group__t"><span>03 - Strap</span><b id="cfgStrapName">Alligator Noir</b></p>
+          <div class="swatches" data-group="strap" role="group" aria-label="Strap">
+            <button class="swatch" data-value="noir" aria-pressed="true"><i style="background:linear-gradient(135deg,#2a2d33,#0a0b0e)"></i>Alligator noir</button>
+            <button class="swatch" data-value="cognac" aria-pressed="false"><i style="background:linear-gradient(135deg,#a06b39,#4a2c14)"></i>Cognac</button>
+            <button class="swatch" data-value="navy" aria-pressed="false"><i style="background:linear-gradient(135deg,#2e4160,#0d1626)"></i>Navy</button>
+          </div>
+        </div>
+
+        <p class="cfg-summary" id="cfgSummary">Automatique 39 &#183; 18k rose gold &#183; obsidian dial &#183; alligator noir</p>
+
+        <div class="cfg-total">
+          <span class="k">Your configuration</span>
+          <span class="v" id="cfgPrice">$24,900</span>
+        </div>
+
+        <a class="btn btn--solid btn--full" href="#reserve">Hold this configuration <span class="arw">&#8594;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SPECS ============================ -->
+<section class="section" id="specs">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-head__l reveal">
+        <p class="kicker">By the numbers</p>
+        <h2>Measured, not marketed.</h2>
+      </div>
+    </div>
+
+    <div class="specs">
+      <div class="spec reveal">
+        <div class="num"><span data-count="70">0</span><sup>h</sup></div>
+        <p class="k">Power reserve</p>
+        <p>Three days on the wrist, tested across a full winding cycle at 22 degrees.</p>
+      </div>
+      <div class="spec reveal" style="--d:100ms">
+        <div class="num"><span data-count="21600" data-format="int">0</span></div>
+        <p class="k">Vibrations / hour</p>
+        <p>A 3 Hz beat: precise enough for a chronometer, slow enough to watch.</p>
+      </div>
+      <div class="spec reveal" style="--d:200ms">
+        <div class="num"><span data-count="342">0</span></div>
+        <p class="k">Components</p>
+        <p>Assembled twice and regulated in six positions over eleven days.</p>
+      </div>
+      <div class="spec reveal" style="--d:300ms">
+        <div class="num"><span data-count="5">0</span><sup>yr</sup></div>
+        <p class="k">Warranty</p>
+        <p>International, transferable, and honoured for as long as we exist.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ATELIER ============================ -->
+<section class="section section--alt" id="atelier">
+  <div class="wrap">
+    <div class="atelier">
+      <div class="reveal blueprint">
+        <svg viewBox="0 0 420 420" role="img" aria-label="Technical drawing of the Automatique 39 case and dial.">
+          <g class="draw">
+            <circle cx="210" cy="200" r="150" class="bp-draw"/>
+            <circle cx="210" cy="200" r="132" class="bp-draw bp-draw--dim"/>
+            <circle cx="210" cy="200" r="104" class="bp-draw bp-draw--thin"/>
+            <circle cx="210" cy="200" r="12" class="bp-draw bp-draw--thin"/>
+            <line x1="60" y1="200" x2="360" y2="200" class="bp-draw bp-draw--thin"/>
+            <line x1="210" y1="50" x2="210" y2="350" class="bp-draw bp-draw--thin"/>
+            <rect x="146" y="150" width="128" height="34" rx="6" class="bp-fill"/>
+            <path d="M164 190 L256 190" class="bp-draw bp-draw--dim"/>
+            <path d="M330 186 L392 186 M392 178 L392 194" class="bp-draw bp-draw--dim"/>
+            <path d="M210 50 L210 20 M196 20 L224 20" class="bp-draw bp-draw--dim"/>
+            <path d="M60 200 L20 200 M20 186 L20 214" class="bp-draw bp-draw--dim"/>
+          </g>
+          <g class="draw">
+            <circle cx="210" cy="200" r="150" fill="none" stroke="rgba(201,168,106,.5)" stroke-width="1"/>
+          </g>
+          <text x="210" y="380" text-anchor="middle" class="bp-txt bp-txt--g">Automatique 39 &#183; 39.00 mm</text>
+          <text x="210" y="396" text-anchor="middle" class="bp-txt">Scale 1:1 &#183; Sheet AE-39/01</text>
+        </svg>
+      </div>
+
+      <div class="reveal" style="--d:120ms">
+        <p class="kicker">The atelier</p>
+        <h2>Nine watchmakers.<br>One room above the lake.</h2>
+        <p class="lede" style="margin-top:24px">
+          Aevum began in 2011 when three watchmakers left the Vallee de Joux for a
+          converted boathouse outside Geneva. We make one thing, slowly. The rose engine
+          that cuts our dials was built in 1911 and has never left the room.
+        </p>
+        <blockquote class="quote">
+          A watch should not shout the hour it was bought. It should simply keep it.
+          <cite>Camille Aevum, founder</cite>
+        </blockquote>
+        <div class="atelier__stats">
+          <div><div class="v">240</div><div class="k">Pieces a year</div></div>
+          <div><div class="v">1911</div><div class="k">Rose engine</div></div>
+          <div><div class="v">9</div><div class="k">Watchmakers</div></div>
+          <div><div class="v">11</div><div class="k">Days of regulation</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PRESS ============================ -->
+<section class="section" id="press">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-head__l reveal">
+        <p class="kicker">In print</p>
+        <h2>What the people who<br>handle watches say.</h2>
+      </div>
+    </div>
+    <div class="press">
+      <blockquote class="reveal">
+        The most quietly confident dress watch of the decade. You notice it a full
+        minute after you notice the man wearing it.
+        <cite>Chronos Quarterly</cite>
+      </blockquote>
+      <blockquote class="reveal" style="--d:110ms">
+        A dial you want to read by candlelight. The guilloche alone is worth the wait.
+        <cite>The Horological Review</cite>
+      </blockquote>
+      <blockquote class="reveal" style="--d:220ms">
+        Restraint, executed with total conviction. Aevum has no interest in being
+        the loudest watch in the room, and that is exactly the point.
+        <cite>Maison &amp; Matiere</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ RESERVE ============================ -->
+<section class="section reserve" id="reserve">
+  <div class="wrap">
+    <div class="reserve__box">
+      <div class="reveal">
+        <p class="kicker">Private viewing</p>
+        <h2>See it in the metal.</h2>
+        <p class="lede" style="margin-top:22px">
+          Viewings are held in Geneva, London, Tokyo and New York, by appointment.
+          Tell us where you are and a concierge will write to you within one business day.
+        </p>
+        <hr class="rule" style="margin:34px 0">
+        <div class="hero__meta" style="border-top:0;padding-top:0">
+          <div><span class="k">Lead time</span><span class="v">11 - 14 weeks</span></div>
+          <div><span class="k">Deposit</span><span class="v">Refundable</span></div>
+        </div>
+      </div>
+
+      <div class="reveal" style="--d:120ms">
+        <form id="reserveForm" novalidate>
+          <div class="field">
+            <label for="f-model">Reference</label>
+            <select id="f-model" name="model">
+              <option>AE 39.01 - Nocturne, steel</option>
+              <option>AE 39.02 - Solstice, rose gold</option>
+              <option>AE 39.03 - Meridian, platinum (allocation)</option>
+              <option>Your own configuration</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-city">City</label>
+            <select id="f-city" name="city">
+              <option>Geneva</option>
+              <option>London</option>
+              <option>Tokyo</option>
+              <option>New York</option>
+              <option>Somewhere else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <button class="btn btn--solid btn--full" type="submit">Request a private viewing <span class="arw">&#8594;</span></button>
+          <p class="form__msg" id="formMsg" role="alert"></p>
+          <p class="form__note">We write once, by hand, and never share your details. No newsletter, no list.</p>
+        </form>
+
+        <div class="form__ok" id="formOk" role="status">
+          <h4>Thank you.</h4>
+          <p id="formOkText">A concierge will write to you within one business day to arrange your viewing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="brand" href="#top" aria-label="Aevum, back to top">
+          <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="14.4" fill="none" stroke="currentColor" stroke-width="1"/>
+            <path d="M9.6 22.6 L16 8.4 L22.4 22.6" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/>
+            <path d="M12.5 18.6 H19.5" stroke="currentColor" stroke-width="1.35"/>
+          </svg>
+          <span class="brand__txt">
+            <span class="brand__name">AEVUM</span>
+            <span class="brand__sub">GEN&#200;VE</span>
+          </span>
+        </a>
+        <p>One watch, made slowly, above Lake Geneva. Since 2011.</p>
+      </div>
+      <div>
+        <h5>Maison</h5>
+        <ul>
+          <li><a href="#atelier">The atelier</a></li>
+          <li><a href="#calibre">Calibre AE-39</a></li>
+          <li><a href="#press">Press</a></li>
+          <li><a href="#reserve">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Collection</h5>
+        <ul>
+          <li><a href="#collection">Nocturne</a></li>
+          <li><a href="#collection">Solstice</a></li>
+          <li><a href="#collection">Meridian</a></li>
+          <li><a href="#configure">Configure</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Client care</h5>
+        <ul>
+          <li><a href="#reserve">Private viewing</a></li>
+          <li><a href="#reserve">Servicing</a></li>
+          <li><a href="#reserve">Warranty</a></li>
+          <li><a href="#reserve">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bot">
+      <span>&#169; <span id="year">2025</span> Maison Aevum SA &#183; Geneva, Switzerland</span>
+      <span class="disc">Aevum is a fictional brand, created for a design demonstration. No watches were harmed.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ==========================================================
+     1. Hand-built watch: dial texture, chapter ring, indices
+     ========================================================== */
+  function buildHeroDial() {
+    var sun = $('#heroSun');
+    var rings = $('#heroRings');
+    var ticks = $('#heroTicks');
+    var marks = $('#heroMarkers');
+    var i, a, s, out;
+
+    if (sun) {
+      out = '';
+      for (i = 0; i < 216; i++) {
+        a = (i * 360) / 216;
+        out += '<line x1="210" y1="300" x2="210" y2="174" transform="rotate(' + a + ' 210 300)"/>';
+      }
+      sun.innerHTML = out;
+      sun.setAttribute('stroke', 'rgba(255,255,255,.045)');
+      sun.setAttribute('stroke-width', '1');
+    }
+
+    if (rings) {
+      out = '';
+      for (i = 1; i <= 9; i++) {
+        out += '<circle cx="210" cy="300" r="' + (14 * i) + '" fill="none" stroke="rgba(232,213,168,' + (0.05 - i * 0.003).toFixed(3) + ')"/>';
+      }
+      rings.innerHTML = out;
+    }
+
+    if (ticks) {
+      out = '';
+      for (i = 0; i < 60; i++) {
+        var major = i % 5 === 0;
+        var r1 = major ? 120 : 122;
+        var r2 = 127;
+        out += '<line x1="210" y1="' + (300 - r2) + '" x2="210" y2="' + (300 - r1) + '"' +
+               ' transform="rotate(' + (i * 6) + ' 210 300)"' +
+               ' stroke="' + (major ? 'rgba(232,213,168,.85)' : 'rgba(214,190,140,.35)') + '"' +
+               ' stroke-width="' + (major ? 1.8 : 1) + '"/>';
+      }
+      ticks.innerHTML = out;
+    }
+
+    if (marks) {
+      out = '';
+      for (i = 0; i < 12; i++) {
+        a = i * 30;
+        if (i === 0) {
+          out += '<rect x="200.5" y="182" width="6" height="20" rx="1.6" fill="url(#hMarker)" transform="rotate(0 210 300)"/>';
+          out += '<rect x="213.5" y="182" width="6" height="20" rx="1.6" fill="url(#hMarker)" transform="rotate(0 210 300)"/>';
+        } else {
+          out += '<rect x="206.5" y="182" width="7" height="20" rx="1.6" fill="url(#hMarker)"' +
+                 ' transform="rotate(' + a + ' 210 300)"/>';
+        }
+      }
+      marks.innerHTML = out;
+    }
+  }
+
+  /* ==========================================================
+     2. Live time on the hero watch
+     ========================================================== */
+  var handHour = $('#handHour');
+  var handMin = $('#handMin');
+  var handSec = $('#handSec');
+
+  function setHand(el, deg) {
+    if (el) { el.setAttribute('transform', 'rotate(' + deg.toFixed(3) + ' 210 300)'); }
+  }
+
+  function tickClock() {
+    var now = new Date();
+    var ms = now.getMilliseconds();
+    var s = now.getSeconds() + ms / 1000;
+    var m = now.getMinutes() + s / 60;
+    var h = (now.getHours() % 12) + m / 60;
+    setHand(handSec, RM ? Math.floor(s) * 6 : s * 6);
+    setHand(handMin, m * 6);
+    setHand(handHour, h * 30);
+  }
+
+  function loopClock() {
+    tickClock();
+    requestAnimationFrame(loopClock);
+  }
+
+  var dateEl = $('#dateNum');
+  if (dateEl) { dateEl.textContent = String(new Date().getDate()); }
+
+  /* ==========================================================
+     3. Movement illustration (gears, jewels, screws, spring)
+     ========================================================== */
+  function gear(cx, cy, teeth, rOut, rIn, hub) {
+    var fill = 'url(#movBrass)';
+    var s = '<circle cx="' + cx + '" cy="' + cy + '" r="' + rIn + '" fill="' + fill + '"/>';
+    var tw = Math.max(4, (2 * Math.PI * rOut) / teeth * 0.55);
+    for (var i = 0; i < teeth; i++) {
+      s += '<rect x="' + (cx - tw / 2) + '" y="' + (cy - rOut) + '" width="' + tw + '" height="' + (rOut - rIn + 3) + '"' +
+           ' rx="1.4" fill="' + fill + '" transform="rotate(' + ((360 / teeth) * i) + ' ' + cx + ' ' + cy + ')"/>';
+    }
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (rIn * 0.42) + '" fill="#0a0b0e"/>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + hub + '" fill="url(#movSteel)"/>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + (hub * 0.4) + '" fill="#0a0b0e"/>';
+    return s;
+  }
+
+  function buildMovement() {
+    var g = $('#movGears');
+    if (g) {
+      g.innerHTML =
+        '<g class="gear gear--a">' + gear(196, 300, 34, 96, 84, 13) + '</g>' +
+        '<g class="gear gear--b">' + gear(346, 232, 22, 62, 52, 10) + '</g>' +
+        '<g class="gear gear--c">' + gear(300, 372, 16, 46, 38, 8) + '</g>' +
+        '<g class="gear gear--d">' + gear(120, 158, 18, 40, 33, 7) + '</g>';
+    }
+
+    var j = $('#movJewels');
+    if (j) {
+      var spots = [[196, 300], [346, 232], [300, 372], [120, 158], [250, 250], [160, 402], [404, 300], [86, 260]];
+      var out = '';
+      spots.forEach(function (p) {
+        out += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="7" fill="url(#movSteel)"/>';
+        out += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="4.4" fill="url(#movJewel)"/>';
+        out += '<circle cx="' + (p[0] - 1.4) + '" cy="' + (p[1] - 1.4) + '" r="1.1" fill="rgba(255,255,255,.6)"/>';
+      });
+      j.innerHTML = out;
+    }
+
+    var sc = $('#movScrews');
+    if (sc) {
+      var screws = [[132, 118], [286, 96], [372, 150], [420, 268], [150, 348], [232, 428], [386, 418], [104, 236]];
+      var out2 = '';
+      screws.forEach(function (p) {
+        out2 += '<g class="screw"><circle cx="' + p[0] + '" cy="' + p[1] + '" r="8.5" fill="url(#movSteel)"/>' +
+                '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="8.5" fill="none" stroke="rgba(0,0,0,.45)"/>' +
+                '<rect x="' + (p[0] - 6.5) + '" y="' + (p[1] - 1) + '" width="13" height="2" rx="1" fill="rgba(0,0,0,.55)"/></g>';
+      });
+      sc.innerHTML = out2;
+    }
+
+    var spring = $('#movSpring');
+    if (spring) {
+      var cx = 378, cy = 384, turns = 4.2, steps = 220, path = '', rr;
+      for (var i = 0; i <= steps; i++) {
+        var t = i / steps;
+        var ang = t * turns * Math.PI * 2;
+        rr = 4 + t * 34;
+        var x = cx + Math.cos(ang) * rr;
+        var y = cy + Math.sin(ang) * rr;
+        path += (i === 0 ? 'M' : 'L') + x.toFixed(2) + ' ' + y.toFixed(2);
+      }
+      spring.setAttribute('d', path);
+    }
+  }
+
+  /* ==========================================================
+     4. Collection dials (generated, unique gradient ids)
+     ========================================================== */
+  var DIALS = {
+    nocturne: { caseA: '#e9ebef', caseB: '#8a8f99', caseC: '#3b3f47', dialA: '#242830', dialB: '#06070a', marker: '#dfe4ec', hand: '#f2f5fa', tick: 'rgba(226,232,242,.5)' },
+    solstice: { caseA: '#f7dfc0', caseB: '#c08a63', caseC: '#7a4b2c', dialA: '#e2cda3', dialB: '#9c7c45', marker: '#2b2418', hand: '#241d12', tick: 'rgba(43,36,24,.5)' },
+    meridian: { caseA: '#f4f6fa', caseB: '#9aa3b2', caseC: '#3f4650', dialA: '#2a4f86', dialB: '#071023', marker: '#e8d5aa', hand: '#f7e9c8', tick: 'rgba(232,213,168,.55)' }
+  };
+
+  function dialSvg(uid, c) {
+    var s = '<svg viewBox="0 0 320 320" aria-hidden="true"><defs>';
+    s += '<linearGradient id="' + uid + 'c" x1=".12" y1="0" x2=".88" y2="1">' +
+         '<stop offset="0" stop-color="' + c.caseA + '"/><stop offset=".5" stop-color="' + c.caseB + '"/>' +
+         '<stop offset="1" stop-color="' + c.caseC + '"/></linearGradient>';
+    s += '<radialGradient id="' + uid + 'd" cx=".35" cy=".26" r=".92">' +
+         '<stop offset="0" stop-color="' + c.dialA + '"/><stop offset="1" stop-color="' + c.dialB + '"/></radialGradient>';
+    s += '</defs>';
+
+    s += '<circle cx="160" cy="160" r="152" fill="url(#' + uid + 'c)"/>';
+    s += '<circle cx="160" cy="160" r="152" fill="none" stroke="rgba(255,255,255,.22)"/>';
+    s += '<circle cx="160" cy="160" r="142" fill="url(#' + uid + 'c)" opacity=".55"/>';
+    s += '<circle cx="160" cy="160" r="132" fill="url(#' + uid + 'd)"/>';
+
+    var i, a, out = '';
+    for (i = 0; i < 150; i++) {
+      a = (i * 360) / 150;
+      out += '<line x1="160" y1="160" x2="160" y2="38" transform="rotate(' + a + ' 160 160)"/>';
+    }
+    s += '<g stroke="rgba(255,255,255,.05)" stroke-width="1">' + out + '</g>';
+
+    out = '';
+    for (i = 0; i < 60; i++) {
+      var major = i % 5 === 0;
+      out += '<line x1="160" y1="' + (160 - 128) + '" x2="160" y2="' + (160 - (major ? 117 : 122)) + '"' +
+             ' transform="rotate(' + (i * 6) + ' 160 160)" stroke="' + c.tick + '" stroke-width="' + (major ? 1.8 : 1) + '"/>';
+    }
+    s += '<g>' + out + '</g>';
+
+    out = '';
+    for (i = 0; i < 12; i++) {
+      if (i === 0) {
+        out += '<rect x="150.5" y="46" width="6" height="20" rx="1.6" fill="' + c.marker + '"/>';
+        out += '<rect x="163.5" y="46" width="6" height="20" rx="1.6" fill="' + c.marker + '"/>';
+      } else {
+        out += '<rect x="156.5" y="46" width="7" height="20" rx="1.6" fill="' + c.marker + '"' +
+               ' transform="rotate(' + (i * 30) + ' 160 160)"/>';
+      }
+    }
+    s += '<g>' + out + '</g>';
+
+    s += '<text x="160" y="110" text-anchor="middle" fill="' + c.marker + '" style="font-family:var(--serif);font-size:14px;letter-spacing:5px">AEVUM</text>';
+    s += '<rect x="146" y="152" width="28" height="22" rx="2" fill="' + c.marker + '" opacity=".92"/>';
+
+    s += '<g transform="rotate(-60 160 160)"><path d="M160 104 L166 150 L160 160 L154 150 Z" fill="' + c.hand + '"/></g>';
+    s += '<g transform="rotate(60 160 160)"><path d="M160 76 L165.4 150 L160 161 L154.6 150 Z" fill="' + c.hand + '"/></g>';
+    s += '<line x1="160" y1="70" x2="160" y2="186" stroke="' + c.hand + '" stroke-width="1.5" opacity=".9"/>';
+    s += '<circle cx="160" cy="160" r="6.5" fill="' + c.caseA + '"/><circle cx="160" cy="160" r="2.6" fill="' + c.marker + '"/>';
+    s += '<ellipse cx="112" cy="96" rx="98" ry="70" fill="rgba(255,255,255,.1)"/>';
+    s += '</svg>';
+    return s;
+  }
+
+  function buildCards() {
+    $$('.card__media').forEach(function (host) {
+      var key = host.getAttribute('data-dial');
+      if (DIALS[key]) { host.innerHTML = dialSvg('d-' + key + '-', DIALS[key]); }
+    });
+  }
+
+  /* ==========================================================
+     5. Configurator
+     ========================================================== */
+  function buildCfgDial() {
+    var ticks = $('#cfgTicks');
+    var marks = $('#cfgMarkers');
+    var i, out;
+
+    if (ticks) {
+      out = '';
+      for (i = 0; i < 60; i++) {
+        var major = i % 5 === 0;
+        out += '<line x1="160" y1="' + (215 - 122) + '" x2="160" y2="' + (215 - (major ? 111 : 116)) + '"' +
+               ' transform="rotate(' + (i * 6) + ' 160 215)" data-fill="tick" stroke-width="' + (major ? 1.8 : 1) + '"/>';
+      }
+      ticks.innerHTML = out;
+    }
+    if (marks) {
+      out = '';
+      for (i = 0; i < 12; i++) {
+        if (i === 0) {
+          out += '<rect x="150.5" y="101" width="6" height="19" rx="1.6" data-fill="marker"/>';
+          out += '<rect x="163.5" y="101" width="6" height="19" rx="1.6" data-fill="marker"/>';
+        } else {
+          out += '<rect x="156.5" y="101" width="7" height="19" rx="1.6" data-fill="marker"' +
+                 ' transform="rotate(' + (i * 30) + ' 160 215)"/>';
+        }
+      }
+      marks.innerHTML = out;
+    }
+  }
+
+  var CFG = {
+    case: {
+      rose: { name: '18k Rose Gold', price: 24900 },
+      steel: { name: '904L Steel', price: 18400 },
+      platinum: { name: '950 Platinum', price: 32500 }
+    },
+    dial: {
+      obsidian: { name: 'Obsidian' },
+      champagne: { name: 'Champagne' },
+      midnight: { name: 'Midnight Blue' }
+    },
+    strap: {
+      noir: { name: 'Alligator Noir' },
+      cognac: { name: 'Alligator Cognac' },
+      navy: { name: 'Alligator Navy' }
+    }
+  };
+
+  var state = { case: 'rose', dial: 'obsidian', strap: 'noir' };
+
+  function money(n) { return '$' + n.toLocaleString('en-US'); }
+
+  function paintConfig() {
+    var watch = $('#cfgWatch');
+    if (!watch) { return; }
+    watch.setAttribute('data-case', state.case);
+    watch.setAttribute('data-dial', state.dial);
+    watch.setAttribute('data-strap', state.strap);
+
+    var c = CFG.case[state.case];
+    var d = CFG.dial[state.dial];
+    var s = CFG.strap[state.strap];
+
+    var price = c.price;
+    if (state.dial === 'midnight') { price += 900; }
+
+    var el;
+    if ((el = $('#cfgCaseName'))) { el.textContent = c.name; }
+    if ((el = $('#cfgDialName'))) { el.textContent = d.name; }
+    if ((el = $('#cfgStrapName'))) { el.textContent = s.name; }
+    if ((el = $('#cfgPrice'))) { el.textContent = money(price); }
+    if ((el = $('#cfgLabel'))) {
+      el.textContent = 'Reference AE 39  |  ' + c.name + '  |  ' + d.name;
+    }
+    if ((el = $('#cfgSummary'))) {
+      el.textContent = 'Automatique 39  |  ' + c.name.toLowerCase() + '  |  ' +
+        d.name.toLowerCase() + ' dial  |  ' + s.name.toLowerCase();
+    }
+  }
+
+  $$('.swatches').forEach(function (group) {
+    var key = group.getAttribute('data-group');
+    group.addEventListener('click', function (e) {
+      var btn = e.target.closest ? e.target.closest('.swatch') : null;
+      if (!btn) { return; }
+      state[key] = btn.getAttribute('data-value');
+      $$('.swatch', group).forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      paintConfig();
+    });
+  });
+
+  /* ==========================================================
+     6. Reveal on scroll
+     ========================================================== */
+  function buildReveals() {
+    var items = $$('.reveal');
+    if (RM || !('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ==========================================================
+     7. Counters
+     ========================================================== */
+  function buildCounters() {
+    var els = $$('[data-count]');
+    if (!els.length) { return; }
+
+    var run = function (el) {
+      var target = parseFloat(el.getAttribute('data-count'));
+      var fmt = el.getAttribute('data-format');
+      var dur = 1500;
+      var start = null;
+      if (RM) { el.textContent = fmt === 'int' ? target.toLocaleString('en-US') : String(target); return; }
+      var step = function (ts) {
+        if (start === null) { start = ts; }
+        var p = Math.min(1, (ts - start) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        var val = Math.round(target * eased);
+        el.textContent = fmt === 'int' ? val.toLocaleString('en-US') : String(val);
+        if (p < 1) { requestAnimationFrame(step); }
+      };
+      requestAnimationFrame(step);
+    };
+
+    if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { run(entry.target); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.6 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ==========================================================
+     8. Nav, progress, drawer
+     ========================================================== */
+  function buildNav() {
+    var nav = $('#nav');
+    var bar = $('#progressBar');
+    var burger = $('#burger');
+    var drawer = $('#drawer');
+
+    var onScroll = function () {
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      if (nav) { nav.classList.toggle('is-stuck', y > 40); }
+      if (bar) {
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (h > 0 ? Math.min(100, (y / h) * 100) : 0) + '%';
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    if (burger && drawer) {
+      var toggle = function (open) {
+        drawer.classList.toggle('is-open', open);
+        burger.setAttribute('aria-expanded', String(open));
+        burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', function () {
+        toggle(!drawer.classList.contains('is-open'));
+      });
+      $$('a', drawer).forEach(function (a) {
+        a.addEventListener('click', function () { toggle(false); });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { toggle(false); }
+      });
+    }
+  }
+
+  /* ==========================================================
+     9. Pointer parallax on the hero watch
+     ========================================================== */
+  function buildParallax() {
+    var stage = $('#stage');
+    var watch = $('#heroWatch');
+    if (!stage || !watch || RM) { return; }
+    if (window.matchMedia('(hover: none)').matches) { return; }
+
+    var tx = 0, ty = 0, px = 0, py = 0, raf = null;
+
+    var apply = function () {
+      raf = null;
+      watch.style.setProperty('--tx', tx.toFixed(3));
+      watch.style.setProperty('--ty', ty.toFixed(3));
+      watch.style.setProperty('--px', px.toFixed(3));
+      watch.style.setProperty('--py', py.toFixed(3));
+    };
+    var queue = function () { if (!raf) { raf = requestAnimationFrame(apply); } };
+
+    window.addEventListener('mousemove', function (e) {
+      var r = stage.getBoundingClientRect();
+      var cx = r.left + r.width / 2;
+      var cy = r.top + r.height / 2;
+      var nx = Math.max(-1, Math.min(1, (e.clientX - cx) / (window.innerWidth / 2)));
+      var ny = Math.max(-1, Math.min(1, (e.clientY - cy) / (window.innerHeight / 2)));
+      tx = nx * 7;
+      ty = ny * 6;
+      px = nx * 0.8;
+      py = ny * 0.8;
+      queue();
+    }, { passive: true });
+
+    stage.addEventListener('mouseleave', function () {
+      tx = ty = px = py = 0;
+      queue();
+    });
+  }
+
+  /* ==========================================================
+     10. Reserve form
+     ========================================================== */
+  function buildForm() {
+    var form = $('#reserveForm');
+    if (!form) { return; }
+    var msg = $('#formMsg');
+    var ok = $('#formOk');
+    var okText = $('#formOkText');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = $('#f-email');
+      var v = (email.value || '').trim();
+      var at = v.indexOf('@');
+      var valid = at > 0 && v.indexOf('.', at) > at + 1 && v.length > 5;
+
+      if (!valid) {
+        if (msg) { msg.textContent = 'Please enter a valid email address.'; }
+        email.focus();
+        return;
+      }
+      if (msg) { msg.textContent = ''; }
+
+      var model = $('#f-model');
+      var city = $('#f-city');
+      var where = city.value === 'Somewhere else' ? 'A concierge' : 'A concierge in ' + city.value;
+      if (okText) {
+        okText.textContent = 'Your request for the ' + model.value.split(' - ')[0] +
+          ' has been noted. ' + where + ' will write to you within one business day.';
+      }
+      form.style.display = 'none';
+      if (ok) { ok.classList.add('is-on'); }
+    });
+  }
+
+  /* ==========================================================
+     boot
+     ========================================================== */
+  function boot() {
+    buildHeroDial();
+    buildMovement();
+    buildCards();
+    buildCfgDial();
+    paintConfig();
+    buildReveals();
+    buildCounters();
+    buildNav();
+    buildParallax();
+    buildForm();
+
+    var year = $('#year');
+    if (year) { year.textContent = String(new Date().getFullYear()); }
+
+    tickClock();
+    if (!RM) { requestAnimationFrame(loopClock); }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+---
+title: Open an Account
+description: Open a Meridian Bank checking, savings or business account online in about five minutes — a four-step application demo with validation and a review screen.
+pageClass: page-apply
+scripts: apply
+---
+
+<section class="page-head">
+  <div class="wrap wrap--narrow">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span>Open an account</span>
+    </nav>
+    <p class="eyebrow">New account</p>
+    <h1>Open an account</h1>
+    <p class="lead">About five minutes. No credit check, no minimum deposit, and you can add a second account at any point.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap wrap--narrow">
+
+    <!-- Progress -->
+    <div class="steps" data-steps>
+      <span class="step" data-step="1" aria-current="step"><i>1</i><span>Account</span></span>
+      <span class="step" data-step="2"><i>2</i><span>About you</span></span>
+      <span class="step" data-step="3"><i>3</i><span>Fund it</span></span>
+      <span class="step" data-step="4"><i>4</i><span>Review</span></span>
+    </div>
+    <div class="progress"><span data-progress style="width:25%"></span></div>
+
+    <div class="callout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <div>
+        <p class="mb-0"><strong>This is a demo application.</strong> Nothing is submitted, stored, or sent anywhere. Please don't enter real personal or financial information.</p>
+      </div>
+    </div>
+
+    <form class="mt-3" data-wizard data-validate novalidate>
+
+      <!-- ── Step 1 ──────────────────────────────────────────────────── -->
+      <div class="wpanel" data-wpanel="1">
+        <h2>Which account would you like?</h2>
+        <p class="muted mb-2">You can open more than one — most people start with checking and savings together.</p>
+
+        <div class="picks">
+          <label class="pick">
+            <input type="radio" name="account" value="Everyday Checking" required data-msg-required="Choose an account to continue.">
+            <span class="pick__body">
+              <b>Everyday Checking</b>
+              <span>$0 monthly fee with direct deposit · 0.10% APY · debit card included</span>
+            </span>
+          </label>
+          <label class="pick">
+            <input type="radio" name="account" value="High-Yield Savings">
+            <span class="pick__body">
+              <b>High-Yield Savings</b>
+              <span>4.35% APY · no minimum · round-ups and goal buckets</span>
+            </span>
+          </label>
+          <label class="pick">
+            <input type="radio" name="account" value="Checking + Savings">
+            <span class="pick__body">
+              <b>Both — checking and savings</b>
+              <span>One application, two accounts, instant transfers between them</span>
+            </span>
+          </label>
+          <label class="pick">
+            <input type="radio" name="account" value="Business Checking">
+            <span class="pick__body">
+              <b>Business Checking</b>
+              <span>Unlimited transactions · first 24 months fee-free · EIN required</span>
+            </span>
+          </label>
+        </div>
+        <p class="err" data-err-for="account" hidden></p>
+      </div>
+
+      <!-- ── Step 2 ──────────────────────────────────────────────────── -->
+      <div class="wpanel" data-wpanel="2" hidden>
+        <h2>Tell us about you</h2>
+        <p class="muted mb-2">We're required to verify your identity before we can open an account.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="label" for="apFirst">First name <span class="req">*</span></label>
+            <input class="input" id="apFirst" name="first" type="text" required autocomplete="given-name" data-label="first name">
+            <p class="err" data-err-for="apFirst" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="apLast">Last name <span class="req">*</span></label>
+            <input class="input" id="apLast" name="last" type="text" required autocomplete="family-name" data-label="last name">
+            <p class="err" data-err-for="apLast" hidden></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="apEmail">Email <span class="req">*</span></label>
+          <input class="input" id="apEmail" name="email" type="email" required autocomplete="email" data-label="email address">
+          <p class="hint">We'll send your account agreement and statements here.</p>
+          <p class="err" data-err-for="apEmail" hidden></p>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="label" for="apPhone">Mobile number <span class="req">*</span></label>
+            <input class="input" id="apPhone" name="phone" type="tel" required autocomplete="tel" placeholder="(555) 555-0142" data-label="mobile number">
+            <p class="err" data-err-for="apPhone" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="apDob">Date of birth <span class="req">*</span></label>
+            <input class="input" id="apDob" name="dob" type="date" required autocomplete="bday" data-label="date of birth">
+            <p class="err" data-err-for="apDob" hidden></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="apAddr">Street address <span class="req">*</span></label>
+          <input class="input" id="apAddr" name="address" type="text" required autocomplete="street-address" data-label="street address">
+          <p class="err" data-err-for="apAddr" hidden></p>
+        </div>
+
+        <div class="field-row field-row--3">
+          <div class="field">
+            <label class="label" for="apCity">City <span class="req">*</span></label>
+            <input class="input" id="apCity" name="city" type="text" required autocomplete="address-level2" data-label="city">
+            <p class="err" data-err-for="apCity" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="apState">State <span class="req">*</span></label>
+            <select class="select" id="apState" name="state" required data-label="state">
+              <option value="">—</option>
+              <option>CA</option><option>CO</option><option>IL</option><option>MA</option>
+              <option>ME</option><option>NY</option><option>OR</option><option>RI</option>
+              <option>TX</option><option>WA</option>
+            </select>
+            <p class="err" data-err-for="apState" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="apZip">ZIP <span class="req">*</span></label>
+            <input class="input" id="apZip" name="zip" type="text" inputmode="numeric" maxlength="5" required
+                   autocomplete="postal-code" data-pattern="^\d{5}$"
+                   data-msg-pattern="Enter a 5-digit ZIP code." data-label="ZIP code">
+            <p class="err" data-err-for="apZip" hidden></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Step 3 ──────────────────────────────────────────────────── -->
+      <div class="wpanel" data-wpanel="3" hidden>
+        <h2>Fund your account</h2>
+        <p class="muted mb-2">You can start with as little as $0 — this is just what you'd like to deposit today.</p>
+
+        <div class="field">
+          <span class="label" id="apFundLabel">Opening deposit</span>
+          <div class="segctl" data-in="funding" role="group" aria-labelledby="apFundLabel">
+            <button type="button" data-value="0" aria-pressed="true">$0</button>
+            <button type="button" data-value="50" aria-pressed="false">$50</button>
+            <button type="button" data-value="250" aria-pressed="false">$250</button>
+            <button type="button" data-value="1000" aria-pressed="false">$1,000</button>
+            <button type="button" data-value="5000" aria-pressed="false">$5,000</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="apMethod">How would you like to fund it? <span class="req">*</span></label>
+          <select class="select" id="apMethod" name="method" required data-label="funding method">
+            <option value="">Choose one…</option>
+            <option>Transfer from another bank (ACH)</option>
+            <option>Debit card</option>
+            <option>Wire transfer</option>
+            <option>I'll fund it later</option>
+          </select>
+          <p class="err" data-err-for="apMethod" hidden></p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="apPromo">Promo code <span class="muted">(optional)</span></label>
+          <input class="input" id="apPromo" name="promo" type="text" placeholder="e.g. MERIDIAN200" data-label="promo code">
+          <p class="hint">New customers with a $250+ opening deposit and a qualifying direct deposit can earn a $200 bonus.</p>
+        </div>
+
+        <div class="callout callout--mint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <div><p class="mb-0">Your debit card details are available in the app the moment you're approved. The physical card follows in 3–5 business days.</p></div>
+        </div>
+      </div>
+
+      <!-- ── Step 4 ──────────────────────────────────────────────────── -->
+      <div class="wpanel" data-wpanel="4" hidden>
+        <h2>Review and confirm</h2>
+        <p class="muted mb-2">Check everything looks right. You can go back to any step to change it.</p>
+
+        <dl class="review" data-summary></dl>
+
+        <div class="field mt-3">
+          <label class="check">
+            <input type="checkbox" name="terms" required data-msg-required="Please confirm the details are correct and you accept the terms.">
+            <span>I confirm the information above is correct, and I accept the <a href="help.html#privacy">account agreement and privacy policy</a>.</span>
+          </label>
+          <p class="err" data-err-for="terms" hidden></p>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="btn-row mt-3" data-nav-row style="justify-content:space-between">
+        <button class="btn btn--ghost" type="button" data-back hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M19 12H5m6 6-6-6 6-6"/></svg>
+          Back
+        </button>
+        <span></span>
+        <button class="btn btn--lg" type="button" data-next>
+          Continue
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </button>
+        <button class="btn btn--lg" type="button" data-submit hidden>Submit application</button>
+      </div>
+    </form>
+
+    <!-- ── Success ───────────────────────────────────────────────────── -->
+    <div data-success hidden tabindex="-1">
+      <div class="card card--flat pad-lg center">
+        <span class="card__icon card__icon--mint" style="margin-inline:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <h2>You're all set, <span data-fill="first">there</span>.</h2>
+        <p class="lead" style="margin-inline:auto">Your <span data-fill="account">new account</span> application is complete. Reference <strong class="num" data-fill="reference">—</strong>.</p>
+
+        <div class="callout mt-3" style="text-align:left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+          <div>
+            <p class="mb-0"><strong>Nothing was actually submitted.</strong> This is the confirmation screen of a front-end demo — no application exists and no data left your browser.</p>
+          </div>
+        </div>
+
+        <div class="btn-row mt-3" style="justify-content:center">
+          <a class="btn" href="login.html">Go to online banking</a>
+          <a class="btn btn--ghost" href="index.html">Back to home</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

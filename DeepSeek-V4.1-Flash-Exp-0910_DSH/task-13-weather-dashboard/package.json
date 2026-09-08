@@ -1,0 +1,17 @@
+{
+  "name": "skylight-weather-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Skylight — a polished, dependency-free weather dashboard with live Open-Meteo data, an animated sky that follows the real conditions, and a deterministic offline fallback.",
+  "scripts": {
+    "start": "python3 -m http.server 8777 --bind 127.0.0.1",
+    "test": "node run-tests.js",
+    "verify": "node run-tests.js && node tools/capture.js && node tools/contrast.js --theme dark && node tools/contrast.js --theme light && node tools/interact.js",
+    "shots": "node tools/capture.js && node tools/inspect.js --theme dark && node tools/inspect.js --theme light",
+    "states": "node tools/states.js",
+    "contrast": "node tools/contrast.js --theme dark && node tools/contrast.js --theme light",
+    "interact": "node tools/interact.js"
+  },
+  "keywords": ["weather", "dashboard", "open-meteo", "vanilla-js", "no-dependencies"],
+  "license": "MIT"
+}

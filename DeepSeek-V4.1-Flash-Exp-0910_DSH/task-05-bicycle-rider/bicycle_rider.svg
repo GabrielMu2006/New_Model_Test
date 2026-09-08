@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#f0f8ff"/>
+
+  <!-- Ground -->
+  <line x1="100" y1="460" x2="700" y2="460" stroke="#ccc" stroke-width="2"/>
+  <line x1="150" y1="470" x2="250" y2="470" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="10, 10"/>
+  <line x1="400" y1="470" x2="500" y2="470" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="10, 10"/>
+  <line x1="600" y1="470" x2="700" y2="470" stroke="#e0e0e0" stroke-width="2" stroke-dasharray="10, 10"/>
+  <ellipse cx="400" cy="460" rx="220" ry="8" fill="rgba(0,0,0,0.08)"/>
+
+  <!-- ================= FAR SIDE (Background) ================= -->
+  <g id="far-side">
+    <!-- Left Crank Arm (far) -->
+    <line x1="400" y1="400" x2="375" y2="425" stroke="#666" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- Left Leg (far) -->
+    <line x1="345" y1="265" x2="365" y2="340" stroke="#4a4a4a" stroke-width="18" stroke-linecap="round"/>
+    <line x1="365" y1="340" x2="375" y2="425" stroke="#4a4a4a" stroke-width="14" stroke-linecap="round"/>
+
+    <!-- Left Foot -->
+    <path d="M 375 425 Q 385 425 395 430 L 395 440 L 370 440 Q 370 435 375 425 Z" fill="#333"/>
+
+    <!-- Left Pedal (lower pedal) -->
+    <rect x="365" y="425" width="20" height="6" rx="2" fill="#555"/>
+
+    <!-- Left Arm (far) -->
+    <line x1="465" y1="225" x2="500" y2="245" stroke="#4a4a4a" stroke-width="12" stroke-linecap="round"/>
+    <line x1="500" y1="245" x2="545" y2="275" stroke="#4a4a4a" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- Left Hand (far) -->
+    <circle cx="545" cy="275" r="7" fill="#4a4a4a"/>
+  </g>
+
+  <!-- ================= BIKE FRAME ================= -->
+  <g id="bike">
+    <!-- Wheels -->
+    <circle cx="250" cy="400" r="60" fill="none" stroke="#333" stroke-width="8"/>
+    <circle cx="250" cy="400" r="54" fill="none" stroke="#ddd" stroke-width="3"/>
+    <circle cx="550" cy="400" r="60" fill="none" stroke="#333" stroke-width="8"/>
+    <circle cx="550" cy="400" r="54" fill="none" stroke="#ddd" stroke-width="3"/>
+
+    <!-- Spokes -->
+    <g stroke="#aaa" stroke-width="1.5">
+      <!-- Rear -->
+      <line x1="250" y1="340" x2="250" y2="460"/>
+      <line x1="190" y1="400" x2="310" y2="400"/>
+      <line x1="207" y1="357" x2="293" y2="443"/>
+      <line x1="293" y1="357" x2="207" y2="443"/>
+      <!-- Front -->
+      <line x1="550" y1="340" x2="550" y2="460"/>
+      <line x1="490" y1="400" x2="610" y2="400"/>
+      <line x1="507" y1="357" x2="593" y2="443"/>
+      <line x1="593" y1="357" x2="507" y2="443"/>
+    </g>
+
+    <!-- Chain and Chainring -->
+    <circle cx="400" cy="400" r="20" fill="none" stroke="#555" stroke-width="4"/>
+    <circle cx="250" cy="400" r="10" fill="none" stroke="#555" stroke-width="4"/>
+    <path d="M 400 380 L 250 390 M 400 420 L 250 410" stroke="#555" stroke-width="3" fill="none"/>
+
+    <!-- Frame Tubes -->
+    <g stroke="#c0392b" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- Chainstay -->
+      <line x1="250" y1="400" x2="400" y2="400" stroke-width="8"/>
+      <!-- Seat stay -->
+      <line x1="250" y1="400" x2="350" y2="280" stroke-width="6"/>
+      <!-- Seat tube -->
+      <line x1="400" y1="400" x2="350" y2="280" stroke-width="8"/>
+      <!-- Down tube -->
+      <line x1="400" y1="400" x2="540" y2="300" stroke-width="8"/>
+      <!-- Top tube -->
+      <line x1="350" y1="280" x2="520" y2="260" stroke-width="6"/>
+      <!-- Fork -->
+      <line x1="550" y1="400" x2="540" y2="300" stroke-width="6"/>
+      <!-- Head tube -->
+      <line x1="520" y1="260" x2="540" y2="300" stroke-width="8"/>
+    </g>
+
+    <!-- Brake Caliper -->
+    <rect x="535" y="350" width="6" height="10" rx="2" fill="#333"/>
+
+    <!-- Seat Post and Saddle -->
+    <line x1="350" y1="280" x2="345" y2="260" stroke="#555" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 320 260 Q 340 252 365 258 Q 360 268 345 268 Z" fill="#333"/>
+
+    <!-- Handlebar -->
+    <line x1="520" y1="260" x2="525" y2="240" stroke="#555" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 525 240 Q 535 235 545 240 L 550 245 L 550 270" fill="none" stroke="#333" stroke-width="8" stroke-linecap="round"/>
+    <line x1="550" y1="260" x2="550" y2="280" stroke="#222" stroke-width="12" stroke-linecap="round"/>
+  </g>
+
+  <!-- ================= RIDER BODY ================= -->
+  <g id="rider-body">
+    <!-- Torso -->
+    <path d="M 345 265 Q 400 240 470 220 L 480 240 Q 420 270 355 285 Z" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+
+    <!-- Race Bib -->
+    <rect x="400" y="245" width="30" height="20" rx="2" fill="#fff" stroke="#ccc" stroke-width="1"/>
+    <text x="415" y="260" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">7</text>
+
+    <!-- Neck -->
+    <line x1="475" y1="230" x2="485" y2="210" stroke="#2c3e50" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- Head -->
+    <circle cx="495" cy="200" r="20" fill="#f1c40f" stroke="#d4ac0d" stroke-width="2"/>
+
+    <!-- Helmet -->
+    <path d="M 475 200 C 475 175, 515 175, 515 200 Z" fill="#e74c3c"/>
+    <path d="M 485 185 L 485 195" stroke="#c0392b" stroke-width="2"/>
+    <path d="M 495 180 L 495 195" stroke="#c0392b" stroke-width="2"/>
+    <path d="M 505 185 L 505 195" stroke="#c0392b" stroke-width="2"/>
+    <path d="M 478 200 L 478 212" stroke="#333" stroke-width="2"/>
+
+    <!-- Face -->
+    <circle cx="510" cy="195" r="2.5" fill="#333"/>
+    <path d="M 506 190 L 513 190" stroke="#333" stroke-width="2"/>
+    <path d="M 515 200 L 520 203 L 515 205" fill="none" stroke="#d4ac0d" stroke-width="2"/>
+    <path d="M 508 208 Q 513 212 516 208" fill="none" stroke="#333" stroke-width="2"/>
+    <path d="M 480 185 Q 490 170 505 175" fill="none" stroke="#333" stroke-width="4"/>
+  </g>
+
+  <!-- ================= NEAR SIDE (Foreground) ================= -->
+  <g id="near-side">
+    <!-- Right Crank Arm (near) -->
+    <line x1="400" y1="400" x2="425" y2="375" stroke="#333" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Right Leg (near) -->
+    <line x1="355" y1="265" x2="405" y2="310" stroke="#2c3e50" stroke-width="20" stroke-linecap="round"/>
+    <line x1="405" y1="310" x2="425" y2="375" stroke="#2c3e50" stroke-width="16" stroke-linecap="round"/>
+
+    <!-- Right Foot -->
+    <path d="M 425 375 Q 435 375 445 380 L 445 390 L 420 390 Q 420 385 425 375 Z" fill="#222"/>
+
+    <!-- Right Pedal (upper pedal) -->
+    <rect x="415" y="375" width="20" height="6" rx="2" fill="#333"/>
+
+    <!-- Right Arm (near) -->
+    <line x1="470" y1="220" x2="505" y2="240" stroke="#2c3e50" stroke-width="14" stroke-linecap="round"/>
+    <line x1="505" y1="240" x2="550" y2="270" stroke="#2c3e50" stroke-width="12" stroke-linecap="round"/>
+
+    <!-- Right Hand (near) -->
+    <circle cx="550" cy="270" r="8" fill="#2c3e50"/>
+  </g>
+</svg>

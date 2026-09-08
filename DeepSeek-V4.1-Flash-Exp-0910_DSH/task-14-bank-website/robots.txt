@@ -1,0 +1,5 @@
+# Meridian Bank is a fictional institution. This file exists so the demo site
+# looks complete; there is nothing here to index in production.
+User-agent: *
+Disallow: /login.html
+Disallow: /open-account.html

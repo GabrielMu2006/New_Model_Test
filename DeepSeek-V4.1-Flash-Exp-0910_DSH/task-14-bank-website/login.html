@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Online Banking Login — Meridian Bank</title>
+<meta name="description" content="Sign in to Meridian online banking — a front-end demo of a two-step login with passcode, device trust, attempt limiting and account lockout.">
+<meta name="theme-color" content="#061527">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Meridian Bank">
+<meta property="og:title" content="{{title}} — Meridian Bank">
+<meta property="og:description" content="{{description}}">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BankOrCreditUnion","name":"Meridian Bank","slogan":"Banking that keeps up with you","url":"https://example.invalid/","telephone":"+1-800-555-0142","address":{"@type":"PostalAddress","streetAddress":"400 Harbor Street","addressLocality":"Boston","addressRegion":"MA","postalCode":"02210","addressCountry":"US"},"disclaimer":"Meridian Bank is a fictional brand created for a front-end design demo."}
+</script>
+</head>
+<body class="page-auth">
+<a class="skip" href="#main">Skip to main content</a>
+
+
+
+<main id="main">
+<div class="auth">
+  <aside class="auth__aside">
+    <div>
+      <a class="brand" href="index.html" style="text-decoration:none">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="8.3"/>
+            <path d="M3.7 12h16.6"/>
+            <path d="M12 3.7c2.7 2.4 2.7 14.2 0 16.6M12 3.7c-2.7 2.4-2.7 14.2 0 16.6"/>
+          </svg>
+        </span>
+        <span class="brand__text"><b style="color:#fff">Meridian</b><i style="color:#7E97B1">Bank</i></span>
+      </a>
+      <h2 class="mt-3">Your accounts, one secure place.</h2>
+      <p class="lead" style="color:#A9C0D6">Sign in to see balances, move money, pay bills, lock a card, and message your banker.</p>
+      <ul class="auth__list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>Two-step verification on every new device</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>256-bit encryption and hardware-backed keys</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <span>Session ends automatically after 10 minutes idle</span>
+        </li>
+      </ul>
+    </div>
+    <p class="auth__foot">© <span id="authYear">2025</span> Meridian Bank, N.A. — a fictional bank built for this design demo.</p>
+  </aside>
+
+  <div class="auth__main">
+    <div class="auth__card">
+      <h1 class="sr-only">Sign in to Meridian online banking</h1>
+
+      <!-- ── Step 1: credentials ─────────────────────────────────────── -->
+      <div class="wpanel" data-step="1">
+        <h2 style="font-size:1.9rem">Welcome back</h2>
+        <p class="muted">Sign in to your Meridian account.</p>
+
+        <div class="callout mt-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+          <div>
+            <p class="mb-0"><strong>Demo login.</strong> Use <span class="num">dana.morgan</span> / <span class="num">meridian-demo</span>.
+              <button class="btn btn--quiet btn--sm" type="button" data-fill-demo>Fill it in</button>
+            </p>
+          </div>
+        </div>
+
+        <form data-validate novalidate data-login-form>
+          <div class="field mt-2">
+            <label class="label" for="lgUser">Username <span class="req">*</span></label>
+            <input class="input" id="lgUser" name="username" type="text" required autocomplete="username" spellcheck="false" data-label="username">
+            <p class="err" data-err-for="lgUser" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="label" for="lgPass">Password <span class="req">*</span></label>
+            <div class="input-group">
+              <input class="input" id="lgPass" name="password" type="password" required autocomplete="current-password" data-label="password">
+              <button class="input-group__btn" type="button" data-toggle-pass aria-label="Show password">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <p class="err" data-err-for="lgPass" hidden></p>
+          </div>
+
+          <div class="field" style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+            <label class="check">
+              <input type="checkbox" name="remember">
+              <span>Trust this device</span>
+            </label>
+            <button class="btn btn--quiet btn--sm" type="button" data-forgot>Forgot password?</button>
+          </div>
+
+          <p class="err" data-login-error hidden></p>
+
+          <button class="btn btn--block btn--lg" type="submit">Log in</button>
+        </form>
+
+        <p class="tiny center mt-3">Not a customer yet? <a href="open-account.html">Open an account</a></p>
+      </div>
+
+      <!-- ── Step 2: one-time passcode ───────────────────────────────── -->
+      <div class="wpanel" data-step="2" hidden>
+        <h2 style="font-size:1.9rem">Verify it's you</h2>
+        <p class="muted">We sent a 6-digit code to the phone ending <strong>0142</strong>. It expires in 10 minutes.</p>
+
+        <div class="callout mt-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+          <div><p class="mb-0"><strong>Demo code:</strong> <span class="num">123456</span></p></div>
+        </div>
+
+        <form data-validate novalidate data-otp-form>
+          <div class="field mt-2">
+            <label class="label" for="lgOtp">6-digit code <span class="req">*</span></label>
+            <input class="input num" id="lgOtp" name="otp" type="text" inputmode="numeric" maxlength="6" required
+                   autocomplete="one-time-code" data-pattern="^\d{6}$"
+                   data-msg-pattern="Enter the 6-digit code from your phone." data-label="code"
+                   style="letter-spacing:.4em;font-size:1.3rem;text-align:center">
+            <p class="err" data-err-for="lgOtp" hidden></p>
+          </div>
+
+          <p class="err" data-otp-error hidden></p>
+
+          <button class="btn btn--block btn--lg" type="submit">Verify and sign in</button>
+          <div class="btn-row mt-2" style="justify-content:space-between">
+            <button class="btn btn--quiet btn--sm" type="button" data-back>Back</button>
+            <button class="btn btn--quiet btn--sm" type="button" data-resend>Resend code</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── Locked out ─────────────────────────────────────────────── -->
+      <div class="wpanel" data-step="locked" hidden>
+        <h2 style="font-size:1.9rem">Account temporarily locked</h2>
+        <p class="muted">Too many incorrect attempts. For your protection, sign-in is paused for <strong data-lock-timer>60</strong> seconds.</p>
+        <div class="callout callout--warn mt-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3.5 18.5h17z"/><path d="M12 9.5v4.2M12 16.6h.01"/></svg>
+          <div><p class="mb-0">Locked out and can't wait? Call 1-800-555-0199 and we'll verify you another way.</p></div>
+        </div>
+        <button class="btn btn--block mt-2" type="button" data-unlock disabled>Try again in <span data-lock-timer>60</span>s</button>
+      </div>
+
+      <!-- ── Signed in ──────────────────────────────────────────────── -->
+      <div class="wpanel" data-step="done" hidden>
+        <p class="pill pill--mint">Signed in</p>
+        <h2 style="font-size:1.9rem" class="mt-2">Good to see you, Dana</h2>
+        <p class="muted">This is a demo account overview — no real data is shown or stored.</p>
+
+        <div class="card card--flat mt-2">
+          <p class="card__kicker">Everyday Checking · ••••4402</p>
+          <p class="rate-big mb-0"><b>$12,480.55</b></p>
+          <p class="tiny mb-0">Available balance</p>
+          <hr>
+          <p class="card__kicker">High-Yield Savings · 4.35% APY</p>
+          <p class="rate-big mb-0"><b>$48,087.10</b></p>
+          <p class="tiny mb-0">Includes $640 in round-ups this month</p>
+        </div>
+
+        <div class="btn-row mt-2">
+          <a class="btn" href="index.html">Go to the site</a>
+          <button class="btn btn--ghost" type="button" data-signout>Sign out</button>
+        </div>
+      </div>
+
+      <!-- ── Forgot password ────────────────────────────────────────── -->
+      <div class="wpanel" data-step="forgot" hidden>
+        <h2 style="font-size:1.9rem">Reset your password</h2>
+        <p class="muted">Enter the email on your account and we'll send a reset link. It's valid for 30 minutes.</p>
+
+        <form data-validate novalidate data-forgot-form>
+          <div class="field mt-2">
+            <label class="label" for="lgReset">Email <span class="req">*</span></label>
+            <input class="input" id="lgReset" name="email" type="email" required autocomplete="email" data-label="email address">
+            <p class="err" data-err-for="lgReset" hidden></p>
+          </div>
+          <button class="btn btn--block btn--lg" type="submit">Send reset link</button>
+          <button class="btn btn--quiet btn--block mt-2" type="button" data-back>Back to sign in</button>
+        </form>
+
+        <div class="callout callout--mint mt-2" data-reset-sent hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <div><p class="mb-0"><strong>Check your inbox.</strong> In a real system a reset link would be on its way to <span data-fill="email">your address</span>. Nothing was sent from this demo.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</main>
+
+
+
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/forms.js" defer></script>
+<script src="assets/js/login.js" defer></script>
+</body>
+</html>

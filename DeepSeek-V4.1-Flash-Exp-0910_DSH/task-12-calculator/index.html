@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculator</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%234f8cff'/><text x='16' y='23' font-size='19' font-family='system-ui' font-weight='700' fill='%23fff' text-anchor='middle'>=</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <section class="calculator" aria-label="Calculator">
+    <header class="calculator__head">
+      <h1 class="calculator__title">Calculator</h1>
+      <button type="button" id="historyToggle" class="ghost" aria-expanded="false" aria-controls="historyPanel">
+        History <span class="ghost__count" id="historyCount" hidden>0</span>
+      </button>
+    </header>
+
+    <div class="display">
+      <div class="display__meta">
+        <span class="display__mem" id="memBadge" hidden title="Value in memory">M</span>
+        <span class="display__expr" id="expr">&nbsp;</span>
+      </div>
+      <output class="display__value" id="value" aria-live="polite" aria-atomic="true">0</output>
+      <div class="display__preview" id="preview" aria-live="off">&nbsp;</div>
+    </div>
+
+    <div class="keys" id="keys">
+      <button type="button" class="key key--fn" data-key="MC" aria-label="Memory clear">MC</button>
+      <button type="button" class="key key--fn" data-key="MR" aria-label="Memory recall">MR</button>
+      <button type="button" class="key key--fn" data-key="M+" aria-label="Memory add">M+</button>
+      <button type="button" class="key key--fn" data-key="M-" aria-label="Memory subtract">M&minus;</button>
+      <button type="button" class="key key--fn" data-key="⌫" aria-label="Backspace">⌫</button>
+
+      <button type="button" class="key key--clear" data-key="AC" aria-label="All clear">AC</button>
+      <button type="button" class="key key--fn" data-key="(" aria-label="Open parenthesis">(</button>
+      <button type="button" class="key key--fn" data-key=")" aria-label="Close parenthesis">)</button>
+      <button type="button" class="key key--fn" data-key="%" aria-label="Percent">%</button>
+      <button type="button" class="key key--op" data-key="÷" aria-label="Divide">÷</button>
+
+      <button type="button" class="key" data-key="7">7</button>
+      <button type="button" class="key" data-key="8">8</button>
+      <button type="button" class="key" data-key="9">9</button>
+      <button type="button" class="key key--fn" data-key="√" aria-label="Square root">√</button>
+      <button type="button" class="key key--op" data-key="×" aria-label="Multiply">×</button>
+
+      <button type="button" class="key" data-key="4">4</button>
+      <button type="button" class="key" data-key="5">5</button>
+      <button type="button" class="key" data-key="6">6</button>
+      <button type="button" class="key key--fn" data-key="x²" aria-label="Square">x²</button>
+      <button type="button" class="key key--op" data-key="-" aria-label="Minus">−</button>
+
+      <button type="button" class="key" data-key="1">1</button>
+      <button type="button" class="key" data-key="2">2</button>
+      <button type="button" class="key" data-key="3">3</button>
+      <button type="button" class="key key--fn" data-key="1/x" aria-label="Reciprocal">1/x</button>
+      <button type="button" class="key key--op" data-key="+" aria-label="Plus">+</button>
+
+      <button type="button" class="key key--fn" data-key="±" aria-label="Toggle sign">±</button>
+      <button type="button" class="key" data-key="0">0</button>
+      <button type="button" class="key" data-key="." aria-label="Decimal point">.</button>
+      <button type="button" class="key key--equals" data-key="=" aria-label="Equals">=</button>
+    </div>
+
+    <p class="hint">
+      <kbd>0-9</kbd> <kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> <kbd>(</kbd> <kbd>)</kbd>
+      <kbd>%</kbd> <kbd>Enter</kbd> <kbd>⌫</kbd> <kbd>Esc</kbd> &nbsp;·&nbsp;
+      <kbd>s</kbd> root <kbd>q</kbd> square <kbd>r</kbd> 1/x <kbd>n</kbd> sign
+    </p>
+  </section>
+
+  <aside class="history" id="historyPanel" hidden aria-label="Calculation history">
+    <header class="history__head">
+      <h2 class="history__title">History</h2>
+      <button type="button" class="ghost" id="historyClear">Clear</button>
+    </header>
+    <ul class="history__list" id="historyList"></ul>
+    <p class="history__empty" id="historyEmpty">Nothing yet — your calculations will appear here.</p>
+  </aside>
+</div>
+
+<script src="calc-engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

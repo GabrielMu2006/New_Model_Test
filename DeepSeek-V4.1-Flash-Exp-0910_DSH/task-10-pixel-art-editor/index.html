@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>像素画编辑器 · Pixel Art Editor</title>
+<style>
+  :root{
+    --bg:#0f1117;
+    --panel:#171a22;
+    --panel-2:#1d212b;
+    --line:#2a2f3c;
+    --line-soft:#222734;
+    --text:#e7eaf2;
+    --dim:#8b93a7;
+    --accent:#ff3b6b;
+    --accent-2:#4dabff;
+    --radius:9px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font:13px/1.5 ui-sans-serif,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    flex:none;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:0 14px;
+    height:52px;
+    background:linear-gradient(180deg,#1b1f28,#151821);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:baseline;gap:8px;font-weight:600;letter-spacing:.2px}
+  .brand .dot{width:10px;height:10px;border-radius:2px;background:var(--accent);align-self:center;
+    box-shadow:0 0 0 1px #ffffff22, 0 0 10px var(--accent)}
+  .brand small{color:var(--dim);font-weight:400;font-size:11px;letter-spacing:.4px;text-transform:uppercase}
+  .topbar .grow{flex:1}
+
+  button,select,input[type="color"]{font:inherit;color:inherit}
+  .btn{
+    appearance:none;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:6px 11px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    line-height:1.2;
+    transition:background .12s,border-color .12s,transform .06s;
+    white-space:nowrap;
+  }
+  .btn:hover:not(:disabled){background:#262b37;border-color:#3a4152}
+  .btn:active:not(:disabled){transform:translateY(1px)}
+  .btn:disabled{opacity:.38;cursor:default}
+  .btn.primary{
+    background:linear-gradient(180deg,#ff4b77,#e42a5b);
+    border-color:#ff6a8e;
+    color:#fff;
+    font-weight:600;
+  }
+  .btn.primary:hover:not(:disabled){background:linear-gradient(180deg,#ff5f86,#ef3163)}
+  .btn .k{font-size:10px;color:var(--dim);border:1px solid var(--line);border-radius:4px;padding:0 4px;line-height:14px}
+  .btn.primary .k{color:#ffffffb0;border-color:#ffffff40}
+  .sep{width:1px;height:24px;background:var(--line)}
+  .field{display:flex;align-items:center;gap:7px;color:var(--dim);font-size:12px}
+  select{
+    appearance:none;
+    background:var(--panel-2) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238b93a7'/></svg>") no-repeat right 8px center;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:6px 24px 6px 9px;
+    cursor:pointer;
+  }
+  select:hover{border-color:#3a4152}
+
+  /* ---------- layout ---------- */
+  main{flex:1;display:flex;min-height:0;min-width:0}
+
+  aside{
+    flex:none;
+    width:252px;
+    background:var(--panel);
+    border-right:1px solid var(--line);
+    overflow-y:auto;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .sec{display:flex;flex-direction:column;gap:8px}
+  .sec > h2{
+    margin:0;
+    font-size:11px;
+    letter-spacing:.9px;
+    text-transform:uppercase;
+    color:var(--dim);
+    font-weight:600;
+    display:flex;align-items:center;gap:7px;
+  }
+  .sec > h2::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+
+  /* tools */
+  .tools{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .tool{
+    appearance:none;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    color:var(--text);
+    padding:9px 8px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    font-size:11px;
+    transition:background .12s,border-color .12s,color .12s;
+  }
+  .tool svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .tool:hover{background:#262b37;border-color:#3a4152}
+  .tool.active{background:#2a1b24;border-color:var(--accent);color:#ffb3c6;box-shadow:inset 0 0 0 1px #ff3b6b40}
+  .tool.active svg{stroke:#ff6f92}
+
+  /* brush */
+  .row{display:flex;align-items:center;gap:8px}
+  .row .lbl{color:var(--dim);font-size:12px;min-width:34px}
+  .range{
+    -webkit-appearance:none;appearance:none;flex:1;height:22px;background:transparent;cursor:pointer;margin:0;
+  }
+  .range::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:#2b3140}
+  .range::-webkit-slider-thumb{
+    -webkit-appearance:none;width:15px;height:15px;border-radius:50%;
+    background:#fff;border:3px solid var(--accent);margin-top:-5px;cursor:pointer;
+  }
+  .range::-moz-range-track{height:5px;border-radius:3px;background:#2b3140}
+  .range::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:#fff;border:3px solid var(--accent);cursor:pointer}
+  .val{
+    min-width:26px;text-align:center;font-variant-numeric:tabular-nums;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:1px 0;font-size:12px;
+  }
+  .seg{display:flex;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel-2)}
+  .seg button{
+    appearance:none;background:transparent;border:0;color:var(--dim);
+    padding:5px 12px;cursor:pointer;font-size:12px;flex:1;
+  }
+  .seg button + button{border-left:1px solid var(--line)}
+  .seg button.active{background:#2a1b24;color:#ffb3c6;font-weight:600}
+  .brush-preview{
+    align-self:center;border-radius:8px;border:1px solid var(--line);
+    background:
+      linear-gradient(45deg,#20242e 25%,transparent 25%,transparent 75%,#20242e 75%),
+      linear-gradient(45deg,#20242e 25%,#1a1e27 25%,#1a1e27 75%,#20242e 75%);
+    background-size:12px 12px;background-position:0 0,6px 6px;
+  }
+
+  /* color */
+  .color-head{display:flex;align-items:center;gap:9px}
+  .swatch-big{
+    width:40px;height:40px;border-radius:8px;flex:none;
+    border:1px solid #ffffff26;box-shadow:inset 0 0 0 1px #00000060;
+    background-image:linear-gradient(45deg,#3a3f4b 25%,transparent 25%,transparent 75%,#3a3f4b 75%),
+                     linear-gradient(45deg,#3a3f4b 25%,#2b2f39 25%,#2b2f39 75%,#3a3f4b 75%);
+    background-size:10px 10px;background-position:0 0,5px 5px;
+    position:relative;overflow:hidden;cursor:pointer;
+  }
+  .swatch-big i{position:absolute;inset:0;background:#ff004d}
+  .color-meta{display:flex;flex-direction:column;gap:4px;min-width:0}
+  .hex{
+    font:12px/1.3 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:6px;
+    padding:4px 7px;color:var(--text);text-transform:uppercase;letter-spacing:.5px;
+  }
+  .color-meta .hint{font-size:11px;color:var(--dim)}
+  input[type="color"]{
+    position:absolute;width:0;height:0;opacity:0;pointer-events:none;
+  }
+  .palette{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+  .sw{
+    appearance:none;padding:0;border:0;cursor:pointer;
+    aspect-ratio:1/1;border-radius:5px;background:#000;
+    box-shadow:inset 0 0 0 1px #ffffff1f;
+    transition:transform .08s,box-shadow .12s;
+  }
+  .sw:hover{transform:scale(1.12)}
+  .sw.sel{box-shadow:0 0 0 2px var(--bg),0 0 0 4px #fff}
+  .recent{display:flex;gap:4px;min-height:18px}
+  .recent .sw{width:18px;height:18px;flex:none;aspect-ratio:auto;border-radius:4px}
+
+  /* stage */
+  .stage{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
+  .viewport{
+    flex:1;min-height:0;overflow:auto;
+    background:
+      radial-gradient(1100px 520px at 50% -8%,#1c2130 0%,#12141b 62%,#0e1016 100%);
+    scrollbar-color:#39405a transparent;
+  }
+  .stage-inner{
+    display:flex;align-items:center;justify-content:center;
+    min-width:100%;min-height:100%;width:max-content;height:max-content;
+    padding:26px;
+  }
+  .stack{position:relative;flex:none;line-height:0;border-radius:2px;
+    box-shadow:0 0 0 1px #ffffff26,0 14px 40px -8px #000000cc,0 0 60px -20px #4dabff33}
+  .stack canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges}
+  #overlay{position:absolute;left:0;top:0;pointer-events:none}
+  #view{cursor:crosshair;touch-action:none}
+
+  .statusbar{
+    flex:none;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    padding:0 14px;height:30px;background:var(--panel);border-top:1px solid var(--line);
+    font:11.5px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--dim);
+  }
+  .statusbar b{color:var(--text);font-weight:500}
+  .statusbar .grow{flex:1}
+  .statusbar .pill{display:inline-flex;align-items:center;gap:5px}
+  .statusbar .dot{width:7px;height:7px;border-radius:2px;background:var(--accent);box-shadow:0 0 0 1px #ffffff26}
+
+  .shortcuts{font-size:11.5px;color:var(--dim);display:flex;flex-direction:column;gap:5px}
+  .shortcuts div{display:flex;justify-content:space-between;gap:10px}
+  .shortcuts kbd{
+    font:11px ui-monospace,Menlo,Consolas,monospace;color:#cfd5e4;
+    background:var(--panel-2);border:1px solid var(--line);border-bottom-width:2px;
+    border-radius:4px;padding:0 5px;line-height:17px;white-space:nowrap;
+  }
+  .toast{
+    position:fixed;left:50%;bottom:56px;transform:translate(-50%,14px);
+    background:#20242ef2;border:1px solid var(--line);color:var(--text);
+    padding:9px 15px;border-radius:10px;font-size:12.5px;
+    box-shadow:0 12px 34px -8px #000c;opacity:0;pointer-events:none;
+    transition:opacity .2s,transform .2s;z-index:50;white-space:nowrap;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:840px){
+    main{flex-direction:column}
+    aside{
+      width:auto;border-right:0;border-bottom:1px solid var(--line);
+      flex-direction:row;flex-wrap:wrap;gap:12px;max-height:44vh;
+    }
+    aside .sec{flex:1 1 190px;min-width:170px}
+    .brush-preview{align-self:flex-start}
+  }
+
+  @media (max-width:640px){
+    .topbar{height:auto;min-height:52px;flex-wrap:wrap;gap:8px;padding:8px 12px}
+    .brand small{display:none}
+    .topbar .sep{display:none}
+    .btn{padding:6px 9px}
+    .statusbar{height:auto;min-height:30px;flex-wrap:wrap;gap:8px 12px;padding:6px 12px;line-height:1.5}
+    .statusbar #statusHint{display:none}
+    .stage-inner{padding:14px}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="dot"></span>
+    <span>像素画编辑器</span>
+    <small>Pixel Art Editor</small>
+  </div>
+  <div class="grow"></div>
+
+  <button class="btn" id="btnUndo" title="撤销 (Ctrl/Cmd+Z)">↶ 撤销</button>
+  <button class="btn" id="btnRedo" title="重做 (Ctrl/Cmd+Shift+Z)">↷ 重做</button>
+  <div class="sep"></div>
+  <button class="btn" id="btnNew" title="清空画布">✧ 新建</button>
+  <div class="sep"></div>
+  <label class="field">导出
+    <select id="exportScale" title="导出倍率">
+      <option value="1">1× 原始</option>
+      <option value="2">2×</option>
+      <option value="4">4×</option>
+      <option value="8">8×</option>
+      <option value="16">16×</option>
+    </select>
+  </label>
+  <button class="btn primary" id="btnExport" title="导出 PNG (Ctrl/Cmd+S)">导出 PNG</button>
+</header>
+
+<main>
+  <aside>
+    <section class="sec">
+      <h2>工具 Tools</h2>
+      <div class="tools" id="tools">
+        <button class="tool active" data-tool="pencil" title="铅笔 (B)">
+          <svg viewBox="0 0 24 24"><path d="M4 20l3.6-.8L19 7.8a2 2 0 0 0 0-2.8l-.9-.9a2 2 0 0 0-2.8 0L3.9 15.5 4 20z"/><path d="M14.5 5.5l4 4"/></svg>
+          <span>铅笔</span>
+        </button>
+        <button class="tool" data-tool="eraser" title="橡皮 (E)">
+          <svg viewBox="0 0 24 24"><path d="M8.5 20H20"/><path d="M15.5 4.5l4 4a1.6 1.6 0 0 1 0 2.3l-7 7a1.6 1.6 0 0 1-2.3 0l-4-4a1.6 1.6 0 0 1 0-2.3l7-7a1.6 1.6 0 0 1 2.3 0z"/><path d="M9 8l7 7"/></svg>
+          <span>橡皮</span>
+        </button>
+        <button class="tool" data-tool="fill" title="油漆桶 (G)">
+          <svg viewBox="0 0 24 24"><path d="M4 12.5L11.5 5l7 7-7.5 7.5a1.4 1.4 0 0 1-2 0L4 14.5a1.4 1.4 0 0 1 0-2z"/><path d="M9 2.5l2.5 2.5"/><path d="M20 16.5c1.2 1.6 1.6 2.4 1.6 3.1a1.6 1.6 0 0 1-3.2 0c0-.7.4-1.5 1.6-3.1z"/></svg>
+          <span>填充</span>
+        </button>
+        <button class="tool" data-tool="eyedropper" title="取色 (I / Alt+点击)">
+          <svg viewBox="0 0 24 24"><path d="M4.5 19.5l1-3 8-8 3 3-8 8-3 1z"/><path d="M14 5.5l4.5 4.5a2 2 0 0 0 0-2.8l-1.7-1.7a2 2 0 0 0-2.8 0z"/></svg>
+          <span>取色</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>画笔 Brush</h2>
+      <div class="row">
+        <span class="lbl">大小</span>
+        <input class="range" type="range" id="brushSize" min="1" max="8" step="1" value="1">
+        <span class="val" id="brushVal">1</span>
+      </div>
+      <div class="seg" id="brushShape">
+        <button data-shape="square" class="active">方形</button>
+        <button data-shape="round">圆形</button>
+      </div>
+      <canvas class="brush-preview" id="brushPreview"></canvas>
+    </section>
+
+    <section class="sec">
+      <h2>颜色 Color</h2>
+      <div class="color-head">
+        <div class="swatch-big" id="swatchBig" title="点击选择颜色"><i></i></div>
+        <div class="color-meta">
+          <div class="hex" id="hexLabel">#FF004D</div>
+          <div class="hint">点击色块自定义</div>
+        </div>
+      </div>
+      <input type="color" id="colorInput" value="#ff004d">
+      <div class="palette" id="palette"></div>
+      <div class="recent" id="recent"></div>
+    </section>
+
+    <section class="sec">
+      <h2>画布 Canvas</h2>
+      <div class="row">
+        <span class="lbl">尺寸</span>
+        <select id="sizeSel" style="flex:1">
+          <option value="16">16 × 16</option>
+          <option value="32" selected>32 × 32</option>
+          <option value="48">48 × 48</option>
+          <option value="64">64 × 64</option>
+          <option value="96">96 × 96</option>
+          <option value="128">128 × 128</option>
+        </select>
+      </div>
+      <button class="btn" id="btnClear" style="justify-content:center">清空画布</button>
+    </section>
+
+    <section class="sec">
+      <h2>视图 View</h2>
+      <div class="row">
+        <span class="lbl">缩放</span>
+        <button class="btn" id="zoomOut" title="缩小 (−)">−</button>
+        <span class="val" id="zoomVal" style="flex:1">100%</span>
+        <button class="btn" id="zoomIn" title="放大 (+)">+</button>
+      </div>
+      <button class="btn" id="btnFit" style="justify-content:center" title="适应窗口 (0)">适应窗口</button>
+      <label class="row" style="cursor:pointer;user-select:none">
+        <input type="checkbox" id="chkGrid" checked style="accent-color:#ff3b6b;width:14px;height:14px">
+        <span style="color:var(--dim);font-size:12px">显示网格</span>
+      </label>
+      <div class="row">
+        <span class="lbl">背景</span>
+        <select id="bgSel" style="flex:1">
+          <option value="checker">透明棋盘</option>
+          <option value="white">白色</option>
+          <option value="black">黑色</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>快捷键 Shortcuts</h2>
+      <div class="shortcuts">
+        <div><span>铅笔 / 橡皮</span><span><kbd>B</kbd> <kbd>E</kbd></span></div>
+        <div><span>填充 / 取色</span><span><kbd>G</kbd> <kbd>I</kbd></span></div>
+        <div><span>画笔大小</span><span><kbd>[</kbd> <kbd>]</kbd></span></div>
+        <div><span>撤销 / 重做</span><span><kbd>⌘Z</kbd> <kbd>⇧⌘Z</kbd></span></div>
+        <div><span>缩放</span><span><kbd>−</kbd> <kbd>+</kbd> <kbd>0</kbd></span></div>
+        <div><span>右键拖动</span><span>擦除</span></div>
+        <div><span>Alt + 点击</span><span>取色</span></div>
+      </div>
+    </section>
+  </aside>
+
+  <section class="stage">
+    <div class="viewport" id="viewport">
+      <div class="stage-inner">
+        <div class="stack" id="stack">
+          <canvas id="view"></canvas>
+          <canvas id="overlay"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span class="pill"><i class="dot" id="statusColor"></i><b id="statusHex">#FF004D</b></span>
+      <span>位置 <b id="statusPos">—</b></span>
+      <span>画布 <b id="statusSize">32×32</b></span>
+      <span>缩放 <b id="statusZoom">100%</b></span>
+      <span>画笔 <b id="statusBrush">1px 方形</b></span>
+      <span class="grow"></span>
+      <span id="statusHint">左键绘制 · 右键擦除 · Alt 取色 · Ctrl+滚轮缩放</span>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============================================================
+     Config
+     ============================================================ */
+  var STORAGE_KEY = 'dsh.pixelEditor.v1';
+  var HISTORY_LIMIT = 60;
+  var ZOOM_STEPS = [1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 56, 64];
+  var PALETTE = [
+    '#000000', '#1d2b53', '#7e2553', '#008751', '#ab5236', '#5f574f', '#c2c3c7', '#fff1e8',
+    '#ff004d', '#ffa300', '#ffec27', '#00e436', '#29adff', '#83769c', '#ff77a8', '#ffccaa',
+    '#0d1b2a', '#4b3f72', '#1f7a8c', '#2ec4b6', '#f4a261', '#e76f51', '#9b5de5', '#f15bb5'
+  ];
+
+  /* ============================================================
+     Tiny helpers
+     ============================================================ */
+  function $(id) { return document.getElementById(id); }
+
+  function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
+
+  function hexToRgb(hex) {
+    var h = String(hex).replace('#', '');
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    var n = parseInt(h, 16);
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+
+  function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(function (v) {
+      var s = clamp(Math.round(v), 0, 255).toString(16);
+      return s.length === 1 ? '0' + s : s;
+    }).join('');
+  }
+
+  function rgba(hex, a) {
+    var c = hexToRgb(hex);
+    return 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + a + ')';
+  }
+
+  function dpr() { return Math.min(window.devicePixelRatio || 1, 3); }
+
+  /* ============================================================
+     State
+     ============================================================ */
+  var S = {
+    w: 32, h: 32,
+    zoom: 14,
+    tool: 'pencil',
+    color: '#ff004d',
+    brush: 1,
+    shape: 'square',
+    grid: true,
+    bg: 'checker',
+    hover: null,          // {x, y, inside}
+    painting: false,
+    strokeErase: false,
+    strokeTool: 'pencil',
+    last: null,           // {x, y}
+    pointerId: null,
+    history: [],
+    future: [],
+    recent: [],
+    maskKey: '',
+    maskList: []
+  };
+
+  /* ============================================================
+     Art canvas (source of truth, logical pixels)
+     ============================================================ */
+  var art = document.createElement('canvas');
+  var ctx = art.getContext('2d', { willReadFrequently: true });
+
+  var view = $('view');
+  var overlay = $('overlay');
+  var viewport = $('viewport');
+  var viewPattern = null;
+
+  /* checkerboard tile (screen space, 8 css px squares) */
+  var checker = document.createElement('canvas');
+  checker.width = checker.height = 16;
+  (function () {
+    var c = checker.getContext('2d');
+    c.fillStyle = '#2b303c';
+    c.fillRect(0, 0, 16, 16);
+    c.fillStyle = '#232833';
+    c.fillRect(0, 0, 8, 8);
+    c.fillRect(8, 8, 8, 8);
+  })();
+
+  function resetCtx() {
+    ctx.imageSmoothingEnabled = false;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = S.color;
+  }
+
+  function setSize(nw, nh, preserve) {
+    var old = null;
+    if (preserve && S.w > 0 && S.h > 0) {
+      try { old = ctx.getImageData(0, 0, S.w, S.h); } catch (e) { old = null; }
+    }
+    S.w = nw;
+    S.h = nh;
+    art.width = nw;
+    art.height = nh;
+    resetCtx();
+    if (old) ctx.putImageData(old, 0, 0);
+    viewPattern = null;
+    syncStatus();
+    render();
+  }
+
+  /* ============================================================
+     History (full-canvas snapshots, capped)
+     ============================================================ */
+  function snapshot() {
+    return { w: S.w, h: S.h, data: ctx.getImageData(0, 0, S.w, S.h).data };
+  }
+
+  function pushHistory() {
+    S.history.push(snapshot());
+    if (S.history.length > HISTORY_LIMIT) S.history.shift();
+    S.future.length = 0;
+    syncHistoryUI();
+    scheduleSave();
+  }
+
+  function applySnapshot(snap) {
+    if (snap.w !== S.w || snap.h !== S.h) {
+      S.w = snap.w;
+      S.h = snap.h;
+      art.width = snap.w;
+      art.height = snap.h;
+      resetCtx();
+      viewPattern = null;
+      syncSizeUI();
+    }
+    ctx.putImageData(new ImageData(new Uint8ClampedArray(snap.data), snap.w, snap.h), 0, 0);
+    syncStatus();
+    render();
+  }
+
+  function undo() {
+    if (!S.history.length) return;
+    S.future.push(snapshot());
+    applySnapshot(S.history.pop());
+    syncHistoryUI();
+    scheduleSave();
+    toast('已撤销');
+  }
+
+  function redo() {
+    if (!S.future.length) return;
+    S.history.push(snapshot());
+    applySnapshot(S.future.pop());
+    syncHistoryUI();
+    scheduleSave();
+    toast('已重做');
+  }
+
+  function syncHistoryUI() {
+    $('btnUndo').disabled = S.history.length === 0;
+    $('btnRedo').disabled = S.future.length === 0;
+  }
+
+  /* ============================================================
+     Brush mask
+     ============================================================ */
+  function brushMask() {
+    var key = S.brush + ':' + S.shape;
+    if (S.maskKey === key) return S.maskList;
+    var s = S.brush;
+    var off = Math.floor((s - 1) / 2);
+    var rad = (s - 1) / 2 + 0.25;
+    var rr = rad * rad;
+    var list = [];
+    for (var dy = 0; dy < s; dy++) {
+      for (var dx = 0; dx < s; dx++) {
+        if (S.shape === 'round') {
+          var cx = dx - (s - 1) / 2;
+          var cy = dy - (s - 1) / 2;
+          if (cx * cx + cy * cy > rr) continue;
+        }
+        list.push([dx - off, dy - off]);
+      }
+    }
+    S.maskKey = key;
+    S.maskList = list;
+    return list;
+  }
+
+  function stamp(px, py, erase) {
+    var list = brushMask();
+    ctx.globalCompositeOperation = erase ? 'destination-out' : 'source-over';
+    ctx.fillStyle = S.color;
+    for (var i = 0; i < list.length; i++) {
+      var x = px + list[i][0];
+      var y = py + list[i][1];
+      if (x < 0 || y < 0 || x >= S.w || y >= S.h) continue;
+      ctx.fillRect(x, y, 1, 1);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  /* Bresenham so fast drags stay connected */
+  function lineTo(x0, y0, x1, y1, erase) {
+    var dx = Math.abs(x1 - x0);
+    var dy = Math.abs(y1 - y0);
+    var sx = x0 < x1 ? 1 : -1;
+    var sy = y0 < y1 ? 1 : -1;
+    var err = dx - dy;
+    var guard = 0;
+    for (;;) {
+      stamp(x0, y0, erase);
+      if (x0 === x1 && y0 === y1) break;
+      if (++guard > 100000) break;
+      var e2 = 2 * err;
+      if (e2 > -dy) { err -= dy; x0 += sx; }
+      if (e2 < dx) { err += dx; y0 += sy; }
+    }
+  }
+
+  /* ============================================================
+     Flood fill
+     ============================================================ */
+  function floodFill(sx, sy, hex) {
+    if (sx < 0 || sy < 0 || sx >= S.w || sy >= S.h) return;
+    var img = ctx.getImageData(0, 0, S.w, S.h);
+    var d = img.data;
+    var start = (sy * S.w + sx) * 4;
+    var tr = d[start], tg = d[start + 1], tb = d[start + 2], ta = d[start + 3];
+    var c = hexToRgb(hex);
+    if (tr === c.r && tg === c.g && tb === c.b && ta === 255) return;
+
+    var seen = new Uint8Array(S.w * S.h);
+    var stack = [sy * S.w + sx];
+    while (stack.length) {
+      var p = stack.pop();
+      if (seen[p]) continue;
+      seen[p] = 1;
+      var i = p * 4;
+      if (d[i] !== tr || d[i + 1] !== tg || d[i + 2] !== tb || d[i + 3] !== ta) continue;
+      d[i] = c.r; d[i + 1] = c.g; d[i + 2] = c.b; d[i + 3] = 255;
+      var px = p % S.w;
+      var py = (p - px) / S.w;
+      if (px > 0) stack.push(p - 1);
+      if (px < S.w - 1) stack.push(p + 1);
+      if (py > 0) stack.push(p - S.w);
+      if (py < S.h - 1) stack.push(p + S.w);
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  function pickColor(x, y) {
+    if (x < 0 || y < 0 || x >= S.w || y >= S.h) return;
+    var d = ctx.getImageData(x, y, 1, 1).data;
+    if (d[3] === 0) { toast('该像素是透明的'); return; }
+    setColor(rgbToHex(d[0], d[1], d[2]), true);
+    toast('已取色 ' + S.color.toUpperCase());
+  }
+
+  /* ============================================================
+     Rendering
+     ============================================================ */
+  function sizeCanvas(el, cssW, cssH) {
+    var s = dpr();
+    var w = Math.max(1, Math.round(cssW * s));
+    var h = Math.max(1, Math.round(cssH * s));
+    if (el.width !== w || el.height !== h) { el.width = w; el.height = h; }
+    el.style.width = cssW + 'px';
+    el.style.height = cssH + 'px';
+  }
+
+  function render() {
+    var cssW = S.w * S.zoom;
+    var cssH = S.h * S.zoom;
+    var s = dpr();
+
+    sizeCanvas(view, cssW, cssH);
+    sizeCanvas(overlay, cssW, cssH);
+
+    var c = view.getContext('2d');
+    c.setTransform(s, 0, 0, s, 0, 0);
+    c.imageSmoothingEnabled = false;
+    c.clearRect(0, 0, cssW, cssH);
+
+    if (S.bg === 'checker') {
+      if (!viewPattern) viewPattern = c.createPattern(checker, 'repeat');
+      c.fillStyle = viewPattern;
+    } else {
+      c.fillStyle = S.bg === 'white' ? '#ffffff' : '#000000';
+    }
+    c.fillRect(0, 0, cssW, cssH);
+    c.drawImage(art, 0, 0, cssW, cssH);
+
+    renderOverlay();
+    syncStatus();
+  }
+
+  function renderOverlay() {
+    var cssW = S.w * S.zoom;
+    var cssH = S.h * S.zoom;
+    var s = dpr();
+    var o = overlay.getContext('2d');
+    o.setTransform(s, 0, 0, s, 0, 0);
+    o.clearRect(0, 0, cssW, cssH);
+
+    /* grid */
+    if (S.grid && S.zoom >= 5) {
+      o.beginPath();
+      for (var x = 1; x < S.w; x++) {
+        var px = x * S.zoom + 0.5;
+        o.moveTo(px, 0); o.lineTo(px, cssH);
+      }
+      for (var y = 1; y < S.h; y++) {
+        var py = y * S.zoom + 0.5;
+        o.moveTo(0, py); o.lineTo(cssW, py);
+      }
+      o.lineWidth = 1;
+      o.strokeStyle = 'rgba(255,255,255,0.11)';
+      o.stroke();
+    }
+
+    /* canvas border */
+    o.lineWidth = 1;
+    o.strokeStyle = 'rgba(255,255,255,0.30)';
+    o.strokeRect(0.5, 0.5, cssW - 1, cssH - 1);
+
+    /* brush cursor */
+    var hv = S.hover;
+    if (hv && hv.inside) {
+      var list = brushMask();
+      o.beginPath();
+      for (var i = 0; i < list.length; i++) {
+        var bx = hv.x + list[i][0];
+        var by = hv.y + list[i][1];
+        if (bx < 0 || by < 0 || bx >= S.w || by >= S.h) continue;
+        o.rect(bx * S.zoom, by * S.zoom, S.zoom, S.zoom);
+      }
+      o.fillStyle = S.strokeTool === 'eraser' ? 'rgba(255,255,255,0.20)' : rgba(S.color, 0.42);
+      o.fill();
+
+      var off = Math.floor((S.brush - 1) / 2);
+      var x0 = clamp(hv.x - off, 0, S.w);
+      var y0 = clamp(hv.y - off, 0, S.h);
+      var x1 = clamp(hv.x - off + S.brush, 0, S.w);
+      var y1 = clamp(hv.y - off + S.brush, 0, S.h);
+      if (x1 > x0 && y1 > y0) {
+        o.lineWidth = 1;
+        o.strokeStyle = 'rgba(0,0,0,0.65)';
+        o.strokeRect(x0 * S.zoom - 0.5, y0 * S.zoom - 0.5, (x1 - x0) * S.zoom + 1, (y1 - y0) * S.zoom + 1);
+        o.strokeStyle = 'rgba(255,255,255,0.95)';
+        o.strokeRect(x0 * S.zoom + 0.5, y0 * S.zoom + 0.5, (x1 - x0) * S.zoom - 1, (y1 - y0) * S.zoom - 1);
+      }
+    }
+  }
+
+  /* ============================================================
+     Coordinate mapping
+     ============================================================ */
+  function toPixel(ev) {
+    var r = view.getBoundingClientRect();
+    var x = Math.floor((ev.clientX - r.left) / S.zoom);
+    var y = Math.floor((ev.clientY - r.top) / S.zoom);
+    return { x: x, y: y, inside: x >= 0 && y >= 0 && x < S.w && y < S.h };
+  }
+
+  /* ============================================================
+     Pointer interaction
+     ============================================================ */
+  function resolveTool(ev) {
+    if (ev.altKey) return 'eyedropper';
+    if (ev.button === 2) return 'eraser';
+    return S.tool;
+  }
+
+  function onPointerDown(ev) {
+    if (ev.button !== 0 && ev.button !== 2) return;
+    if (S.painting) return;
+    var p = toPixel(ev);
+    if (!p.inside) return;
+    ev.preventDefault();
+
+    var tool = resolveTool(ev);
+    S.pointerId = ev.pointerId;
+    try { view.setPointerCapture(ev.pointerId); } catch (e) {}
+
+    if (tool === 'eyedropper') { pickColor(p.x, p.y); return; }
+
+    if (tool === 'fill') {
+      pushHistory();
+      floodFill(p.x, p.y, S.color);
+      render();
+      scheduleSave();
+      return;
+    }
+
+    pushHistory();
+    S.painting = true;
+    S.strokeTool = tool;
+    S.strokeErase = (tool === 'eraser');
+    S.last = { x: p.x, y: p.y };
+    stamp(p.x, p.y, S.strokeErase);
+    render();
+  }
+
+  function onPointerMove(ev) {
+    var p = toPixel(ev);
+    S.hover = p;
+
+    if (S.painting && ev.pointerId === S.pointerId) {
+      if (!S.last) S.last = { x: p.x, y: p.y };
+      lineTo(S.last.x, S.last.y, p.x, p.y, S.strokeErase);
+      S.last = { x: p.x, y: p.y };
+      render();
+    } else {
+      renderOverlay();
+    }
+    updatePosStatus();
+  }
+
+  function endStroke(ev) {
+    if (S.pointerId !== null && ev && ev.pointerId !== undefined && ev.pointerId !== S.pointerId) return;
+    if (S.painting) { S.painting = false; scheduleSave(); }
+    S.last = null;
+    S.pointerId = null;
+  }
+
+  function onPointerUp(ev) {
+    endStroke(ev);
+    if (ev && ev.pointerId !== undefined) {
+      try { view.releasePointerCapture(ev.pointerId); } catch (e) {}
+    }
+  }
+
+  function onPointerLeave() {
+    if (S.painting) return;
+    S.hover = null;
+    renderOverlay();
+    updatePosStatus();
+  }
+
+  /* ============================================================
+     Zoom
+     ============================================================ */
+  function setZoom(z) {
+    var nz = clamp(Math.round(z), ZOOM_STEPS[0], ZOOM_STEPS[ZOOM_STEPS.length - 1]);
+    if (nz === S.zoom) return;
+    S.zoom = nz;
+    viewPattern = null;
+    render();
+    syncZoomUI();
+    scheduleSave();
+  }
+
+  function stepZoom(dir) {
+    var i;
+    if (dir > 0) {
+      for (i = 0; i < ZOOM_STEPS.length; i++) {
+        if (ZOOM_STEPS[i] > S.zoom) { setZoom(ZOOM_STEPS[i]); return; }
+      }
+      setZoom(ZOOM_STEPS[ZOOM_STEPS.length - 1]);
+    } else {
+      for (i = ZOOM_STEPS.length - 1; i >= 0; i--) {
+        if (ZOOM_STEPS[i] < S.zoom) { setZoom(ZOOM_STEPS[i]); return; }
+      }
+      setZoom(ZOOM_STEPS[0]);
+    }
+  }
+
+  function zoomAtCursor(ev, dir) {
+    var vpRect = viewport.getBoundingClientRect();
+    var r = view.getBoundingClientRect();
+    var fx = (ev.clientX - r.left) / S.zoom;
+    var fy = (ev.clientY - r.top) / S.zoom;
+    var before = S.zoom;
+    stepZoom(dir);
+    if (S.zoom === before) return;
+    viewport.scrollLeft = fx * S.zoom - (ev.clientX - vpRect.left);
+    viewport.scrollTop = fy * S.zoom - (ev.clientY - vpRect.top);
+  }
+
+  /* keep every zoom level on the step grid, so +/− stay reversible */
+  function snapZoom(z) {
+    var best = ZOOM_STEPS[0];
+    for (var i = 0; i < ZOOM_STEPS.length; i++) {
+      if (ZOOM_STEPS[i] <= z) best = ZOOM_STEPS[i];
+    }
+    return best;
+  }
+
+  function fitZoom() {
+    var vp = viewport.getBoundingClientRect();
+    var availW = Math.max(64, vp.width - 60);
+    var availH = Math.max(64, vp.height - 60);
+    S.zoom = snapZoom(Math.floor(Math.min(availW / S.w, availH / S.h)));
+    viewPattern = null;
+    render();
+    syncZoomUI();
+    scheduleSave();
+  }
+
+  /* ============================================================
+     Export
+     ============================================================ */
+  function exportPNG() {
+    var scale = parseInt($('exportScale').value, 10) || 1;
+    var src = art;
+    if (scale > 1) {
+      var t = document.createElement('canvas');
+      t.width = S.w * scale;
+      t.height = S.h * scale;
+      var tc = t.getContext('2d');
+      tc.imageSmoothingEnabled = false;
+      tc.drawImage(art, 0, 0, t.width, t.height);
+      src = t;
+    }
+    var stamp = new Date();
+    var pad = function (n) { return n < 10 ? '0' + n : String(n); };
+    var name = 'pixel-art-' + S.w + 'x' + S.h +
+      (scale > 1 ? '@' + scale + 'x' : '') + '-' +
+      stamp.getFullYear() + pad(stamp.getMonth() + 1) + pad(stamp.getDate()) + '-' +
+      pad(stamp.getHours()) + pad(stamp.getMinutes()) + pad(stamp.getSeconds()) + '.png';
+
+    var a = document.createElement('a');
+    a.download = name;
+    a.href = src.toDataURL('image/png');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    toast('已导出 ' + name);
+  }
+
+  /* ============================================================
+     Persistence
+     ============================================================ */
+  var saveTimer = null;
+  function scheduleSave() {
+    if (saveTimer) clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveNow, 350);
+  }
+
+  function saveNow() {
+    if (saveTimer) { clearTimeout(saveTimer); saveTimer = null; }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        w: S.w, h: S.h, zoom: S.zoom, tool: S.tool, color: S.color,
+        brush: S.brush, shape: S.shape, grid: S.grid, bg: S.bg,
+        recent: S.recent,
+        art: art.toDataURL('image/png')
+      }));
+    } catch (e) { /* quota or private mode — non-fatal */ }
+  }
+
+  function loadSaved() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (e) { return null; }
+  }
+
+  function drawDataURL(url) {
+    return new Promise(function (resolve) {
+      var img = new Image();
+      img.onload = function () {
+        ctx.clearRect(0, 0, S.w, S.h);
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(img, 0, 0);
+        resolve(true);
+      };
+      img.onerror = function () { resolve(false); };
+      img.src = url;
+    });
+  }
+
+  /* ============================================================
+     UI sync
+     ============================================================ */
+  function syncStatus() {
+    $('statusSize').textContent = S.w + '×' + S.h;
+    $('statusZoom').textContent = Math.round(S.zoom * 100) + '%';
+    $('statusBrush').textContent = S.brush + 'px ' + (S.shape === 'square' ? '方形' : '圆形');
+    $('statusHex').textContent = S.color.toUpperCase();
+    $('statusColor').style.background = S.color;
+    $('statusHint').textContent = S.tool === 'eraser'
+      ? '左键擦除 · Ctrl+滚轮缩放'
+      : (S.tool === 'fill' ? '点击填充连通区域 · Alt 取色'
+        : (S.tool === 'eyedropper' ? '点击画布拾取颜色' : '左键绘制 · 右键擦除 · Alt 取色 · Ctrl+滚轮缩放'));
+    $('hexLabel').textContent = S.color.toUpperCase();
+    $('swatchBig').firstElementChild.style.background = S.color;
+    $('zoomVal').textContent = Math.round(S.zoom * 100) + '%';
+  }
+
+  function updatePosStatus() {
+    var hv = S.hover;
+    $('statusPos').textContent = (hv && hv.inside) ? (hv.x + ', ' + hv.y) : '—';
+  }
+
+  function syncZoomUI() {
+    $('statusZoom').textContent = Math.round(S.zoom * 100) + '%';
+    $('zoomVal').textContent = Math.round(S.zoom * 100) + '%';
+  }
+
+  function syncSizeUI() {
+    var sel = $('sizeSel');
+    var v = String(S.w);
+    var found = false;
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === v) { found = true; break; }
+    }
+    if (!found) {
+      var opt = document.createElement('option');
+      opt.value = v;
+      opt.textContent = S.w + ' × ' + S.h;
+      sel.appendChild(opt);
+    }
+    sel.value = v;
+  }
+
+  function setColor(hex, silent) {
+    hex = String(hex).toLowerCase();
+    if (!/^#[0-9a-f]{6}$/.test(hex)) return;
+    S.color = hex;
+    $('colorInput').value = hex;
+    syncStatus();
+    syncPaletteSelection();
+    renderBrushPreview();
+    renderOverlay();
+    if (!silent) {
+      var i = S.recent.indexOf(hex);
+      if (i !== -1) S.recent.splice(i, 1);
+      S.recent.unshift(hex);
+      if (S.recent.length > 8) S.recent.length = 8;
+      renderRecent();
+    }
+    scheduleSave();
+  }
+
+  function syncPaletteSelection() {
+    var nodes = $('palette').children;
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].classList.toggle('sel', nodes[i].dataset.color === S.color);
+    }
+  }
+
+  function renderPalette() {
+    var box = $('palette');
+    box.textContent = '';
+    PALETTE.forEach(function (hex) {
+      var b = document.createElement('button');
+      b.className = 'sw';
+      b.type = 'button';
+      b.dataset.color = hex;
+      b.style.background = hex;
+      b.title = hex.toUpperCase();
+      b.addEventListener('click', function () { setColor(hex); });
+      box.appendChild(b);
+    });
+    syncPaletteSelection();
+  }
+
+  function renderRecent() {
+    var box = $('recent');
+    box.textContent = '';
+    S.recent.forEach(function (hex) {
+      var b = document.createElement('button');
+      b.className = 'sw';
+      b.type = 'button';
+      b.style.background = hex;
+      b.title = hex.toUpperCase();
+      b.addEventListener('click', function () { setColor(hex); });
+      box.appendChild(b);
+    });
+  }
+
+  function renderBrushPreview() {
+    var el = $('brushPreview');
+    var size = 64;
+    var s = dpr();
+    el.width = size * s;
+    el.height = size * s;
+    el.style.width = size + 'px';
+    el.style.height = size + 'px';
+    var c = el.getContext('2d');
+    c.setTransform(s, 0, 0, s, 0, 0);
+    c.clearRect(0, 0, size, size);
+
+    var cell = 6;
+    var n = S.brush;
+    var off = Math.floor((n - 1) / 2);
+    var ox = (size - n * cell) / 2;
+    var oy = (size - n * cell) / 2;
+    var list = brushMask();
+    c.fillStyle = S.tool === 'eraser' ? '#8b93a7' : S.color;
+    for (var i = 0; i < list.length; i++) {
+      c.fillRect(ox + (list[i][0] + off) * cell, oy + (list[i][1] + off) * cell, cell, cell);
+    }
+  }
+
+  function setTool(tool) {
+    S.tool = tool;
+    var btns = $('tools').children;
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('active', btns[i].dataset.tool === tool);
+    }
+    renderBrushPreview();
+    syncStatus();
+    scheduleSave();
+  }
+
+  function setBrush(n) {
+    S.brush = clamp(n, 1, 8);
+    $('brushSize').value = String(S.brush);
+    $('brushVal').textContent = String(S.brush);
+    renderBrushPreview();
+    renderOverlay();
+    syncStatus();
+    scheduleSave();
+  }
+
+  function setShape(shape) {
+    S.shape = shape;
+    var btns = $('brushShape').children;
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('active', btns[i].dataset.shape === shape);
+    }
+    renderBrushPreview();
+    renderOverlay();
+    syncStatus();
+    scheduleSave();
+  }
+
+  var toastTimer = null;
+  function toast(msg) {
+    var el = $('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 1500);
+  }
+
+  /* ============================================================
+     Wiring
+     ============================================================ */
+  function wire() {
+    /* tools */
+    $('tools').addEventListener('click', function (ev) {
+      var b = ev.target.closest('.tool');
+      if (b) setTool(b.dataset.tool);
+    });
+
+    /* brush */
+    $('brushSize').addEventListener('input', function () { setBrush(parseInt(this.value, 10)); });
+    $('brushShape').addEventListener('click', function (ev) {
+      var b = ev.target.closest('button');
+      if (b) setShape(b.dataset.shape);
+    });
+
+    /* color */
+    $('swatchBig').addEventListener('click', function () { $('colorInput').click(); });
+    $('colorInput').addEventListener('input', function () { setColor(this.value); });
+
+    /* canvas */
+    $('sizeSel').addEventListener('change', function () {
+      var n = parseInt(this.value, 10);
+      if (!n || n === S.w) return;
+      if (!confirm('将画布调整为 ' + n + ' × ' + n + '？\n超出范围的像素会被裁掉。')) {
+        syncSizeUI();
+        return;
+      }
+      pushHistory();
+      setSize(n, n, true);
+      fitZoom();
+      toast('画布已调整为 ' + n + ' × ' + n);
+    });
+
+    $('btnClear').addEventListener('click', function () {
+      if (!confirm('清空整块画布？（可用撤销恢复）')) return;
+      pushHistory();
+      ctx.clearRect(0, 0, S.w, S.h);
+      render();
+      toast('画布已清空');
+    });
+
+    $('btnNew').addEventListener('click', function () {
+      if (!confirm('新建一张空白画布？当前内容会丢失（可先撤销恢复）。')) return;
+      pushHistory();
+      ctx.clearRect(0, 0, S.w, S.h);
+      render();
+      toast('已新建空白画布');
+    });
+
+    /* view */
+    $('zoomIn').addEventListener('click', function () { stepZoom(1); });
+    $('zoomOut').addEventListener('click', function () { stepZoom(-1); });
+    $('btnFit').addEventListener('click', fitZoom);
+    $('chkGrid').addEventListener('change', function () {
+      S.grid = this.checked;
+      renderOverlay();
+      scheduleSave();
+    });
+    $('bgSel').addEventListener('change', function () {
+      S.bg = this.value;
+      viewPattern = null;
+      render();
+      scheduleSave();
+    });
+
+    /* history + export */
+    $('btnUndo').addEventListener('click', undo);
+    $('btnRedo').addEventListener('click', redo);
+    $('btnExport').addEventListener('click', exportPNG);
+
+    /* canvas pointer */
+    view.addEventListener('pointerdown', onPointerDown);
+    view.addEventListener('pointermove', onPointerMove);
+    view.addEventListener('pointerup', onPointerUp);
+    view.addEventListener('pointercancel', onPointerUp);
+    view.addEventListener('pointerleave', onPointerLeave);
+    view.addEventListener('contextmenu', function (ev) { ev.preventDefault(); });
+
+    /* wheel: ctrl/cmd zoom at cursor */
+    viewport.addEventListener('wheel', function (ev) {
+      if (!(ev.ctrlKey || ev.metaKey)) return;
+      ev.preventDefault();
+      zoomAtCursor(ev, ev.deltaY < 0 ? 1 : -1);
+    }, { passive: false });
+
+    /* keyboard */
+    window.addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA')) return;
+
+      var mod = ev.metaKey || ev.ctrlKey;
+      var k = ev.key;
+
+      if (mod && (k === 'z' || k === 'Z')) {
+        ev.preventDefault();
+        if (ev.shiftKey) redo(); else undo();
+        return;
+      }
+      if (mod && (k === 'y' || k === 'Y')) { ev.preventDefault(); redo(); return; }
+      if (mod && (k === 's' || k === 'S')) { ev.preventDefault(); exportPNG(); return; }
+      if (mod) return;
+
+      switch (k) {
+        case 'b': case 'B': setTool('pencil'); break;
+        case 'e': case 'E': setTool('eraser'); break;
+        case 'g': case 'G': setTool('fill'); break;
+        case 'i': case 'I': setTool('eyedropper'); break;
+        case '[': setBrush(S.brush - 1); break;
+        case ']': setBrush(S.brush + 1); break;
+        case '+': case '=': ev.preventDefault(); stepZoom(1); break;
+        case '-': case '_': ev.preventDefault(); stepZoom(-1); break;
+        case '0': ev.preventDefault(); fitZoom(); break;
+        default: return;
+      }
+    });
+
+    window.addEventListener('resize', function () { render(); });
+    window.addEventListener('beforeunload', saveNow);
+  }
+
+  /* ============================================================
+     Init
+     ============================================================ */
+  function applySaved(saved) {
+    if (!saved) return Promise.resolve(false);
+    if (saved.tool) setTool(saved.tool);
+    if (saved.color) setColor(saved.color, true);
+    if (saved.brush) setBrush(saved.brush);
+    if (saved.shape) setShape(saved.shape);
+    if (typeof saved.grid === 'boolean') { S.grid = saved.grid; $('chkGrid').checked = saved.grid; }
+    if (saved.bg) { S.bg = saved.bg; $('bgSel').value = saved.bg; }
+    if (Array.isArray(saved.recent)) { S.recent = saved.recent.slice(0, 8); renderRecent(); }
+
+    var w = saved.w || 32;
+    var h = saved.h || 32;
+    S.w = w; S.h = h;
+    art.width = w; art.height = h;
+    resetCtx();
+    syncSizeUI();
+
+    var done = saved.art ? drawDataURL(saved.art) : Promise.resolve(false);
+    return done.then(function (ok) {
+      if (!ok) ctx.clearRect(0, 0, S.w, S.h);
+      return true;
+    });
+  }
+
+  function init() {
+    renderPalette();
+    renderRecent();
+    wire();
+    syncHistoryUI();
+
+    var saved = loadSaved();
+    applySaved(saved).then(function (restored) {
+      if (restored && saved && saved.zoom) {
+        S.zoom = snapZoom(saved.zoom);
+        viewPattern = null;
+        render();
+        syncZoomUI();
+      } else {
+        fitZoom();
+      }
+      resetCtx();
+      renderBrushPreview();
+      syncStatus();
+      syncSizeUI();
+      syncZoomUI();
+      // expose a tiny debug surface for automated checks
+      window.__pixelEditor = {
+        state: S, art: art, ctx: ctx, render: render,
+        setColor: setColor, setTool: setTool, setBrush: setBrush, setSize: setSize,
+        undo: undo, redo: redo, exportPNG: exportPNG, floodFill: floodFill, fitZoom: fitZoom
+      };
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-labelledby="title desc">
+  <title id="title">Analog clock showing 11:52:30</title>
+  <desc id="desc">A clock face with twelve hour markers. The minute hand is halfway between the 10 and 11 (52.5 minutes), the hour hand is just before the 12 (11:52:30), and the second hand points at the 6 (30 seconds).</desc>
+
+  <defs>
+    <style>
+      .case  { fill: #ffffff; stroke: #1f2937; stroke-width: 8; }
+      .face  { fill: #fbfaf5; stroke: #d1d5db; stroke-width: 1.5; }
+      .tick  { stroke: #6b7280; stroke-width: 1.6; stroke-linecap: round; }
+      .hour  { stroke: #111827; stroke-width: 9; stroke-linecap: round; }
+      .num   { fill: #111827; font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 700; text-anchor: middle; dominant-baseline: central; }
+      .hand-hour   { stroke: #111827; stroke-width: 13; stroke-linecap: round; }
+      .hand-minute { stroke: #111827; stroke-width: 8;  stroke-linecap: round; }
+      .hand-second { stroke: #dc2626; stroke-width: 3;  stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <!-- case and face -->
+  <circle class="case" cx="200" cy="200" r="180" />
+  <circle class="face" cx="200" cy="200" r="166" />
+
+  <!-- minute ticks -->
+  <g class="tick">
+    <line x1="218.188" y1="26.953" x2="217.561" y2="32.92" />
+    <line x1="236.177" y1="29.802" x2="234.929" y2="35.671" />
+    <line x1="253.769" y1="34.516" x2="251.915" y2="40.223" />
+    <line x1="270.772" y1="41.043" x2="268.332" y2="46.524" />
+    <line x1="302.275" y1="59.231" x2="298.748" y2="64.085" />
+    <line x1="316.429" y1="70.693" x2="312.414" y2="75.152" />
+    <line x1="329.307" y1="83.571" x2="324.848" y2="87.586" />
+    <line x1="340.769" y1="97.725" x2="335.915" y2="101.252" />
+    <line x1="358.957" y1="129.228" x2="353.476" y2="131.668" />
+    <line x1="365.484" y1="146.231" x2="359.777" y2="148.085" />
+    <line x1="370.198" y1="163.823" x2="364.329" y2="165.071" />
+    <line x1="373.047" y1="181.812" x2="367.08" y2="182.439" />
+    <line x1="373.047" y1="218.188" x2="367.08" y2="217.561" />
+    <line x1="370.198" y1="236.177" x2="364.329" y2="234.929" />
+    <line x1="365.484" y1="253.769" x2="359.777" y2="251.915" />
+    <line x1="358.957" y1="270.772" x2="353.476" y2="268.332" />
+    <line x1="340.769" y1="302.275" x2="335.915" y2="298.748" />
+    <line x1="329.307" y1="316.429" x2="324.848" y2="312.414" />
+    <line x1="316.429" y1="329.307" x2="312.414" y2="324.848" />
+    <line x1="302.275" y1="340.769" x2="298.748" y2="335.915" />
+    <line x1="270.772" y1="358.957" x2="268.332" y2="353.476" />
+    <line x1="253.769" y1="365.484" x2="251.915" y2="359.777" />
+    <line x1="236.177" y1="370.198" x2="234.929" y2="364.329" />
+    <line x1="218.188" y1="373.047" x2="217.561" y2="367.08" />
+    <line x1="181.812" y1="373.047" x2="182.439" y2="367.08" />
+    <line x1="163.823" y1="370.198" x2="165.071" y2="364.329" />
+    <line x1="146.231" y1="365.484" x2="148.085" y2="359.777" />
+    <line x1="129.228" y1="358.957" x2="131.668" y2="353.476" />
+    <line x1="97.725" y1="340.769" x2="101.252" y2="335.915" />
+    <line x1="83.571" y1="329.307" x2="87.586" y2="324.848" />
+    <line x1="70.693" y1="316.429" x2="75.152" y2="312.414" />
+    <line x1="59.231" y1="302.275" x2="64.085" y2="298.748" />
+    <line x1="41.043" y1="270.772" x2="46.524" y2="268.332" />
+    <line x1="34.516" y1="253.769" x2="40.223" y2="251.915" />
+    <line x1="29.802" y1="236.177" x2="35.671" y2="234.929" />
+    <line x1="26.953" y1="218.188" x2="32.92" y2="217.561" />
+    <line x1="26.953" y1="181.812" x2="32.92" y2="182.439" />
+    <line x1="29.802" y1="163.823" x2="35.671" y2="165.071" />
+    <line x1="34.516" y1="146.231" x2="40.223" y2="148.085" />
+    <line x1="41.043" y1="129.228" x2="46.524" y2="131.668" />
+    <line x1="59.231" y1="97.725" x2="64.085" y2="101.252" />
+    <line x1="70.693" y1="83.571" x2="75.152" y2="87.586" />
+    <line x1="83.571" y1="70.693" x2="87.586" y2="75.152" />
+    <line x1="97.725" y1="59.231" x2="101.252" y2="64.085" />
+    <line x1="129.228" y1="41.043" x2="131.668" y2="46.524" />
+    <line x1="146.231" y1="34.516" x2="148.085" y2="40.223" />
+    <line x1="163.823" y1="29.802" x2="165.071" y2="35.671" />
+    <line x1="181.812" y1="26.953" x2="182.439" y2="32.92" />
+  </g>
+
+  <!-- hour markers -->
+  <g class="hour">
+    <line x1="200" y1="26" x2="200" y2="48" />
+    <line x1="287" y1="49.312" x2="276" y2="68.364" />
+    <line x1="350.688" y1="113" x2="331.636" y2="124" />
+    <line x1="374" y1="200" x2="352" y2="200" />
+    <line x1="350.688" y1="287" x2="331.636" y2="276" />
+    <line x1="287" y1="350.688" x2="276" y2="331.636" />
+    <line x1="200" y1="374" x2="200" y2="352" />
+    <line x1="113" y1="350.688" x2="124" y2="331.636" />
+    <line x1="49.312" y1="287" x2="68.364" y2="276" />
+    <line x1="26" y1="200" x2="48" y2="200" />
+    <line x1="49.312" y1="113" x2="68.364" y2="124" />
+    <line x1="113" y1="49.312" x2="124" y2="68.364" />
+  </g>
+
+  <!-- numerals -->
+  <g class="num">
+    <text x="264" y="89.149">1</text>
+    <text x="310.851" y="136">2</text>
+    <text x="328" y="200">3</text>
+    <text x="310.851" y="264">4</text>
+    <text x="264" y="310.851">5</text>
+    <text x="200" y="328">6</text>
+    <text x="136" y="310.851">7</text>
+    <text x="89.149" y="264">8</text>
+    <text x="72" y="200">9</text>
+    <text x="89.149" y="136">10</text>
+    <text x="136" y="89.149">11</text>
+    <text x="200" y="72">12</text>
+  </g>
+
+  <!-- hands: drawn from the center outward, then rotated clockwise from 12 -->
+  <!-- hour hand: 11:52:30 => 11*30 + 52.5*0.5 = 356.25 degrees -->
+  <line class="hand-hour" x1="200" y1="216" x2="200" y2="104" transform="rotate(356.25 200 200)" />
+  <!-- minute hand: 52 min 30 s => 52.5*6 = 315 degrees -->
+  <line class="hand-minute" x1="200" y1="218" x2="200" y2="62" transform="rotate(315 200 200)" />
+  <!-- second hand: 30 s => 30*6 = 180 degrees -->
+  <line class="hand-second" x1="200" y1="226" x2="200" y2="48" transform="rotate(180 200 200)" />
+  <circle cx="200" cy="200" r="6" fill="#dc2626" />
+  <circle cx="200" cy="200" r="10" fill="none" stroke="#111827" stroke-width="4" />
+</svg>

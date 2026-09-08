@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>HARVEST HOLLOW · 山谷农场</title>
+<style>
+  :root{
+    --ink:#eaf1fb;
+    --mut:#93a4bd;
+    --line:rgba(150,190,255,.16);
+    --panel:rgba(14,18,26,.94);
+    --gold:#ffc44d;
+    --green:#5fd07a;
+    --blue:#5fb6ff;
+    --rose:#ff6b83;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%;overflow:hidden;background:#0a0d13}
+  body{
+    display:flex;align-items:center;justify-content:center;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"PingFang SC","Microsoft YaHei",monospace;
+    color:var(--ink);
+    background:radial-gradient(120% 90% at 50% 0%,#16202e 0%,#0a0d13 70%);
+    user-select:none;
+  }
+  #stage{
+    position:relative;width:768px;height:512px;flex:0 0 auto;
+    transform-origin:center center;
+  }
+  canvas{
+    display:block;width:768px;height:512px;border-radius:8px;
+    image-rendering:pixelated;
+    box-shadow:0 0 0 2px #26303f, 0 0 0 3px #0a0d13, 0 22px 50px rgba(0,0,0,.65);
+  }
+  #ui{position:absolute;inset:0;pointer-events:none;font-size:12px;line-height:1.35}
+
+  /* ---------- HUD ---------- */
+  .hud{
+    position:absolute;background:rgba(14,18,26,.84);border:1px solid var(--line);
+    border-radius:8px;padding:7px 10px;
+    box-shadow:0 6px 18px rgba(0,0,0,.45);
+    backdrop-filter:blur(3px);
+  }
+  #hud-tl{top:10px;left:10px;min-width:150px}
+  #clock{font-size:13px;font-weight:700;letter-spacing:.02em}
+  #money{color:var(--gold);font-weight:700;margin-top:2px}
+  #weather{color:var(--mut);margin-top:1px;font-size:11px}
+
+  #hud-tr{top:10px;right:10px;width:168px}
+  .meter{display:flex;align-items:center;gap:6px}
+  .meter + .meter{margin-top:5px}
+  .meter .lbl{width:42px;color:var(--mut);font-size:11px}
+  .track{flex:1;height:9px;background:#0d1219;border:1px solid var(--line);border-radius:5px;overflow:hidden}
+  .fill{height:100%;width:100%;transition:width .18s ease}
+  .fill.energy{background:linear-gradient(90deg,#ffb03a,#ffd970)}
+  .fill.energy.low{background:linear-gradient(90deg,#ff5f6d,#ff9068)}
+  .fill.water{background:linear-gradient(90deg,#2f8fd8,#6fd0ff)}
+
+  #hint{
+    left:50%;bottom:66px;transform:translateX(-50%);
+    padding:6px 14px;font-size:12px;white-space:nowrap;
+    color:#cfe0f5;opacity:0;transition:opacity .16s ease;
+  }
+  #hint.on{opacity:1}
+
+  #toolbar{left:10px;bottom:10px;display:flex;gap:6px;padding:6px}
+  .slot{
+    display:flex;flex-direction:column;align-items:center;gap:1px;
+    width:56px;padding:4px 2px;border-radius:6px;cursor:pointer;
+    border:1px solid transparent;background:#0f141d;
+    transition:background .12s,border-color .12s;
+  }
+  .slot .ico{font-size:17px;line-height:1}
+  .slot .nm{font-size:10px;color:var(--mut)}
+  .slot .k{position:absolute;margin-top:-2px;font-size:9px;color:#5d6b80}
+  .slot:hover{background:#16202c}
+  .slot.on{background:#1d2c3d;border-color:#4d7fb5}
+  .slot.on .nm{color:#cfe0f5}
+
+  #seedbar{right:10px;bottom:10px;display:flex;gap:6px;padding:6px}
+  .seed{
+    display:flex;flex-direction:column;align-items:center;gap:1px;
+    width:54px;padding:4px 2px;border-radius:6px;cursor:pointer;
+    border:1px solid transparent;background:#0f141d;
+    transition:background .12s,border-color .12s;
+  }
+  .seed .ico{font-size:16px;line-height:1}
+  .seed .ct{font-size:10px;color:var(--mut)}
+  .seed:hover{background:#16202c}
+  .seed.on{background:#22331f;border-color:#5d9b4a}
+  .seed.on .ct{color:#bfe6a8}
+  .seed.empty{opacity:.42}
+
+  /* ---------- toasts ---------- */
+  #toasts{
+    position:absolute;left:50%;top:56px;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:5px;width:max-content;
+  }
+  .toast{
+    background:var(--panel);border:1px solid var(--line);border-radius:7px;
+    padding:5px 12px;font-size:12px;color:#dbe7f7;
+    box-shadow:0 8px 20px rgba(0,0,0,.5);
+    animation:pop .18s ease both;
+  }
+  .toast.out{animation:fade .4s ease both}
+  .toast.warn{color:#ffcfa0;border-color:rgba(255,180,90,.35)}
+  .toast.good{color:#a8ecc0;border-color:rgba(110,220,140,.35)}
+  @keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  @keyframes fade{to{opacity:0;transform:translateY(-6px)}}
+
+  /* ---------- panels ---------- */
+  .panel{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:18px 20px;box-shadow:0 18px 46px rgba(0,0,0,.7);
+    pointer-events:auto;min-width:320px;
+  }
+  .panel.hidden{display:none}
+  .panel h1{margin:0 0 2px;font-size:21px;letter-spacing:.06em}
+  .panel h1 span{color:var(--gold)}
+  .panel h2{margin:0 0 10px;font-size:15px;letter-spacing:.04em}
+  .panel h3{margin:10px 0 6px;font-size:11px;color:var(--mut);letter-spacing:.12em;text-transform:uppercase}
+  .panel p{margin:6px 0;color:var(--mut);font-size:12px}
+  .panel .sub{color:var(--mut);font-size:11px}
+  .keys{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:10px 0 4px;font-size:12px}
+  .keys b{color:#cfe0f5;font-weight:600}
+  .keys span{color:var(--mut)}
+  .btnrow{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  button{
+    font:inherit;font-size:12px;color:var(--ink);cursor:pointer;
+    background:#182333;border:1px solid #33506f;border-radius:7px;
+    padding:7px 14px;transition:background .12s,transform .08s;
+  }
+  button:hover{background:#22344a}
+  button:active{transform:translateY(1px)}
+  button.primary{background:#2c5c3a;border-color:#4d9b5f}
+  button.primary:hover{background:#367147}
+  button:disabled{opacity:.4;cursor:not-allowed;background:#141b25}
+  button.sm{padding:3px 9px;font-size:11px;border-radius:5px}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;width:430px}
+  .srow{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px}
+  .srow .nm{flex:0 0 auto}
+  .srow .sub{flex:1;color:var(--mut);font-size:11px}
+  .srow .btns{display:flex;gap:4px}
+  .empty{color:var(--mut);font-size:11px;padding:3px 0}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="game" width="768" height="512"></canvas>
+
+  <div id="ui">
+    <div id="hud-tl" class="hud">
+      <div id="clock">Day 1 · 6:00 AM</div>
+      <div id="money">🪙 $100</div>
+      <div id="weather">☀️ Clear</div>
+    </div>
+
+    <div id="hud-tr" class="hud">
+      <div class="meter"><span class="lbl">Energy</span><div class="track"><div id="energyFill" class="fill energy"></div></div></div>
+      <div class="meter"><span class="lbl">Water</span><div class="track"><div id="waterFill" class="fill water"></div></div></div>
+    </div>
+
+    <div id="hint" class="hud"></div>
+    <div id="toolbar" class="hud"></div>
+    <div id="seedbar" class="hud"></div>
+    <div id="toasts"></div>
+
+    <!-- ===== Title ===== -->
+    <div id="title" class="panel">
+      <h1>HARVEST <span>HOLLOW</span></h1>
+      <p>开垦土地，播种，浇水，收获 —— 然后把它们卖掉。</p>
+      <div class="keys">
+        <b>WASD / ↑↓←→</b><span>移动</span>
+        <b>空格 / E</b><span>使用工具 · 交互（也可点击地块）</span>
+        <b>1 / 2 / 3</b><span>锄头 / 水壶 / 种子</span>
+        <b>Q / Tab</b><span>切换种子种类</span>
+        <b>M</b><span>静音 · <b>Esc</b> 暂停</span>
+      </div>
+      <div class="btnrow">
+        <button id="btnContinue" class="primary">继续游戏</button>
+        <button id="btnNew">开始新的一天</button>
+      </div>
+    </div>
+
+    <!-- ===== Shop ===== -->
+    <div id="shop" class="panel hidden">
+      <h2>🏪 山谷杂货铺</h2>
+      <div class="cols">
+        <div>
+          <h3>购买种子</h3>
+          <div id="shopSeeds"></div>
+        </div>
+        <div>
+          <h3>出售作物</h3>
+          <div id="shopSell"></div>
+        </div>
+      </div>
+      <div class="btnrow">
+        <button id="shopClose">离开 (Esc)</button>
+      </div>
+    </div>
+
+    <!-- ===== Pause ===== -->
+    <div id="pause" class="panel hidden">
+      <h2>暂停</h2>
+      <p class="sub">农场会等你回来。</p>
+      <div class="btnrow">
+        <button id="pauseResume" class="primary">继续 (Esc)</button>
+        <button id="pauseMute">音效：开</button>
+        <button id="pauseReset">重开存档</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ================================================================
+     1. 常量与数据
+     ================================================================ */
+  const TILE = 32, COLS = 24, ROWS = 16;
+  const VW = COLS * TILE, VH = ROWS * TILE;
+
+  const MIN_PER_SEC   = 3;          // 每现实秒推进 3 游戏分钟
+  const DAY_START     = 6 * 60;     // 6:00
+  const DAY_END       = 26 * 60;    // 次日 2:00 昏倒
+  const MAX_ENERGY    = 100;
+  const CAN_MAX       = 20;
+  const RAIN_CHANCE   = 0.26;
+  const SAVE_KEY      = 'harvest-hollow-save-v1';
+
+  const COST = { till: 2, water: 1, plant: 1, harvest: 1 };
+
+  const CROPS = {
+    turnip:  { name: '芜菁',  icon: '🥬', cost: 20,  sell: 45,  days: 2, fruit: '#efe9f7', leaf: '#67b24c' },
+    carrot:  { name: '胡萝卜', icon: '🥕', cost: 35,  sell: 85,  days: 3, fruit: '#f18b2c', leaf: '#5aa83f' },
+    tomato:  { name: '番茄',  icon: '🍅', cost: 55,  sell: 160, days: 4, fruit: '#e2453a', leaf: '#4f9c3a' },
+    pumpkin: { name: '南瓜',  icon: '🎃', cost: 100, sell: 320, days: 5, fruit: '#f0a233', leaf: '#4a8f38' }
+  };
+  const CROP_KEYS = ['turnip', 'carrot', 'tomato', 'pumpkin'];
+
+  /* 地图： . 草地  ~ 水  # 墙  D 门  p 小路  f 可耕地  T 树 */
+  const MAP = [
+    '~~~~~~~~................',
+    '~~~~~~~.................',
+    '~~~~~~~.................',
+    '~~~~~~..................',
+    '....######..............',
+    '....######.....ffffff...',
+    '....######.....ffffff...',
+    '....######.....ffffff...',
+    '....##D###.....ffffff...',
+    '....ppppppppppppppppp...',
+    '........................',
+    '..####................TT',
+    '..####................TT',
+    '..####..................',
+    '..##D#..................',
+    '..TT..........TT........'
+  ];
+
+  const GRASS = 0, WATER = 1, WALL = 2, DOOR = 3, PATH = 4, FARM = 5, TREE = 6;
+
+  const BUILDINGS = [
+    { id: 'house', x: 4,  y: 4,  w: 6, h: 5, door: { x: 6, y: 8 },  roof: '#b8503f', roofDark: '#8d3a2c', wall: '#dcbd92', wallDark: '#b99a6e' },
+    { id: 'shop',  x: 2,  y: 11, w: 4, h: 4, door: { x: 4, y: 14 }, roof: '#3f6f9e', roofDark: '#2e5578', wall: '#e2d6ba', wallDark: '#c0b08f' }
+  ];
+
+  const TOOLS = [
+    { id: 'hoe',  icon: '⛏️', name: '锄头', key: '1' },
+    { id: 'can',  icon: '💧', name: '水壶', key: '2' },
+    { id: 'seed', icon: '🌱', name: '种子', key: '3' }
+  ];
+
+  const DIRV = {
+    down:  { x: 0, y: 1 },
+    up:    { x: 0, y: -1 },
+    left:  { x: -1, y: 0 },
+    right: { x: 1, y: 0 }
+  };
+
+  /* ================================================================
+     2. DOM
+     ================================================================ */
+  const stage   = document.getElementById('stage');
+  const canvas  = document.getElementById('game');
+  const ctx     = canvas.getContext('2d');
+  const elClock = document.getElementById('clock');
+  const elMoney = document.getElementById('money');
+  const elWeather = document.getElementById('weather');
+  const elEnergy = document.getElementById('energyFill');
+  const elWater  = document.getElementById('waterFill');
+  const elHint   = document.getElementById('hint');
+  const elToolbar = document.getElementById('toolbar');
+  const elSeedbar = document.getElementById('seedbar');
+  const elToasts  = document.getElementById('toasts');
+  const elTitle   = document.getElementById('title');
+  const elShop    = document.getElementById('shop');
+  const elShopSeeds = document.getElementById('shopSeeds');
+  const elShopSell  = document.getElementById('shopSell');
+  const elPause   = document.getElementById('pause');
+  const btnContinue = document.getElementById('btnContinue');
+  const btnNew    = document.getElementById('btnNew');
+  const btnPauseMute = document.getElementById('pauseMute');
+
+  /* ================================================================
+     3. 工具函数
+     ================================================================ */
+  const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+  const lerp  = (a, b, t) => a + (b - a) * t;
+
+  function hash(x, y) {
+    let h = (x | 0) * 374761393 + (y | 0) * 668265263;
+    h = (h ^ (h >> 13)) * 1274126177;
+    return ((h ^ (h >> 16)) >>> 0) / 4294967296;
+  }
+
+  function fmtTime(mins) {
+    const h24 = Math.floor(mins / 60) % 24;
+    const mm  = Math.floor(mins % 60);
+    const ap  = h24 < 12 ? 'AM' : 'PM';
+    let h12 = h24 % 12; if (h12 === 0) h12 = 12;
+    return h12 + ':' + (mm < 10 ? '0' : '') + mm + ' ' + ap;
+  }
+
+  const key = (x, y) => x + ',' + y;
+  const inBounds = (x, y) => x >= 0 && y >= 0 && x < COLS && y < ROWS;
+  const tileAt = (px, py) => ({ x: Math.floor(px / TILE), y: Math.floor(py / TILE) });
+
+  /* ================================================================
+     4. 音效（纯 WebAudio 合成）
+     ================================================================ */
+  let actx = null, muted = false;
+
+  function ensureAudio() {
+    if (actx) return;
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) actx = new AC();
+    } catch (e) { actx = null; }
+  }
+
+  function beep(freq, dur, type, vol, slideTo) {
+    if (muted) return;
+    ensureAudio();
+    if (!actx) return;
+    if (actx.state === 'suspended') actx.resume();
+    const t0 = actx.currentTime;
+    const osc = actx.createOscillator();
+    const g = actx.createGain();
+    osc.type = type || 'square';
+    osc.frequency.setValueAtTime(freq, t0);
+    if (slideTo) osc.frequency.exponentialRampToValueAtTime(Math.max(30, slideTo), t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(vol || 0.05, t0 + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    osc.connect(g); g.connect(actx.destination);
+    osc.start(t0); osc.stop(t0 + dur + 0.02);
+  }
+
+  function noiseBurst(dur, vol, freq) {
+    if (muted) return;
+    ensureAudio();
+    if (!actx) return;
+    if (actx.state === 'suspended') actx.resume();
+    const n = Math.floor(actx.sampleRate * dur);
+    const buf = actx.createBuffer(1, n, actx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const src = actx.createBufferSource();
+    src.buffer = buf;
+    const f = actx.createBiquadFilter();
+    f.type = 'lowpass'; f.frequency.value = freq || 900;
+    const g = actx.createGain(); g.gain.value = vol || 0.06;
+    src.connect(f); f.connect(g); g.connect(actx.destination);
+    src.start();
+  }
+
+  const SFX = {
+    till:    () => { noiseBurst(0.16, 0.07, 620); beep(150, 0.07, 'sine', 0.04, 90); },
+    water:   () => { noiseBurst(0.26, 0.045, 2600); },
+    plant:   () => { beep(620, 0.07, 'triangle', 0.045, 880); },
+    harvest: () => { beep(660, 0.07, 'square', 0.04); setTimeout(() => beep(990, 0.1, 'square', 0.04), 70); },
+    coin:    () => { beep(1180, 0.05, 'square', 0.035); setTimeout(() => beep(1560, 0.08, 'square', 0.035), 55); },
+    buy:     () => { beep(880, 0.06, 'square', 0.035, 620); },
+    nope:    () => { beep(180, 0.14, 'sawtooth', 0.035, 120); },
+    sleep:   () => { beep(392, 0.16, 'sine', 0.05); setTimeout(() => beep(523, 0.22, 'sine', 0.05), 150); },
+    wake:    () => { beep(523, 0.1, 'sine', 0.05); setTimeout(() => beep(784, 0.16, 'sine', 0.05), 110); }
+  };
+
+  /* ================================================================
+     5. 地图解析 / 预渲染
+     ================================================================ */
+  const grid = new Uint8Array(COLS * ROWS);
+  const solid = new Uint8Array(COLS * ROWS);
+  const trees = [];
+
+  (function parseMap() {
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        const ch = MAP[y][x];
+        let t = GRASS;
+        if (ch === '~') t = WATER;
+        else if (ch === '#') t = WALL;
+        else if (ch === 'D') t = DOOR;
+        else if (ch === 'p') t = PATH;
+        else if (ch === 'f') t = FARM;
+        else if (ch === 'T') { t = TREE; trees.push({ x, y }); }
+        grid[y * COLS + x] = t;
+        solid[y * COLS + x] = (t === WATER || t === WALL || t === DOOR || t === TREE) ? 1 : 0;
+      }
+    }
+  })();
+
+  const ground = document.createElement('canvas');
+  ground.width = VW; ground.height = VH;
+  const gx = ground.getContext('2d');
+
+  function gGrass(c, x, y, cool) {
+    const px = x * TILE, py = y * TILE;
+    const r = hash(x, y);
+    let base;
+    if (cool) base = r < 0.34 ? '#468c37' : r < 0.68 ? '#418433' : '#4b9440';
+    else      base = r < 0.34 ? '#4e9c3d' : r < 0.68 ? '#489236' : '#55a544';
+    c.fillStyle = base;
+    c.fillRect(px, py, TILE, TILE);
+    c.fillStyle = ((x + y) & 1) ? 'rgba(255,255,255,.03)' : 'rgba(0,0,0,.035)';
+    c.fillRect(px, py, TILE, TILE);
+
+    c.fillStyle = 'rgba(26,74,22,.32)';
+    for (let i = 0; i < 3; i++) {
+      const bx = px + 3 + hash(x * 7 + i, y * 13 + i) * (TILE - 6);
+      const by = py + 4 + hash(x + i * 3, y * 5 + i) * (TILE - 10);
+      c.fillRect(bx, by, 1, 3);
+    }
+    const f = hash(x * 31 + 5, y * 17 + 9);
+    if (f > 0.935) {
+      const fx = px + 8 + hash(x + 1, y) * 15;
+      const fy = py + 8 + hash(x, y + 2) * 15;
+      c.fillStyle = 'rgba(20,60,18,.35)'; c.fillRect(fx, fy + 2, 1, 3);
+      c.fillStyle = f > 0.975 ? '#f6e15c' : '#f4f4f4'; c.fillRect(fx, fy, 2, 2);
+    }
+  }
+
+  function gPath(c, x, y) {
+    const px = x * TILE, py = y * TILE;
+    c.fillStyle = '#c3a374';
+    c.fillRect(px, py, TILE, TILE);
+    c.fillStyle = 'rgba(255,255,255,.07)';
+    c.fillRect(px, py, TILE, 1);
+    c.fillStyle = 'rgba(0,0,0,.08)';
+    c.fillRect(px, py + TILE - 1, TILE, 1);
+    for (let i = 0; i < 6; i++) {
+      const r = hash(x * 11 + i * 7, y * 23 + i * 3);
+      c.fillStyle = r > 0.5 ? 'rgba(120,90,55,.35)' : 'rgba(255,245,220,.30)';
+      c.fillRect(px + 2 + hash(x + i, y * 3) * (TILE - 4), py + 2 + hash(x * 5, y + i) * (TILE - 4), 2, 2);
+    }
+  }
+
+  function gWater(c, x, y) {
+    const px = x * TILE, py = y * TILE;
+    c.fillStyle = '#2f6fae';
+    c.fillRect(px, py, TILE, TILE);
+    // 靠岸更亮，营造浅水感
+    let shore = 0;
+    for (const d of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+      const nx = x + d[0], ny = y + d[1];
+      if (!inBounds(nx, ny) || grid[ny * COLS + nx] !== WATER) shore++;
+    }
+    if (shore) {
+      c.fillStyle = 'rgba(140,210,255,' + (0.10 * shore) + ')';
+      c.fillRect(px, py, TILE, TILE);
+    }
+    c.fillStyle = 'rgba(255,255,255,.09)';
+    for (let i = 0; i < 2; i++) {
+      const wy = py + 7 + hash(x * 3 + i, y * 5) * (TILE - 14);
+      const wx = px + 4 + hash(x + i * 9, y) * 10;
+      c.fillRect(wx, wy, 10 + hash(x, y + i) * 8, 1);
+    }
+  }
+
+  function gWall(c, x, y, b) {
+    const px = x * TILE, py = y * TILE;
+    c.fillStyle = b.wall;
+    c.fillRect(px, py, TILE, TILE);
+    c.fillStyle = b.wallDark;
+    for (let i = 0; i < TILE; i += 8) c.fillRect(px + i, py, 1, TILE);
+    c.fillStyle = 'rgba(0,0,0,.10)';
+    c.fillRect(px, py + TILE - 2, TILE, 2);
+  }
+
+  function drawBuilding(c, b) {
+    const x = b.x * TILE, y = b.y * TILE, w = b.w * TILE;
+    for (let ty = b.y; ty < b.y + b.h; ty++) {
+      for (let tx = b.x; tx < b.x + b.w; tx++) gWall(c, tx, ty, b);
+    }
+
+    // 屋顶：覆盖除最下排以外的全部区域，并向外挑出一点
+    const rx = x - 4, ry = y - 7;
+    const rw = w + 8, rh = (b.h - 1) * TILE + 7;
+    c.fillStyle = b.roof;
+    c.fillRect(rx, ry, rw, rh);
+    c.fillStyle = b.roofDark;
+    for (let i = 7; i < rh; i += 7) c.fillRect(rx, ry + i, rw, 2);
+    c.fillStyle = 'rgba(255,255,255,.20)';
+    c.fillRect(rx, ry, rw, 3);
+    c.fillStyle = 'rgba(0,0,0,.30)';
+    c.fillRect(rx, ry + rh, rw, 3);
+    c.fillStyle = 'rgba(0,0,0,.16)';
+    c.fillRect(rx, ry + 3, 2, rh - 3);
+    c.fillRect(rx + rw - 2, ry + 3, 2, rh - 3);
+
+    // 正面墙上的窗户
+    const wy = y + (b.h - 1) * TILE;
+    const dx = b.door.x * TILE;
+    for (const wx of [x + 6, x + w - 22]) {
+      if (Math.abs(wx - dx) < 34) continue;
+      c.fillStyle = '#2b3a4a'; c.fillRect(wx, wy + 8, 16, 15);
+      c.fillStyle = '#8fc4e6'; c.fillRect(wx + 2, wy + 10, 12, 11);
+      c.fillStyle = 'rgba(255,255,255,.45)'; c.fillRect(wx + 3, wy + 11, 4, 9);
+      c.fillStyle = '#2b3a4a'; c.fillRect(wx + 7, wy + 10, 2, 11);
+    }
+
+    // 门
+    const dy = b.door.y * TILE;
+    c.fillStyle = 'rgba(0,0,0,.30)'; c.fillRect(dx + 3, dy + 2, TILE - 6, TILE - 2);
+    c.fillStyle = '#5c3d24'; c.fillRect(dx + 5, dy + 5, TILE - 10, TILE - 5);
+    c.fillStyle = '#3a2617'; c.fillRect(dx + 5, dy + 5, TILE - 10, 2);
+    c.fillStyle = '#e8c86a';
+    c.beginPath(); c.arc(dx + TILE - 11, dy + TILE / 2 + 4, 1.7, 0, Math.PI * 2); c.fill();
+    c.fillStyle = 'rgba(0,0,0,.22)'; c.fillRect(dx + 2, dy + TILE - 2, TILE - 4, 3);
+  }
+
+  function prerender() {
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        const t = grid[y * COLS + x];
+        if (t === WATER) gWater(gx, x, y);
+        else if (t === PATH) gPath(gx, x, y);
+        else if (t === FARM) gGrass(gx, x, y, true);
+        else if (t === WALL || t === DOOR) gGrass(gx, x, y, false); // 会被建筑覆盖
+        else gGrass(gx, x, y, false);
+      }
+    }
+    BUILDINGS.forEach(b => drawBuilding(gx, b));
+
+    // 耕地边界
+    let x0 = 99, y0 = 99, x1 = -1, y1 = -1;
+    for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) {
+      if (grid[y * COLS + x] === FARM) {
+        if (x < x0) x0 = x; if (y < y0) y0 = y;
+        if (x > x1) x1 = x; if (y > y1) y1 = y;
+      }
+    }
+    gx.save();
+    gx.setLineDash([5, 5]);
+    gx.strokeStyle = 'rgba(255,255,255,.22)';
+    gx.lineWidth = 2;
+    gx.strokeRect(x0 * TILE + 1, y0 * TILE + 1, (x1 - x0 + 1) * TILE - 2, (y1 - y0 + 1) * TILE - 2);
+    gx.restore();
+  }
+
+  /* ================================================================
+     6. 游戏状态
+     ================================================================ */
+  const G = {
+    day: 1,
+    time: DAY_START,
+    energy: MAX_ENERGY,
+    weather: 'clear',
+    money: 100,
+    water: CAN_MAX,
+    seeds: { turnip: 5, carrot: 0, tomato: 0, pumpkin: 0 },
+    crops: { turnip: 0, carrot: 0, tomato: 0, pumpkin: 0 },
+    plots: {},
+    player: { x: 6 * TILE + 16, y: 10 * TILE + 16, dir: 'down', walk: 0, moving: false },
+    tool: 'hoe',
+    seed: 'turnip',
+    muted: false
+  };
+
+  let uiState = 'title';       // title | play | shop | pause
+  let transition = null;       // { t, phase, text }
+  const particles = [];
+  const floaters = [];
+  const drops = [];
+  let timeAcc = 0;
+
+  function plot(x, y) {
+    const k = key(x, y);
+    if (!G.plots[k]) G.plots[k] = { tilled: false, wet: false, crop: null };
+    return G.plots[k];
+  }
+  function plotIf(x, y) { return G.plots[key(x, y)] || null; }
+  function isTilled(x, y) {
+    const p = plotIf(x, y);
+    return !!(p && p.tilled);
+  }
+
+  /* ---------- 存档 ---------- */
+  function save() {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        day: G.day, time: G.time, energy: G.energy, weather: G.weather,
+        money: G.money, water: G.water, seeds: G.seeds, crops: G.crops,
+        plots: G.plots, player: G.player, tool: G.tool, seed: G.seed, muted: G.muted
+      }));
+    } catch (e) { /* 隐私模式下静默降级 */ }
+  }
+
+  function hasSave() {
+    try { return !!localStorage.getItem(SAVE_KEY); } catch (e) { return false; }
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return false;
+      const d = JSON.parse(raw);
+      if (!d || typeof d !== 'object') return false;
+      G.day = d.day || 1;
+      G.time = typeof d.time === 'number' ? d.time : DAY_START;
+      G.energy = typeof d.energy === 'number' ? d.energy : MAX_ENERGY;
+      G.weather = d.weather === 'rain' ? 'rain' : 'clear';
+      G.money = typeof d.money === 'number' ? d.money : 100;
+      G.water = typeof d.water === 'number' ? d.water : CAN_MAX;
+      if (d.seeds) Object.assign(G.seeds, d.seeds);
+      if (d.crops) Object.assign(G.crops, d.crops);
+      G.plots = (d.plots && typeof d.plots === 'object') ? d.plots : {};
+      if (d.player) Object.assign(G.player, d.player);
+      if (d.tool) G.tool = d.tool;
+      if (d.seed && CROPS[d.seed]) G.seed = d.seed;
+      if (typeof d.muted === 'boolean') { G.muted = d.muted; muted = d.muted; }
+      G.player.moving = false;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function resetGame() {
+    G.day = 1;
+    G.time = DAY_START;
+    G.energy = MAX_ENERGY;
+    G.weather = 'clear';
+    G.money = 100;
+    G.water = CAN_MAX;
+    G.seeds = { turnip: 5, carrot: 0, tomato: 0, pumpkin: 0 };
+    G.crops = { turnip: 0, carrot: 0, tomato: 0, pumpkin: 0 };
+    G.plots = {};
+    G.player.x = 6 * TILE + 16;
+    G.player.y = 10 * TILE + 16;
+    G.player.dir = 'down';
+    G.player.moving = false;
+    G.tool = 'hoe';
+    G.seed = 'turnip';
+    particles.length = 0;
+    floaters.length = 0;
+  }
+
+  /* ================================================================
+     7. 绘制：动态内容
+     ================================================================ */
+  function drawSoil(tx, ty, p) {
+    const px = tx * TILE, py = ty * TILE;
+    ctx.fillStyle = p.wet ? '#4b3320' : '#7a5a3a';
+    ctx.fillRect(px, py, TILE, TILE);
+
+    ctx.fillStyle = p.wet ? 'rgba(0,0,0,.24)' : 'rgba(0,0,0,.14)';
+    for (let i = 0; i < 3; i++) ctx.fillRect(px + 3, py + 6 + i * 9, TILE - 6, 3);
+    ctx.fillStyle = p.wet ? 'rgba(120,200,255,.07)' : 'rgba(255,235,200,.10)';
+    ctx.fillRect(px + 3, py + 4, TILE - 6, 1);
+
+    for (let i = 0; i < 3; i++) {
+      const r = hash(tx * 13 + i, ty * 7 + i * 5);
+      ctx.fillStyle = r > 0.5 ? 'rgba(0,0,0,.16)' : 'rgba(255,240,215,.13)';
+      ctx.fillRect(px + 3 + hash(tx + i, ty) * (TILE - 8), py + 3 + hash(tx, ty + i) * (TILE - 8), 2, 2);
+    }
+
+    ctx.fillStyle = 'rgba(0,0,0,.22)';
+    if (!isTilled(tx - 1, ty)) ctx.fillRect(px, py, 1, TILE);
+    if (!isTilled(tx + 1, ty)) ctx.fillRect(px + TILE - 1, py, 1, TILE);
+    if (!isTilled(tx, ty - 1)) ctx.fillRect(px, py, TILE, 1);
+    if (!isTilled(tx, ty + 1)) ctx.fillRect(px, py + TILE - 1, TILE, 1);
+  }
+
+  function drawCrop(tx, ty, p) {
+    const def = CROPS[p.crop.kind];
+    if (!def) return;
+    const prog = clamp(p.crop.growth / def.days, 0, 1);
+    const cx = tx * TILE + TILE / 2;
+    const base = ty * TILE + TILE / 2 + 7;
+    const mature = p.crop.growth >= def.days;
+    const t = performance.now() / 1000;
+
+    const sway = mature ? Math.sin(t * 2 + tx * 0.7 + ty * 1.3) * 1.2 : Math.sin(t * 1.1 + tx + ty) * 0.5;
+    const h = 5 + prog * 15;
+
+    // 阴影
+    ctx.fillStyle = 'rgba(0,0,0,.18)';
+    ctx.beginPath(); ctx.ellipse(cx, base + 1, 4 + prog * 5, 2 + prog * 2, 0, 0, Math.PI * 2); ctx.fill();
+
+    // 茎
+    ctx.strokeStyle = def.leaf;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, base);
+    ctx.quadraticCurveTo(cx + sway, base - h * 0.6, cx + sway * 1.4, base - h);
+    ctx.stroke();
+
+    // 叶子
+    const leaves = prog < 0.34 ? 1 : prog < 0.67 ? 2 : 3;
+    ctx.fillStyle = def.leaf;
+    for (let i = 0; i < leaves; i++) {
+      const side = i % 2 === 0 ? -1 : 1;
+      const ly = base - h * (0.35 + i * 0.22);
+      const lw = 3 + prog * 3.5;
+      ctx.beginPath();
+      ctx.ellipse(cx + sway + side * lw * 0.85, ly, lw, lw * 0.55, side * 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.fillStyle = 'rgba(255,255,255,.16)';
+    ctx.beginPath();
+    ctx.ellipse(cx + sway - 1.5, base - h * 0.7, 1.6, 1, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (mature) {
+      const bob = Math.sin(t * 3 + tx) * 1.2;
+      const fy = base - h - 2 + bob;
+      const n = p.crop.kind === 'pumpkin' ? 1 : 3;
+      for (let i = 0; i < n; i++) {
+        const fx = n === 1 ? cx : cx + (i - 1) * 6 + sway;
+        const fyy = n === 1 ? base - 5 + bob * 0.6 : fy + (i === 1 ? -2 : 1);
+        const r = p.crop.kind === 'pumpkin' ? 8 : 4;
+        ctx.fillStyle = def.fruit;
+        ctx.beginPath(); ctx.arc(fx, fyy, r, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,.35)';
+        ctx.beginPath(); ctx.arc(fx - r * 0.35, fyy - r * 0.35, r * 0.32, 0, Math.PI * 2); ctx.fill();
+        if (p.crop.kind === 'pumpkin') {
+          ctx.strokeStyle = 'rgba(140,80,20,.55)'; ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(fx, fyy - r); ctx.lineTo(fx, fyy + r); ctx.stroke();
+          ctx.fillStyle = '#5f8f2e';
+          ctx.fillRect(fx - 1.5, fyy - r - 3, 3, 3);
+        }
+      }
+      // 成熟闪光
+      const sp = (t * 1.6 + tx * 0.4 + ty * 0.9) % 1;
+      if (sp < 0.5) {
+        ctx.fillStyle = 'rgba(255,255,200,' + (0.85 * (1 - Math.abs(sp - 0.25) * 4)) + ')';
+        ctx.fillRect(cx + 6, base - h - 8, 2, 2);
+        ctx.fillRect(cx - 8, base - h - 4, 1, 1);
+      }
+    } else if (prog >= 0.67) {
+      // 花苞
+      ctx.fillStyle = def.fruit;
+      ctx.beginPath(); ctx.arc(cx + sway * 1.4, base - h, 2.2, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+
+  function drawTree(tx, ty) {
+    const cx = tx * TILE + TILE / 2, by = ty * TILE + TILE / 2 + 6;
+    ctx.fillStyle = 'rgba(0,0,0,.22)';
+    ctx.beginPath(); ctx.ellipse(cx, by, 13, 6, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#6b4a2c';
+    ctx.fillRect(cx - 3.5, by - 16, 7, 16);
+    ctx.fillStyle = '#54381f';
+    ctx.fillRect(cx - 3.5, by - 16, 2, 16);
+
+    const r = hash(tx, ty);
+    const cy = by - 26;
+    ctx.fillStyle = r > 0.5 ? '#2f7a35' : '#357f38';
+    ctx.beginPath(); ctx.ellipse(cx, cy, 17, 15, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#3f9440';
+    ctx.beginPath(); ctx.ellipse(cx - 5, cy - 4, 10, 8, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#4fa84b';
+    ctx.beginPath(); ctx.ellipse(cx + 6, cy - 2, 6, 5, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,.14)';
+    ctx.beginPath(); ctx.ellipse(cx - 7, cy - 7, 4, 3, 0, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function drawPlayer() {
+    const p = G.player;
+    const x = p.x, y = p.y;
+    const moving = p.moving;
+    const ph = p.walk;
+    const bob = moving ? Math.abs(Math.sin(ph)) * 1.4 : 0;
+    const legSwing = moving ? Math.sin(ph) * 2.6 : 0;
+    const dir = p.dir;
+
+    ctx.fillStyle = 'rgba(0,0,0,.30)';
+    ctx.beginPath(); ctx.ellipse(x, y + 1, 9, 5, 0, 0, Math.PI * 2); ctx.fill();
+
+    const f = y - bob;              // 脚底
+    // 腿
+    ctx.fillStyle = '#39486a';
+    ctx.fillRect(x - 5.5, f - 11, 4.5, 8 + legSwing);
+    ctx.fillRect(x + 1, f - 11, 4.5, 8 - legSwing);
+    // 鞋
+    ctx.fillStyle = '#5a3d28';
+    ctx.fillRect(x - 6, f - 4 + legSwing, 5, 4);
+    ctx.fillRect(x + 1, f - 4 - legSwing, 5, 4);
+
+    // 躯干（背带裤）
+    ctx.fillStyle = '#2f4a7a';
+    ctx.fillRect(x - 7, f - 22, 14, 11);
+    ctx.fillStyle = '#4a6ba8';       // 衬衫
+    ctx.fillRect(x - 7, f - 27, 14, 6);
+    ctx.fillStyle = '#2f4a7a';       // 背带
+    ctx.fillRect(x - 5, f - 27, 3, 6);
+    ctx.fillRect(x + 2, f - 27, 3, 6);
+    // 手臂
+    ctx.fillStyle = '#4a6ba8';
+    if (dir === 'left') { ctx.fillRect(x - 9, f - 24, 3, 8); }
+    else if (dir === 'right') { ctx.fillRect(x + 6, f - 24, 3, 8); }
+    else { ctx.fillRect(x - 9, f - 24, 3, 8); ctx.fillRect(x + 6, f - 24, 3, 8); }
+
+    // 头
+    const hx = x + (dir === 'left' ? -1.2 : dir === 'right' ? 1.2 : 0);
+    ctx.fillStyle = '#e9b98e';
+    ctx.fillRect(hx - 5, f - 37, 10, 10);
+    // 眼睛
+    if (dir !== 'up') {
+      ctx.fillStyle = '#2b2b33';
+      if (dir === 'left') ctx.fillRect(hx - 4, f - 33, 1.6, 2);
+      else if (dir === 'right') ctx.fillRect(hx + 2.5, f - 33, 1.6, 2);
+      else { ctx.fillRect(hx - 3, f - 33, 1.6, 2); ctx.fillRect(hx + 1.5, f - 33, 1.6, 2); }
+    }
+    // 草帽
+    ctx.fillStyle = '#e0bc63';
+    ctx.beginPath(); ctx.ellipse(hx, f - 37, 10, 3.6, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#f0d183';
+    ctx.beginPath(); ctx.ellipse(hx, f - 40, 6, 4, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#c79f45';
+    ctx.fillRect(hx - 6, f - 38.5, 12, 1.6);
+
+    // 手里拿着当前工具
+    const d = DIRV[dir];
+    const ix = x + d.x * 9, iy = f - 22 + d.y * 4;
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const tool = TOOLS.find(t => t.id === G.tool);
+    if (tool) ctx.fillText(tool.icon, ix, iy);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  function drawParticles() {
+    for (let i = 0; i < particles.length; i++) {
+      const q = particles[i];
+      const a = clamp(q.life / q.max, 0, 1);
+      ctx.globalAlpha = a;
+      ctx.fillStyle = q.color;
+      ctx.fillRect(q.x - q.s / 2, q.y - q.s / 2, q.s, q.s);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function drawFloaters() {
+    ctx.font = 'bold 11px ui-monospace, monospace';
+    ctx.textAlign = 'center';
+    for (let i = 0; i < floaters.length; i++) {
+      const t = floaters[i];
+      const a = clamp(t.life / t.max, 0, 1);
+      ctx.globalAlpha = a;
+      ctx.fillStyle = 'rgba(0,0,0,.55)';
+      ctx.fillText(t.text, t.x + 1, t.y + 1);
+      ctx.fillStyle = t.color;
+      ctx.fillText(t.text, t.x, t.y);
+    }
+    ctx.globalAlpha = 1;
+    ctx.textAlign = 'left';
+  }
+
+  /* ---------- 水面动画 ---------- */
+  function drawWaterAnim() {
+    const t = performance.now() / 1000;
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        if (grid[y * COLS + x] !== WATER) continue;
+        const px = x * TILE, py = y * TILE;
+        for (let i = 0; i < 2; i++) {
+          const off = (t * (10 + i * 7) + hash(x * 3 + i, y * 5) * 40) % TILE;
+          const wy = py + 6 + ((i * 15 + hash(x, y + i) * 12) % (TILE - 12));
+          const wx = px + off - 6;
+          ctx.fillStyle = 'rgba(255,255,255,' + (0.05 + i * 0.03) + ')';
+          ctx.fillRect(wx, wy, 9, 1);
+        }
+      }
+    }
+  }
+
+  /* ---------- 天气 / 昼夜 ---------- */
+  function initDrops() {
+    drops.length = 0;
+    for (let i = 0; i < 140; i++) {
+      drops.push({
+        x: Math.random() * (VW + 120) - 60,
+        y: Math.random() * VH,
+        len: 7 + Math.random() * 9,
+        sp: 420 + Math.random() * 320
+      });
+    }
+  }
+  initDrops();
+
+  function updateRain(dt) {
+    for (let i = 0; i < drops.length; i++) {
+      const d = drops[i];
+      d.y += d.sp * dt;
+      d.x += d.sp * 0.16 * dt;
+      if (d.y > VH + 20) { d.y = -20; d.x = Math.random() * (VW + 120) - 60; }
+      if (d.x > VW + 40) d.x -= VW + 100;
+    }
+  }
+
+  function drawRain() {
+    ctx.strokeStyle = 'rgba(180,215,255,.42)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let i = 0; i < drops.length; i++) {
+      const d = drops[i];
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x - d.len * 0.16, d.y + d.len);
+    }
+    ctx.stroke();
+  }
+
+  const TINT_KEYS = [
+    [6.0,  255, 168, 92, 0.30],
+    [7.5,  255, 205, 150, 0.11],
+    [10.0, 255, 255, 255, 0.00],
+    [16.0, 255, 255, 255, 0.00],
+    [18.5, 255, 158, 92, 0.20],
+    [20.0, 96, 78, 168, 0.32],
+    [22.0, 34, 40, 96, 0.44],
+    [26.0, 22, 28, 78, 0.52]
+  ];
+
+  function tintAt(hours) {
+    let a = TINT_KEYS[0], b = TINT_KEYS[TINT_KEYS.length - 1];
+    for (let i = 0; i < TINT_KEYS.length - 1; i++) {
+      if (hours >= TINT_KEYS[i][0] && hours <= TINT_KEYS[i + 1][0]) {
+        a = TINT_KEYS[i]; b = TINT_KEYS[i + 1];
+        break;
+      }
+    }
+    const span = (b[0] - a[0]) || 1;
+    const t = clamp((hours - a[0]) / span, 0, 1);
+    return {
+      r: Math.round(lerp(a[1], b[1], t)),
+      g: Math.round(lerp(a[2], b[2], t)),
+      b: Math.round(lerp(a[3], b[3], t)),
+      a: lerp(a[4], b[4], t)
+    };
+  }
+
+  let vignette = null;
+  function drawTint() {
+    const hours = G.time / 60;
+    const c = tintAt(hours);
+    if (c.a > 0.005) {
+      ctx.fillStyle = 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + c.a.toFixed(3) + ')';
+      ctx.fillRect(0, 0, VW, VH);
+    }
+    if (G.weather === 'rain') {
+      ctx.fillStyle = 'rgba(60,80,110,.16)';
+      ctx.fillRect(0, 0, VW, VH);
+    }
+
+    // 夜里门窗透出的灯光
+    const dark = clamp((c.a - 0.18) / 0.34, 0, 1);
+    if (dark > 0.02) {
+      for (const b of BUILDINGS) {
+        const dx = b.door.x * TILE + TILE / 2;
+        const dy = b.door.y * TILE + TILE / 2;
+        const g = ctx.createRadialGradient(dx, dy, 2, dx, dy, 52);
+        g.addColorStop(0, 'rgba(255,214,140,' + (0.34 * dark) + ')');
+        g.addColorStop(1, 'rgba(255,214,140,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(dx - 52, dy - 52, 104, 104);
+      }
+    }
+
+    // 暗角
+    if (!vignette) {
+      vignette = ctx.createRadialGradient(VW / 2, VH / 2, VH * 0.42, VW / 2, VH / 2, VH * 0.92);
+      vignette.addColorStop(0, 'rgba(0,0,0,0)');
+      vignette.addColorStop(1, 'rgba(0,0,0,.32)');
+    }
+    ctx.fillStyle = vignette;
+    ctx.fillRect(0, 0, VW, VH);
+  }
+
+  function drawTransition() {
+    if (!transition) return;
+    const a = clamp(transition.t / 0.55, 0, 1);
+    ctx.fillStyle = 'rgba(6,8,12,' + a.toFixed(3) + ')';
+    ctx.fillRect(0, 0, VW, VH);
+    if (transition.t > 0.34) {
+      ctx.globalAlpha = clamp((transition.t - 0.34) / 0.3, 0, 1);
+      ctx.textAlign = 'center';
+      ctx.font = 'bold 22px ui-monospace, monospace';
+      ctx.fillStyle = '#ffd97a';
+      ctx.fillText(transition.text, VW / 2, VH / 2 - 4);
+      ctx.font = '12px ui-monospace, monospace';
+      ctx.fillStyle = '#9fb3cc';
+      ctx.fillText(transition.sub || '', VW / 2, VH / 2 + 22);
+      ctx.textAlign = 'left';
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  /* ================================================================
+     8. 渲染主流程
+     ================================================================ */
+  function render() {
+    ctx.drawImage(ground, 0, 0);
+    drawWaterAnim();
+
+    // 土壤与作物
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        if (grid[y * COLS + x] !== FARM) continue;
+        const p = plotIf(x, y);
+        if (!p || !p.tilled) continue;
+        drawSoil(x, y, p);
+        if (p.crop) drawCrop(x, y, p);
+      }
+    }
+
+    // 需要按 y 排序的对象
+    const ents = [];
+    for (let i = 0; i < trees.length; i++) {
+      const t = trees[i];
+      ents.push({ y: t.y * TILE + TILE, draw: drawTree, tx: t.x, ty: t.y });
+    }
+    ents.push({ y: G.player.y, draw: drawPlayer });
+    ents.sort((a, b) => a.y - b.y);
+    for (let i = 0; i < ents.length; i++) {
+      if (ents[i].draw === drawTree) drawTree(ents[i].tx, ents[i].ty);
+      else ents[i].draw();
+    }
+
+    drawParticles();
+    drawFloaters();
+    if (G.weather === 'rain') drawRain();
+    drawTint();
+    drawTransition();
+  }
+
+  /* ================================================================
+     9. 更新逻辑
+     ================================================================ */
+  function updateEffects(dt) {
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const q = particles[i];
+      q.life -= dt;
+      if (q.life <= 0) { particles.splice(i, 1); continue; }
+      q.x += q.vx * dt;
+      q.y += q.vy * dt;
+      q.vy += q.g * dt;
+      q.vx *= 0.99;
+    }
+    for (let i = floaters.length - 1; i >= 0; i--) {
+      const t = floaters[i];
+      t.life -= dt;
+      if (t.life <= 0) { floaters.splice(i, 1); continue; }
+      t.y -= 22 * dt;
+    }
+  }
+
+  function spawnBurst(x, y, n, colors, spread, up) {
+    for (let i = 0; i < n; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const s = 20 + Math.random() * (spread || 60);
+      particles.push({
+        x, y,
+        vx: Math.cos(a) * s,
+        vy: Math.sin(a) * s - (up || 40),
+        g: 240,
+        s: 2 + Math.random() * 2,
+        color: colors[(Math.random() * colors.length) | 0],
+        life: 0.35 + Math.random() * 0.4,
+        max: 0.75
+      });
+    }
+  }
+
+  function floatText(x, y, text, color) {
+    floaters.push({ x, y, text, color: color || '#fff', life: 1.1, max: 1.1 });
+  }
+
+  function updateTime(dt) {
+    timeAcc += dt * MIN_PER_SEC;
+    if (timeAcc >= 1) {
+      const add = Math.floor(timeAcc);
+      timeAcc -= add;
+      G.time += add;
+      if (G.time >= DAY_END) {
+        G.time = DAY_END;
+        collapse();
+      }
+    }
+  }
+
+  const keys = Object.create(null);
+  function isKey(k) { return !!keys[k]; }
+
+  function canMoveTo(x, y) {
+    const hw = 9, hh = 8;
+    const pts = [[x - hw, y - hh], [x + hw, y - hh], [x - hw, y + hh], [x + hw, y + hh]];
+    for (let i = 0; i < 4; i++) {
+      const t = tileAt(pts[i][0], pts[i][1]);
+      if (!inBounds(t.x, t.y)) return false;
+      if (solid[t.y * COLS + t.x]) return false;
+    }
+    return true;
+  }
+
+  function updatePlayer(dt) {
+    let dx = 0, dy = 0;
+    if (isKey('a') || isKey('arrowleft')) dx--;
+    if (isKey('d') || isKey('arrowright')) dx++;
+    if (isKey('w') || isKey('arrowup')) dy--;
+    if (isKey('s') || isKey('arrowdown')) dy++;
+
+    if (dx || dy) {
+      const len = Math.hypot(dx, dy);
+      dx /= len; dy /= len;
+      const speed = G.energy > 0 ? 108 : 74;
+      if (Math.abs(dx) > Math.abs(dy)) G.player.dir = dx < 0 ? 'left' : 'right';
+      else G.player.dir = dy < 0 ? 'up' : 'down';
+
+      const nx = G.player.x + dx * speed * dt;
+      if (canMoveTo(nx, G.player.y)) G.player.x = nx;
+      const ny = G.player.y + dy * speed * dt;
+      if (canMoveTo(G.player.x, ny)) G.player.y = ny;
+
+      G.player.x = clamp(G.player.x, 12, VW - 12);
+      G.player.y = clamp(G.player.y, 16, VH - 10);
+      G.player.walk += dt * 11;
+      G.player.moving = true;
+    } else {
+      G.player.moving = false;
+    }
+  }
+
+  function update(dt) {
+    updateEffects(dt);
+    if (G.weather === 'rain') updateRain(dt);
+
+    if (transition) {
+      transition.t += dt * 1.5;
+      if (transition.t >= 0.62 && !transition.done) {
+        transition.done = true;
+        doDayRollover(transition.penalty);
+      }
+      if (transition.t >= 1.25) transition = null;
+      return;
+    }
+    if (uiState !== 'play') return;
+
+    updateTime(dt);
+    updatePlayer(dt);
+    updateHint();
+  }
+
+  /* ================================================================
+     10. 交互
+     ================================================================ */
+  function facingTile() {
+    const d = DIRV[G.player.dir];
+    return tileAt(G.player.x + d.x * 18, G.player.y + d.y * 18);
+  }
+
+  function standingTile() {
+    return tileAt(G.player.x, G.player.y);
+  }
+
+  function findBuildingDoor(t) {
+    for (let i = 0; i < BUILDINGS.length; i++) {
+      const b = BUILDINGS[i];
+      if (b.door.x === t.x && b.door.y === t.y) return b;
+    }
+    return null;
+  }
+
+  function hasMature(t) {
+    const p = plotIf(t.x, t.y);
+    return !!(p && p.crop && p.crop.growth >= CROPS[p.crop.kind].days);
+  }
+
+  function doAction() {
+    if (transition || uiState !== 'play') return;
+
+    const ft = facingTile();
+    const st = standingTile();
+
+    // 1) 建筑门
+    let b = findBuildingDoor(ft) || findBuildingDoor(st);
+    if (b) {
+      if (b.id === 'shop') openShop();
+      else askSleep();
+      return;
+    }
+
+    // 2) 收获（面前优先，其次脚下）
+    if (hasMature(ft)) { harvest(ft); return; }
+    if (hasMature(st)) { harvest(st); return; }
+
+    // 3) 水壶补水
+    if (G.tool === 'can' && grid[ft.y * COLS + ft.x] === WATER) { refillCan(); return; }
+
+    // 4) 使用工具
+    if (G.energy <= 0) {
+      toast('太累了 —— 回屋睡一觉吧', 'warn');
+      SFX.nope();
+      return;
+    }
+    useToolOn(ft);
+  }
+
+  function useToolOn(t) {
+    if (!inBounds(t.x, t.y)) return;
+    const ter = grid[t.y * COLS + t.x];
+    const p = plotIf(t.x, t.y);
+
+    if (G.tool === 'hoe') {
+      if (ter !== FARM) { toast('这里不能开垦 —— 去围栏里的耕地', 'warn'); SFX.nope(); return; }
+      if (p && p.tilled) { toast('这块地已经翻好了', 'warn'); SFX.nope(); return; }
+      if (G.energy < COST.till) { toast('体力不够了', 'warn'); SFX.nope(); return; }
+      const pl = plot(t.x, t.y);
+      pl.tilled = true;
+      G.energy -= COST.till;
+      spawnBurst(t.x * TILE + 16, t.y * TILE + 20, 10, ['#8a6440', '#6d4c2e', '#a37a4f'], 55, 60);
+      SFX.till();
+      return;
+    }
+
+    if (G.tool === 'can') {
+      if (ter === WATER) { refillCan(); return; }
+      if (!p || !p.tilled) { toast('这里没有可浇水的地', 'warn'); SFX.nope(); return; }
+      if (p.wet) { toast('已经浇过水了', 'warn'); SFX.nope(); return; }
+      if (G.water <= 0) { toast('水壶空了 —— 去池塘打水', 'warn'); SFX.nope(); return; }
+      if (G.energy < COST.water) { toast('体力不够了', 'warn'); SFX.nope(); return; }
+      p.wet = true;
+      G.water--;
+      G.energy -= COST.water;
+      spawnBurst(t.x * TILE + 16, t.y * TILE + 14, 8, ['#7fd4ff', '#4aa8e0', '#bfeaff'], 45, 80);
+      SFX.water();
+      return;
+    }
+
+    if (G.tool === 'seed') {
+      if (!p || !p.tilled) { toast('先用锄头翻地', 'warn'); SFX.nope(); return; }
+      if (p.crop) { toast('这里已经种着东西了', 'warn'); SFX.nope(); return; }
+      if (G.seeds[G.seed] <= 0) { toast('没有' + CROPS[G.seed].name + '种子了', 'warn'); SFX.nope(); return; }
+      if (G.energy < COST.plant) { toast('体力不够了', 'warn'); SFX.nope(); return; }
+      G.seeds[G.seed]--;
+      p.crop = { kind: G.seed, growth: 0 };
+      G.energy -= COST.plant;
+      spawnBurst(t.x * TILE + 16, t.y * TILE + 18, 7, ['#8fe06a', '#5fb04a', '#c8f0a8'], 40, 60);
+      SFX.plant();
+      return;
+    }
+  }
+
+  function harvest(t) {
+    const p = plotIf(t.x, t.y);
+    if (!p || !p.crop) return;
+    const def = CROPS[p.crop.kind];
+    if (G.energy < COST.harvest) { toast('体力不够了', 'warn'); SFX.nope(); return; }
+    G.energy -= COST.harvest;
+    G.crops[p.crop.kind]++;
+    p.crop = null;
+    const cx = t.x * TILE + 16, cy = t.y * TILE + 12;
+    spawnBurst(cx, cy, 14, [def.fruit, def.leaf, '#ffffff'], 70, 90);
+    floatText(cx, cy - 6, '+1 ' + def.name, '#b6f0a0');
+    SFX.harvest();
+  }
+
+  function refillCan() {
+    if (G.water >= CAN_MAX) { toast('水壶已经满了', 'warn'); SFX.nope(); return; }
+    G.water = CAN_MAX;
+    floatText(G.player.x, G.player.y - 34, '水壶满了', '#8fd8ff');
+    SFX.water();
+  }
+
+  /* ================================================================
+     11. 睡觉 / 换日
+     ================================================================ */
+  function askSleep() {
+    SFX.sleep();
+    transition = { t: 0, phase: 'out', done: false, penalty: 0, text: '', sub: '' };
+  }
+
+  function collapse() {
+    if (transition) return;
+    SFX.nope();
+    transition = { t: 0, phase: 'out', done: false, penalty: 1, text: '', sub: '' };
+  }
+
+  function doDayRollover(penalty) {
+    // 1. 今天浇过水的作物长一天
+    let grown = 0, ready = 0;
+    for (const k in G.plots) {
+      const p = G.plots[k];
+      if (!p || !p.tilled) continue;
+      if (p.crop && p.wet && p.crop.growth < CROPS[p.crop.kind].days) {
+        p.crop.growth++;
+        grown++;
+        if (p.crop.growth >= CROPS[p.crop.kind].days) ready++;
+      }
+      p.wet = false;                 // 隔夜变干
+    }
+
+    // 2. 新的一天
+    G.day++;
+    G.time = DAY_START;
+    timeAcc = 0;
+    G.weather = Math.random() < RAIN_CHANCE ? 'rain' : 'clear';
+
+    if (G.weather === 'rain') {
+      for (const k in G.plots) {
+        const p = G.plots[k];
+        if (p && p.tilled) p.wet = true;
+      }
+    }
+
+    // 3. 体力
+    let fee = 0;
+    if (penalty) {
+      fee = Math.min(G.money, 20);
+      G.money -= fee;
+      G.energy = Math.round(MAX_ENERGY * 0.5);
+    } else {
+      G.energy = MAX_ENERGY;
+    }
+
+    // 4. 过渡文字
+    transition.text = '第 ' + G.day + ' 天';
+    const bits = [];
+    if (G.weather === 'rain') bits.push('☔ 下雨了，作物自动浇水');
+    else bits.push('☀️ 晴天');
+    if (grown) bits.push(grown + ' 株作物生长');
+    if (ready) bits.push(ready + ' 株可以收获');
+    if (penalty) bits.push('你在田里睡着了，损失 $' + fee);
+    transition.sub = bits.join(' · ');
+
+    if (G.weather === 'rain') initDrops();
+    save();
+  }
+
+  /* ================================================================
+     12. HUD
+     ================================================================ */
+  let lastHudKey = '';
+
+  function updateHint() {
+    let text = '';
+    const ft = facingTile();
+    const st = standingTile();
+    const b = findBuildingDoor(ft) || findBuildingDoor(st);
+    if (b) {
+      text = b.id === 'shop' ? '空格 / E：进入杂货铺' : '空格 / E：睡觉（进入第二天）';
+    } else if (hasMature(ft) || hasMature(st)) {
+      text = '空格 / E：收获';
+    } else if (G.tool === 'can' && grid[ft.y * COLS + ft.x] === WATER) {
+      text = '空格 / E：打水';
+    } else if (G.energy <= 0) {
+      text = '体力耗尽 —— 回屋睡觉';
+    } else if (G.tool === 'hoe') {
+      const p = plotIf(ft.x, ft.y);
+      if (grid[ft.y * COLS + ft.x] === FARM && (!p || !p.tilled)) text = '空格 / E：翻地（-2 体力）';
+    } else if (G.tool === 'can') {
+      const p = plotIf(ft.x, ft.y);
+      if (p && p.tilled && !p.wet) text = '空格 / E：浇水（-1 体力）';
+    } else if (G.tool === 'seed') {
+      const p = plotIf(ft.x, ft.y);
+      if (p && p.tilled && !p.crop) text = '空格 / E：种下' + CROPS[G.seed].name + '（-1 体力）';
+    }
+
+    if (text) {
+      if (elHint.textContent !== text) elHint.textContent = text;
+      elHint.classList.add('on');
+    } else {
+      elHint.classList.remove('on');
+    }
+  }
+
+  function renderHud() {
+    const k = [G.day, Math.floor(G.time), G.money, Math.round(G.energy), G.water, G.weather, G.tool, G.seed,
+               G.seeds.turnip, G.seeds.carrot, G.seeds.tomato, G.seeds.pumpkin, muted].join('|');
+    if (k === lastHudKey) return;
+    lastHudKey = k;
+
+    elClock.textContent = '第 ' + G.day + ' 天 · ' + fmtTime(G.time);
+    elMoney.textContent = '🪙 $' + G.money;
+    elWeather.textContent = G.weather === 'rain' ? '☔ 雨天（自动浇水）' : '☀️ 晴天';
+
+    const e = clamp(G.energy / MAX_ENERGY, 0, 1);
+    elEnergy.style.width = (e * 100).toFixed(1) + '%';
+    elEnergy.classList.toggle('low', e <= 0.25);
+    elWater.style.width = (clamp(G.water / CAN_MAX, 0, 1) * 100).toFixed(1) + '%';
+
+    // 工具栏
+    if (elToolbar.children.length !== TOOLS.length) {
+      elToolbar.innerHTML = '';
+      TOOLS.forEach(t => {
+        const d = document.createElement('div');
+        d.className = 'slot';
+        d.dataset.tool = t.id;
+        d.innerHTML = '<span class="ico">' + t.icon + '</span><span class="nm">' + t.name + '</span>' +
+                      '<span class="k">' + t.key + '</span>';
+        d.addEventListener('click', () => setTool(t.id));
+        elToolbar.appendChild(d);
+      });
+    }
+    Array.prototype.forEach.call(elToolbar.children, c => {
+      c.classList.toggle('on', c.dataset.tool === G.tool);
+    });
+
+    // 种子栏
+    if (elSeedbar.children.length !== CROP_KEYS.length) {
+      elSeedbar.innerHTML = '';
+      CROP_KEYS.forEach(kk => {
+        const d = document.createElement('div');
+        d.className = 'seed';
+        d.dataset.seed = kk;
+        d.innerHTML = '<span class="ico">' + CROPS[kk].icon + '</span><span class="ct">0</span>';
+        d.addEventListener('click', () => { G.seed = kk; setTool('seed'); });
+        elSeedbar.appendChild(d);
+      });
+    }
+    Array.prototype.forEach.call(elSeedbar.children, c => {
+      const id = c.dataset.seed;
+      c.classList.toggle('on', id === G.seed);
+      c.classList.toggle('empty', G.seeds[id] <= 0);
+      const ct = c.querySelector('.ct');
+      const v = String(G.seeds[id]);
+      if (ct.textContent !== v) ct.textContent = v;
+    });
+  }
+
+  function setTool(id) {
+    if (G.tool === id) return;
+    G.tool = id;
+    SFX.buy();
+    lastHudKey = '';
+  }
+
+  function cycleSeed(dir) {
+    const i = CROP_KEYS.indexOf(G.seed);
+    G.seed = CROP_KEYS[(i + dir + CROP_KEYS.length) % CROP_KEYS.length];
+    G.tool = 'seed';
+    lastHudKey = '';
+  }
+
+  function toast(msg, kind) {
+    const d = document.createElement('div');
+    d.className = 'toast' + (kind ? ' ' + kind : '');
+    d.textContent = msg;
+    elToasts.appendChild(d);
+    while (elToasts.children.length > 4) elToasts.removeChild(elToasts.firstChild);
+    setTimeout(() => {
+      d.classList.add('out');
+      setTimeout(() => d.remove(), 420);
+    }, 1300);
+  }
+
+  /* ================================================================
+     13. 商店
+     ================================================================ */
+  function mkBtn(label, fn, disabled) {
+    const b = document.createElement('button');
+    b.className = 'sm';
+    b.textContent = label;
+    if (disabled) b.disabled = true;
+    else b.addEventListener('click', fn);
+    return b;
+  }
+
+  function openShop() {
+    uiState = 'shop';
+    elShop.classList.remove('hidden');
+    renderShop();
+    SFX.buy();
+  }
+
+  function closeShop() {
+    uiState = 'play';
+    elShop.classList.add('hidden');
+  }
+
+  function renderShop() {
+    elShopSeeds.innerHTML = '';
+    CROP_KEYS.forEach(k => {
+      const c = CROPS[k];
+      const row = document.createElement('div');
+      row.className = 'srow';
+      const nm = document.createElement('span');
+      nm.className = 'nm';
+      nm.textContent = c.icon + ' ' + c.name;
+      const sub = document.createElement('span');
+      sub.className = 'sub';
+      sub.textContent = '$' + c.cost + ' · ' + c.days + '天';
+      const btns = document.createElement('span');
+      btns.className = 'btns';
+      btns.appendChild(mkBtn('×1', () => buySeed(k, 1), G.money < c.cost));
+      btns.appendChild(mkBtn('×5', () => buySeed(k, 5), G.money < c.cost * 5));
+      row.append(nm, sub, btns);
+      elShopSeeds.appendChild(row);
+    });
+
+    elShopSell.innerHTML = '';
+    let any = false;
+    CROP_KEYS.forEach(k => {
+      if (G.crops[k] <= 0) return;
+      any = true;
+      const c = CROPS[k];
+      const row = document.createElement('div');
+      row.className = 'srow';
+      const nm = document.createElement('span');
+      nm.className = 'nm';
+      nm.textContent = c.icon + ' ' + c.name;
+      const sub = document.createElement('span');
+      sub.className = 'sub';
+      sub.textContent = '×' + G.crops[k] + ' · $' + c.sell;
+      const btns = document.createElement('span');
+      btns.className = 'btns';
+      btns.appendChild(mkBtn('卖 1', () => sellCrop(k, 1)));
+      btns.appendChild(mkBtn('全卖', () => sellCrop(k, G.crops[k])));
+      row.append(nm, sub, btns);
+      elShopSell.appendChild(row);
+    });
+    if (!any) {
+      const d = document.createElement('div');
+      d.className = 'empty';
+      d.textContent = '还没有可卖的作物';
+      elShopSell.appendChild(d);
+    }
+  }
+
+  function buySeed(kind, n) {
+    const c = CROPS[kind];
+    const total = c.cost * n;
+    if (G.money < total) { toast('钱不够', 'warn'); SFX.nope(); return; }
+    G.money -= total;
+    G.seeds[kind] += n;
+    toast('买了 ' + n + ' 个' + c.name + '种子（-$' + total + '）', 'good');
+    SFX.coin();
+    renderShop();
+    lastHudKey = '';
+    save();
+  }
+
+  function sellCrop(kind, n) {
+    n = Math.min(n, G.crops[kind]);
+    if (n <= 0) return;
+    const c = CROPS[kind];
+    const gain = c.sell * n;
+    G.crops[kind] -= n;
+    G.money += gain;
+    toast('卖出 ' + n + ' 个' + c.name + '（+$' + gain + '）', 'good');
+    SFX.coin();
+    renderShop();
+    lastHudKey = '';
+    save();
+  }
+
+  /* ================================================================
+     14. 暂停 / 标题
+     ================================================================ */
+  function togglePause() {
+    if (uiState === 'shop') { closeShop(); return; }
+    if (uiState === 'pause') {
+      uiState = 'play';
+      elPause.classList.add('hidden');
+    } else if (uiState === 'play') {
+      uiState = 'pause';
+      elPause.classList.remove('hidden');
+      btnPauseMute.textContent = '音效：' + (muted ? '关' : '开');
+      save();
+    }
+  }
+
+  function toggleMute() {
+    muted = !muted;
+    G.muted = muted;
+    btnPauseMute.textContent = '音效：' + (muted ? '关' : '开');
+    if (!muted) SFX.buy();
+    lastHudKey = '';
+    save();
+  }
+
+  function startGame() {
+    uiState = 'play';
+    elTitle.classList.add('hidden');
+    elPause.classList.add('hidden');
+    elShop.classList.add('hidden');
+    lastHudKey = '';
+    ensureAudio();
+    SFX.wake();
+  }
+
+  btnContinue.addEventListener('click', () => { load(); startGame(); });
+  btnNew.addEventListener('click', () => { resetGame(); startGame(); save(); });
+  document.getElementById('shopClose').addEventListener('click', closeShop);
+  document.getElementById('pauseResume').addEventListener('click', togglePause);
+  btnPauseMute.addEventListener('click', toggleMute);
+  document.getElementById('pauseReset').addEventListener('click', () => {
+    if (!window.confirm('重开存档？当前进度会丢失。')) return;
+    resetGame();
+    save();
+    uiState = 'play';
+    elPause.classList.add('hidden');
+    lastHudKey = '';
+    toast('新的开始！', 'good');
+  });
+
+  /* ================================================================
+     15. 输入
+     ================================================================ */
+  function normalizeKey(e) {
+    if (e.key === ' ' || e.key === 'Spacebar') return ' ';
+    return e.key.toLowerCase();
+  }
+
+  addEventListener('keydown', (e) => {
+    const k = normalizeKey(e);
+    if (k === 'arrowup' || k === 'arrowdown' || k === 'arrowleft' || k === 'arrowright' || k === ' ' || k === 'tab') {
+      e.preventDefault();
+    }
+    keys[k] = true;
+    if (e.repeat) return;
+
+    if (uiState === 'title') {
+      if (k === 'enter' || k === ' ') (hasSave() ? btnContinue : btnNew).click();
+      return;
+    }
+    if (k === 'escape') { togglePause(); return; }
+    if (uiState !== 'play') return;
+
+    if (k === ' ' || k === 'e' || k === 'enter') doAction();
+    else if (k === '1') setTool('hoe');
+    else if (k === '2') setTool('can');
+    else if (k === '3') setTool('seed');
+    else if (k === 'q' || k === 'tab') cycleSeed(1);
+    else if (k === 'm') toggleMute();
+  });
+
+  addEventListener('keyup', (e) => { keys[normalizeKey(e)] = false; });
+  addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
+
+  // 鼠标 / 触摸点击地块使用工具
+  canvas.addEventListener('pointerdown', (e) => {
+    ensureAudio();
+    if (uiState === 'title') { (hasSave() ? btnContinue : btnNew).click(); return; }
+    if (uiState !== 'play' || transition) return;
+    const r = canvas.getBoundingClientRect();
+    const cx = (e.clientX - r.left) / r.width * VW;
+    const cy = (e.clientY - r.top) / r.height * VH;
+    const t = tileAt(cx, cy);
+    if (!inBounds(t.x, t.y)) return;
+
+    // 面向目标
+    const dx = (t.x * TILE + 16) - G.player.x;
+    const dy = (t.y * TILE + 16) - G.player.y;
+    if (Math.abs(dx) > Math.abs(dy)) G.player.dir = dx < 0 ? 'left' : 'right';
+    else G.player.dir = dy < 0 ? 'up' : 'down';
+
+    // 只在近处生效
+    const dist = Math.hypot(dx, dy);
+    if (dist > TILE * 2.2) {
+      toast('太远了 —— 走近一点', 'warn');
+      SFX.nope();
+      return;
+    }
+    if (hasMature(t)) { harvest(t); return; }
+    const b = findBuildingDoor(t);
+    if (b) { b.id === 'shop' ? openShop() : askSleep(); return; }
+    if (G.tool === 'can' && grid[t.y * COLS + t.x] === WATER) { refillCan(); return; }
+    if (G.energy <= 0) { toast('太累了 —— 回屋睡一觉吧', 'warn'); SFX.nope(); return; }
+    useToolOn(t);
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && uiState === 'play') togglePause();
+  });
+  addEventListener('beforeunload', save);
+
+  /* ================================================================
+     16. 缩放 / 主循环
+     ================================================================ */
+  function resize() {
+    const s = Math.min(innerWidth / VW, innerHeight / VH);
+    stage.style.transform = 'scale(' + s + ')';
+  }
+  addEventListener('resize', resize);
+
+  let last = performance.now();
+  function frame(now) {
+    let dt = (now - last) / 1000;
+    last = now;
+    if (dt > 0.05) dt = 0.05;
+    update(dt);
+    render();
+    renderHud();
+    requestAnimationFrame(frame);
+  }
+
+  /* ---------- 启动 ---------- */
+  prerender();
+  resize();
+  if (hasSave()) {
+    load();
+    btnContinue.classList.add('primary');
+  } else {
+    btnContinue.style.display = 'none';
+  }
+  renderHud();
+  requestAnimationFrame(frame);
+
+})();
+</script>
+</body>
+</html>

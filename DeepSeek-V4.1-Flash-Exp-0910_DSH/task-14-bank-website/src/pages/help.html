@@ -1,0 +1,326 @@
+---
+title: Help &amp; Support
+description: Contact Meridian Bank by phone, chat or message, find a branch or fee-free ATM, and read answers to the questions we get most often.
+nav: help
+scripts: forms
+---
+
+<section class="page-head">
+  <div class="wrap wrap--wide">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span>Help &amp; support</span>
+    </nav>
+    <p class="eyebrow">Help &amp; support</p>
+    <h1>How can we help?</h1>
+    <p class="lead">Real people, in three places: the phone, the app, and 2,400 branches. Most calls are answered in under four minutes.</p>
+  </div>
+</section>
+
+<!-- ── Contact ──────────────────────────────────────────────────────────── -->
+<section class="sec" id="contact">
+  <div class="wrap wrap--wide">
+    <div class="grid grid--3">
+      <a class="card card--lift" href="tel:+18005550199" style="text-decoration:none">
+        <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.6l1.6 4-2.1 1.5a12 12 0 0 0 5.4 5.4l1.5-2.1 4 1.6V19a1.9 1.9 0 0 1-2.1 1.9A15.6 15.6 0 0 1 3.1 6.1 1.9 1.9 0 0 1 5 4Z"/></svg></span>
+        <h3>Call us</h3>
+        <p class="mb-0">1-800-555-0199<br>Mon–Sat, 7 a.m.–11 p.m. ET</p>
+        <p class="tiny mt-2 mb-0">Fraud line is open 24/7: 1-800-555-0177</p>
+      </a>
+      <a class="card card--lift" href="login.html" style="text-decoration:none">
+        <span class="card__icon card__icon--mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3.2-6.9"/><path d="M21 4v5h-5"/></svg></span>
+        <h3>Secure message</h3>
+        <p class="mb-0">Send a message from inside online banking.<br>Replies within one business day.</p>
+      </a>
+      <a class="card card--lift" href="#locations" style="text-decoration:none">
+        <span class="card__icon card__icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+        <h3>Visit a branch</h3>
+        <p class="mb-0">2,400 branches, 55,000 fee-free ATMs.<br>Most open Saturdays until 2 p.m.</p>
+      </a>
+    </div>
+
+    <div class="grid grid--sidebar mt-3">
+      <div>
+        <p class="eyebrow">Send a message</p>
+        <h2>Tell us what's going on</h2>
+        <p class="lead">Include the account type and, if it's about a transaction, the date and amount. That's usually enough for us to solve it in the first reply.</p>
+
+        <div class="callout mt-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+          <div><p class="mb-0">This is a design demo — the form is not connected to anything and nothing is transmitted. Please don't enter real personal or financial information.</p></div>
+        </div>
+      </div>
+
+      <div class="card card--flat">
+        <form data-validate novalidate>
+          <div class="field">
+            <label class="label" for="hcName">Name <span class="req">*</span></label>
+            <input class="input" id="hcName" name="name" type="text" required autocomplete="name" data-label="name">
+            <p class="err" data-err-for="hcName" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="hcEmail">Email <span class="req">*</span></label>
+            <input class="input" id="hcEmail" name="email" type="email" required autocomplete="email" data-label="email address">
+            <p class="err" data-err-for="hcEmail" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="hcTopic">Topic <span class="req">*</span></label>
+            <select class="select" id="hcTopic" name="topic" required data-label="topic">
+              <option value="">Choose one…</option>
+              <option>Account or card</option>
+              <option>Payments and transfers</option>
+              <option>Mortgage or loan</option>
+              <option>Online banking and app</option>
+              <option>Fees and statements</option>
+              <option>Business banking</option>
+              <option>Accessibility</option>
+            </select>
+            <p class="err" data-err-for="hcTopic" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="hcMsg">Message <span class="req">*</span></label>
+            <textarea class="textarea" id="hcMsg" name="message" required minlength="15" data-label="message" placeholder="What happened, and when?"></textarea>
+            <p class="err" data-err-for="hcMsg" hidden></p>
+          </div>
+          <button class="btn btn--block" type="submit">Send message</button>
+        </form>
+
+        <div class="callout callout--mint" data-success hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <div data-success-body>
+            <p class="mb-0"><strong>Message queued.</strong> Thanks, <span data-fill="name">there</span>. In a real system we'd reply to <span data-fill="email">your email</span> within one business day. Nothing was actually sent.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Locations ────────────────────────────────────────────────────────── -->
+<section class="sec sec--cream" id="locations">
+  <div class="wrap wrap--wide" data-filterlist>
+    <div class="sec-head">
+      <p class="eyebrow">Branch &amp; ATM finder</p>
+      <h2>Find us near you</h2>
+      <p class="lead">Search by city, state or ZIP. Showing <strong data-filterlist-count>0</strong> of 12 locations.</p>
+    </div>
+
+    <div class="field" style="max-width:420px">
+      <label class="label" for="branchSearch">Search locations</label>
+      <input class="input" id="branchSearch" type="search" data-filterlist-input placeholder="e.g. Boston, Austin, 02210" autocomplete="off">
+    </div>
+
+    <div class="grid grid--3 mt-2">
+      <article class="card card--flat" data-filter-item>
+        <h4>Harbor Street</h4>
+        <p class="mb-0">400 Harbor Street<br>Boston, MA 02210</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 8–6 · Sat 9–2 · Full service · Safe deposit</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>Back Bay</h4>
+        <p class="mb-0">1180 Boylston Street<br>Boston, MA 02215</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 8–6 · Sat 9–1 · Full service</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>Cambridge — Kendall</h4>
+        <p class="mb-0">55 Third Street<br>Cambridge, MA 02141</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 8–7 · Sat 9–2 · Business banking</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>Providence — College Hill</h4>
+        <p class="mb-0">212 Thayer Street<br>Providence, RI 02906</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 9–5 · Sat 9–12 · ATM only after hours</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>Austin — Congress</h4>
+        <p class="mb-0">600 Congress Avenue<br>Austin, TX 78701</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 8–6 · Sat 9–2 · Mortgage team on site</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>Dallas — Uptown</h4>
+        <p class="mb-0">2401 McKinney Avenue<br>Dallas, TX 75201</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 8–6 · Sat 9–1 · Full service</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>Sacramento — Midtown</h4>
+        <p class="mb-0">1801 L Street<br>Sacramento, CA 95811</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 9–5 · Sat 10–2 · Full service</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>San Francisco — Mission</h4>
+        <p class="mb-0">3015 Mission Street<br>San Francisco, CA 94110</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 8–6 · Sat 9–2 · Bilingual staff</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>Seattle — Ballard</h4>
+        <p class="mb-0">5401 Ballard Avenue NW<br>Seattle, WA 98107</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 9–6 · Sat 9–1 · Full service</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>Chicago — Wicker Park</h4>
+        <p class="mb-0">1580 N Damen Avenue<br>Chicago, IL 60622</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 8–6 · Sat 9–2 · Business banking</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>Denver — LoDo</h4>
+        <p class="mb-0">1550 Wynkoop Street<br>Denver, CO 80202</p>
+        <p class="tiny mt-2 mb-0">Mon–Fri 8–6 · Sat 9–1 · Full service</p>
+      </article>
+      <article class="card card--flat" data-filter-item>
+        <h4>ATM — Riverside Market</h4>
+        <p class="mb-0">88 Riverside Drive<br>Portland, ME 04103</p>
+        <p class="tiny mt-2 mb-0">ATM only · 24 hours · Fee-free withdrawals</p>
+      </article>
+    </div>
+
+    <div class="empty" data-filterlist-empty hidden>
+      <p class="mb-0"><strong>No locations match that search.</strong> Try a nearby city or a ZIP code.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────────────────────── -->
+<section class="sec" id="faq">
+  <div class="wrap wrap--narrow">
+    <div class="sec-head">
+      <p class="eyebrow">Frequently asked</p>
+      <h2>The questions we answer most</h2>
+    </div>
+
+    <h3 class="mt-2">Accounts</h3>
+    <div class="acc">
+      <details class="acc__item">
+        <summary>How do I close an account?</summary>
+        <div class="acc__body">
+          <p>Message us from online banking or call. We'll move any remaining balance to an account you choose, close it the same day, and mail a final statement. There's no closing fee and no exit interview.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>How do I add a joint owner?</summary>
+        <div class="acc__body">
+          <p>Both people need to be present — in a branch, or on a video call in the app. You'll each need a government ID and Social Security number. The change takes about 15 minutes.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>What if I need to change my name?</summary>
+        <div class="acc__body">
+          <p>Bring a marriage certificate, divorce decree, or court order to any branch, or upload it in the app. We'll update your accounts, cards and statements within one business day.</p>
+        </div>
+      </details>
+    </div>
+
+    <h3 class="mt-3">Payments &amp; transfers</h3>
+    <div class="acc">
+      <details class="acc__item">
+        <summary>Why is my transfer pending?</summary>
+        <div class="acc__body">
+          <p>Transfers between your Meridian accounts are instant. Transfers to another bank usually take one business day, and first-time transfers to a new external account can take three while we verify ownership.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>Can I cancel a scheduled payment?</summary>
+        <div class="acc__body">
+          <p>Yes, any time before it starts processing — usually 8 p.m. ET the business day before. In the app: Pay &amp; Transfer → Scheduled → Cancel. If it has already been sent, we can attempt a recall but can't guarantee it.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>What are my daily limits?</summary>
+        <div class="acc__body">
+          <ul>
+            <li>ATM withdrawals: $1,000 per day</li>
+            <li>Debit card purchases: $5,000 per day</li>
+            <li>External transfers: $25,000 per day, $100,000 per month</li>
+            <li>Zelle-style instant transfers: $2,500 per day</li>
+          </ul>
+          <p>Higher limits are available on request for Premium and business accounts.</p>
+        </div>
+      </details>
+    </div>
+
+    <h3 class="mt-3">Cards &amp; fraud</h3>
+    <div class="acc">
+      <details class="acc__item">
+        <summary>How fast do I get a replacement card?</summary>
+        <div class="acc__body">
+          <p>A virtual card is available in the app immediately so you can keep paying. A physical card arrives in 3–5 business days, or next business day if you pay for expedited shipping. There's no fee for the standard replacement.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>How long does a dispute take?</summary>
+        <div class="acc__body">
+          <p>We issue provisional credit within one business day for card disputes and complete the investigation within 10 business days for most cases, 45 days for complex ones. You'll get a written decision either way.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>Do you ever ask for my password or a code?</summary>
+        <div class="acc__body">
+          <p>Never. Not on a call, not by text, not by email. If someone claiming to be from Meridian asks for a one-time code or your password, it's a scam — hang up and call the number on your card.</p>
+        </div>
+      </details>
+    </div>
+
+    <h3 class="mt-3">App &amp; online banking</h3>
+    <div class="acc">
+      <details class="acc__item">
+        <summary>I'm locked out of online banking</summary>
+        <div class="acc__body">
+          <p>After five failed attempts we lock the profile for 30 minutes as a precaution. You can unlock it yourself with the "Forgot password" link and a code to your registered phone, or call us if the phone number has changed.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>Can I use the app on more than one device?</summary>
+        <div class="acc__body">
+          <p>Yes — up to five devices. Each one is registered individually and shows up in Settings → Devices, where you can revoke access for any device at any time.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>Do you sell my data?</summary>
+        <div class="acc__body">
+          <p>No. We don't sell customer data and we don't share transaction-level data with advertisers. See the <a href="#privacy">privacy section</a> below for the full detail.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ── Company info ─────────────────────────────────────────────────────── -->
+<section class="sec sec--cream">
+  <div class="wrap wrap--wide">
+    <div class="grid grid--3">
+      <div class="card card--flat" id="accessibility">
+        <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><path d="M4.5 9.5h15M12 9.5V15m0 0-3 6m3-6 3 6"/></svg></span>
+        <h3>Accessibility</h3>
+        <p>Our app and website meet WCAG 2.2 AA. If something doesn't work with your screen reader, keyboard, or assistive technology, tell us and we'll fix it.</p>
+        <ul class="icon-list mt-2">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Full keyboard navigation and visible focus states</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Screen-reader labels on every control</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Large-print and braille statements on request</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Video calls with a sign-language interpreter</span></li>
+        </ul>
+      </div>
+
+      <div class="card card--flat" id="privacy">
+        <span class="card__icon card__icon--mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.6 3.2 8.4 7.5 9.4 4.3-1 7.5-4.8 7.5-9.4V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+        <h3>Privacy &amp; terms</h3>
+        <p>We collect what we need to run your accounts and meet our legal obligations — nothing more. We don't sell personal data.</p>
+        <ul class="icon-list mt-2">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>No sale of customer data, ever</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Opt out of marketing in one tap</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Download a copy of your data any time</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Clear retention limits on closed accounts</span></li>
+        </ul>
+      </div>
+
+      <div class="card card--flat" id="careers">
+        <span class="card__icon card__icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg></span>
+        <h3>Careers at Meridian</h3>
+        <p>We hire bankers, engineers and fraud analysts who like talking to customers. Remote-friendly, with 14 offices and a published pay range on every role.</p>
+        <ul class="icon-list mt-2">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Salary ranges published on every posting</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>16 weeks parental leave, fully paid</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>401(k) match up to 6%</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>No degree required for most branch roles</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

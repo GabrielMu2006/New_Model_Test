@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Calculator — browser self test</title>
+<style>
+  body { margin: 0; background: #0f1216; color: #cfd8e3;
+         font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  /* The frame must stay visible and unoccluded: headless Chrome gives an
+     offscreen iframe a 0x0 layout and throttles it, which would break every
+     geometry assertion below. */
+  #frame { display: block; width: 900px; height: 820px; border: 0; }
+  pre { margin: 0; padding: 14px; white-space: pre-wrap; }
+</style>
+<script>
+  // Start from a clean slate: never inherit a previous run's persisted history.
+  try { localStorage.removeItem('calculator.v1'); } catch (err) { /* ignore */ }
+</script>
+</head>
+<body>
+<pre id="out">running…</pre>
+<iframe id="frame" src="index.html" title="calculator under test"></iframe>
+<script src="selftest.js"></script>
+</body>
+</html>

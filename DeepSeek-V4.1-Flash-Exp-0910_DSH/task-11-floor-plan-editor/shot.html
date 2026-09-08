@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Floor Plan Editor — screenshot harness</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0f1216; }
+  iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+</style>
+<script>
+  // Start from the demo plan, never from a previous run's autosave.
+  try { localStorage.removeItem('floorplan-editor.v1'); } catch (err) { /* ignore */ }
+</script>
+</head>
+<body>
+<script>
+  var frame = document.createElement('iframe');
+  frame.src = 'index.html';
+  document.body.appendChild(frame);
+
+  var tries = 0;
+  (function wait() {
+    var w;
+    try { w = frame.contentWindow; } catch (err) { w = null; }
+    if (!(w && w.FloorPlan && w.FloorPlan.state.walls.length)) {
+      if (tries++ < 120) setTimeout(wait, 50);
+      return;
+    }
+    var F = w.FloorPlan;
+    F.fit();
+    // Select the largest room so its dimension lines are visible.
+    var room = F.rooms()[0];
+    var p = F.toScreen(room.centroid);
+    var cv = w.document.getElementById('cv');
+    var r = cv.getBoundingClientRect();
+    function ev(type) {
+      return new w.PointerEvent(type, {
+        bubbles: true, cancelable: true,
+        clientX: r.left + p.x, clientY: r.top + p.y,
+        pointerId: 1, pointerType: 'mouse', isPrimary: true,
+        button: 0, buttons: type === 'pointerup' ? 0 : 1
+      });
+    }
+    cv.dispatchEvent(ev('pointerdown'));
+    cv.dispatchEvent(ev('pointerup'));
+  })();
+</script>
+</body>
+</html>

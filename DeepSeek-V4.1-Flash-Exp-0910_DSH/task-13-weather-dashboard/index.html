@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-sky="clear-day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<title>Skylight — Weather Dashboard</title>
+<meta name="description" content="Skylight is a polished weather dashboard: current conditions, an hourly curve, a 7-day outlook, air quality and live ambient weather effects.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='7' fill='%23ffd166'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ── Ambient sky ─────────────────────────────────────────────────── -->
+<div class="sky" id="sky" aria-hidden="true">
+  <canvas id="skyFx"></canvas>
+  <div class="sky__orb" id="skyOrb"></div>
+  <div class="sky__veil"></div>
+</div>
+
+<!-- ── Top bar ─────────────────────────────────────────────────────── -->
+<header class="topbar">
+  <a class="brand" href="#" id="brand" aria-label="Skylight weather dashboard, reload">
+    <span class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="9" r="3.4"/>
+        <path d="M9 2.2v1.6M9 14.2v1.6M2.2 9h1.6M14.2 9h1.6M4.2 4.2l1.1 1.1M12.7 12.7l1.1 1.1M13.8 4.2l-1.1 1.1M5.3 12.7l-1.1 1.1"/>
+        <path d="M11.5 19.6h7.1a3 3 0 0 0 .4-6 4.2 4.2 0 0 0-7.9-.9 3.4 3.4 0 0 0 .4 6.9Z" fill="currentColor" stroke="none" opacity=".85"/>
+      </svg>
+    </span>
+    <span class="brand__text"><b>Skylight</b><i>weather</i></span>
+  </a>
+
+  <div class="topbar__search">
+    <div class="search" id="search">
+      <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/>
+      </svg>
+      <input id="searchInput" type="text" role="combobox" aria-expanded="false"
+             aria-controls="searchList" aria-autocomplete="list" autocomplete="off"
+             spellcheck="false" placeholder="Search a city…" aria-label="Search for a city">
+      <button class="search__clear" id="searchClear" type="button" hidden aria-label="Clear search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <div class="search__spin" id="searchSpin" hidden aria-hidden="true"></div>
+      <ul class="search__list" id="searchList" role="listbox" aria-label="City results" hidden></ul>
+    </div>
+  </div>
+
+  <div class="topbar__tools">
+    <div class="seg" role="group" aria-label="Temperature units">
+      <button class="seg__btn is-on" id="unitC" type="button" aria-pressed="true">°C</button>
+      <button class="seg__btn" id="unitF" type="button" aria-pressed="false">°F</button>
+    </div>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch to light theme" title="Toggle light / dark">
+      <svg class="icon-btn__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2"/><path d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/>
+      </svg>
+      <svg class="icon-btn__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.7 8.7 0 1 0 11.1 11.1Z"/>
+      </svg>
+    </button>
+    <button class="icon-btn" id="refreshBtn" type="button" aria-label="Refresh weather data" title="Refresh">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1"/><path d="M20.7 3.6v4.6h-4.6"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ── Main ────────────────────────────────────────────────────────── -->
+<main class="wrap" id="main">
+
+  <!-- Hero -->
+  <section class="hero card card--bare" id="hero" aria-labelledby="heroPlace">
+    <div class="hero__head">
+      <div class="hero__place">
+        <h1 id="heroPlace">
+          <span id="placeName">—</span>
+          <span class="hero__country" id="placeRegion"></span>
+        </h1>
+        <p class="hero__meta">
+          <span id="localTime">—</span>
+          <span class="dot" aria-hidden="true">·</span>
+          <span id="updateAge">updating…</span>
+          <span class="badge" id="sourceBadge" title="Data source">live</span>
+        </p>
+      </div>
+      <div class="hero__nav">
+        <button class="pill" id="locateBtn" type="button" title="Use my location">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/>
+          </svg>
+          <span>My location</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="hero__body">
+      <div class="hero__now">
+        <div class="hero__icon" id="heroIcon" aria-hidden="true"></div>
+        <div class="hero__temp">
+          <span class="hero__value" id="tempNow">—</span>
+          <span class="hero__unit" id="tempUnit">°C</span>
+        </div>
+        <p class="hero__cond" id="condText">—</p>
+        <p class="hero__sub">
+          Feels like <b id="feelsLike">—</b>
+          <span class="dot" aria-hidden="true">·</span>
+          <span id="hiLo">—</span>
+        </p>
+        <ul class="hero__chips" id="heroChips"></ul>
+      </div>
+
+      <div class="hero__spark">
+        <div class="hero__spark-head">
+          <h2>Next 12 hours</h2>
+          <span class="hint" id="sparkHint">temperature &amp; chance of rain</span>
+        </div>
+        <div class="spark" id="heroSpark"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hourly -->
+  <section class="card" aria-labelledby="hourlyTitle">
+    <div class="card__head">
+      <div>
+        <h2 id="hourlyTitle">Hourly forecast</h2>
+        <p class="card__sub" id="hourlySub">Next 24 hours</p>
+      </div>
+      <div class="card__tools">
+        <button class="chip" id="hourlyToggle" type="button" aria-pressed="false">
+          <span class="chip__dot" aria-hidden="true"></span>Show details
+        </button>
+      </div>
+    </div>
+    <div class="hourly" id="hourly" role="list" aria-label="Hourly forecast"></div>
+  </section>
+
+  <!-- Daily -->
+  <section class="card" aria-labelledby="dailyTitle">
+    <div class="card__head">
+      <div>
+        <h2 id="dailyTitle">7-day outlook</h2>
+        <p class="card__sub" id="dailySub">High / low range</p>
+      </div>
+      <div class="card__tools">
+        <span class="legend"><i class="legend__swatch"></i>temperature range</span>
+      </div>
+    </div>
+    <div class="daily" id="daily" role="list" aria-label="Seven day forecast"></div>
+  </section>
+
+  <!-- Details -->
+  <section class="grid" id="details" aria-label="Current conditions detail"></section>
+
+  <p class="foot" id="foot">
+    <span>Data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> · updated automatically every 10 minutes</span>
+    <span class="foot__sep" aria-hidden="true">·</span>
+    <span id="footCoords">—</span>
+  </p>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="js/weather.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/api.js"></script>
+<script src="js/effects.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

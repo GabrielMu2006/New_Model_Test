@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Business Banking — Meridian Bank</title>
+<meta name="description" content="Business checking with no transaction limits, treasury management, merchant services at 2.6% + 10¢, and credit lines from 9.25% — for sole traders to 500-seat teams.">
+<meta name="theme-color" content="#061527">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Meridian Bank">
+<meta property="og:title" content="{{title}} — Meridian Bank">
+<meta property="og:description" content="{{description}}">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BankOrCreditUnion","name":"Meridian Bank","slogan":"Banking that keeps up with you","url":"https://example.invalid/","telephone":"+1-800-555-0142","address":{"@type":"PostalAddress","streetAddress":"400 Harbor Street","addressLocality":"Boston","addressRegion":"MA","postalCode":"02210","addressCountry":"US"},"disclaimer":"Meridian Bank is a fictional brand created for a front-end design demo."}
+</script>
+</head>
+<body class="">
+<a class="skip" href="#main">Skip to main content</a>
+
+<!-- ── Utility bar ─────────────────────────────────────────────────────── -->
+<div class="util">
+  <div class="wrap wrap--wide util__in">
+    <div class="util__group">
+      <span style="display:inline-flex;align-items:center;gap:8px"><span class="util__dot" aria-hidden="true"></span> All systems operational</span>
+      <a href="security.html">Security center</a>
+      <a href="help.html">Help &amp; support</a>
+    </div>
+    <div class="util__group">
+      <span class="nowrap">Lost or stolen card? <a href="tel:+18005550142">1-800-555-0142</a></span>
+      <a href="login.html">Log in</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Header ──────────────────────────────────────────────────────────── -->
+<header class="hdr" id="hdr">
+  <div class="wrap wrap--wide hdr__in">
+    <a class="brand" href="index.html" aria-label="Meridian Bank — home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="8.3"/>
+          <path d="M3.7 12h16.6"/>
+          <path d="M12 3.7c2.7 2.4 2.7 14.2 0 16.6M12 3.7c-2.7 2.4-2.7 14.2 0 16.6"/>
+        </svg>
+      </span>
+      <span class="brand__text"><b>Meridian</b><i>Bank</i></span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <div class="nav__item">
+        <button class="nav__link" type="button" data-menu="menu-personal" aria-expanded="false" aria-controls="menu-personal">
+          Personal
+          <svg class="nav__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu" id="menu-personal" role="group" aria-label="Personal banking">
+          <a class="menu__link" href="personal.html#checking">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v8m4.5-8v8m5-8v8M19 10v8M3 21h18"/></svg>
+            <span><b>Everyday Checking</b><span>No monthly fee with direct deposit</span></span>
+          </a>
+          <a class="menu__link" href="personal.html#savings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11m5 9V6m5 14v-6m5 6V8"/></svg>
+            <span><b>High-Yield Savings</b><span>4.35% APY, no minimum balance</span></span>
+          </a>
+          <a class="menu__link" href="personal.html#cards">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.6"/><path d="M2.5 10h19M6 15h4"/></svg>
+            <span><b>Credit Cards</b><span>2% back on everything, $0 annual fee</span></span>
+          </a>
+          <a class="menu__link" href="loans.html#mortgage">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2"/><path d="M5.5 10.4V20h13v-9.6"/><path d="M10 20v-5h4v5"/></svg>
+            <span><b>Mortgages</b><span>From 6.375% (6.51% APR), fixed 30-year</span></span>
+          </a>
+          <a class="menu__link" href="loans.html#auto">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16.5V12l2-5h12l2 5v4.5"/><path d="M4 16.5h16M7 16.5v2m10-2v2"/><circle cx="8" cy="12.5" r="1.1"/><circle cx="16" cy="12.5" r="1.1"/></svg>
+            <span><b>Auto Loans</b><span>From 5.49% APR, decisions in minutes</span></span>
+          </a>
+          <div class="menu__sep"></div>
+          <a class="menu__link" href="personal.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            <span><b>All personal banking</b><span>Accounts, cards, and tools</span></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="nav__item">
+        <button class="nav__link" type="button" data-menu="menu-business" aria-expanded="false" aria-controls="menu-business">
+          Business
+          <svg class="nav__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu" id="menu-business" role="group" aria-label="Business banking">
+          <a class="menu__link" href="business.html#checking">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9.5 20v-6h5v6"/></svg>
+            <span><b>Business Checking</b><span>Unlimited transactions, no cash limits</span></span>
+          </a>
+          <a class="menu__link" href="business.html#treasury">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 7.5h7a2.8 2.8 0 0 1 0 5.6H8.5a2.8 2.8 0 0 0 0 5.6H17"/></svg>
+            <span><b>Treasury Management</b><span>Cash positioning, fraud controls, APIs</span></span>
+          </a>
+          <a class="menu__link" href="business.html#merchant">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.6"/><path d="M2.5 10h19"/></svg>
+            <span><b>Merchant Services</b><span>2.6% + 10¢ per in-person payment</span></span>
+          </a>
+          <a class="menu__link" href="business.html#lending">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19h16M6.5 19V9m5.5 10V9m5.5 10V9"/><path d="M12 4.5 4 8h16Z"/></svg>
+            <span><b>Business Lending</b><span>Lines of credit from 9.25%, SBA loans</span></span>
+          </a>
+          <div class="menu__sep"></div>
+          <a class="menu__link" href="business.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            <span><b>All business banking</b><span>From sole traders to 500-seat teams</span></span>
+          </a>
+        </div>
+      </div>
+
+      <a class="nav__link" data-navlink="loans" href="loans.html">Loans</a>
+      <a class="nav__link" data-navlink="rates" href="rates.html">Rates</a>
+      <a class="nav__link" data-navlink="security" href="security.html">Security</a>
+      <a class="nav__link" data-navlink="help" href="help.html">Help</a>
+    </nav>
+
+    <div class="hdr__cta">
+      <a class="btn btn--ghost btn--sm" href="login.html">Log in</a>
+      <a class="btn btn--sm" href="open-account.html">Open an account</a>
+      <button class="burger" type="button" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ── Mobile drawer ───────────────────────────────────────────────────── -->
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel">
+    <div class="drawer__top">
+      <span class="brand__text"><b>Meridian</b><i>Bank</i></span>
+      <button class="drawer__close" type="button" data-drawer-close aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="drawer__body">
+      <details class="dgroup">
+        <summary>Personal</summary>
+        <div class="dgroup__list">
+          <a href="personal.html#checking">Everyday Checking</a>
+          <a href="personal.html#savings">High-Yield Savings</a>
+          <a href="personal.html#cards">Credit Cards</a>
+          <a href="loans.html#mortgage">Mortgages</a>
+          <a href="loans.html#auto">Auto Loans</a>
+        </div>
+      </details>
+      <details class="dgroup">
+        <summary>Business</summary>
+        <div class="dgroup__list">
+          <a href="business.html#checking">Business Checking</a>
+          <a href="business.html#treasury">Treasury Management</a>
+          <a href="business.html#merchant">Merchant Services</a>
+          <a href="business.html#lending">Business Lending</a>
+        </div>
+      </details>
+      <a class="dlink" href="loans.html">Loans</a>
+      <a class="dlink" href="rates.html">Rates</a>
+      <a class="dlink" href="security.html">Security</a>
+      <a class="dlink" href="help.html">Help &amp; support</a>
+      <div class="drawer__cta">
+        <a class="btn btn--block" href="open-account.html">Open an account</a>
+        <a class="btn btn--ghost btn--block" href="login.html">Log in</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<main id="main">
+<section class="page-head">
+  <div class="wrap wrap--wide">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span>Business banking</span>
+    </nav>
+    <div class="grid grid--split">
+      <div>
+        <p class="eyebrow">Business banking</p>
+        <h1>Banking that scales when you do</h1>
+        <p class="lead">One relationship from your first invoice to your five hundredth employee. Unlimited transactions, real underwriting, and a banker who answers when you call.</p>
+      </div>
+      <div class="card card--ink">
+        <h3 class="mb-0">Talk to a business banker</h3>
+        <p class="mt-2">Tell us what you're building. We'll come back with an account structure, a lending range, and a realistic timeline — usually within one business day.</p>
+        <div class="btn-row">
+          <a class="btn btn--light" href="help.html#contact">Request a call</a>
+          <a class="btn btn--ghost" style="--btn-fg:#fff;--btn-bd:rgba(255,255,255,.3)" href="#checking">Compare accounts</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Checking ─────────────────────────────────────────────────────────── -->
+<section class="sec" id="checking">
+  <div class="wrap wrap--wide">
+    <div class="sec-head">
+      <p class="eyebrow">Business checking</p>
+      <h2>Three tiers. No transaction limits on any of them.</h2>
+      <p class="lead">No cash deposit caps, no per-item fees, and no charge for the first 500 outgoing transfers each month on every tier.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="tbl">
+        <caption>Monthly fees are waived for the first 24 months on all new business accounts. Sample data for this demo.</caption>
+        <thead>
+          <tr><th scope="col">Feature</th><th scope="col">Starter</th><th scope="col">Growth</th><th scope="col">Scale</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Monthly fee (after waiver)</td><td>$0</td><td class="rate">$25</td><td class="rate">$75</td></tr>
+          <tr><td>Transactions included</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><td>Cash deposited per month</td><td>Up to $10,000</td><td>Up to $75,000</td><td>Unlimited</td></tr>
+          <tr><td>Sub-accounts</td><td>2</td><td>10</td><td>Up to 20</td></tr>
+          <tr><td>Users with permissions</td><td>2</td><td>10</td><td>Unlimited</td></tr>
+          <tr><td>Same-day ACH</td><td class="rate rate--hi">Included</td><td class="rate rate--hi">Included</td><td class="rate rate--hi">Included</td></tr>
+          <tr><td>Earnings credit on balances</td><td>—</td><td>0.35%</td><td class="rate rate--hi">0.90%</td></tr>
+          <tr><td>Positive pay &amp; fraud controls</td><td>—</td><td class="rate rate--hi">Included</td><td class="rate rate--hi">Included</td></tr>
+          <tr><td>API access</td><td>—</td><td>Read-only</td><td>Full</td></tr>
+          <tr><td>Dedicated banker</td><td>Shared team</td><td>Named contact</td><td>Named team of 3</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid grid--3 mt-3">
+      <div class="card card--flat">
+        <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span>
+        <h4>Open in a day</h4>
+        <p class="mb-0">Sole traders open online in about 15 minutes. Entities with an EIN and formation documents typically clear within one business day.</p>
+      </div>
+      <div class="card card--flat">
+        <span class="card__icon card__icon--mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.4"/><path d="M3 10h18"/></svg></span>
+        <h4>Cards with real controls</h4>
+        <p class="mb-0">Issue a virtual card per vendor, set a monthly cap, and freeze it from your phone. Every transaction lands in your ledger with the receipt attached.</p>
+      </div>
+      <div class="card card--flat">
+        <span class="card__icon card__icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></span>
+        <h4>Books that reconcile</h4>
+        <p class="mb-0">Direct feeds to QuickBooks, Xero and NetSuite, plus a rules engine that codes recurring vendors automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Treasury ─────────────────────────────────────────────────────────── -->
+<section class="sec sec--cream" id="treasury">
+  <div class="wrap wrap--wide">
+    <div class="grid grid--split">
+      <div>
+        <p class="eyebrow">Treasury management</p>
+        <h2>See every dollar, in every account, at 7 a.m.</h2>
+        <p class="lead">Consolidate balances across banks, automate your sweep, and put real controls between your money and a fraudulent wire.</p>
+        <ul class="icon-list mt-2">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19h16M7 19V9m5 10V9m5 10V9"/><path d="M12 4.5 4 8h16Z"/></svg>
+            <span><b>Cash positioning</b> — one dashboard for balances at Meridian and your other banks, refreshed every 15 minutes.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.6 3.2 8.4 7.5 9.4 4.3-1 7.5-4.8 7.5-9.4V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>
+            <span><b>Positive pay</b> — we check every cheque and ACH against the list you send us and flag exceptions before they clear.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M12 4v16"/><circle cx="12" cy="12" r="9"/></svg>
+            <span><b>Automated sweeps</b> — move excess cash into a money market account overnight, and back before payroll runs.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4"/><path d="M4 12h16"/></svg>
+            <span><b>API &amp; file transfers</b> — REST API, SFTP batch files, and ISO 20022 support with sandbox access from day one.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="card card--flat pad-lg">
+        <h3>Built for the way fraud actually happens</h3>
+        <p>Business email compromise is the most expensive scam in commercial banking. Our controls are designed around it:</p>
+        <div class="timeline" style="margin-top:22px">
+          <div class="timeline__item">
+            <span class="timeline__num" aria-hidden="true">1</span>
+            <div>
+              <h4>Dual approval on every outgoing wire</h4>
+              <p>No single login can move money out. Approvers are notified out-of-band, not by email.</p>
+            </div>
+          </div>
+          <div class="timeline__item">
+            <span class="timeline__num" aria-hidden="true">2</span>
+            <div>
+              <h4>Verified payee lists</h4>
+              <p>New beneficiaries sit in a 24-hour cooling-off period and require a callback to a number you registered.</p>
+            </div>
+          </div>
+          <div class="timeline__item">
+            <span class="timeline__num" aria-hidden="true">3</span>
+            <div>
+              <h4>Anomaly alerts in plain language</h4>
+              <p>"This payment is 4× your usual amount to a payee added yesterday." That's the alert, word for word.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Merchant ─────────────────────────────────────────────────────────── -->
+<section class="sec" id="merchant">
+  <div class="wrap wrap--wide">
+    <div class="sec-head">
+      <p class="eyebrow">Merchant services</p>
+      <h2>Take payments without giving away the margin</h2>
+      <p class="lead">Flat, published pricing. No monthly gateway fee, no PCI compliance fee, no long-term contract, and settlement the next business day.</p>
+    </div>
+
+    <div class="grid grid--3">
+      <div class="card card--flat">
+        <p class="card__kicker">In person</p>
+        <div class="rate-big"><b>2.6%</b><span>+ 10¢ per tap, dip or swipe</span></div>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Free terminal, or use tap-to-phone</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Offline mode keeps taking payments</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Tip prompts you control</li>
+        </ul>
+      </div>
+      <div class="card card--flat">
+        <p class="card__kicker">Online</p>
+        <div class="rate-big"><b>2.9%</b><span>+ 30¢ per transaction</span></div>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Hosted checkout or drop-in SDK</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Apple Pay, Google Pay, ACH, and cards</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Automatic card updater reduces declines</li>
+        </ul>
+      </div>
+      <div class="card card--flat">
+        <p class="card__kicker">Invoicing</p>
+        <div class="rate-big"><b>1%</b><span>capped at $10 per invoice</span></div>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Send from the app or your own domain</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Automatic reminders and payment links</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Customers pay by card, ACH or bank transfer</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Lending ──────────────────────────────────────────────────────────── -->
+<section class="sec sec--cream" id="lending">
+  <div class="wrap wrap--wide">
+    <div class="sec-head">
+      <p class="eyebrow">Business lending</p>
+      <h2>Credit sized to the opportunity</h2>
+      <p class="lead">From a $10,000 line of credit to a $5 million term loan. Decisions are made by underwriters in your region who can visit your premises.</p>
+    </div>
+
+    <div class="calc" data-calc="loan" data-fee-pct="1.5">
+      <div class="calc__panel">
+        <h3>Estimate a term loan</h3>
+        <div class="calc__row">
+          <label for="bzAmount">Loan amount <output data-out="amountLabel">$150,000</output></label>
+          <input class="range" id="bzAmount" data-in="amount" type="range" min="10000" max="500000" step="5000" value="150000">
+        </div>
+        <div class="calc__row">
+          <span class="label" id="bzTermLabel">Term</span>
+          <div class="segctl" data-in="term" role="group" aria-labelledby="bzTermLabel">
+            <button type="button" data-value="24" aria-pressed="false">2 yr</button>
+            <button type="button" data-value="36" aria-pressed="false">3 yr</button>
+            <button type="button" data-value="60" aria-pressed="true">5 yr</button>
+            <button type="button" data-value="84" aria-pressed="false">7 yr</button>
+            <button type="button" data-value="120" aria-pressed="false">10 yr</button>
+          </div>
+        </div>
+        <div class="calc__row">
+          <label for="bzRate">Rate</label>
+          <select class="select" id="bzRate" data-in="rate">
+            <option value="9.25" selected>9.25% — secured line of credit</option>
+            <option value="10.50">10.50% — unsecured term loan</option>
+            <option value="8.75">8.75% — SBA 7(a), variable</option>
+            <option value="7.95">7.95% — equipment loan, 5-year</option>
+            <option value="7.25">7.25% — commercial real estate</option>
+          </select>
+        </div>
+        <p class="hint">A 1.5% origination fee is assumed and included in the APR.</p>
+      </div>
+
+      <div class="calc__result">
+        <p class="calc__k">Estimated monthly payment</p>
+        <p class="calc__amount" data-out="monthly">$3,132<small>/ month</small></p>
+
+        <div class="calc__bar">
+          <i data-out="barPrincipal" style="background:#3D8BEA;width:79.82%"></i>
+          <i data-out="barInterest" style="background:#00A574;width:20.18%"></i>
+        </div>
+        <div class="calc__legend">
+          <span><em style="background:#3D8BEA"></em>Principal</span>
+          <span><em style="background:#00A574"></em>Interest</span>
+        </div>
+
+        <div class="calc__rows">
+          <div><span>Total interest</span><b data-out="interest">$37,919</b></div>
+          <div><span>Total cost of credit</span><b data-out="total">$187,919</b></div>
+          <div><span>APR with origination fee</span><b data-out="apr">9.900%</b></div>
+        </div>
+        <p class="calc__note">Estimate only. Commercial credit is underwritten individually; your rate and structure will reflect your financials and collateral.</p>
+      </div>
+    </div>
+
+    <div class="tablewrap mt-3">
+      <table class="tbl">
+        <thead><tr><th scope="col">Product</th><th scope="col">Amount</th><th scope="col">Rate from</th><th scope="col">Decision time</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Business line of credit</strong></td><td>$10,000 – $5,000,000</td><td class="rate rate--hi">9.25% APR</td><td>2 business days</td></tr>
+          <tr><td><strong>Term loan</strong></td><td>$25,000 – $5,000,000</td><td class="rate">10.50%</td><td>3–5 business days</td></tr>
+          <tr><td><strong>SBA 7(a)</strong></td><td>Up to $5,000,000</td><td class="rate rate--hi">8.75%</td><td>2–3 weeks</td></tr>
+          <tr><td><strong>Equipment financing</strong></td><td>$15,000 – $2,000,000</td><td class="rate rate--hi">7.95%</td><td>3 business days</td></tr>
+          <tr><td><strong>Commercial real estate</strong></td><td>$250,000 – $25,000,000</td><td class="rate">7.25%</td><td>3–4 weeks</td></tr>
+          <tr><td><strong>Merchant cash advance</strong></td><td>$5,000 – $250,000</td><td class="rate">1.25 factor rate</td><td>Same day</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── Payroll ──────────────────────────────────────────────────────────── -->
+<section class="sec" id="payroll">
+  <div class="wrap wrap--wide">
+    <div class="grid grid--split">
+      <div>
+        <p class="eyebrow">Payroll &amp; people</p>
+        <h2>Run payroll the same day you approve it</h2>
+        <p class="lead">Included with Growth and Scale business checking at no extra cost. Federal and state filings, direct deposit, contractor payments and W-2s in one place.</p>
+        <div class="btn-row mt-2">
+          <a class="btn" href="help.html#contact">Talk to a specialist</a>
+          <a class="btn btn--ghost" href="rates.html#fees">See business fees</a>
+        </div>
+      </div>
+      <div class="card card--flat">
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Same-day direct deposit for W-2 and 1099 workers</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Automatic federal, state and local tax filings</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> W-2 and 1099-NEC preparation and e-filing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Time tracking, PTO balances and scheduling</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Health insurance and 401(k) administration through partners</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Multi-state registration handled for you</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────────────────────── -->
+<section class="sec sec--tight">
+  <div class="wrap wrap--wide">
+    <div class="cta-band">
+      <div class="cta-band__in">
+        <div>
+          <h2 class="mb-0">Open a business account this week</h2>
+          <p class="lead mt-2">Sole traders can finish online in 15 minutes. Entities with an EIN usually clear in one business day — and the first 24 months of fees are on us.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn--lg btn--light" href="open-account.html">Start an application</a>
+          <a class="btn btn--lg btn--ghost" style="--btn-fg:#fff;--btn-bd:rgba(255,255,255,.32)" href="help.html#contact">Request a call</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────── -->
+<footer class="ft">
+  <div class="wrap wrap--wide">
+    <div class="ft__grid">
+      <div class="ft__brand">
+        <span class="brand">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="12" cy="12" r="8.3"/>
+              <path d="M3.7 12h16.6"/>
+              <path d="M12 3.7c2.7 2.4 2.7 14.2 0 16.6M12 3.7c-2.7 2.4-2.7 14.2 0 16.6"/>
+            </svg>
+          </span>
+          <span class="brand__text"><b>Meridian</b><i>Bank</i></span>
+        </span>
+        <p class="ft__blurb">Banking that keeps up with you. Member FDIC · Equal Housing Lender.</p>
+        <div class="ft__social mt-2">
+          <a href="help.html" aria-label="Contact Meridian Bank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5 12 13l8-6.5"/><rect x="3" y="5" width="18" height="14" rx="2.4"/></svg>
+          </a>
+          <a href="tel:+18005550142" aria-label="Call Meridian Bank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.6l1.6 4-2.1 1.5a12 12 0 0 0 5.4 5.4l1.5-2.1 4 1.6V19a1.9 1.9 0 0 1-2.1 1.9A15.6 15.6 0 0 1 3.1 6.1 1.9 1.9 0 0 1 5 4Z"/></svg>
+          </a>
+          <a href="help.html#locations" aria-label="Find a branch">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Personal</h4>
+        <ul>
+          <li><a href="personal.html#checking">Checking</a></li>
+          <li><a href="personal.html#savings">Savings &amp; CDs</a></li>
+          <li><a href="personal.html#cards">Credit cards</a></li>
+          <li><a href="loans.html#mortgage">Mortgages</a></li>
+          <li><a href="loans.html#auto">Auto loans</a></li>
+          <li><a href="loans.html#personal">Personal loans</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Business</h4>
+        <ul>
+          <li><a href="business.html#checking">Business checking</a></li>
+          <li><a href="business.html#treasury">Treasury management</a></li>
+          <li><a href="business.html#merchant">Merchant services</a></li>
+          <li><a href="business.html#lending">Lending &amp; credit</a></li>
+          <li><a href="business.html#payroll">Payroll &amp; HR tools</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="help.html">Help center</a></li>
+          <li><a href="help.html#contact">Contact us</a></li>
+          <li><a href="help.html#locations">Branch &amp; ATM finder</a></li>
+          <li><a href="security.html">Report fraud</a></li>
+          <li><a href="security.html#checklist">Security checklist</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="rates.html">Rates &amp; fees</a></li>
+          <li><a href="help.html#accessibility">Accessibility</a></li>
+          <li><a href="help.html#privacy">Privacy &amp; terms</a></li>
+          <li><a href="help.html#careers">Careers</a></li>
+          <li><a href="index.html#about">About Meridian</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ft__demo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <p><strong style="color:#fff">This is a design demo.</strong> Meridian Bank is a fictional institution created to showcase this website. It is not a real bank, holds no deposits, and every rate, figure, and testimonial on this site is illustrative sample data. Do not enter real personal or financial information anywhere on this site.</p>
+    </div>
+
+    <div class="ft__bar">
+      <div class="ft__legal">
+        <span>© 2026 Meridian Bank, N.A.</span>
+        <span>Member FDIC</span>
+        <span>Equal Housing Lender</span>
+        <a href="help.html#privacy">Privacy</a>
+        <a href="help.html#privacy">Terms</a>
+      </div>
+      <span>Routing number 011 000 042 (sample)</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/finance.js" defer></script>
+<script src="assets/js/calculators.js" defer></script>
+</body>
+</html>

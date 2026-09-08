@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shelf — book tracker</title>
+<meta name="description" content="Track what you are reading, what you have finished, and what is next. Works offline; your library stays in this browser.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23f2b544'/><path d='M9 7h9a5 5 0 0 1 5 5v13H14a5 5 0 0 0-5 5z' fill='%23241a05'/></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============================================================ brand -->
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">S</div>
+    <div class="brand-name">Shelf<em>.</em></div>
+  </div>
+
+  <!-- =========================================================== topbar -->
+  <header class="topbar">
+    <button class="btn btn-icon btn-ghost" id="btn-sidebar" title="Show filters" aria-label="Show filters">☰</button>
+
+    <div class="search" id="search-wrap">
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <label class="sr-only" for="search">Search your library</label>
+      <input id="search" type="search" placeholder="Search title, author, tag, ISBN…" autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+    </div>
+
+    <div class="spacer"></div>
+
+    <button class="btn" id="btn-stats" title="Library statistics">Statistics</button>
+    <button class="btn" id="btn-io" title="Import or export your library">Import / Export</button>
+    <button class="btn btn-primary" id="btn-add" title="Add a book (n)">+ Add book</button>
+  </header>
+
+  <!-- ========================================================== sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="side-title">Shelf</div>
+    <nav id="status-nav" aria-label="Filter by reading status"></nav>
+
+    <div class="side-title">Genre</div>
+    <div class="side-filter" id="genre-filter"></div>
+
+    <div class="side-title">Tag</div>
+    <div class="side-filter" id="tag-filter"></div>
+
+    <div class="side-title">Format</div>
+    <div class="side-filter" id="format-filter"></div>
+
+    <div class="side-title">Rating</div>
+    <div class="side-filter" id="rating-filter"></div>
+
+    <div class="side-title">Sort by</div>
+    <select class="side-select" id="sort-select" aria-label="Sort books"></select>
+
+    <div class="side-title">Data</div>
+    <button class="nav-item" id="btn-export-json"><span class="nav-label">Export JSON</span><span class="nav-count">↓</span></button>
+    <button class="nav-item" id="btn-export-csv"><span class="nav-label">Export CSV</span><span class="nav-count">↓</span></button>
+    <button class="nav-item" id="btn-help"><span class="nav-label">Keyboard shortcuts</span><span class="nav-count">?</span></button>
+  </aside>
+
+  <!-- ============================================================= main -->
+  <main class="main" id="main">
+    <section class="stats" id="stats" aria-label="Library statistics"></section>
+
+    <div class="toolbar">
+      <h1 id="view-title">All books</h1>
+      <span class="count" id="view-count"></span>
+      <div class="spacer"></div>
+      <button class="btn btn-sm btn-ghost" id="btn-clear-filters" hidden>Clear filters</button>
+      <div class="seg" role="group" aria-label="View mode">
+        <button id="btn-view-grid" aria-pressed="true">Grid</button>
+        <button id="btn-view-list" aria-pressed="false">List</button>
+      </div>
+    </div>
+
+    <div id="view" aria-live="polite"></div>
+  </main>
+</div>
+
+<!-- ============================================================ dialogs -->
+
+<!-- add / edit ------------------------------------------------------------ -->
+<div class="overlay" id="modal-book" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="book-form-title">
+    <div class="modal-head">
+      <div>
+        <h2 id="book-form-title">Add a book</h2>
+        <div class="sub" id="book-form-sub">Only the title is required.</div>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn btn-icon btn-ghost" data-close aria-label="Close">✕</button>
+    </div>
+
+    <form class="modal-body" id="book-form" novalidate>
+      <div class="field">
+        <label for="f-title">Title</label>
+        <input id="f-title" name="title" maxlength="300" autocomplete="off" placeholder="e.g. Piranesi" required>
+        <div class="err" id="e-title"></div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="f-author">Author</label>
+          <input id="f-author" name="author" maxlength="200" autocomplete="off" placeholder="e.g. Susanna Clarke">
+          <div class="err" id="e-author"></div>
+        </div>
+        <div class="field">
+          <label for="f-genre">Genre</label>
+          <input id="f-genre" name="genre" maxlength="60" autocomplete="off" placeholder="e.g. Fantasy" list="genre-options">
+          <datalist id="genre-options"></datalist>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="f-isbn">ISBN</label>
+          <input id="f-isbn" name="isbn" autocomplete="off" inputmode="numeric" placeholder="978-0-571-36487-9">
+          <div class="hint" id="isbn-hint">ISBN-10 or ISBN-13 — checksum verified.</div>
+          <div class="err" id="e-isbn"></div>
+        </div>
+        <div class="field">
+          <label for="f-tags">Tags</label>
+          <input id="f-tags" name="tags" autocomplete="off" placeholder="book club, classics">
+          <div class="hint">Comma separated.</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-status">Reading status</label>
+        <div class="seg-input" id="status-input" role="group" aria-label="Reading status">
+          <button type="button" data-status="want">Want to read</button>
+          <button type="button" data-status="reading">Reading</button>
+          <button type="button" data-status="paused">Paused</button>
+          <button type="button" data-status="finished">Finished</button>
+          <button type="button" data-status="abandoned">Abandoned</button>
+        </div>
+        <input type="hidden" id="f-status" name="status" value="want">
+      </div>
+
+      <div class="field-row-3">
+        <div class="field">
+          <label for="f-pages">Pages</label>
+          <input id="f-pages" name="pageCount" inputmode="numeric" autocomplete="off" placeholder="245">
+          <div class="err" id="e-pages"></div>
+        </div>
+        <div class="field">
+          <label for="f-page">Current page</label>
+          <input id="f-page" name="currentPage" inputmode="numeric" autocomplete="off" placeholder="0">
+          <div class="err" id="e-page"></div>
+        </div>
+        <div class="field">
+          <label for="f-format">Format</label>
+          <select id="f-format" name="format">
+            <option value="print">Print</option>
+            <option value="ebook">Ebook</option>
+            <option value="audiobook">Audiobook</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="f-started">Started</label>
+          <input id="f-started" name="startedAt" type="date">
+          <div class="err" id="e-started"></div>
+        </div>
+        <div class="field">
+          <label for="f-finished">Finished</label>
+          <input id="f-finished" name="finishedAt" type="date">
+          <div class="err" id="e-finished"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Rating</label>
+        <div class="star-input" id="rating-input" role="group" aria-label="Rating">
+          <button type="button" data-star="1" aria-label="1 star">★</button>
+          <button type="button" data-star="2" aria-label="2 stars">★</button>
+          <button type="button" data-star="3" aria-label="3 stars">★</button>
+          <button type="button" data-star="4" aria-label="4 stars">★</button>
+          <button type="button" data-star="5" aria-label="5 stars">★</button>
+          <button type="button" class="clear-rating" id="rating-clear">clear</button>
+        </div>
+        <input type="hidden" id="f-rating" name="rating" value="0">
+        <div class="hint">Click the left half of a star for a half star.</div>
+      </div>
+
+      <div class="field">
+        <label for="f-notes">Notes</label>
+        <textarea id="f-notes" name="notes" maxlength="4000" placeholder="What did you think? Quotes, thoughts, who borrowed it…"></textarea>
+      </div>
+
+      <div class="field">
+        <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:13px;color:var(--text-dim)">
+          <input type="checkbox" id="f-favorite" name="favorite" style="width:auto;height:auto">
+          Mark as a favourite
+        </label>
+      </div>
+    </form>
+
+    <div class="modal-foot">
+      <button class="btn btn-danger" id="btn-delete-book" hidden>Delete</button>
+      <div class="spacer"></div>
+      <button class="btn" data-close>Cancel</button>
+      <button class="btn btn-primary" id="btn-save-book">Save book</button>
+    </div>
+  </div>
+</div>
+
+<!-- detail ----------------------------------------------------------------- -->
+<div class="overlay" id="modal-detail" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+    <div class="modal-head">
+      <div>
+        <h2 id="detail-title">Book</h2>
+        <div class="sub" id="detail-sub"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn btn-icon btn-ghost" data-close aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="detail-body"></div>
+    <div class="modal-foot">
+      <button class="btn" id="detail-edit">Edit</button>
+      <div class="spacer"></div>
+      <button class="btn" data-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- statistics ------------------------------------------------------------- -->
+<div class="overlay" id="modal-stats" hidden>
+  <div class="modal modal-wide" role="dialog" aria-modal="true" aria-labelledby="stats-title">
+    <div class="modal-head">
+      <div>
+        <h2 id="stats-title">Reading statistics</h2>
+        <div class="sub" id="stats-sub"></div>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn btn-icon btn-ghost" data-close aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="stats-body"></div>
+    <div class="modal-foot"><div class="spacer"></div><button class="btn" data-close>Close</button></div>
+  </div>
+</div>
+
+<!-- import / export --------------------------------------------------------- -->
+<div class="overlay" id="modal-io" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="io-title">
+    <div class="modal-head">
+      <div>
+        <h2 id="io-title">Import &amp; export</h2>
+        <div class="sub">Your library lives in this browser. Move it in and out as JSON or CSV.</div>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn btn-icon btn-ghost" data-close aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="section-title" style="margin-top:0">Export</div>
+      <p class="hint" style="margin-bottom:10px">
+        JSON is the complete, re-importable backup (progress history included).
+        CSV opens in any spreadsheet.
+      </p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="io-export-json">Download JSON</button>
+        <button class="btn" id="io-export-csv">Download CSV</button>
+        <button class="btn" id="io-copy-json">Copy JSON</button>
+      </div>
+
+      <div class="section-title">Import</div>
+      <div class="dropzone" id="io-drop">
+        Drop a <strong>.json</strong> backup or a Goodreads-style <strong>.csv</strong> here,
+        or <button class="btn btn-sm" id="io-browse" type="button">choose a file</button>
+        <input type="file" id="io-file" accept=".json,.csv,application/json,text/csv" hidden>
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label for="io-text">…or paste it</label>
+        <textarea class="import-area" id="io-text" placeholder="Paste JSON or CSV here"></textarea>
+      </div>
+      <div class="field">
+        <label for="io-mode">When a book already exists</label>
+        <select id="io-mode">
+          <option value="skip">Skip it — keep what I have</option>
+          <option value="merge">Merge — fill in the blanks</option>
+          <option value="replace">Replace — trust the file</option>
+        </select>
+      </div>
+      <div id="io-preview"></div>
+    </div>
+    <div class="modal-foot">
+      <div class="spacer"></div>
+      <button class="btn" data-close>Cancel</button>
+      <button class="btn btn-primary" id="io-import">Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- help -------------------------------------------------------------------- -->
+<div class="overlay" id="modal-help" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <div class="modal-head">
+      <h2 id="help-title">Keyboard shortcuts</h2>
+      <div class="spacer"></div>
+      <button class="btn btn-icon btn-ghost" data-close aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <dl class="help-list">
+        <dt><kbd>/</kbd></dt><dd>Focus the search box</dd>
+        <dt><kbd>n</kbd></dt><dd>Add a new book</dd>
+        <dt><kbd>s</kbd></dt><dd>Open statistics</dd>
+        <dt><kbd>v</kbd></dt><dd>Toggle grid / list</dd>
+        <dt><kbd>f</kbd></dt><dd>Show only favourites</dd>
+        <dt><kbd>1</kbd>–<kbd>5</kbd></dt><dd>Filter by reading status</dd>
+        <dt><kbd>0</kbd></dt><dd>Show every book</dd>
+        <dt><kbd>Esc</kbd></dt><dd>Close a dialog, or clear the search</dd>
+        <dt><kbd>?</kbd></dt><dd>This list</dd>
+      </dl>
+    </div>
+    <div class="modal-foot"><div class="spacer"></div><button class="btn" data-close>Close</button></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<script src="book-engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

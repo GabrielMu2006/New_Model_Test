@@ -1,0 +1,15 @@
+{
+  "name": "meridian-bank-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Meridian Bank — a multi-page retail bank website built as a front-end design demo. No dependencies, no framework.",
+  "scripts": {
+    "build": "node build.js",
+    "test": "node tests/finance.test.js && node tools/interact.js",
+    "audit": "node tools/audit.js && node tools/audit.js --mobile",
+    "shots": "node tools/screenshot.js --slices 4",
+    "shots:mobile": "node tools/screenshot.js --mobile --slices 6",
+    "verify": "npm run build && npm test && npm run audit"
+  },
+  "license": "MIT"
+}

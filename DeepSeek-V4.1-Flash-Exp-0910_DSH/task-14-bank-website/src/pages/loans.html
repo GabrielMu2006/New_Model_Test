@@ -1,0 +1,434 @@
+---
+title: Loans &amp; Mortgages
+description: Mortgage rates from 6.375%, auto loans from 5.49% APR and personal loans from 8.99%. Run the numbers with our calculators, then apply online in minutes.
+nav: loans
+scripts: calculators
+---
+
+<section class="page-head">
+  <div class="wrap wrap--wide">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span>Loans</span>
+    </nav>
+    <div class="grid grid--split">
+      <div>
+        <p class="eyebrow">Borrowing</p>
+        <h1>Loans with the numbers on the table</h1>
+        <p class="lead">Every calculator on this page uses the same formula our underwriters do. Move a slider, see the real payment, then apply — most decisions come back the same business day.</p>
+      </div>
+      <div class="card card--flat">
+        <div class="grid grid--2" style="gap:20px">
+          <div>
+            <p class="card__kicker">30-yr fixed</p>
+            <p class="rate-big mb-0"><b>6.375%</b></p>
+            <p class="tiny mb-0">6.51% APR</p>
+          </div>
+          <div>
+            <p class="card__kicker">New auto</p>
+            <p class="rate-big mb-0"><b>5.49%</b></p>
+            <p class="tiny mb-0">5.49% APR</p>
+          </div>
+          <div>
+            <p class="card__kicker">Personal</p>
+            <p class="rate-big mb-0"><b>8.99%</b></p>
+            <p class="tiny mb-0">9.42% APR</p>
+          </div>
+          <div>
+            <p class="card__kicker">HELOC</p>
+            <p class="rate-big mb-0"><b>7.25%</b></p>
+            <p class="tiny mb-0">7.25% APR, variable</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Calculators ──────────────────────────────────────────────────────── -->
+<section class="sec">
+  <div class="wrap wrap--wide">
+    <div class="tabs" data-tabs role="tablist" aria-label="Loan type">
+      <button class="tabs__btn" role="tab" id="tab-mortgage" aria-controls="panel-mortgage" aria-selected="true">Mortgage</button>
+      <button class="tabs__btn" role="tab" id="tab-auto" aria-controls="panel-auto" aria-selected="false" tabindex="-1">Auto</button>
+      <button class="tabs__btn" role="tab" id="tab-personal-loan" aria-controls="panel-personal-loan" aria-selected="false" tabindex="-1">Personal</button>
+    </div>
+
+    <!-- Mortgage -->
+    <div class="tabpanel" id="panel-mortgage" role="tabpanel" aria-labelledby="tab-mortgage">
+      <div id="mortgage">
+        <div class="sec-head">
+          <h2>What will my mortgage payment be?</h2>
+          <p class="lead">Includes principal, interest, property taxes and homeowners insurance. HOA dues and mortgage insurance are not included.</p>
+        </div>
+
+        <div class="calc" data-calc="mortgage" data-tax-rate="1.05" data-insurance="1800" data-fee-pct="0.5">
+          <div class="calc__panel">
+            <div class="calc__row">
+              <label for="mgPrice">Home price <output data-out="priceLabel">$450,000</output></label>
+              <input class="range" id="mgPrice" data-in="price" type="range" min="100000" max="2000000" step="5000" value="450000">
+            </div>
+            <div class="calc__row">
+              <label for="mgDown">Down payment <output data-out="downLabel">20% &middot; $90,000</output></label>
+              <input class="range" id="mgDown" data-in="down" type="range" min="3" max="50" step="1" value="20">
+              <p class="hint">Below 20% adds mortgage insurance, which isn't included above.</p>
+            </div>
+            <div class="calc__row">
+              <span class="label" id="mgTermLabel">Term</span>
+              <div class="segctl" data-in="term" role="group" aria-labelledby="mgTermLabel">
+                <button type="button" data-value="360" aria-pressed="true">30 yr</button>
+                <button type="button" data-value="240" aria-pressed="false">20 yr</button>
+                <button type="button" data-value="180" aria-pressed="false">15 yr</button>
+                <button type="button" data-value="120" aria-pressed="false">10 yr</button>
+              </div>
+            </div>
+            <div class="calc__row">
+              <label for="mgRate">Interest rate</label>
+              <select class="select" id="mgRate" data-in="rate">
+                <option value="6.375" selected>6.375% — 30-year fixed</option>
+                <option value="5.625">5.625% — 15-year fixed</option>
+                <option value="5.875">5.875% — 5/6 ARM</option>
+                <option value="6.125">6.125% — FHA 30-year</option>
+                <option value="6.750">6.750% — Jumbo 30-year</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="calc__result">
+            <p class="calc__k">Estimated monthly payment</p>
+            <p class="calc__amount" data-out="monthly">$2,790<small>/ month</small></p>
+
+            <div class="calc__bar">
+              <i data-out="barPI" style="background:#3D8BEA;width:80.51%"></i>
+              <i data-out="barTax" style="background:#00A574;width:14.11%"></i>
+              <i data-out="barIns" style="background:#B8862B;width:5.38%"></i>
+            </div>
+            <div class="calc__legend">
+              <span><em style="background:#3D8BEA"></em>Principal &amp; interest</span>
+              <span><em style="background:#00A574"></em>Property tax</span>
+              <span><em style="background:#B8862B"></em>Insurance</span>
+            </div>
+
+            <div class="calc__rows">
+              <div><span>Principal &amp; interest</span><b data-out="pi">$2,245.93</b></div>
+              <div><span>Property tax (1.05%/yr)</span><b data-out="tax">$393.75</b></div>
+              <div><span>Homeowners insurance</span><b data-out="insurance">$150.00</b></div>
+              <div><span>Loan amount</span><b data-out="loan">$360,000</b></div>
+              <div><span>Total interest over the term</span><b data-out="interest">$448,535</b></div>
+              <div><span>Total of payments</span><b data-out="cost">$808,535</b></div>
+              <div><span>Estimated APR with 0.5% fees</span><b data-out="apr">6.423%</b></div>
+            </div>
+            <p class="calc__note">Estimate only. Your rate depends on credit, occupancy, property type and points.</p>
+          </div>
+        </div>
+
+        <div class="grid grid--2 mt-3">
+          <div class="card card--flat">
+            <h3>Today's mortgage rates</h3>
+            <div class="tablewrap" style="margin-top:16px">
+              <table class="tbl" style="min-width:520px">
+                <thead><tr><th scope="col">Product</th><th scope="col">Rate</th><th scope="col">APR</th></tr></thead>
+                <tbody>
+                  <tr><td>30-year fixed</td><td class="rate rate--hi">6.375%</td><td class="rate">6.51%</td></tr>
+                  <tr><td>20-year fixed</td><td class="rate">5.990%</td><td class="rate">6.14%</td></tr>
+                  <tr><td>15-year fixed</td><td class="rate rate--hi">5.625%</td><td class="rate">5.79%</td></tr>
+                  <tr><td>5/6 ARM</td><td class="rate">5.875%</td><td class="rate">6.02%</td></tr>
+                  <tr><td>FHA 30-year</td><td class="rate">6.125%</td><td class="rate">6.68%</td></tr>
+                  <tr><td>Jumbo 30-year</td><td class="rate">6.750%</td><td class="rate">6.88%</td></tr>
+                  <tr><td>VA 30-year</td><td class="rate rate--hi">5.750%</td><td class="rate">5.92%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tiny mt-2">Rates assume a $450,000 loan on a primary residence, 740+ credit score, 20% down, and one point. Sample data for this demo.</p>
+          </div>
+
+          <div class="card card--flat">
+            <h3>How the process works</h3>
+            <div class="timeline" style="margin-top:20px">
+              <div class="timeline__item">
+                <span class="timeline__num" aria-hidden="true">1</span>
+                <div>
+                  <h4>Get pre-approved</h4>
+                  <p>A soft credit check, 10 minutes online. You'll have a letter the same day that sellers take seriously.</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <span class="timeline__num" aria-hidden="true">2</span>
+                <div>
+                  <h4>Make an offer</h4>
+                  <p>Your loan officer is reachable by phone or text — not a call centre — while you're negotiating.</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <span class="timeline__num" aria-hidden="true">3</span>
+                <div>
+                  <h4>Appraisal and underwriting</h4>
+                  <p>We order the appraisal within 24 hours and underwrite in parallel, not one after the other.</p>
+                </div>
+              </div>
+              <div class="timeline__item">
+                <span class="timeline__num" aria-hidden="true">4</span>
+                <div>
+                  <h4>Close</h4>
+                  <p>Average 21 days from contract to keys. You'll get a clear breakdown of every dollar three days before closing.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auto -->
+    <div class="tabpanel" id="panel-auto" role="tabpanel" aria-labelledby="tab-auto" hidden>
+      <div id="auto">
+        <div class="sec-head">
+          <h2>What will my car payment be?</h2>
+          <p class="lead">New, used or refinance — the rate changes, the maths doesn't.</p>
+        </div>
+
+        <div class="calc" data-calc="loan" data-fee-pct="0">
+          <div class="calc__panel">
+            <div class="calc__row">
+              <label for="autoAmount">Amount financed <output data-out="amountLabel">$32,000</output></label>
+              <input class="range" id="autoAmount" data-in="amount" type="range" min="4000" max="120000" step="1000" value="32000">
+            </div>
+            <div class="calc__row">
+              <span class="label" id="autoTermLabel">Term</span>
+              <div class="segctl" data-in="term" role="group" aria-labelledby="autoTermLabel">
+                <button type="button" data-value="36" aria-pressed="false">36 mo</button>
+                <button type="button" data-value="48" aria-pressed="false">48 mo</button>
+                <button type="button" data-value="60" aria-pressed="true">60 mo</button>
+                <button type="button" data-value="72" aria-pressed="false">72 mo</button>
+                <button type="button" data-value="84" aria-pressed="false">84 mo</button>
+              </div>
+            </div>
+            <div class="calc__row">
+              <label for="autoRate">Rate</label>
+              <select class="select" id="autoRate" data-in="rate">
+                <option value="5.49" selected>5.49% APR — new car, 60 months</option>
+                <option value="6.19">6.19% APR — used car, 60 months</option>
+                <option value="5.99">5.99% APR — refinance</option>
+                <option value="6.79">6.79% APR — used car over 100k miles</option>
+              </select>
+            </div>
+            <div class="callout callout--mint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <div>
+                <p class="mb-0"><strong>No application fee</strong> and no prepayment penalty. Pay the loan off early and you pay less interest, full stop.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc__result">
+            <p class="calc__k">Estimated monthly payment</p>
+            <p class="calc__amount" data-out="monthly">$611<small>/ month</small></p>
+
+            <div class="calc__bar">
+              <i data-out="barPrincipal" style="background:#3D8BEA;width:87.28%"></i>
+              <i data-out="barInterest" style="background:#00A574;width:12.72%"></i>
+            </div>
+            <div class="calc__legend">
+              <span><em style="background:#3D8BEA"></em>Principal</span>
+              <span><em style="background:#00A574"></em>Interest</span>
+            </div>
+
+            <div class="calc__rows">
+              <div><span>Total interest</span><b data-out="interest">$4,665</b></div>
+              <div><span>Total cost of the loan</span><b data-out="total">$36,665</b></div>
+              <div><span>APR</span><b data-out="apr">5.490%</b></div>
+            </div>
+            <p class="calc__note">Estimate only. Your APR depends on the vehicle, term, and your credit history.</p>
+          </div>
+        </div>
+
+        <div class="tablewrap mt-3">
+          <table class="tbl">
+            <caption>Auto loan rates, as of March 14, 2025. Sample data for this demo.</caption>
+            <thead><tr><th scope="col">Loan type</th><th scope="col">Term</th><th scope="col">Rate</th><th scope="col">Monthly per $10,000</th></tr></thead>
+            <tbody>
+              <tr><td>New car</td><td>36 months</td><td class="rate rate--hi">5.29% APR</td><td class="rate">$301</td></tr>
+              <tr><td>New car</td><td>60 months</td><td class="rate rate--hi">5.49% APR</td><td class="rate">$191</td></tr>
+              <tr><td>New car</td><td>72 months</td><td class="rate">5.79% APR</td><td class="rate">$165</td></tr>
+              <tr><td>Used car (under 100k miles)</td><td>60 months</td><td class="rate">6.19% APR</td><td class="rate">$194</td></tr>
+              <tr><td>Used car (over 100k miles)</td><td>48 months</td><td class="rate">6.79% APR</td><td class="rate">$238</td></tr>
+              <tr><td>Refinance</td><td>60 months</td><td class="rate">5.99% APR</td><td class="rate">$193</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal -->
+    <div class="tabpanel" id="panel-personal-loan" role="tabpanel" aria-labelledby="tab-personal-loan" hidden>
+      <div id="personal">
+        <div class="sec-head">
+          <h2>What will a personal loan cost?</h2>
+          <p class="lead">Fixed rate, fixed term, no collateral. Money lands in your Meridian account the same day you're approved.</p>
+        </div>
+
+        <div class="calc" data-calc="loan" data-fee-pct="1">
+          <div class="calc__panel">
+            <div class="calc__row">
+              <label for="plAmount">Amount <output data-out="amountLabel">$15,000</output></label>
+              <input class="range" id="plAmount" data-in="amount" type="range" min="2000" max="50000" step="500" value="15000">
+            </div>
+            <div class="calc__row">
+              <span class="label" id="plTermLabel">Term</span>
+              <div class="segctl" data-in="term" role="group" aria-labelledby="plTermLabel">
+                <button type="button" data-value="24" aria-pressed="false">24 mo</button>
+                <button type="button" data-value="36" aria-pressed="true">36 mo</button>
+                <button type="button" data-value="48" aria-pressed="false">48 mo</button>
+                <button type="button" data-value="60" aria-pressed="false">60 mo</button>
+                <button type="button" data-value="84" aria-pressed="false">84 mo</button>
+              </div>
+            </div>
+            <div class="calc__row">
+              <label for="plRate">Rate</label>
+              <select class="select" id="plRate" data-in="rate">
+                <option value="8.99" selected>8.99% — excellent credit</option>
+                <option value="11.49">11.49% — good credit</option>
+                <option value="14.99">14.99% — fair credit</option>
+                <option value="19.99">19.99% — rebuilding credit</option>
+              </select>
+            </div>
+            <div class="callout">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+              <div><p class="mb-0">Checking your rate uses a soft credit pull and won't affect your score. Only a full application does.</p></div>
+            </div>
+          </div>
+
+          <div class="calc__result">
+            <p class="calc__k">Estimated monthly payment</p>
+            <p class="calc__amount" data-out="monthly">$477<small>/ month</small></p>
+
+            <div class="calc__bar">
+              <i data-out="barPrincipal" style="background:#3D8BEA;width:87.37%"></i>
+              <i data-out="barInterest" style="background:#00A574;width:12.63%"></i>
+            </div>
+            <div class="calc__legend">
+              <span><em style="background:#3D8BEA"></em>Principal</span>
+              <span><em style="background:#00A574"></em>Interest</span>
+            </div>
+
+            <div class="calc__rows">
+              <div><span>Total interest</span><b data-out="interest">$2,169</b></div>
+              <div><span>Total cost of the loan</span><b data-out="total">$17,169</b></div>
+              <div><span>APR including 1% origination</span><b data-out="apr">9.678%</b></div>
+            </div>
+            <p class="calc__note">Estimate only. A 1% origination fee is assumed and folded into the APR.</p>
+          </div>
+        </div>
+
+        <div class="grid grid--3 mt-3">
+          <div class="card card--flat">
+            <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19h16M7 19V9m5 10V9m5 10V9"/><path d="M12 4.5 4 8h16Z"/></svg></span>
+            <h4>Consolidate high-rate debt</h4>
+            <p class="mb-0">Replace three cards at 24% with one fixed payment at 11%. Most borrowers save $180 a month.</p>
+          </div>
+          <div class="card card--flat">
+            <span class="card__icon card__icon--mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2"/><path d="M5.5 10.4V20h13v-9.6"/></svg></span>
+            <h4>Home improvement</h4>
+            <p class="mb-0">A new roof or kitchen without touching your mortgage or your emergency fund.</p>
+          </div>
+          <div class="card card--flat">
+            <span class="card__icon card__icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span>
+            <h4>One big, planned expense</h4>
+            <p class="mb-0">A wedding, a move, a medical bill — funded in a day, paid off on a schedule you choose.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Why borrow here ──────────────────────────────────────────────────── -->
+<section class="sec sec--cream">
+  <div class="wrap wrap--wide">
+    <div class="sec-head sec-head--center">
+      <p class="eyebrow">Why borrow from Meridian</p>
+      <h2>Decisions made by people, not just models</h2>
+    </div>
+    <div class="grid grid--3">
+      <div class="card card--flat">
+        <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span>
+        <h3>Same-day decisions</h3>
+        <p>Auto and personal loan applications get a decision in about four hours during business hours. Mortgages get a pre-approval the same day.</p>
+      </div>
+      <div class="card card--flat">
+        <span class="card__icon card__icon--mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.6 3.2 8.4 7.5 9.4 4.3-1 7.5-4.8 7.5-9.4V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+        <h3>No surprise fees</h3>
+        <p>No application fee, no prepayment penalty, no "document preparation" charge. The closing disclosure you get is the number you pay.</p>
+      </div>
+      <div class="card card--flat">
+        <span class="card__icon card__icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg></span>
+        <h3>A banker with a name</h3>
+        <p>You get a direct line and a direct email. The person who takes your application is the person who calls you at closing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────────────────────── -->
+<section class="sec">
+  <div class="wrap wrap--narrow">
+    <div class="sec-head">
+      <p class="eyebrow">Loan questions</p>
+      <h2>Answers before you apply</h2>
+    </div>
+    <div class="acc">
+      <details class="acc__item">
+        <summary>Will checking my rate hurt my credit score?</summary>
+        <div class="acc__body">
+          <p>No. Checking a rate with Meridian uses a soft inquiry, which is invisible to other lenders and doesn't affect your score. A full application uses a hard inquiry, typically a five-point dip that recovers within a few months.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>How much house can I afford?</summary>
+        <div class="acc__body">
+          <p>A common guideline is keeping total housing costs below 28% of gross monthly income and total debt below 36%. Our calculator lets you test any combination — the mortgage payment above includes taxes and insurance so you can compare it directly to your budget.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>Can I pay extra without a penalty?</summary>
+        <div class="acc__body">
+          <p>Yes, on every loan we offer. Extra payments go straight to principal by default, and you can set up a recurring extra amount in the app. On a $360,000 mortgage at 6.375%, an extra $200 a month saves roughly $118,000 in interest and pays the loan off about six years early.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>What documents do I need for a mortgage?</summary>
+        <div class="acc__body">
+          <ul>
+            <li>Two recent pay stubs and your last two W-2s, or two years of tax returns if self-employed.</li>
+            <li>Two months of statements for every asset account you want counted.</li>
+            <li>Your government ID and Social Security number.</li>
+            <li>For a purchase: the signed purchase contract once you have one.</li>
+          </ul>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>Do you offer loans to self-employed borrowers?</summary>
+        <div class="acc__body">
+          <p>Yes. We underwrite self-employed borrowers using two years of filed returns, and we can also consider 12 or 24 months of bank statements through our stated-income program for established businesses. Ask your loan officer which path fits your situation.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────────────────────── -->
+<section class="sec sec--tight">
+  <div class="wrap wrap--wide">
+    <div class="cta-band">
+      <div class="cta-band__in">
+        <div>
+          <h2 class="mb-0">Get pre-approved today</h2>
+          <p class="lead mt-2">A soft credit check, ten minutes, and a letter you can show a seller tonight. No obligation to borrow.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn--lg btn--light" href="open-account.html">Start an application</a>
+          <a class="btn btn--lg btn--ghost" style="--btn-fg:#fff;--btn-bd:rgba(255,255,255,.32)" href="help.html#contact">Talk to a loan officer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

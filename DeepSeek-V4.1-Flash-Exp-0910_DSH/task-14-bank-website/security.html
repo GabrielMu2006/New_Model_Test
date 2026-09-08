@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Security Center — Meridian Bank</title>
+<meta name="description" content="How Meridian Bank protects your money — encryption, real-time alerts, card lock, zero liability, a 24/7 fraud line, and a security checklist you can run in two minutes.">
+<meta name="theme-color" content="#061527">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Meridian Bank">
+<meta property="og:title" content="{{title}} — Meridian Bank">
+<meta property="og:description" content="{{description}}">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BankOrCreditUnion","name":"Meridian Bank","slogan":"Banking that keeps up with you","url":"https://example.invalid/","telephone":"+1-800-555-0142","address":{"@type":"PostalAddress","streetAddress":"400 Harbor Street","addressLocality":"Boston","addressRegion":"MA","postalCode":"02210","addressCountry":"US"},"disclaimer":"Meridian Bank is a fictional brand created for a front-end design demo."}
+</script>
+</head>
+<body class="">
+<a class="skip" href="#main">Skip to main content</a>
+
+<!-- ── Utility bar ─────────────────────────────────────────────────────── -->
+<div class="util">
+  <div class="wrap wrap--wide util__in">
+    <div class="util__group">
+      <span style="display:inline-flex;align-items:center;gap:8px"><span class="util__dot" aria-hidden="true"></span> All systems operational</span>
+      <a href="security.html">Security center</a>
+      <a href="help.html">Help &amp; support</a>
+    </div>
+    <div class="util__group">
+      <span class="nowrap">Lost or stolen card? <a href="tel:+18005550142">1-800-555-0142</a></span>
+      <a href="login.html">Log in</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Header ──────────────────────────────────────────────────────────── -->
+<header class="hdr" id="hdr">
+  <div class="wrap wrap--wide hdr__in">
+    <a class="brand" href="index.html" aria-label="Meridian Bank — home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="8.3"/>
+          <path d="M3.7 12h16.6"/>
+          <path d="M12 3.7c2.7 2.4 2.7 14.2 0 16.6M12 3.7c-2.7 2.4-2.7 14.2 0 16.6"/>
+        </svg>
+      </span>
+      <span class="brand__text"><b>Meridian</b><i>Bank</i></span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <div class="nav__item">
+        <button class="nav__link" type="button" data-menu="menu-personal" aria-expanded="false" aria-controls="menu-personal">
+          Personal
+          <svg class="nav__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu" id="menu-personal" role="group" aria-label="Personal banking">
+          <a class="menu__link" href="personal.html#checking">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v8m4.5-8v8m5-8v8M19 10v8M3 21h18"/></svg>
+            <span><b>Everyday Checking</b><span>No monthly fee with direct deposit</span></span>
+          </a>
+          <a class="menu__link" href="personal.html#savings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11m5 9V6m5 14v-6m5 6V8"/></svg>
+            <span><b>High-Yield Savings</b><span>4.35% APY, no minimum balance</span></span>
+          </a>
+          <a class="menu__link" href="personal.html#cards">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.6"/><path d="M2.5 10h19M6 15h4"/></svg>
+            <span><b>Credit Cards</b><span>2% back on everything, $0 annual fee</span></span>
+          </a>
+          <a class="menu__link" href="loans.html#mortgage">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.2 12 4l9 7.2"/><path d="M5.5 10.4V20h13v-9.6"/><path d="M10 20v-5h4v5"/></svg>
+            <span><b>Mortgages</b><span>From 6.375% (6.51% APR), fixed 30-year</span></span>
+          </a>
+          <a class="menu__link" href="loans.html#auto">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16.5V12l2-5h12l2 5v4.5"/><path d="M4 16.5h16M7 16.5v2m10-2v2"/><circle cx="8" cy="12.5" r="1.1"/><circle cx="16" cy="12.5" r="1.1"/></svg>
+            <span><b>Auto Loans</b><span>From 5.49% APR, decisions in minutes</span></span>
+          </a>
+          <div class="menu__sep"></div>
+          <a class="menu__link" href="personal.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            <span><b>All personal banking</b><span>Accounts, cards, and tools</span></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="nav__item">
+        <button class="nav__link" type="button" data-menu="menu-business" aria-expanded="false" aria-controls="menu-business">
+          Business
+          <svg class="nav__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu" id="menu-business" role="group" aria-label="Business banking">
+          <a class="menu__link" href="business.html#checking">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9.5 20v-6h5v6"/></svg>
+            <span><b>Business Checking</b><span>Unlimited transactions, no cash limits</span></span>
+          </a>
+          <a class="menu__link" href="business.html#treasury">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 7.5h7a2.8 2.8 0 0 1 0 5.6H8.5a2.8 2.8 0 0 0 0 5.6H17"/></svg>
+            <span><b>Treasury Management</b><span>Cash positioning, fraud controls, APIs</span></span>
+          </a>
+          <a class="menu__link" href="business.html#merchant">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.6"/><path d="M2.5 10h19"/></svg>
+            <span><b>Merchant Services</b><span>2.6% + 10¢ per in-person payment</span></span>
+          </a>
+          <a class="menu__link" href="business.html#lending">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19h16M6.5 19V9m5.5 10V9m5.5 10V9"/><path d="M12 4.5 4 8h16Z"/></svg>
+            <span><b>Business Lending</b><span>Lines of credit from 9.25%, SBA loans</span></span>
+          </a>
+          <div class="menu__sep"></div>
+          <a class="menu__link" href="business.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            <span><b>All business banking</b><span>From sole traders to 500-seat teams</span></span>
+          </a>
+        </div>
+      </div>
+
+      <a class="nav__link" data-navlink="loans" href="loans.html">Loans</a>
+      <a class="nav__link" data-navlink="rates" href="rates.html">Rates</a>
+      <a class="nav__link" data-navlink="security" aria-current="page" href="security.html">Security</a>
+      <a class="nav__link" data-navlink="help" href="help.html">Help</a>
+    </nav>
+
+    <div class="hdr__cta">
+      <a class="btn btn--ghost btn--sm" href="login.html">Log in</a>
+      <a class="btn btn--sm" href="open-account.html">Open an account</a>
+      <button class="burger" type="button" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ── Mobile drawer ───────────────────────────────────────────────────── -->
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel">
+    <div class="drawer__top">
+      <span class="brand__text"><b>Meridian</b><i>Bank</i></span>
+      <button class="drawer__close" type="button" data-drawer-close aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="drawer__body">
+      <details class="dgroup">
+        <summary>Personal</summary>
+        <div class="dgroup__list">
+          <a href="personal.html#checking">Everyday Checking</a>
+          <a href="personal.html#savings">High-Yield Savings</a>
+          <a href="personal.html#cards">Credit Cards</a>
+          <a href="loans.html#mortgage">Mortgages</a>
+          <a href="loans.html#auto">Auto Loans</a>
+        </div>
+      </details>
+      <details class="dgroup">
+        <summary>Business</summary>
+        <div class="dgroup__list">
+          <a href="business.html#checking">Business Checking</a>
+          <a href="business.html#treasury">Treasury Management</a>
+          <a href="business.html#merchant">Merchant Services</a>
+          <a href="business.html#lending">Business Lending</a>
+        </div>
+      </details>
+      <a class="dlink" href="loans.html">Loans</a>
+      <a class="dlink" href="rates.html">Rates</a>
+      <a class="dlink" href="security.html">Security</a>
+      <a class="dlink" href="help.html">Help &amp; support</a>
+      <div class="drawer__cta">
+        <a class="btn btn--block" href="open-account.html">Open an account</a>
+        <a class="btn btn--ghost btn--block" href="login.html">Log in</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<main id="main">
+<section class="page-head">
+  <div class="wrap wrap--wide">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span>Security center</span>
+    </nav>
+    <p class="eyebrow">Security center</p>
+    <h1>Security you can check yourself</h1>
+    <p class="lead">Every control below is something you can turn on, inspect, or test from your phone. No vague promises about "bank-grade security" — just the specifics.</p>
+    <div class="btn-row mt-2">
+      <a class="btn" href="#checklist">Run the 2-minute check</a>
+      <a class="btn btn--ghost" href="#report">Report fraud now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Pillars ──────────────────────────────────────────────────────────── -->
+<section class="sec">
+  <div class="wrap wrap--wide">
+    <div class="grid grid--4">
+      <div class="card card--flat reveal">
+        <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2.4"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></svg></span>
+        <h4>Encryption everywhere</h4>
+        <p class="mb-0">TLS 1.3 for data in transit, AES-256 at rest, and hardware security modules for keys. Audited quarterly by an independent firm.</p>
+      </div>
+      <div class="card card--flat reveal reveal--d1">
+        <span class="card__icon card__icon--mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.6 3.2 8.4 7.5 9.4 4.3-1 7.5-4.8 7.5-9.4V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+        <h4>Zero liability</h4>
+        <p class="mb-0">You're not responsible for unauthorised card or account activity you report promptly. We credit provisional funds within one business day.</p>
+      </div>
+      <div class="card card--flat reveal reveal--d2">
+        <span class="card__icon card__icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></span>
+        <h4>Card lock</h4>
+        <p class="mb-0">Freeze a card instantly from the app. Recurring payments keep working if you choose, or block everything until you find the card.</p>
+      </div>
+      <div class="card card--flat reveal reveal--d3">
+        <span class="card__icon card__icon--danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.6l1.6 4-2.1 1.5a12 12 0 0 0 5.4 5.4l1.5-2.1 4 1.6V19a1.9 1.9 0 0 1-2.1 1.9A15.6 15.6 0 0 1 3.1 6.1 1.9 1.9 0 0 1 5 4Z"/></svg></span>
+        <h4>24/7 fraud line</h4>
+        <p class="mb-0">A specialist answers in about four minutes, day or night. The number is on the back of your card and never changes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Checklist ────────────────────────────────────────────────────────── -->
+<section class="sec sec--cream" id="checklist">
+  <div class="wrap wrap--narrow">
+    <div class="sec-head">
+      <p class="eyebrow">Two-minute check</p>
+      <h2>Eight things that stop most attacks</h2>
+      <p class="lead">This is the same list our fraud team gives customers on the phone. Tick what you already do — nothing is sent anywhere, it stays in your browser.</p>
+    </div>
+
+    <div class="checklist" data-checklist>
+      <label class="check">
+        <input type="checkbox">
+        <span><b>Turn on two-factor authentication</b><span>Use an authenticator app or a passkey rather than SMS where you can.</span></span>
+      </label>
+      <label class="check">
+        <input type="checkbox">
+        <span><b>Use a passcode or biometric lock on your phone</b><span>Anyone with your unlocked phone can read your email — and reset your bank password.</span></span>
+      </label>
+      <label class="check">
+        <input type="checkbox">
+        <span><b>Set transaction alerts</b><span>Any charge over $1, and every login from a new device. You'll know before we call.</span></span>
+      </label>
+      <label class="check">
+        <input type="checkbox">
+        <span><b>Never move money because of an email or text</b><span>Hang up and call the number on the back of your card. We will never rush you into a transfer.</span></span>
+      </label>
+      <label class="check">
+        <input type="checkbox">
+        <span><b>Check your statements every month</b><span>Small, repeating charges are the most common way fraud hides. Two minutes, once a month.</span></span>
+      </label>
+      <label class="check">
+        <input type="checkbox">
+        <span><b>Use a unique password for banking</b><span>Not reused anywhere else. A password manager makes this free.</span></span>
+      </label>
+      <label class="check">
+        <input type="checkbox">
+        <span><b>Keep your contact details current</b><span>If we can't reach you, we can't confirm a suspicious payment with you.</span></span>
+      </label>
+      <label class="check">
+        <input type="checkbox">
+        <span><b>Freeze your credit if you're not borrowing</b><span>Free at all three bureaus and easy to lift when you need it. It blocks new accounts in your name.</span></span>
+      </label>
+    </div>
+
+    <div class="score">
+      <span class="tiny nowrap">Your score</span>
+      <span class="score__track"><i data-score-bar></i></span>
+      <b data-score>0/8</b>
+    </div>
+    <p class="tiny mt-2" data-score-msg role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- ── Report fraud ─────────────────────────────────────────────────────── -->
+<section class="sec" id="report">
+  <div class="wrap wrap--wide">
+    <div class="grid grid--sidebar">
+      <div>
+        <p class="eyebrow">Report fraud</p>
+        <h2>Tell us what happened</h2>
+        <p class="lead">If a card is missing or you see a charge you don't recognise, call us — it's the fastest route. Use this form for anything else, or if you'd rather not talk.</p>
+
+        <div class="callout callout--danger mt-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3.5 18.5h17z"/><path d="M12 9.5v4.2M12 16.6h.01"/></svg>
+          <div>
+            <p class="mb-0"><strong>This is a design demo.</strong> Nothing you type is transmitted, stored, or read. Never enter real card, Social Security, or account numbers into this page.</p>
+          </div>
+        </div>
+
+        <div class="card card--flat mt-3">
+          <h3>Call us instead</h3>
+          <div class="tablewrap" style="margin-top:14px">
+            <table class="tbl" style="min-width:420px">
+              <thead><tr><th scope="col">Line</th><th scope="col">Number</th><th scope="col">Hours</th></tr></thead>
+              <tbody>
+                <tr><td>Lost or stolen card</td><td class="rate">1-800-555-0142</td><td>24/7</td></tr>
+                <tr><td>Fraud &amp; disputes</td><td class="rate">1-800-555-0177</td><td>24/7</td></tr>
+                <tr><td>Online banking support</td><td class="rate">1-800-555-0199</td><td>Mon–Sat, 7 a.m.–11 p.m. ET</td></tr>
+                <tr><td>Business fraud</td><td class="rate">1-800-555-0163</td><td>24/7</td></tr>
+                <tr><td>International collect</td><td class="rate">+1-617-555-0100</td><td>24/7</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--flat">
+        <h3>Fraud report</h3>
+        <p class="tiny">Fields marked <span class="req">*</span> are required.</p>
+
+        <form data-validate novalidate>
+          <div class="field">
+            <label class="label" for="frName">Your name <span class="req">*</span></label>
+            <input class="input" id="frName" name="name" type="text" required autocomplete="name" data-label="name">
+            <p class="err" data-err-for="frName" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="frEmail">Email <span class="req">*</span></label>
+            <input class="input" id="frEmail" name="email" type="email" required autocomplete="email" data-label="email address">
+            <p class="err" data-err-for="frEmail" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="frPhone">Phone <span class="req">*</span></label>
+            <input class="input" id="frPhone" name="phone" type="tel" required autocomplete="tel" data-label="phone number" placeholder="(555) 555-0142">
+            <p class="err" data-err-for="frPhone" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="frType">What happened? <span class="req">*</span></label>
+            <select class="select" id="frType" name="type" required data-label="issue type">
+              <option value="">Choose one…</option>
+              <option>Charge I don't recognise</option>
+              <option>Lost or stolen card</option>
+              <option>Unauthorised transfer or payment</option>
+              <option>Phishing email or text</option>
+              <option>Suspicious login or account change</option>
+              <option>Something else</option>
+            </select>
+            <p class="err" data-err-for="frType" hidden></p>
+          </div>
+          <div class="field">
+            <label class="label" for="frDetail">Tell us more <span class="req">*</span></label>
+            <textarea class="textarea" id="frDetail" name="detail" required minlength="20" data-label="description" placeholder="What did you see, when, and for how much? Don't include full card or account numbers."></textarea>
+            <p class="err" data-err-for="frDetail" hidden></p>
+          </div>
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" name="confirm" required data-msg-required="Please confirm you understand this is a demo form.">
+              <span>I understand this is a demo form and I have not entered real financial details.</span>
+            </label>
+            <p class="err" data-err-for="confirm" hidden></p>
+          </div>
+          <button class="btn btn--block" type="submit">Submit report</button>
+        </form>
+
+        <div class="callout callout--mint" data-success hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <div data-success-body>
+            <p class="mb-0"><strong>Report received.</strong> Thanks, <span data-fill="name">there</span> — in a real system a fraud specialist would call you on <span data-fill="phone">your number</span> within one hour. Nothing was actually submitted here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Playbook ─────────────────────────────────────────────────────────── -->
+<section class="sec sec--ink">
+  <div class="wrap wrap--wide">
+    <div class="grid grid--split">
+      <div>
+        <p class="eyebrow">If it happens</p>
+        <h2>What to do in the first hour</h2>
+        <p class="lead">Speed matters more than anything else. Most money lost to fraud is moved out within 60 minutes.</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline__item">
+          <span class="timeline__num" aria-hidden="true">1</span>
+          <div>
+            <h4>Lock the card or account</h4>
+            <p>In the app: Cards → Lock. It takes three seconds and stops new charges immediately.</p>
+          </div>
+        </div>
+        <div class="timeline__item">
+          <span class="timeline__num" aria-hidden="true">2</span>
+          <div>
+            <h4>Call the fraud line</h4>
+            <p>1-800-555-0177, 24/7. Have the last four digits of the card and the charge amount ready.</p>
+          </div>
+        </div>
+        <div class="timeline__item">
+          <span class="timeline__num" aria-hidden="true">3</span>
+          <div>
+            <h4>Change your password</h4>
+            <p>From a device you trust. If you reused that password anywhere else, change it there too.</p>
+          </div>
+        </div>
+        <div class="timeline__item">
+          <span class="timeline__num" aria-hidden="true">4</span>
+          <div>
+            <h4>File a report</h4>
+            <p>For identity theft, file at IdentityTheft.gov and put a freeze on your credit with all three bureaus.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Scams ────────────────────────────────────────────────────────────── -->
+<section class="sec">
+  <div class="wrap wrap--narrow">
+    <div class="sec-head">
+      <p class="eyebrow">Scams we see most</p>
+      <h2>How to spot them in one line</h2>
+    </div>
+    <div class="acc">
+      <details class="acc__item" open>
+        <summary>"This is your bank — confirm this payment now"</summary>
+        <div class="acc__body">
+          <p>We never call and ask you to read a code, move money to a "safe account", or install software. Ever. Hang up and call the number on the back of your card.</p>
+          <p><strong>The tell:</strong> urgency plus a request to keep it secret.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>"Your account is frozen — click here to verify"</summary>
+        <div class="acc__body">
+          <p>Phishing emails copy our branding well but rarely our domain. Check that the sender is exactly <span class="num">meridian.example</span>, not a lookalike. We won't send a login link you didn't ask for.</p>
+          <p><strong>The tell:</strong> a link that goes somewhere other than the app you already have.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>"You've won — just pay the fee"</summary>
+        <div class="acc__body">
+          <p>Legitimate prizes never require a payment or a gift card. Neither does the IRS, the police, or a utility company. Any demand for gift cards is fraud, always.</p>
+          <p><strong>The tell:</strong> paying money to receive money.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>"Your new landlord asks for a deposit by wire"</summary>
+        <div class="acc__body">
+          <p>Rental fraud peaks at the start of every month. Verify ownership through the county assessor's site and pay by a method you can reverse. Wire transfers are effectively final.</p>
+          <p><strong>The tell:</strong> pressure to pay before you've seen the property in person.</p>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>"We're from tech support and found a virus"</summary>
+        <div class="acc__body">
+          <p>Nobody from Microsoft, Apple, or your internet provider will cold-call you about a virus. If you've already given remote access, disconnect the machine and call us — we'll watch your accounts with you.</p>
+          <p><strong>The tell:</strong> a stranger asking to control your computer.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────── -->
+<footer class="ft">
+  <div class="wrap wrap--wide">
+    <div class="ft__grid">
+      <div class="ft__brand">
+        <span class="brand">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="12" cy="12" r="8.3"/>
+              <path d="M3.7 12h16.6"/>
+              <path d="M12 3.7c2.7 2.4 2.7 14.2 0 16.6M12 3.7c-2.7 2.4-2.7 14.2 0 16.6"/>
+            </svg>
+          </span>
+          <span class="brand__text"><b>Meridian</b><i>Bank</i></span>
+        </span>
+        <p class="ft__blurb">Banking that keeps up with you. Member FDIC · Equal Housing Lender.</p>
+        <div class="ft__social mt-2">
+          <a href="help.html" aria-label="Contact Meridian Bank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5 12 13l8-6.5"/><rect x="3" y="5" width="18" height="14" rx="2.4"/></svg>
+          </a>
+          <a href="tel:+18005550142" aria-label="Call Meridian Bank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.6l1.6 4-2.1 1.5a12 12 0 0 0 5.4 5.4l1.5-2.1 4 1.6V19a1.9 1.9 0 0 1-2.1 1.9A15.6 15.6 0 0 1 3.1 6.1 1.9 1.9 0 0 1 5 4Z"/></svg>
+          </a>
+          <a href="help.html#locations" aria-label="Find a branch">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Personal</h4>
+        <ul>
+          <li><a href="personal.html#checking">Checking</a></li>
+          <li><a href="personal.html#savings">Savings &amp; CDs</a></li>
+          <li><a href="personal.html#cards">Credit cards</a></li>
+          <li><a href="loans.html#mortgage">Mortgages</a></li>
+          <li><a href="loans.html#auto">Auto loans</a></li>
+          <li><a href="loans.html#personal">Personal loans</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Business</h4>
+        <ul>
+          <li><a href="business.html#checking">Business checking</a></li>
+          <li><a href="business.html#treasury">Treasury management</a></li>
+          <li><a href="business.html#merchant">Merchant services</a></li>
+          <li><a href="business.html#lending">Lending &amp; credit</a></li>
+          <li><a href="business.html#payroll">Payroll &amp; HR tools</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="help.html">Help center</a></li>
+          <li><a href="help.html#contact">Contact us</a></li>
+          <li><a href="help.html#locations">Branch &amp; ATM finder</a></li>
+          <li><a href="security.html">Report fraud</a></li>
+          <li><a href="security.html#checklist">Security checklist</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="rates.html">Rates &amp; fees</a></li>
+          <li><a href="help.html#accessibility">Accessibility</a></li>
+          <li><a href="help.html#privacy">Privacy &amp; terms</a></li>
+          <li><a href="help.html#careers">Careers</a></li>
+          <li><a href="index.html#about">About Meridian</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ft__demo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <p><strong style="color:#fff">This is a design demo.</strong> Meridian Bank is a fictional institution created to showcase this website. It is not a real bank, holds no deposits, and every rate, figure, and testimonial on this site is illustrative sample data. Do not enter real personal or financial information anywhere on this site.</p>
+    </div>
+
+    <div class="ft__bar">
+      <div class="ft__legal">
+        <span>© 2026 Meridian Bank, N.A.</span>
+        <span>Member FDIC</span>
+        <span>Equal Housing Lender</span>
+        <a href="help.html#privacy">Privacy</a>
+        <a href="help.html#privacy">Terms</a>
+      </div>
+      <span>Routing number 011 000 042 (sample)</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/forms.js" defer></script>
+</body>
+</html>

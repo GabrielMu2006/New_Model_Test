@@ -1,0 +1,396 @@
+---
+title: Personal Banking
+description: Everyday Checking with no monthly fee, High-Yield Savings at 4.35% APY, term savings up to 4.60% APY, and three credit cards with no foreign transaction fees.
+nav: personal
+scripts: calculators
+---
+
+<section class="page-head">
+  <div class="wrap wrap--wide">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span>Personal banking</span>
+    </nav>
+    <div class="grid grid--split">
+      <div>
+        <p class="eyebrow">Personal banking</p>
+        <h1>Accounts that don't nickel-and-dime you</h1>
+        <p class="lead">No monthly maintenance fee when you have direct deposit. No overdraft fee. No minimum balance to earn the rate we advertise. Open one account or all four — they work together.</p>
+      </div>
+      <div class="card card--brand">
+        <h3 class="mb-0">Not sure where to start?</h3>
+        <p class="mt-2">Most people open Everyday Checking for bills and High-Yield Savings for everything else. That takes about eight minutes combined.</p>
+        <div class="btn-row">
+          <a class="btn" href="open-account.html">Open an account</a>
+          <a class="btn btn--ghost" href="#savings">Compare rates</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Checking ─────────────────────────────────────────────────────────── -->
+<section class="sec" id="checking">
+  <div class="wrap wrap--wide">
+    <div class="sec-head">
+      <p class="eyebrow">Checking</p>
+      <h2>Everyday Checking</h2>
+      <p class="lead">Built for direct deposit, automatic bills, and a balance you can actually predict.</p>
+    </div>
+
+    <div class="grid grid--split">
+      <div>
+        <div class="rate-big"><b>$0</b><span>monthly fee with qualifying direct deposit</span></div>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Get your paycheck up to 2 days early</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> No overdraft fee — transactions are declined instead, and you can add a fee-free $50 buffer</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 55,000+ fee-free ATMs, including every 7-Eleven and Target</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Free incoming wires and no fee for cashier's checks</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Up to 20 savings "buckets" to split your money by goal</li>
+        </ul>
+        <div class="btn-row mt-2">
+          <a class="btn" href="open-account.html">Open checking</a>
+          <a class="btn btn--ghost" href="rates.html#fees">See the fee schedule</a>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table class="tbl">
+          <caption>Three checking tiers. Same app, same support line.</caption>
+          <thead>
+            <tr><th scope="col">Feature</th><th scope="col">Essential</th><th scope="col">Everyday</th><th scope="col">Premium</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Monthly fee</td><td>$8</td><td><strong>$0 with direct deposit</strong></td><td><strong>$0</strong></td></tr>
+            <tr><td>Waiver</td><td>$1,500 balance</td><td>$500 direct deposit</td><td>$25,000 balance</td></tr>
+            <tr><td>Early direct deposit</td><td>—</td><td class="rate">Up to 2 days</td><td class="rate">Up to 2 days</td></tr>
+            <tr><td>Out-of-network ATM fee</td><td>$2.50</td><td>$0</td><td>$0, and we refund others' fees</td></tr>
+            <tr><td>Free wires</td><td>—</td><td>Incoming</td><td>Incoming &amp; outgoing</td></tr>
+            <tr><td>Rate on balances</td><td>0.05% APY</td><td class="rate rate--hi">0.10% APY</td><td class="rate rate--hi">0.35% APY</td></tr>
+            <tr><td>Personal banker</td><td>—</td><td>—</td><td>Named contact</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Savings ──────────────────────────────────────────────────────────── -->
+<section class="sec sec--cream" id="savings">
+  <div class="wrap wrap--wide">
+    <div class="sec-head">
+      <p class="eyebrow">Savings</p>
+      <h2>High-Yield Savings at 4.35% APY</h2>
+      <p class="lead">No minimum to open, no minimum to earn the rate, and no monthly fee. Money moves between checking and savings instantly — no waiting for a transfer to clear.</p>
+    </div>
+
+    <div class="calc" data-calc="savings">
+      <div class="calc__panel">
+        <h3>See what you could save</h3>
+        <div class="calc__row">
+          <label for="svStart">Starting balance <output data-out="startLabel">$2,000</output></label>
+          <input class="range" id="svStart" data-in="start" type="range" min="0" max="50000" step="500" value="2000">
+        </div>
+        <div class="calc__row">
+          <label for="svMonthly">Monthly deposit <output data-out="monthlyLabel">$300</output></label>
+          <input class="range" id="svMonthly" data-in="monthly" type="range" min="0" max="3000" step="25" value="300">
+        </div>
+        <div class="calc__row">
+          <span class="label" id="svYearsLabel">Time horizon</span>
+          <div class="segctl" data-in="years" role="group" aria-labelledby="svYearsLabel">
+            <button type="button" data-value="1" aria-pressed="false">1 yr</button>
+            <button type="button" data-value="5" aria-pressed="false">5 yr</button>
+            <button type="button" data-value="10" aria-pressed="true">10 yr</button>
+            <button type="button" data-value="20" aria-pressed="false">20 yr</button>
+          </div>
+        </div>
+        <div class="calc__row">
+          <label for="svApy">Rate</label>
+          <select class="select" id="svApy" data-in="apy">
+            <option value="4.35" selected>4.35% APY — High-Yield Savings</option>
+            <option value="4.60">4.60% APY — 12-month Term Savings</option>
+            <option value="3.10">3.10% APY — Everyday Savings</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="calc__result">
+        <p class="calc__k">Projected balance</p>
+        <p class="calc__amount" data-out="balance">$48,087</p>
+
+        <div class="chart">
+          <svg viewBox="0 0 320 120" preserveAspectRatio="none" data-out="chart" aria-hidden="true">
+            <defs>
+              <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3D8BEA" stop-opacity=".38"/>
+                <stop offset="100%" stop-color="#3D8BEA" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line class="chart__axis" x1="0" y1="119" x2="320" y2="119"/>
+            <path class="chart__area" data-out="chartArea" d=""/>
+            <path class="chart__line" data-out="chartLine" d="" vector-effect="non-scaling-stroke"/>
+            <circle class="chart__dot" data-out="chartDot" cx="0" cy="0" r="4"/>
+          </svg>
+          <p class="chart__cap" data-out="chartCap">Projected balance after 10 years</p>
+        </div>
+
+        <div class="calc__bar">
+          <i data-out="barContributed" style="background:#3D8BEA;width:79.02%"></i>
+          <i data-out="barEarned" style="background:#00A574;width:20.98%"></i>
+        </div>
+        <div class="calc__legend">
+          <span><em style="background:#3D8BEA"></em>You deposit</span>
+          <span><em style="background:#00A574"></em>Interest earned</span>
+        </div>
+
+        <div class="calc__rows">
+          <div><span>Your deposits</span><b data-out="contributed">$38,000</b></div>
+          <div><span>Interest earned</span><b data-out="earned">$10,087</b></div>
+        </div>
+        <p class="calc__note">Illustration only. Assumes the rate stays constant, monthly compounding, and deposits made at the end of each month.</p>
+      </div>
+    </div>
+
+    <div class="grid grid--3 mt-3">
+      <div class="card card--flat">
+        <span class="card__icon card__icon--mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M8 7.5h6.5a2.8 2.8 0 0 1 0 5.6h-5a2.8 2.8 0 0 0 0 5.6H16"/></svg></span>
+        <h4>Round-ups</h4>
+        <p class="mb-0">Every card purchase rounds to the next dollar and the difference lands in savings.</p>
+      </div>
+      <div class="card card--flat">
+        <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span>
+        <h4>Payday rules</h4>
+        <p class="mb-0">Move a set amount to savings the moment your paycheck lands, before you can spend it.</p>
+      </div>
+      <div class="card card--flat">
+        <span class="card__icon card__icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.4"/><path d="M3 10h18M8 15h4"/></svg></span>
+        <h4>Buckets</h4>
+        <p class="mb-0">Split one savings account into goals — emergency fund, vacation, new roof — each with its own target.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Term savings ─────────────────────────────────────────────────────── -->
+<section class="sec" id="cds">
+  <div class="wrap wrap--wide">
+    <div class="sec-head">
+      <p class="eyebrow">Term savings</p>
+      <h2>Lock in a rate for 6 to 60 months</h2>
+      <p class="lead">A fixed rate for a fixed term. Minimum $500, no account fee, and you can take the interest as a payout instead of reinvesting it.</p>
+    </div>
+
+    <div class="calc" data-calc="cd">
+      <div class="calc__panel">
+        <h3>What will it be worth?</h3>
+        <div class="calc__row">
+          <label for="cdAmount">Deposit <output data-out="amountLabel">$10,000</output></label>
+          <input class="range" id="cdAmount" data-in="amount" type="range" min="500" max="100000" step="500" value="10000">
+        </div>
+        <div class="calc__row">
+          <span class="label" id="cdTermLabel">Term</span>
+          <div class="segctl" data-in="term" role="group" aria-labelledby="cdTermLabel">
+            <button type="button" data-value="6" aria-pressed="false">6 mo</button>
+            <button type="button" data-value="12" aria-pressed="true">12 mo</button>
+            <button type="button" data-value="24" aria-pressed="false">24 mo</button>
+            <button type="button" data-value="36" aria-pressed="false">36 mo</button>
+            <button type="button" data-value="60" aria-pressed="false">60 mo</button>
+          </div>
+        </div>
+        <div class="calc__row">
+          <label for="cdApy">Rate</label>
+          <select class="select" id="cdApy" data-in="apy">
+            <option value="4.35" data-term="6">4.35% APY — 6 months</option>
+            <option value="4.60" data-term="12" selected>4.60% APY — 12 months</option>
+            <option value="4.20" data-term="24">4.20% APY — 24 months</option>
+            <option value="4.00" data-term="36">4.00% APY — 36 months</option>
+            <option value="3.85" data-term="60">3.85% APY — 60 months</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="calc__result">
+        <p class="calc__k">Value at maturity</p>
+        <p class="calc__amount" data-out="maturity">$10,460</p>
+        <div class="calc__rows">
+          <div><span>Interest earned</span><b data-out="interest">$460</b></div>
+          <div><span>Rate applied</span><b data-out="apy">4.60%</b></div>
+          <div><span>Average per month</span><b data-out="perMonth">$38.33</b></div>
+        </div>
+        <p class="calc__note">Early withdrawal before maturity costs three months of interest. At maturity you get a 10-day window to move the money before it renews at the then-current rate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Cards ────────────────────────────────────────────────────────────── -->
+<section class="sec sec--cream" id="cards">
+  <div class="wrap wrap--wide">
+    <div class="sec-head">
+      <p class="eyebrow">Credit cards</p>
+      <h2>Three cards, no foreign transaction fees on any of them</h2>
+      <p class="lead">Cash back if you want simple. Points if you travel. A secured card if you're rebuilding. All three report to the bureaus and come with the same fraud protection.</p>
+    </div>
+
+    <div class="grid grid--3">
+      <article class="card card--lift">
+        <div class="ccard ccard--blue">
+          <div class="ccard__top">
+            <span class="ccard__name">Meridian Cashback</span>
+            <span class="ccard__chip" aria-hidden="true"></span>
+          </div>
+          <p class="ccard__num">•••• •••• •••• 4402</p>
+          <div class="ccard__bottom">
+            <div class="ccard__meta"><span>Member since<b>2021</b></span><span>Expires<b>09/29</b></span></div>
+          </div>
+        </div>
+        <h3 class="mt-2">Cashback Card</h3>
+        <p>2% back on everything, automatically deposited into your account every month. No categories to track.</p>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> $0 annual fee</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> $200 bonus after $1,000 in purchases</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 18.24%–27.24% variable APR</li>
+        </ul>
+        <div class="card__foot">
+          <span class="pill pill--mint">Most popular</span>
+          <a class="btn btn--sm" href="open-account.html">Apply</a>
+        </div>
+      </article>
+
+      <article class="card card--lift">
+        <div class="ccard ccard--ink">
+          <div class="ccard__top">
+            <span class="ccard__name">Meridian Voyage</span>
+            <span class="ccard__chip" aria-hidden="true"></span>
+          </div>
+          <p class="ccard__num">•••• •••• •••• 8817</p>
+          <div class="ccard__bottom">
+            <div class="ccard__meta"><span>Member since<b>2019</b></span><span>Expires<b>03/30</b></span></div>
+          </div>
+        </div>
+        <h3 class="mt-2">Voyage Travel Card</h3>
+        <p>3 points per dollar on travel and dining, 1.5 on everything else. Points transfer to 14 airline and hotel partners.</p>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 60,000 point bonus after $4,000 spend</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> $95 annual fee, waived the first year</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Primary rental car coverage included</li>
+        </ul>
+        <div class="card__foot">
+          <span class="pill pill--gold">Best for travel</span>
+          <a class="btn btn--sm btn--ghost" href="open-account.html">Apply</a>
+        </div>
+      </article>
+
+      <article class="card card--lift">
+        <div class="ccard ccard--mint">
+          <div class="ccard__top">
+            <span class="ccard__name">Meridian Secure</span>
+            <span class="ccard__chip" aria-hidden="true"></span>
+          </div>
+          <p class="ccard__num">•••• •••• •••• 2106</p>
+          <div class="ccard__bottom">
+            <div class="ccard__meta"><span>Deposit<b>$300</b></span><span>Expires<b>11/29</b></span></div>
+          </div>
+        </div>
+        <h3 class="mt-2">Secure Card</h3>
+        <p>Open with a refundable deposit and build credit with the same on-time reporting as our flagship card.</p>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> $0 annual fee, deposit from $200</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Automatic review for an upgrade in 7 months</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 26.24% variable APR</li>
+        </ul>
+        <div class="card__foot">
+          <span class="pill">Builds credit</span>
+          <a class="btn btn--sm btn--ghost" href="open-account.html">Apply</a>
+        </div>
+      </article>
+    </div>
+
+    <p class="tiny mt-2">Rates and terms shown are illustrative sample data for this design demo. Actual credit card APRs are variable and depend on creditworthiness.</p>
+  </div>
+</section>
+
+<!-- ── Fees ─────────────────────────────────────────────────────────────── -->
+<section class="sec" id="fees">
+  <div class="wrap wrap--narrow">
+    <div class="sec-head">
+      <p class="eyebrow">The fine print, in plain English</p>
+      <h2>What we charge for — and what we don't</h2>
+    </div>
+
+    <div class="acc">
+      <details class="acc__item" open>
+        <summary>Everyday Checking fees</summary>
+        <div class="acc__body">
+          <ul>
+            <li><strong>$0</strong> monthly maintenance with qualifying direct deposit (otherwise $8, waived with a $1,500 average daily balance).</li>
+            <li><strong>$0</strong> overdraft fee. We decline the transaction and charge nothing.</li>
+            <li><strong>$0</strong> for the first 20 ATM transactions per month at out-of-network machines; $2.50 after that.</li>
+            <li><strong>$0</strong> for incoming wires, cashier's checks, and stop-payment requests placed in the app.</li>
+            <li><strong>$25</strong> for an outgoing domestic wire, <strong>$45</strong> international.</li>
+            <li><strong>$12</strong> to replace a lost debit card with expedited shipping; standard shipping is free.</li>
+          </ul>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>Savings and term savings fees</summary>
+        <div class="acc__body">
+          <ul>
+            <li><strong>$0</strong> monthly fee and <strong>$0</strong> minimum balance on High-Yield Savings.</li>
+            <li><strong>$0</strong> for transfers between your Meridian accounts, no matter how many.</li>
+            <li><strong>$500</strong> minimum to open a Term Savings account; <strong>$0</strong> account fee.</li>
+            <li>Early withdrawal from a Term Savings account costs three months of interest.</li>
+            <li>Withdrawals above six per month from savings are allowed — we don't charge for them, but federal rules may require us to convert the account to checking.</li>
+          </ul>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>Credit card fees</summary>
+        <div class="acc__body">
+          <ul>
+            <li><strong>$0</strong> annual fee on Cashback and Secure cards. Voyage is $95, waived the first year.</li>
+            <li><strong>$0</strong> foreign transaction fees on every card.</li>
+            <li>Late payment: up to <strong>$40</strong>, never more than your minimum payment.</li>
+            <li>Cash advance: <strong>$10 or 3%</strong>, whichever is greater, plus interest from the day of the advance.</li>
+            <li>Returned payment: <strong>$29</strong>.</li>
+          </ul>
+        </div>
+      </details>
+      <details class="acc__item">
+        <summary>How we compare on the fees people actually pay</summary>
+        <div class="acc__body">
+          <div class="tablewrap">
+            <table class="tbl" style="min-width:480px">
+              <thead><tr><th scope="col">Fee</th><th scope="col">Meridian</th><th scope="col">Industry average</th></tr></thead>
+              <tbody>
+                <tr><td>Monthly maintenance</td><td class="rate rate--hi">$0</td><td>$12.00</td></tr>
+                <tr><td>Overdraft</td><td class="rate rate--hi">$0</td><td>$29.80</td></tr>
+                <tr><td>Out-of-network ATM</td><td class="rate rate--hi">$0–$2.50</td><td>$4.66</td></tr>
+                <tr><td>Outgoing domestic wire</td><td class="rate">$25</td><td>$26.00</td></tr>
+                <tr><td>Card replacement</td><td class="rate rate--hi">$0</td><td>$10.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-2">Industry averages are illustrative sample figures for this demo.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ──────────────────────────────────────────────────────────────── -->
+<section class="sec sec--tight">
+  <div class="wrap wrap--wide">
+    <div class="cta-band">
+      <div class="cta-band__in">
+        <div>
+          <h2 class="mb-0">Open checking and savings together</h2>
+          <p class="lead mt-2">One application, two accounts, about eight minutes. You'll get your debit card details instantly and the physical card in 3–5 business days.</p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn--lg btn--light" href="open-account.html">Open an account</a>
+          <a class="btn btn--lg btn--ghost" style="--btn-fg:#fff;--btn-bd:rgba(255,255,255,.32)" href="help.html#contact">Ask a question</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

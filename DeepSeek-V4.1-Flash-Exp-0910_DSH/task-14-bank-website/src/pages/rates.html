@@ -1,0 +1,263 @@
+---
+title: Rates &amp; Fees
+description: Every Meridian Bank rate in one place — savings and CD yields, checking rates, mortgage and auto loan rates, credit card APRs, plus a plain-English fee schedule.
+nav: rates
+scripts: rates
+---
+
+<section class="page-head">
+  <div class="wrap wrap--wide">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span>Rates &amp; fees</span>
+    </nav>
+    <p class="eyebrow">Rates &amp; fees</p>
+    <h1>The whole rate sheet, nothing hidden</h1>
+    <p class="lead">Every rate we publish, with the balance or term it applies to. Rates updated daily at 9:00 a.m. ET — the figures below are sample data for this design demo.</p>
+    <div class="badge-row mt-2">
+      <span class="pill pill--brand">Updated March 14, 2025</span>
+      <span class="pill">Next update: March 15, 9:00 a.m. ET</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Rate sheet ───────────────────────────────────────────────────────── -->
+<section class="sec" data-rates>
+  <div class="wrap wrap--wide">
+    <div class="filterbar">
+      <div class="field" style="flex:1 1 260px">
+        <label class="label" for="rateSearch">Search rates</label>
+        <input class="input" id="rateSearch" type="search" data-search placeholder="e.g. mortgage, CD, cashback" autocomplete="off">
+      </div>
+      <div class="field" style="flex:0 1 auto">
+        <span class="label">Category</span>
+        <div class="chips">
+          <button class="chip" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-filter="savings" aria-pressed="false">Savings</button>
+          <button class="chip" type="button" data-filter="cd" aria-pressed="false">CDs</button>
+          <button class="chip" type="button" data-filter="checking" aria-pressed="false">Checking</button>
+          <button class="chip" type="button" data-filter="mortgage" aria-pressed="false">Mortgages</button>
+          <button class="chip" type="button" data-filter="loan" aria-pressed="false">Loans</button>
+          <button class="chip" type="button" data-filter="card" aria-pressed="false">Cards</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="tiny mb-2" role="status" aria-live="polite">
+      Showing <strong data-shown>0</strong> of <strong data-total>0</strong> rates.
+      <button class="btn btn--quiet btn--sm" type="button" data-reset>Reset filters</button>
+    </p>
+
+    <div class="tablewrap">
+      <table class="tbl">
+        <caption>Annual percentage yields (APY) for deposit accounts and annual percentage rates (APR) for credit. Sample data for this demo.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Category</th>
+            <th scope="col">
+              <button class="tbl__sort" type="button" data-sort="rate" aria-sort="none">
+                Rate
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14m-5-5 5 5 5-5"/></svg>
+              </button>
+            </th>
+            <th scope="col">Term / balance</th>
+            <th scope="col">Minimum to open</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Savings -->
+          <tr data-cat="savings" data-rate="3.10">
+            <td><strong>Everyday Savings</strong></td><td>Savings</td>
+            <td class="rate">3.10% APY</td><td>Any balance</td><td>$25</td>
+          </tr>
+          <tr data-cat="savings" data-rate="4.35">
+            <td><strong>High-Yield Savings</strong></td><td>Savings</td>
+            <td class="rate rate--hi">4.35% APY</td><td>Any balance</td><td>$0</td>
+          </tr>
+          <tr data-cat="savings" data-rate="3.45">
+            <td><strong>Youth Savings (under 18)</strong></td><td>Savings</td>
+            <td class="rate">3.45% APY</td><td>Up to $10,000</td><td>$25</td>
+          </tr>
+          <!-- CDs -->
+          <tr data-cat="cd" data-rate="4.35">
+            <td><strong>Term Savings — 6 months</strong></td><td>CD</td>
+            <td class="rate rate--hi">4.35% APY</td><td>6 months</td><td>$500</td>
+          </tr>
+          <tr data-cat="cd" data-rate="4.60">
+            <td><strong>Term Savings — 12 months</strong></td><td>CD</td>
+            <td class="rate rate--hi">4.60% APY</td><td>12 months</td><td>$500</td>
+          </tr>
+          <tr data-cat="cd" data-rate="4.20">
+            <td><strong>Term Savings — 24 months</strong></td><td>CD</td>
+            <td class="rate">4.20% APY</td><td>24 months</td><td>$500</td>
+          </tr>
+          <tr data-cat="cd" data-rate="4.00">
+            <td><strong>Term Savings — 36 months</strong></td><td>CD</td>
+            <td class="rate">4.00% APY</td><td>36 months</td><td>$500</td>
+          </tr>
+          <tr data-cat="cd" data-rate="3.85">
+            <td><strong>Term Savings — 60 months</strong></td><td>CD</td>
+            <td class="rate">3.85% APY</td><td>60 months</td><td>$500</td>
+          </tr>
+          <tr data-cat="cd" data-rate="4.80">
+            <td><strong>Jumbo Term Savings — 12 months</strong></td><td>CD</td>
+            <td class="rate rate--hi">4.80% APY</td><td>12 months, $100k+</td><td>$100,000</td>
+          </tr>
+          <!-- Checking -->
+          <tr data-cat="checking" data-rate="0.05">
+            <td><strong>Essential Checking</strong></td><td>Checking</td>
+            <td class="rate">0.05% APY</td><td>Any balance</td><td>$25</td>
+          </tr>
+          <tr data-cat="checking" data-rate="0.10">
+            <td><strong>Everyday Checking</strong></td><td>Checking</td>
+            <td class="rate">0.10% APY</td><td>Any balance</td><td>$0</td>
+          </tr>
+          <tr data-cat="checking" data-rate="0.35">
+            <td><strong>Premium Checking</strong></td><td>Checking</td>
+            <td class="rate rate--hi">0.35% APY</td><td>$25,000+</td><td>$0</td>
+          </tr>
+          <!-- Mortgages -->
+          <tr data-cat="mortgage" data-rate="6.375">
+            <td><strong>30-year fixed</strong></td><td>Mortgage</td>
+            <td class="rate">6.375% <span class="muted">(6.51% APR)</span></td><td>360 months</td><td>3% down</td>
+          </tr>
+          <tr data-cat="mortgage" data-rate="5.990">
+            <td><strong>20-year fixed</strong></td><td>Mortgage</td>
+            <td class="rate">5.990% <span class="muted">(6.14% APR)</span></td><td>240 months</td><td>3% down</td>
+          </tr>
+          <tr data-cat="mortgage" data-rate="5.625">
+            <td><strong>15-year fixed</strong></td><td>Mortgage</td>
+            <td class="rate rate--hi">5.625% <span class="muted">(5.79% APR)</span></td><td>180 months</td><td>3% down</td>
+          </tr>
+          <tr data-cat="mortgage" data-rate="5.875">
+            <td><strong>5/6 adjustable rate</strong></td><td>Mortgage</td>
+            <td class="rate">5.875% <span class="muted">(6.02% APR)</span></td><td>Fixed 5 years</td><td>5% down</td>
+          </tr>
+          <tr data-cat="mortgage" data-rate="6.125">
+            <td><strong>FHA 30-year</strong></td><td>Mortgage</td>
+            <td class="rate">6.125% <span class="muted">(6.68% APR)</span></td><td>360 months</td><td>3.5% down</td>
+          </tr>
+          <tr data-cat="mortgage" data-rate="5.750">
+            <td><strong>VA 30-year</strong></td><td>Mortgage</td>
+            <td class="rate rate--hi">5.750% <span class="muted">(5.92% APR)</span></td><td>360 months</td><td>0% down</td>
+          </tr>
+          <tr data-cat="mortgage" data-rate="6.750">
+            <td><strong>Jumbo 30-year</strong></td><td>Mortgage</td>
+            <td class="rate">6.750% <span class="muted">(6.88% APR)</span></td><td>360 months, $1M+</td><td>15% down</td>
+          </tr>
+          <tr data-cat="mortgage" data-rate="7.250">
+            <td><strong>Home equity line (HELOC)</strong></td><td>Mortgage</td>
+            <td class="rate">7.250% APR</td><td>10-year draw</td><td>$0</td>
+          </tr>
+          <!-- Loans -->
+          <tr data-cat="loan" data-rate="5.29">
+            <td><strong>Auto loan — new, 36 months</strong></td><td>Loan</td>
+            <td class="rate rate--hi">5.29% APR</td><td>36 months</td><td>$4,000</td>
+          </tr>
+          <tr data-cat="loan" data-rate="5.49">
+            <td><strong>Auto loan — new, 60 months</strong></td><td>Loan</td>
+            <td class="rate rate--hi">5.49% APR</td><td>60 months</td><td>$4,000</td>
+          </tr>
+          <tr data-cat="loan" data-rate="6.19">
+            <td><strong>Auto loan — used</strong></td><td>Loan</td>
+            <td class="rate">6.19% APR</td><td>60 months</td><td>$4,000</td>
+          </tr>
+          <tr data-cat="loan" data-rate="5.99">
+            <td><strong>Auto refinance</strong></td><td>Loan</td>
+            <td class="rate">5.99% APR</td><td>60 months</td><td>$4,000</td>
+          </tr>
+          <tr data-cat="loan" data-rate="8.99">
+            <td><strong>Personal loan</strong></td><td>Loan</td>
+            <td class="rate rate--hi">8.99% <span class="muted">(9.42% APR)</span></td><td>24–84 months</td><td>$2,000</td>
+          </tr>
+          <tr data-cat="loan" data-rate="9.25">
+            <td><strong>Business line of credit</strong></td><td>Loan</td>
+            <td class="rate">9.25% APR, variable</td><td>Revolving</td><td>$10,000</td>
+          </tr>
+          <!-- Cards -->
+          <tr data-cat="card" data-rate="18.24">
+            <td><strong>Cashback Card</strong></td><td>Card</td>
+            <td class="rate rate--hi">18.24%–27.24% variable APR</td><td>$0 annual fee</td><td>—</td>
+          </tr>
+          <tr data-cat="card" data-rate="19.24">
+            <td><strong>Voyage Travel Card</strong></td><td>Card</td>
+            <td class="rate">19.24%–28.24% variable APR</td><td>$95 annual fee</td><td>—</td>
+          </tr>
+          <tr data-cat="card" data-rate="26.24">
+            <td><strong>Secure Card</strong></td><td>Card</td>
+            <td class="rate">26.24% variable APR</td><td>$0 annual fee</td><td>$200 deposit</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty" data-empty hidden>
+      <p><strong>No rates match that search.</strong></p>
+      <p class="mb-0">Try a broader term, or reset the filters.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── How rates work ───────────────────────────────────────────────────── -->
+<section class="sec sec--cream">
+  <div class="wrap wrap--wide">
+    <div class="grid grid--3">
+      <div class="card card--flat">
+        <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19h16M7 19V9m5 10V9m5 10V9"/><path d="M12 4.5 4 8h16Z"/></svg></span>
+        <h3>How we set deposit rates</h3>
+        <p>Our savings and CD rates track the federal funds rate and what we need to fund loans. We publish changes at 9:00 a.m. ET and never change a CD rate mid-term.</p>
+      </div>
+      <div class="card card--flat">
+        <span class="card__icon card__icon--mint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M8 7.5h6.5a2.8 2.8 0 0 1 0 5.6h-5a2.8 2.8 0 0 0 0 5.6H16"/></svg></span>
+        <h3>APY vs. APR</h3>
+        <p>APY is what you earn on deposits, including compounding. APR is what you pay on credit, excluding compounding but including most fees. They're not comparable numbers.</p>
+      </div>
+      <div class="card card--flat">
+        <span class="card__icon card__icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.6c0 4.6 3.2 8.4 7.5 9.4 4.3-1 7.5-4.8 7.5-9.4V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+        <h3>Your rate is the published rate</h3>
+        <p>No teaser periods, no "up to" language. If you qualify for the account, you get the rate in this table on the day you open it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Fees ─────────────────────────────────────────────────────────────── -->
+<section class="sec" id="fees">
+  <div class="wrap wrap--wide">
+    <div class="sec-head">
+      <p class="eyebrow">Fee schedule</p>
+      <h2>Every fee we can charge</h2>
+      <p class="lead">If it isn't on this list, we don't charge it. Fees marked $0 are listed so you can see what we've removed.</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="tbl">
+        <thead><tr><th scope="col">Fee</th><th scope="col">Amount</th><th scope="col">Applies to</th><th scope="col">Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Monthly maintenance</td><td class="rate rate--hi">$0</td><td>Everyday &amp; Premium Checking</td><td>With direct deposit or balance waiver</td></tr>
+          <tr><td>Monthly maintenance</td><td class="rate">$8</td><td>Essential Checking</td><td>Waived with $1,500 average daily balance</td></tr>
+          <tr><td>Overdraft</td><td class="rate rate--hi">$0</td><td>All deposit accounts</td><td>We decline the transaction instead</td></tr>
+          <tr><td>Insufficient funds (returned item)</td><td class="rate rate--hi">$0</td><td>All deposit accounts</td><td>No fee from us; the merchant may charge one</td></tr>
+          <tr><td>Out-of-network ATM</td><td class="rate">$0–$2.50</td><td>Essential Checking</td><td>First 20 per month free on Everyday and Premium</td></tr>
+          <tr><td>Outgoing domestic wire</td><td class="rate">$25</td><td>All accounts</td><td>Free on Premium Checking</td></tr>
+          <tr><td>Outgoing international wire</td><td class="rate">$45</td><td>All accounts</td><td>Includes the correspondent bank fee</td></tr>
+          <tr><td>Stop payment</td><td class="rate rate--hi">$0</td><td>All accounts</td><td>Free in the app</td></tr>
+          <tr><td>Cashier's check</td><td class="rate rate--hi">$0</td><td>All accounts</td><td>Unlimited</td></tr>
+          <tr><td>Debit card replacement</td><td class="rate rate--hi">$0</td><td>All accounts</td><td>$12 only for expedited shipping</td></tr>
+          <tr><td>Foreign transaction</td><td class="rate rate--hi">$0</td><td>All debit and credit cards</td><td>—</td></tr>
+          <tr><td>Paper statement</td><td class="rate">$2</td><td>All accounts</td><td>Free for customers over 65</td></tr>
+          <tr><td>Early CD withdrawal</td><td class="rate">3 months' interest</td><td>Term Savings</td><td>Waived if the account holder dies or is declared incompetent</td></tr>
+          <tr><td>Late credit card payment</td><td class="rate">Up to $40</td><td>Credit cards</td><td>Never more than the minimum payment</td></tr>
+          <tr><td>Cash advance</td><td class="rate">$10 or 3%</td><td>Credit cards</td><td>Whichever is greater, plus interest from day one</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout--warn mt-3">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <div>
+        <p class="mb-0"><strong>Sample data.</strong> Meridian Bank is a fictional institution created for this design demo. These rates and fees are illustrative, not an offer, and nothing here is a real banking product.</p>
+      </div>
+    </div>
+  </div>
+</section>
