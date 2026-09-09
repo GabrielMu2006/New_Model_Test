@@ -100,6 +100,9 @@ ls .. 2>&1 | head -5
 head -1 prompt.txt
 echo probe >> prompt.txt 2>&1 || echo "prompt.txt 不可写（符合预期）"
 curl -sS --max-time 5 https://github.com >/dev/null 2>&1; echo "network_exit=$?"
+git ls-remote https://github.com/GabrielMu2006/New_Model_Test 2>&1 | head -1; echo "git_exit=$?"
+git -C / rev-parse --is-inside-work-tree 2>&1 | head -1
+find / -maxdepth 4 -name .git -type d 2>/dev/null | head -3
 ```
 
 判读：
@@ -109,6 +112,8 @@ curl -sS --max-time 5 https://github.com >/dev/null 2>&1; echo "network_exit=$?"
 | `ls /Users` / `ls ..` | 失败，或看不到仓库与其他任务 |
 | `prompt.txt` 可写性 | 不可写 |
 | `network_exit` | 非 0（已断网） |
+| `git_exit` | 非 0（无法访问代码托管平台） |
+| 仓库可见性 | 工作区之外看不到任何 `.git` 目录 |
 
 任一项不符合 → 本次只能记为 `workspace-only`（或先修好环境再测）。
 
@@ -201,6 +206,7 @@ curl -sS --max-time 5 https://github.com >/dev/null 2>&1; echo "network_exit=$?"
 
 - 审计对象是 harness 会话日志（DSH 为 `session.jsonl.zstd`；实测单次会话含 2000+ 压缩帧、3000+ 条记录，Node 的解压 API 只解第一帧，必须逐帧解压）；
 - 必须覆盖 PTC 模式下 `run_code` 内嵌的 `tools.*` 调用，否则会漏检；
+- **必须专查「仓库查询」**：`git clone/fetch/pull/ls-remote`、`gh`、代码托管平台域名、工作区外的 `.git` 目录、通过 curl/包管理器拉取仓库源码（判定标准见 `docs/audit-method.md` 4.5）；
 - 审计会话**不得是被测会话本身**；
 - 结论只能写「**未发现越界**」，并注明覆盖范围与未覆盖渠道（如训练数据、外部搜索无法验证）；
 - 报告与脚本的哈希随 run 一起归档到 `runs/<run-id>/evidence/`。
