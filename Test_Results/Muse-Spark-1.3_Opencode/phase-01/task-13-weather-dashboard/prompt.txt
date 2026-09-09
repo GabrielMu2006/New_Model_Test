@@ -1,0 +1,8 @@
+Build a polished weather dashboard.
+
+After implementing it:
+1. Run the application.
+2. Open it in the browser.
+3. Inspect the rendered result yourself.
+4. Fix any visual or functional issues you notice.
+5. Repeat until you are satisfied.

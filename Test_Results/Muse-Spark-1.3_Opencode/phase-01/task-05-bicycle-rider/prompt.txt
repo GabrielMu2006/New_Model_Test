@@ -1,0 +1,3 @@
+Generate an SVG of a person riding a bicycle viewed from the side.
+The left foot must be on the lower pedal and the right foot on the upper pedal.
+Both hands must be holding the handlebars.

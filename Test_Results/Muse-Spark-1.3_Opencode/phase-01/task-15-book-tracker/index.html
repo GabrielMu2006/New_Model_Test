@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Library — Book Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">📚</span>
+        <div>
+          <h1>My Library</h1>
+          <p class="sub">Keep track of what you read</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button id="exportBtn" class="btn ghost" type="button">Export</button>
+        <button id="importBtn" class="btn ghost" type="button">Import</button>
+        <input id="importFile" type="file" accept="application/json,.json" hidden />
+        <button id="addBtn" class="btn primary" type="button">+ Add book</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="stats" id="stats" aria-label="Reading stats"></section>
+
+    <section class="toolbar" aria-label="Search and filters">
+      <div class="search-row">
+        <input id="search" type="search" placeholder="Search title, author, genre, notes…" aria-label="Search books" autocomplete="off" />
+        <select id="sort" aria-label="Sort books">
+          <option value="dateAdded-desc">Recently added</option>
+          <option value="title-asc">Title A–Z</option>
+          <option value="author-asc">Author A–Z</option>
+          <option value="rating-desc">Top rated</option>
+          <option value="progress-desc">Most progress</option>
+          <option value="year-desc">Newest published</option>
+        </select>
+      </div>
+      <div class="filter-row">
+        <div class="chips" id="statusChips" role="tablist" aria-label="Filter by status">
+          <button class="chip active" data-status="all" type="button">All</button>
+          <button class="chip" data-status="reading" type="button">Reading</button>
+          <button class="chip" data-status="finished" type="button">Finished</button>
+          <button class="chip" data-status="want" type="button">Want to read</button>
+        </div>
+        <div class="filter-selects">
+          <select id="genreFilter" aria-label="Filter by genre"><option value="all">All genres</option></select>
+          <select id="ratingFilter" aria-label="Filter by rating">
+            <option value="0">Any rating</option>
+            <option value="5">★★★★★ only</option>
+            <option value="4">★★★★ &amp; up</option>
+            <option value="3">★★★ &amp; up</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <p class="result-count" id="resultCount" aria-live="polite"></p>
+    <section class="grid" id="grid" aria-label="Books"></section>
+
+    <div class="empty" id="empty" hidden>
+      <div class="empty-art" aria-hidden="true">📖</div>
+      <h2>No books here yet</h2>
+      <p>Add your first book, or restore the sample shelf.</p>
+      <div class="empty-actions">
+        <button class="btn primary" id="emptyAddBtn" type="button">Add a book</button>
+        <button class="btn ghost" id="seedBtn" type="button">Load sample books</button>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <span id="footInfo"></span>
+      <button class="linklike" id="clearBtn" type="button">Clear library</button>
+    </footer>
+  </main>
+
+  <div class="overlay" id="overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h2 id="modalTitle">Add book</h2>
+        <button class="icon-btn" id="closeModal" type="button" aria-label="Close">✕</button>
+      </div>
+      <form id="bookForm" novalidate>
+        <input type="hidden" id="fId" />
+        <div class="form-grid">
+          <label>Title *
+            <input id="fTitle" maxlength="200" required placeholder="e.g. The Name of the Wind" />
+            <small class="err" data-err="title"></small>
+          </label>
+          <label>Author *
+            <input id="fAuthor" maxlength="200" required placeholder="e.g. Patrick Rothfuss" />
+            <small class="err" data-err="author"></small>
+          </label>
+          <label>Genre
+            <input id="fGenre" maxlength="60" list="genreList" placeholder="Fantasy, Sci-Fi, Nonfiction…" />
+            <datalist id="genreList"></datalist>
+            <small class="err" data-err="genre"></small>
+          </label>
+          <label>Year
+            <input id="fYear" inputmode="numeric" placeholder="e.g. 2007" />
+            <small class="err" data-err="year"></small>
+          </label>
+          <label>Total pages
+            <input id="fTotal" inputmode="numeric" placeholder="e.g. 662" />
+            <small class="err" data-err="totalPages"></small>
+          </label>
+          <label>Current page
+            <input id="fCurrent" inputmode="numeric" placeholder="e.g. 120" />
+            <small class="err" data-err="currentPage"></small>
+          </label>
+          <label>Status
+            <select id="fStatus">
+              <option value="want">Want to read</option>
+              <option value="reading">Reading</option>
+              <option value="finished">Finished</option>
+            </select>
+            <small class="err" data-err="status"></small>
+          </label>
+          <fieldset class="rating-field">
+            <legend>Rating</legend>
+            <div class="star-input" id="starInput" role="radiogroup" aria-label="Rating"></div>
+          </fieldset>
+        </div>
+        <label class="notes-label">Notes
+          <textarea id="fNotes" rows="3" maxlength="2000" placeholder="What did you think? Quotes, ideas…"></textarea>
+          <small class="err" data-err="notes"></small>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn ghost" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn primary" id="saveBtn">Save book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

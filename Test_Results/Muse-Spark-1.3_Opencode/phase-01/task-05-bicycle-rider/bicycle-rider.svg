@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-labelledby="title desc">
+<title id="title">Person riding a bicycle in side view</title>
+<desc id="desc">Side view of a person riding a bicycle facing right. The rider's right foot is on the upper pedal and the rider's left foot is on the lower pedal. Both the left and right hands grip the handlebars. Near side (rider's right) is solid, far side (rider's left) is behind the frame.</desc>
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#7DD3FC"/>
+    <stop offset="70%" stop-color="#E0F2FE"/>
+    <stop offset="100%" stop-color="#F0FDFA"/>
+  </linearGradient>
+  <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#9CA3AF"/>
+    <stop offset="100%" stop-color="#6B7280"/>
+  </linearGradient>
+</defs>
+
+<!-- Background -->
+<rect x="0" y="0" width="800" height="600" fill="url(#sky)" rx="16"/>
+<circle cx="660" cy="95" r="58" fill="#FFD93D" opacity="0.3"/>
+<circle cx="660" cy="95" r="42" fill="#FFD93D" stroke="#F59E0B" stroke-width="3"/>
+<g fill="white" opacity="0.95">
+  <ellipse cx="140" cy="105" rx="45" ry="22"/>
+  <ellipse cx="175" cy="95" rx="35" ry="20"/>
+  <ellipse cx="110" cy="95" rx="28" ry="16"/>
+  <ellipse cx="420" cy="75" rx="38" ry="18"/>
+  <ellipse cx="450" cy="68" rx="28" ry="15"/>
+</g>
+<ellipse cx="150" cy="460" rx="220" ry="90" fill="#86EFAC"/>
+<ellipse cx="650" cy="470" rx="260" ry="100" fill="#6EE7B7"/>
+<rect x="0" y="420" width="800" height="110" fill="#4ADE80"/>
+<rect x="0" y="420" width="800" height="12" fill="#22C55E"/>
+<rect x="0" y="460" width="800" height="90" fill="url(#roadGrad)"/>
+<rect x="0" y="460" width="800" height="8" fill="#4B5563"/>
+<g fill="white" opacity="0.9">
+  <rect x="20" y="498" width="60" height="8" rx="4"/>
+  <rect x="120" y="498" width="60" height="8" rx="4"/>
+  <rect x="220" y="498" width="60" height="8" rx="4"/>
+  <rect x="320" y="498" width="60" height="8" rx="4"/>
+  <rect x="420" y="498" width="60" height="8" rx="4"/>
+  <rect x="520" y="498" width="60" height="8" rx="4"/>
+  <rect x="620" y="498" width="60" height="8" rx="4"/>
+  <rect x="720" y="498" width="60" height="8" rx="4"/>
+</g>
+
+<!-- Legend -->
+<g font-family="Arial, sans-serif">
+  <rect x="12" y="12" width="360" height="78" rx="10" fill="white" opacity="0.92" stroke="#334155" stroke-width="2"/>
+  <text x="24" y="34" font-size="14" font-weight="bold" fill="#0F172A">Side view • Bike faces → right</text>
+  <text x="24" y="54" font-size="13" fill="#1D4ED8">● RIGHT side = near (solid, in front)</text>
+  <text x="24" y="73" font-size="13" fill="#5B6B8A">● LEFT side = far (behind frame)</text>
+</g>
+
+<!-- Wheels -->
+<g id="rear-wheel" transform="translate(250,450)">
+  <circle r="70" fill="none" stroke="#1F2937" stroke-width="14"/>
+  <circle r="58" fill="white" fill-opacity="0.25" stroke="#374151" stroke-width="4"/>
+  <g stroke="#94A3B8" stroke-width="3">
+    <line x1="0" y1="0" x2="0" y2="-56"/><line x1="0" y1="0" x2="0" y2="56"/>
+    <line x1="0" y1="0" x2="-48" y2="-28"/><line x1="0" y1="0" x2="48" y2="28"/>
+    <line x1="0" y1="0" x2="-48" y2="28"/><line x1="0" y1="0" x2="48" y2="-28"/>
+    <line x1="0" y1="0" x2="-56" y2="0"/><line x1="0" y1="0" x2="56" y2="0"/>
+  </g>
+  <circle r="12" fill="#6B7280" stroke="#1F2937" stroke-width="3"/>
+</g>
+<g id="front-wheel" transform="translate(550,450)">
+  <circle r="70" fill="none" stroke="#1F2937" stroke-width="14"/>
+  <circle r="58" fill="white" fill-opacity="0.25" stroke="#374151" stroke-width="4"/>
+  <g stroke="#94A3B8" stroke-width="3">
+    <line x1="0" y1="0" x2="0" y2="-56"/><line x1="0" y1="0" x2="0" y2="56"/>
+    <line x1="0" y1="0" x2="-48" y2="-28"/><line x1="0" y1="0" x2="48" y2="28"/>
+    <line x1="0" y1="0" x2="-48" y2="28"/><line x1="0" y1="0" x2="48" y2="-28"/>
+    <line x1="0" y1="0" x2="-56" y2="0"/><line x1="0" y1="0" x2="56" y2="0"/>
+  </g>
+  <circle r="12" fill="#6B7280" stroke="#1F2937" stroke-width="3"/>
+</g>
+
+<!-- FAR SIDE LEG (rider's LEFT) — drawn behind frame -->
+<!-- Left hip -> knee -> lower pedal -->
+<g id="left-leg" opacity="0.65">
+  <line x1="335" y1="298" x2="345" y2="385" stroke="#1E3A8A" stroke-width="14" stroke-linecap="round"/>
+  <line x1="345" y1="385" x2="392" y2="476" stroke="#1E3A8A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="345" cy="385" r="9" fill="#1E3A8A"/>
+</g>
+
+<!-- Frame -->
+<g fill="none" stroke="#0E9594" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="250" y1="450" x2="395" y2="445"/>
+  <line x1="250" y1="450" x2="322" y2="318"/>
+  <line x1="395" y1="445" x2="322" y2="318"/>
+  <line x1="322" y1="318" x2="515" y2="315"/>
+  <line x1="395" y1="445" x2="535" y2="365"/>
+  <line x1="535" y1="365" x2="550" y2="450"/>
+  <line x1="515" y1="315" x2="535" y2="365"/>
+</g>
+
+<!-- Chain -->
+<g>
+  <circle cx="395" cy="445" r="26" fill="none" stroke="#1F2937" stroke-width="4"/>
+  <circle cx="395" cy="445" r="6" fill="#1F2937"/>
+  <circle cx="250" cy="450" r="10" fill="none" stroke="#1F2937" stroke-width="4"/>
+  <line x1="250" y1="440" x2="395" y2="419" stroke="#1F2937" stroke-width="4"/>
+  <line x1="250" y1="460" x2="395" y2="471" stroke="#1F2937" stroke-width="4"/>
+</g>
+
+<!-- Crank — VERTICAL: upper pedal + lower pedal -->
+<g id="crank">
+  <line x1="395" y1="405" x2="395" y2="485" stroke="#1F2937" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="395" cy="445" r="8" fill="#1F2937"/>
+  <!-- upper pedal (for RIGHT foot) -->
+  <rect x="377" y="399" width="36" height="12" rx="4" fill="#111827"/>
+  <!-- lower pedal (for LEFT foot) -->
+  <rect x="377" y="479" width="36" height="12" rx="4" fill="#111827"/>
+</g>
+
+<!-- Seat -->
+<line x1="322" y1="318" x2="315" y2="295" stroke="#1F2937" stroke-width="7" stroke-linecap="round"/>
+<ellipse cx="305" cy="288" rx="36" ry="12" fill="#1F2937"/>
+<ellipse cx="305" cy="284" rx="36" ry="10" fill="#374151"/>
+
+<!-- Handlebar -->
+<line x1="515" y1="315" x2="530" y2="282" stroke="#1F2937" stroke-width="7" stroke-linecap="round"/>
+<path d="M 530 282 Q 555 278 562 295 Q 565 305 555 308" fill="none" stroke="#1F2937" stroke-width="7" stroke-linecap="round"/>
+<rect x="545" y="299" width="24" height="14" rx="7" fill="#111827" transform="rotate(15 545 299)"/>
+
+<!-- ===== RIDER ===== -->
+<!-- FAR ARM (rider's LEFT) — behind -->
+<g id="left-arm" opacity="0.65">
+  <line x1="475" y1="292" x2="505" y2="330" stroke="#0F766E" stroke-width="10" stroke-linecap="round"/>
+  <line x1="505" y1="330" x2="543" y2="303" stroke="#FDBA74" stroke-width="9" stroke-linecap="round"/>
+</g>
+
+<!-- Torso leaning forward -->
+<line x1="335" y1="298" x2="475" y2="292" stroke="#0E9594" stroke-width="26" stroke-linecap="round"/>
+<line x1="335" y1="298" x2="475" y2="292" stroke="#14B8A6" stroke-width="18" stroke-linecap="round"/>
+<!-- Hip -->
+<circle cx="335" cy="298" r="16" fill="#1E40AF"/>
+<!-- Shoulder -->
+<circle cx="475" cy="292" r="12" fill="#0E9594" stroke="#134E4A" stroke-width="2"/>
+
+<!-- Neck + Head -->
+<line x1="475" y1="292" x2="500" y2="252" stroke="#FDBA74" stroke-width="12" stroke-linecap="round"/>
+<circle cx="512" cy="228" r="28" fill="#FFD6A5" stroke="#92400E" stroke-width="3"/>
+<!-- Helmet -->
+<path d="M 484 222 Q 488 196 512 194 Q 538 196 540 222 L 540 226 L 484 226 Z" fill="#EF4444" stroke="#991B1B" stroke-width="3" stroke-linejoin="round"/>
+<rect x="484" y="222" width="56" height="6" rx="3" fill="#991B1B"/>
+<!-- Eye (facing right) -->
+<circle cx="522" cy="228" r="3.5" fill="#1F2937"/>
+<path d="M 528 242 Q 534 244 538 240" stroke="#92400E" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+<!-- NEAR ARM (rider's RIGHT) — in front -->
+<g id="right-arm">
+  <line x1="475" y1="292" x2="520" y2="325" stroke="#0F766E" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="520" y1="325" x2="554" y2="308" stroke="#FDBA74" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="520" cy="325" r="7" fill="#0F766E"/>
+</g>
+
+<!-- NEAR LEG (rider's RIGHT) — in front, to UPPER pedal -->
+<g id="right-leg">
+  <line x1="335" y1="298" x2="428" y2="292" stroke="#2563EB" stroke-width="16" stroke-linecap="round"/>
+  <line x1="428" y1="292" x2="395" y2="398" stroke="#2563EB" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="428" cy="292" r="10" fill="#1E40AF" stroke="white" stroke-width="2"/>
+</g>
+
+<!-- Shoes ON pedals -->
+<!-- Right shoe on UPPER pedal -->
+<g id="right-foot">
+  <rect x="373" y="385" width="46" height="16" rx="7" fill="#111827" stroke="white" stroke-width="2"/>
+  <circle cx="380" cy="393" r="11" fill="#2563EB" stroke="white" stroke-width="2.5"/>
+  <text x="380" y="397.5" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="white">R</text>
+</g>
+<!-- Left shoe on LOWER pedal -->
+<g id="left-foot" opacity="0.9">
+  <rect x="373" y="465" width="46" height="16" rx="7" fill="#374151" stroke="white" stroke-width="2"/>
+  <circle cx="380" cy="473" r="11" fill="#1E3A8A" stroke="white" stroke-width="2.5"/>
+  <text x="380" y="477.5" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="white">L</text>
+</g>
+
+<!-- Hands BOTH on handlebar grip -->
+<g id="hands">
+  <!-- left hand (far) -->
+  <circle cx="544" cy="303" r="10" fill="#FDBA74" stroke="#92400E" stroke-width="3" opacity="0.9"/>
+  <text x="544" y="307" font-family="Arial" font-size="10" font-weight="bold" text-anchor="middle" fill="#7C2D12">L</text>
+  <!-- right hand (near) -->
+  <circle cx="557" cy="308" r="11" fill="#FDBA74" stroke="#92400E" stroke-width="3"/>
+  <text x="557" y="312" font-family="Arial" font-size="11" font-weight="bold" text-anchor="middle" fill="#7C2D12">R</text>
+</g>
+
+<!-- Labels with leader lines -->
+<g font-family="Arial, sans-serif" font-size="14" font-weight="bold">
+  <!-- Right foot label -->
+  <line x1="419" y1="393" x2="500" y2="365" stroke="#1D4ED8" stroke-width="2"/>
+  <rect x="500" y="348" width="240" height="32" rx="8" fill="#1D4ED8"/>
+  <text x="512" y="369" fill="white" font-size="14">RIGHT FOOT → upper pedal</text>
+
+  <!-- Left foot label -->
+  <line x1="419" y1="473" x2="500" y2="505" stroke="#374151" stroke-width="2"/>
+  <rect x="500" y="489" width="238" height="32" rx="8" fill="#374151"/>
+  <text x="512" y="510" fill="white" font-size="14">LEFT FOOT → lower pedal</text>
+
+  <!-- Hands label -->
+  <line x1="567" y1="305" x2="620" y2="270" stroke="#92400E" stroke-width="2"/>
+  <rect x="590" y="232" width="198" height="52" rx="8" fill="white" stroke="#92400E" stroke-width="2"/>
+  <text x="600" y="252" fill="#7C2D12" font-size="13">RIGHT hand (R) +</text>
+  <text x="600" y="270" fill="#7C2D12" font-size="13">LEFT hand (L) on bar</text>
+</g>
+
+</svg>

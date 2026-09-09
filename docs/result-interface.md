@@ -26,6 +26,8 @@ Test_Results/
 
 第一阶段兼容例外：`Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/` 内保留原来的 15 个 `task-*` 目录、README 和 Reviews，不为套用新模板而重写历史资料。其 r1 对应关系以现有导入器为准；重复运行放入该阶段的 `runs/<新run-id>/`。同一个 run 只对应一题的一次执行，多题同会话通过 sessionId/共享上下文标记关联。
 
+Muse-Spark 例外（组织者 2026-09-09 决定）：`Test_Results/Muse-Spark-1.3_Opencode/phase-01/` 同样沿用扁平 `task-*/` 布局，便于与第一阶段同题对照；其逐字 `prompt.txt` 为**事后补录**并已在阶段 README 中标注，AI 评价按 `Reviews/ai/<评价者标识>-vN/` 目录接口组织（同一运行可挂多份评价，互不覆盖）。**后续新阶段仍按上方 `runs/<run-id>/` 契约执行**，不再扩大扁平布局的适用范围。
+
 新 model-folder 使用稳定文件名，显示名称、供应商、实际模型版本和 harness 在元数据中分列。同一模型不同阶段并列，不能把阶段放到模型目录之上。
 
 ## 必须交接的信息

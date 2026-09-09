@@ -1,0 +1,6 @@
+Create a working calculator app.
+Choose the technology yourself.
+Run it.
+Test it.
+Fix any issues you find.
+Do not ask me questions unless you are genuinely blocked.

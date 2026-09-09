@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pixel Art Editor</title>
+<style>
+  :root {
+    --bg: #1a1b22;
+    --panel: #24262f;
+    --panel2: #2e313d;
+    --border: #3a3e4d;
+    --text: #e8eaf0;
+    --muted: #9aa0b4;
+    --accent: #7c5cff;
+    --accent2: #00d9a5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text);
+    height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+  }
+  header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--border);
+  }
+  header h1 { font-size: 16px; margin: 0; letter-spacing: .3px; }
+  header h1 span { color: var(--accent2); }
+  header .spacer { flex: 1; }
+  button, select, input[type="number"] {
+    background: var(--panel2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 7px 11px; font-size: 13px; cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  button.active { background: var(--accent); border-color: var(--accent); color: white; }
+  button:disabled { opacity: .4; cursor: default; }
+  button.primary { background: var(--accent2); border-color: var(--accent2); color: #0b1411; font-weight: 700; }
+  .layout { flex: 1; display: flex; min-height: 0; }
+  .toolbar {
+    width: 232px; background: var(--panel); border-right: 1px solid var(--border);
+    padding: 14px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto;
+  }
+  .group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 7px; }
+  .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .tools button { font-size: 13px; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  input[type="color"] { width: 44px; height: 36px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel2); padding: 2px; cursor: pointer; }
+  input[type="text"] {
+    flex: 1; background: var(--panel2); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 7px 9px; font-size: 13px; font-family: monospace;
+    width: 100%;
+  }
+  .palette { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; }
+  .swatch { aspect-ratio: 1; border-radius: 6px; border: 2px solid transparent; cursor: pointer; padding: 0; }
+  .swatch.active { border-color: white; }
+  input[type="range"] { width: 100%; accent-color: var(--accent); }
+  .canvas-wrap {
+    flex: 1; overflow: auto; display: grid; place-items: center;
+    background:
+      radial-gradient(circle at 1px 1px, #2c2f3b 1px, transparent 1px);
+    background-size: 22px 22px; background-color: #14151b;
+    padding: 30px; cursor: crosshair; position: relative;
+  }
+  #stage { box-shadow: 0 12px 50px rgba(0,0,0,.55); border: 1px solid var(--border); background: white; image-rendering: pixelated; touch-action: none; }
+  .statusbar {
+    background: var(--panel); border-top: 1px solid var(--border);
+    padding: 7px 16px; font-size: 12px; color: var(--muted);
+    display: flex; gap: 16px;
+  }
+  .statusbar b { color: var(--text); font-weight: 600; }
+  kbd { background: #111; border: 1px solid var(--border); border-radius: 4px; padding: 0 5px; font-size: 11px; }
+  .hint { font-size: 12px; color: var(--muted); line-height: 1.6; }
+</style>
+</head>
+<body>
+<header>
+  <h1>◧ PIXEL<span>ART</span> EDITOR</h1>
+  <div class="spacer"></div>
+  <button id="undoBtn" title="Undo (Ctrl+Z)">↩ Undo</button>
+  <button id="redoBtn" title="Redo (Ctrl+Y)">↪ Redo</button>
+  <button id="clearBtn" title="Clear canvas">🗑 Clear</button>
+  <button id="exportBtn" class="primary">⬇ Export PNG</button>
+</header>
+
+<div class="layout">
+  <aside class="toolbar">
+    <div class="group">
+      <label>Tool</label>
+      <div class="tools">
+        <button id="penBtn" class="active">✏️ Pen</button>
+        <button id="eraserBtn">🧽 Eraser</button>
+        <button id="fillBtn">🪣 Fill</button>
+        <button id="pickerBtn">💧 Picker</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <label>Color</label>
+      <div class="row">
+        <input type="color" id="colorInput" value="#7c5cff" />
+        <input type="text" id="hexInput" value="#7c5cff" maxlength="7" spellcheck="false" />
+      </div>
+      <div style="height:8px"></div>
+      <div class="palette" id="palette"></div>
+    </div>
+
+    <div class="group">
+      <label>Brush size: <span id="brushVal">1</span>px</label>
+      <input type="range" id="brushSize" min="1" max="8" value="1" />
+      <div class="row" style="margin-top:6px">
+        <button data-brush="1">1</button>
+        <button data-brush="2">2</button>
+        <button data-brush="3">3</button>
+        <button data-brush="4">4</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <label>Zoom: <span id="zoomVal">16</span>px / cell</label>
+      <input type="range" id="zoom" min="4" max="40" value="16" />
+      <div class="row" style="margin-top:6px">
+        <button id="zoomOut">−</button>
+        <button id="zoomFit" style="flex:1">Fit</button>
+        <button id="zoomIn">+</button>
+      </div>
+      <label style="margin-top:10px"><input type="checkbox" id="gridToggle" checked style="accent-color:#7c5cff" /> Show grid</label>
+    </div>
+
+    <div class="group">
+      <label>Canvas size</label>
+      <div class="row">
+        <select id="preset">
+          <option value="16x16">16 × 16</option>
+          <option value="32x32" selected>32 × 32</option>
+          <option value="48x48">48 × 48</option>
+          <option value="64x64">64 × 64</option>
+        </select>
+        <button id="resizeBtn" style="flex:1">Resize</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <label>Export scale</label>
+      <div class="row">
+        <select id="exportScale" style="flex:1">
+          <option value="1">1× (tiny)</option>
+          <option value="4">4×</option>
+          <option value="8">8×</option>
+          <option value="16" selected>16× (512px @32)</option>
+          <option value="32">32×</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="hint">
+      Left-drag: draw · Right-drag: erase<br />
+      <kbd>Wheel</kbd> + <kbd>Ctrl</kbd>: zoom · <kbd>E</kbd> eraser<br />
+      <kbd>B</kbd> pen · <kbd>G</kbd> fill · <kbd>[</kbd> <kbd>]</kbd> brush
+    </div>
+  </aside>
+
+  <main class="canvas-wrap" id="wrap">
+    <canvas id="stage"></canvas>
+  </main>
+</div>
+
+<div class="statusbar">
+  <span>Pos: <b id="pos">—</b></span>
+  <span>Size: <b id="sizeLabel">32 × 32</b></span>
+  <span>Tool: <b id="toolLabel">pen</b></span>
+  <span>History: <b id="histLabel">0 / 0</b></span>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('stage');
+  const ctx = canvas.getContext('2d');
+  const wrap = document.getElementById('wrap');
+
+  let W = 32, H = 32;
+  let cell = 16;
+  let pixels = []; // H x W of string|null
+  let tool = 'pen';
+  let color = '#7c5cff';
+  let brush = 1;
+  let showGrid = true;
+  let drawing = false, drawingButton = 0;
+  let strokeBefore = null;
+
+  let undoStack = [], redoStack = [];
+  const MAX_HIST = 60;
+
+  const $ = id => document.getElementById(id);
+  const colorInput = $('colorInput'), hexInput = $('hexInput');
+
+  const PALETTE = ['#000000','#ffffff','#ff0044','#ff8a00','#ffee00','#00d9a5','#00b8ff','#7c5cff',
+                   '#ff6b9d','#8a5a2b','#5c5c5c','#b8bcc8','#ffcccc','#ffe5b4','#d6f5d6','#cce5ff',
+                   '#e5ccff','#4a2b8a','#0b2b26','#123a6d','#7a0033','#3d2b00','#2b2b2b','#f5f0e6'];
+  const palEl = $('palette');
+  PALETTE.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'swatch'; b.style.background = c; b.title = c;
+    b.onclick = () => setColor(c);
+    b.dataset.color = c;
+    palEl.appendChild(b);
+  });
+
+  function setColor(c) {
+    if (!/^#[0-9a-fA-F]{6}$/.test(c)) return;
+    color = c.toLowerCase();
+    colorInput.value = color;
+    hexInput.value = color;
+    document.querySelectorAll('.swatch').forEach(s =>
+      s.classList.toggle('active', s.dataset.color.toLowerCase() === color));
+  }
+  colorInput.oninput = e => setColor(e.target.value);
+  hexInput.onchange = e => {
+    let v = e.target.value.trim();
+    if (!v.startsWith('#')) v = '#' + v;
+    if (/^#[0-9a-fA-F]{3}$/.test(v)) v = '#' + [...v.slice(1)].map(ch => ch + ch).join('');
+    if (/^#[0-9a-fA-F]{6}$/.test(v)) setColor(v); else hexInput.value = color;
+  };
+  setColor('#7c5cff');
+
+  function blank() {
+    pixels = Array.from({length: H}, () => Array(W).fill(null));
+  }
+  function snapshot() { return pixels.map(r => r.slice()); }
+  function restore(s) { pixels = s.map(r => r.slice()); render(); }
+  function pushHistory(before) {
+    undoStack.push(before);
+    if (undoStack.length > MAX_HIST) undoStack.shift();
+    redoStack = [];
+    updateHist();
+  }
+  function updateHist() {
+    $('undoBtn').disabled = !undoStack.length;
+    $('redoBtn').disabled = !redoStack.length;
+    $('histLabel').textContent = `${undoStack.length} / ${undoStack.length + redoStack.length}`;
+  }
+  function doUndo() {
+    if (!undoStack.length) return;
+    redoStack.push(snapshot());
+    restore(undoStack.pop());
+    updateHist();
+  }
+  function doRedo() {
+    if (!redoStack.length) return;
+    undoStack.push(snapshot());
+    restore(redoStack.pop());
+    updateHist();
+  }
+  $('undoBtn').onclick = doUndo;
+  $('redoBtn').onclick = doRedo;
+
+  // ---- tools ----
+  function setTool(t) {
+    tool = t;
+    $('toolLabel').textContent = t;
+    ['pen','eraser','fill','picker'].forEach(k =>
+      $(k + 'Btn').classList.toggle('active', k === t));
+    wrap.style.cursor = t === 'picker' ? 'copy' : 'crosshair';
+  }
+  $('penBtn').onclick = () => setTool('pen');
+  $('eraserBtn').onclick = () => setTool('eraser');
+  $('fillBtn').onclick = () => setTool('fill');
+  $('pickerBtn').onclick = () => setTool('picker');
+
+  // ---- brush ----
+  const brushInput = $('brushSize');
+  function setBrush(n) {
+    brush = Math.min(8, Math.max(1, n|0));
+    brushInput.value = brush;
+    $('brushVal').textContent = brush;
+    document.querySelectorAll('[data-brush]').forEach(b =>
+      b.classList.toggle('active', +b.dataset.brush === brush));
+  }
+  brushInput.oninput = e => setBrush(+e.target.value);
+  document.querySelectorAll('[data-brush]').forEach(b => b.onclick = () => setBrush(+b.dataset.brush));
+  setBrush(1);
+
+  // ---- zoom ----
+  const zoomInput = $('zoom');
+  function setZoom(n) {
+    cell = Math.min(40, Math.max(4, Math.round(n)));
+    zoomInput.value = cell;
+    $('zoomVal').textContent = cell;
+    render();
+  }
+  zoomInput.oninput = e => setZoom(+e.target.value);
+  $('zoomIn').onclick = () => setZoom(cell + 2);
+  $('zoomOut').onclick = () => setZoom(cell - 2);
+  $('zoomFit').onclick = () => {
+    const fit = Math.floor(Math.min((wrap.clientWidth - 60) / W, (wrap.clientHeight - 60) / H));
+    setZoom(Math.min(40, Math.max(4, fit || 8)));
+  };
+  $('gridToggle').onchange = e => { showGrid = e.target.checked; render(); };
+  wrap.addEventListener('wheel', e => {
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    setZoom(cell + (e.deltaY < 0 ? 2 : -2));
+  }, { passive: false });
+
+  // ---- resize ----
+  $('resizeBtn').onclick = () => {
+    const [nw, nh] = $('preset').value.split('x').map(Number);
+    pushHistory(snapshot());
+    const next = Array.from({length: nh}, (_, y) =>
+      Array.from({length: nw}, (_, x) => (y < H && x < W ? pixels[y][x] : null)));
+    W = nw; H = nh; pixels = next;
+    $('sizeLabel').textContent = `${W} × ${H}`;
+    render();
+  };
+  $('clearBtn').onclick = () => {
+    pushHistory(snapshot());
+    blank(); render();
+  };
+
+  // ---- painting ----
+  function paintAt(cx, cy, col) {
+    for (let dy = 0; dy < brush; dy++)
+      for (let dx = 0; dx < brush; dx++) {
+        const x = cx + dx, y = cy + dy;
+        if (x >= 0 && y >= 0 && x < W && y < H) pixels[y][x] = col;
+      }
+  }
+  function floodFill(sx, sy, col) {
+    const target = pixels[sy][sx];
+    if (target === col) return;
+    const stack = [[sx, sy]];
+    while (stack.length) {
+      const [x, y] = stack.pop();
+      if (x < 0 || y < 0 || x >= W || y >= H || pixels[y][x] !== target) continue;
+      pixels[y][x] = col;
+      stack.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]);
+    }
+  }
+  function eventCell(e) {
+    const r = canvas.getBoundingClientRect();
+    return [Math.floor((e.clientX - r.left) / cell), Math.floor((e.clientY - r.top) / cell)];
+  }
+  canvas.addEventListener('contextmenu', e => e.preventDefault());
+  canvas.addEventListener('mousedown', e => {
+    if (e.button === 1) return;
+    e.preventDefault();
+    drawing = true; drawingButton = e.button;
+    strokeBefore = snapshot();
+    applyStroke(e);
+  });
+  window.addEventListener('mouseup', () => {
+    if (drawing && strokeBefore) pushHistory(strokeBefore);
+    drawing = false; strokeBefore = null;
+  });
+  canvas.addEventListener('mousemove', e => {
+    const [cx, cy] = eventCell(e);
+    $('pos').textContent = (cx >= 0 && cy >= 0 && cx < W && cy < H) ? `${cx}, ${cy}` : '—';
+    if (drawing) applyStroke(e);
+  });
+  function applyStroke(e) {
+    const [cx, cy] = eventCell(e);
+    if (cx < 0 || cy < 0 || cx >= W || cy >= H) return;
+    const rightErase = drawingButton === 2;
+    const activeTool = rightErase ? 'eraser' : tool;
+    if (activeTool === 'picker') { const c = pixels[cy][cx]; if (c) setColor(c); return; }
+    if (activeTool === 'fill') {
+      if (e.type === 'mousedown') floodFill(cx, cy, rightErase ? null : color);
+      return;
+    }
+    paintAt(cx, cy, activeTool === 'eraser' ? null : color);
+    render();
+  }
+  // touch support
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    drawing = true; drawingButton = 0; strokeBefore = snapshot();
+    applyStroke(e.touches[0]);
+  }, { passive: false });
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const t = e.touches[0];
+    const r = canvas.getBoundingClientRect();
+    applyStroke({ clientX: t.clientX, clientY: t.clientY, type: 'mousemove', button: 0 });
+  }, { passive: false });
+  canvas.addEventListener('touchend', () => {
+    if (strokeBefore) pushHistory(strokeBefore);
+    drawing = false; strokeBefore = null;
+  });
+
+  // keyboard
+  window.addEventListener('keydown', e => {
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'select' || tag === 'textarea') return;
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); e.shiftKey ? doRedo() : doUndo(); }
+    else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') { e.preventDefault(); doRedo(); }
+    else if (e.key.toLowerCase() === 'b') setTool('pen');
+    else if (e.key.toLowerCase() === 'e') setTool('eraser');
+    else if (e.key.toLowerCase() === 'g') setTool('fill');
+    else if (e.key.toLowerCase() === 'i') setTool('picker');
+    else if (e.key === '[') setBrush(brush - 1);
+    else if (e.key === ']') setBrush(brush + 1);
+  });
+
+  // ---- render ----
+  function render() {
+    canvas.width = W * cell;
+    canvas.height = H * cell;
+    canvas.style.width = canvas.width + 'px';
+    canvas.style.height = canvas.height + 'px';
+    // checkerboard for transparency
+    const s = Math.max(4, Math.floor(cell / 2));
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      ctx.fillStyle = (x + y) % 2 ? '#d7d9e0' : '#ffffff';
+      ctx.fillRect(x * cell, y * cell, cell, cell);
+    }
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const c = pixels[y][x];
+      if (c) { ctx.fillStyle = c; ctx.fillRect(x * cell, y * cell, cell, cell); }
+    }
+    if (showGrid && cell >= 6) {
+      ctx.strokeStyle = 'rgba(0,0,0,.18)'; ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let x = 1; x < W; x++) { ctx.moveTo(x * cell + .5, 0); ctx.lineTo(x * cell + .5, H * cell); }
+      for (let y = 1; y < H; y++) { ctx.moveTo(0, y * cell + .5); ctx.lineTo(W * cell, y * cell + .5); }
+      ctx.stroke();
+    }
+  }
+
+  // ---- export PNG ----
+  $('exportBtn').onclick = () => {
+    const scale = parseInt($('exportScale').value, 10) || 16;
+    const out = document.createElement('canvas');
+    out.width = W * scale; out.height = H * scale;
+    const octx = out.getContext('2d');
+    octx.imageSmoothingEnabled = false;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const c = pixels[y][x];
+      if (c) { octx.fillStyle = c; octx.fillRect(x * scale, y * scale, scale, scale); }
+    }
+    out.toBlob(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `pixel-art-${W}x${H}-${scale}x.png`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }, 'image/png');
+  };
+
+  // init + demo sprite so first paint isn't blank
+  blank();
+  const demo = [
+    '................',
+    '.....rrrr.......',
+    '....rrrrrr......',
+    '....rwwrr.......',
+    '....rrrrrr......',
+  ];
+  updateHist();
+  setZoom(16);
+  render();
+})();
+</script>
+</body>
+</html>

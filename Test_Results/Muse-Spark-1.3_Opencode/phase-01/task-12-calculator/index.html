@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <div class="calc" role="application" aria-label="Calculator">
+      <div class="screen">
+        <div id="history" class="history" aria-live="polite"></div>
+        <div id="expression" class="expression" aria-live="polite"></div>
+        <div id="display" class="display" aria-live="polite">0</div>
+      </div>
+      <div class="keys">
+        <button data-action="clear-all" class="btn danger">AC</button>
+        <button data-action="clear-entry" class="btn">C</button>
+        <button data-action="backspace" class="btn">⌫</button>
+        <button data-op="/" class="btn op">÷</button>
+
+        <button data-digit="7" class="btn num">7</button>
+        <button data-digit="8" class="btn num">8</button>
+        <button data-digit="9" class="btn num">9</button>
+        <button data-op="*" class="btn op">×</button>
+
+        <button data-digit="4" class="btn num">4</button>
+        <button data-digit="5" class="btn num">5</button>
+        <button data-digit="6" class="btn num">6</button>
+        <button data-op="-" class="btn op">−</button>
+
+        <button data-digit="1" class="btn num">1</button>
+        <button data-digit="2" class="btn num">2</button>
+        <button data-digit="3" class="btn num">3</button>
+        <button data-op="+" class="btn op">+</button>
+
+        <button data-action="negate" class="btn">±</button>
+        <button data-digit="0" class="btn num">0</button>
+        <button data-action="decimal" class="btn num">.</button>
+        <button data-action="equals" class="btn equals">=</button>
+
+        <button data-op="(" class="btn">(</button>
+        <button data-op=")" class="btn">)</button>
+        <button data-action="percent" class="btn">%</button>
+        <button data-op="^" class="btn op">^</button>
+      </div>
+      <p class="hint">Keyboard: 0-9 + - * / ^ ( ) . % · Enter = · Backspace ⌫ · Esc AC</p>
+    </div>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

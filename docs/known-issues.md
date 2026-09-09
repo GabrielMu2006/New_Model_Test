@@ -46,21 +46,23 @@
 - 现象：`/en/runs/*` 显示 `AI assessment: 直接通过 (translated label).`，正文为固定占位句。
 - 说明：属展示文案问题，不影响数据真实性；与 1.1/1.2 一并处理更经济。
 
-## 2. Muse Spark 档案（`Test_Results/Muse-Spark-1.3_Opencode/`，尚未入库）
+## 2. Muse Spark 档案（`Test_Results/Muse-Spark-1.3_Opencode/`）——✅ 已入库（2026-09-09）
+
+入库形态（组织者决定）：沿用第一阶段 DeepSeek 的**扁平 `task-*/` 布局**，不改为 `runs/<run-id>/`；新增 `README.md`、每题 `prompt.txt`、`evidence/` 与 `Reviews/ai/<评价者>-vN/` 接口。阶段索引见 `Test_Results/Muse-Spark-1.3_Opencode/phase-01/README.md`。
 
 ### 2.1 本次判定（组织者决定）
 
-- **原始 Prompt**：组织者确认档案中 15 题与实际使用题目一致；档案内不再另存逐字 prompt 副本。
+- **原始 Prompt**：组织者确认档案中 15 题与实际使用题目一致；入库时按题目文档**事后补录** `prompt.txt`（已逐字比对 15/15，标注为补录而非当时封存）。
 - **隔离与作弊检查**：本次判定通过，按现有材料接受；后续运行必须按 `docs/testing-protocol.md` 执行并封存证据。
-- **AI 评价**：因额度不足未跑完；后续补齐。网站侧需支持一个运行挂多份 AI 评价（见 3.1）。
-- **task-12 计算器 / task-15 图书追踪**：标记为**交付方式问题**，不是功能逻辑缺陷。复核证据见 `Test_Results/Muse-Spark-1.3_Opencode/phase-01/Reviews/复核说明-交付方式.md`（原始人工判定原文保留，不改写）。
+- **AI 评价**：组织者侧的独立 AI 评价因额度不足未跑完；**维护 agent 已补出 v1 版**（`phase-01/Reviews/ai/maintenance-agent-v1/`：每题一条 + 阶段总评，非盲评、未执行成果，平均 84.9/100，口径与第一阶段不可比）。独立盲评仍待补。网站侧需支持一个运行挂多份 AI 评价（见 3.1）。
+- **task-12 计算器 / task-15 图书追踪**：标记为**交付方式问题**，不是功能逻辑缺陷。复核证据见 `phase-01/Reviews/复核说明-交付方式.md`（原始人工判定原文保留，不改写）。
+- **测试期配置**：原 `phase-01/AGENTS.md` 与 `opencode.json` 已改名为 `evidence/isolation-rules.md` 与 `evidence/tool-config.json`，避免被后续会话自动加载为仓库指令；正文未改动。
 
-### 2.2 正式接入网站前需补齐
+### 2.2 入库后仍缺的材料
 
-- `runs/<run-id>/` 目录结构、`submission.json`、`evidence/`（隔离与作弊检查证据封存），字段契约见 `docs/result-interface.md`。
-- 每题 README 或统一说明；外部依赖如实记录（task-14 引用 Google Fonts、task-13 引用 Open-Meteo）。
-- 隔离等级需显式标注：本次为「配置/提示词约束 + 15 题共用工作区」，只能记 `workspace-only`，不能声称强制隔离。
-- 网站适配按 `docs/adding-results.md` 的清单执行；当前导入器、页面计数、路由、查询与校验均为第一阶段硬编码。
+- **隔离/作弊检查证据未封存**：复盘结论依据宿主 `~/.local/share/opencode/opencode.db` 与 `/tmp` 临时脚本，原始日志与探针结果不在档案内，无法独立复核；该 run 的 `contamination.status` 保持 `unknown`。
+- **独立盲评**：现有 AI 评价为维护 agent 出具（非盲评），独立 AI 评价待补；新增评价按 `Reviews/ai/<评价者>-vN/` 接口存放。
+- **网站接入未做**：导入器、页面计数、路由、查询与校验仍为第一阶段硬编码，接入按 `docs/adding-results.md` 清单单独执行（组织者决定另开任务）。
 
 ## 3. 网站能力待办
 

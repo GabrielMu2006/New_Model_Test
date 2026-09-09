@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AEVUM — Time, Distilled to Eternity</title>
+<meta name="description" content="Aevum Haute Horlogerie. Hand-finished mechanical watches from Vallée de Joux. Discover the Meridian, Noctis and Aurelia collections." />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader-inner">
+    <div class="preloader-logo">AEVUM</div>
+    <div class="preloader-sub">HAUTE HORLOGERIE · EST. 1897</div>
+    <div class="preloader-bar"><span id="loadBar"></span></div>
+  </div>
+</div>
+
+<!-- Announcement -->
+<div class="announce">Private Unveiling — Aevum Noctis Éclipse · Geneva, 24 Oct · <a href="#reserve">Request Invitation</a></div>
+
+<!-- Nav -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav-links left">
+      <a href="#collection">Collection</a>
+      <a href="#maison">Maison</a>
+      <a href="#savoir">Savoir-Faire</a>
+    </nav>
+    <a href="#top" class="brand" aria-label="Aevum home">AEVUM<span class="brand-dot">.</span></a>
+    <nav class="nav-links right">
+      <a href="#atelier">Atelier</a>
+      <a href="#journal">Journal</a>
+      <a href="#reserve" class="btn-small">Reserve <span aria-hidden="true">→</span></a>
+    </nav>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#collection">Collection</a>
+    <a href="#maison">Maison</a>
+    <a href="#savoir">Savoir-Faire</a>
+    <a href="#atelier">Atelier</a>
+    <a href="#journal">Journal</a>
+    <a href="#reserve" class="btn-gold">Reserve a Viewing</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-ring r1"></div>
+      <div class="hero-ring r2"></div>
+      <div class="hero-ring r3"></div>
+      <div class="hero-glow"></div>
+      <div class="hero-numerals" aria-hidden="true">XII · III · VI · IX</div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow reveal"><span class="line"></span> Vallée de Joux · Since 1897</p>
+        <h1 class="reveal">Time,<br /><em>distilled</em> to<br />eternity.</h1>
+        <p class="lede reveal">Hand-bevelled calibres, grand-feu enamel, and 312 hours of finishing — in watches made at eleven pieces per month. Never more.</p>
+        <div class="hero-cta reveal">
+          <a href="#collection" class="btn-gold">Explore the Collection</a>
+          <a href="#atelier" class="btn-ghost">Configure Yours <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-meta reveal">
+          <div><strong data-count="128">0</strong><span>Years of craft</span></div>
+          <div><strong data-count="312">0</strong><span>Hours per piece</span></div>
+          <div><strong data-count="11">0</strong><span>Pieces / month</span></div>
+        </div>
+      </div>
+      <div class="hero-watch reveal">
+        <div class="watch-stage">
+          <div class="watch-halo" aria-hidden="true"></div>
+          <!-- Master SVG Watch -->
+          <svg class="watch-svg" viewBox="0 0 400 560" role="img" aria-label="Aevum Meridian wristwatch with black dial">
+            <defs>
+              <linearGradient id="goldCase" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f1dfa8"/><stop offset=".35" stop-color="#c8a86a"/>
+                <stop offset=".6" stop-color="#8a6b35"/><stop offset="1" stop-color="#e9d49c"/>
+              </linearGradient>
+              <linearGradient id="dialGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1a1c22"/><stop offset=".55" stop-color="#0d0e12"/><stop offset="1" stop-color="#000"/>
+              </linearGradient>
+              <linearGradient id="strapGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#1e1410"/><stop offset=".5" stop-color="#3d2a1c"/><stop offset="1" stop-color="#15100c"/>
+              </linearGradient>
+              <radialGradient id="glass" cx=".32" cy=".22" r=".9">
+                <stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".25" stop-color="#fff" stop-opacity=".07"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/>
+              </radialGradient>
+              <pattern id="guilloche" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(12)">
+                <circle cx="7" cy="7" r="6.2" fill="none" stroke="#ffffff" stroke-opacity=".05" stroke-width=".7"/>
+                <circle cx="7" cy="7" r="3.1" fill="none" stroke="#ffffff" stroke-opacity=".05" stroke-width=".6"/>
+              </pattern>
+            </defs>
+            <!-- strap -->
+            <g>
+              <path d="M140 0 C138 55 136 95 142 135 L258 135 C264 95 262 55 260 0 Z" fill="url(#strapGrad)" stroke="#5a4430" stroke-width="1.2"/>
+              <path d="M200 8 L200 124" stroke="#ffffff" stroke-opacity=".08" stroke-width="1" stroke-dasharray="3 5"/>
+              <g fill="none" stroke="#6b543d" stroke-width="1" opacity=".7">
+                <path d="M152 20 Q200 26 248 20"/><path d="M150 48 Q200 54 250 48"/><path d="M149 76 Q200 82 251 76"/><path d="M149 104 Q200 110 251 104"/>
+              </g>
+              <path d="M142 425 L136 560 L264 560 L258 425 Z" fill="url(#strapGrad)" stroke="#5a4430" stroke-width="1.2"/>
+              <g fill="none" stroke="#6b543d" opacity=".7"><path d="M148 452 Q200 458 252 452"/><path d="M150 484 Q200 490 250 484"/><path d="M152 516 Q200 522 248 516"/></g>
+              <rect x="188" y="478" width="24" height="10" rx="2" fill="none" stroke="#c8a86a" stroke-width="1.2" opacity=".8"/>
+            </g>
+            <!-- lugs -->
+            <g fill="url(#goldCase)" stroke="#6b5326" stroke-width="1">
+              <rect x="118" y="120" width="32" height="42" rx="9" transform="rotate(-18 134 141)"/>
+              <rect x="250" y="120" width="32" height="42" rx="9" transform="rotate(18 266 141)"/>
+              <rect x="118" y="398" width="32" height="42" rx="9" transform="rotate(18 134 419)"/>
+              <rect x="250" y="398" width="32" height="42" rx="9" transform="rotate(-18 266 419)"/>
+            </g>
+            <!-- case -->
+            <circle cx="200" cy="280" r="138" fill="url(#goldCase)" stroke="#5e4a22" stroke-width="1.5"/>
+            <circle cx="200" cy="280" r="127" fill="#0a0a0c" stroke="#2a2416" stroke-width="1"/>
+            <circle cx="200" cy="280" r="118" fill="url(#dialGrad)"/>
+            <circle cx="200" cy="280" r="118" fill="url(#guilloche)"/>
+            <!-- minute track -->
+            <g id="minuteTrack" stroke="#cbb37e" opacity=".9"></g>
+            <!-- Roman + batons generated by JS, fallback static -->
+            <g font-family="Georgia, Times, serif" fill="#e9dcc0" text-anchor="middle">
+              <text x="200" y="193" font-size="28" letter-spacing="2">XII</text>
+              <text x="200" y="389" font-size="22">VI</text>
+              <text x="293" y="288" font-size="18">III</text>
+              <text x="107" y="288" font-size="18">IX</text>
+            </g>
+            <g id="batons" fill="#d8c08a"></g>
+            <text x="200" y="245" text-anchor="middle" font-family="Georgia, serif" font-size="13" letter-spacing="4" fill="#c8a86a">AEVUM</text>
+            <text x="200" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="7.5" letter-spacing="2.2" fill="#9a958a">AUTOMATIQUE · 72H</text>
+            <!-- sub seconds -->
+            <circle cx="200" cy="322" r="26" fill="none" stroke="#3a352a" stroke-width="1"/>
+            <circle cx="200" cy="322" r="1.6" fill="#c8a86a"/>
+            <g id="subHand" style="transform-origin:200px 322px"><line x1="200" y1="322" x2="200" y2="303" stroke="#e8d5a3" stroke-width="1.2" stroke-linecap="round"/></g>
+            <!-- date -->
+            <g><rect x="228" y="272" width="28" height="16" rx="2" fill="#efe7d3" stroke="#8a7a55"/><text x="242" y="284.5" font-size="11" text-anchor="middle" font-family="Arial" fill="#111" id="dateNum">9</text></g>
+            <!-- hands -->
+            <g stroke-linecap="round">
+              <g id="hourHand" style="transform-origin:200px 280px"><line x1="200" y1="294" x2="200" y2="228" stroke="#f0e6cc" stroke-width="6" /><line x1="200" y1="294" x2="200" y2="228" stroke="#111" stroke-width="1" opacity=".25"/></g>
+              <g id="minHand" style="transform-origin:200px 280px"><line x1="200" y1="298" x2="200" y2="192" stroke="#f0e6cc" stroke-width="4" /></g>
+              <g id="secHand" style="transform-origin:200px 280px"><line x1="200" y1="304" x2="200" y2="178" stroke="#c84a3a" stroke-width="1.4"/><circle cx="200" cy="178" r="3.2" fill="#c84a3a"/><circle cx="200" cy="304" r="4" fill="#c84a3a"/></g>
+            </g>
+            <circle cx="200" cy="280" r="7" fill="url(#goldCase)" stroke="#5e4a22"/>
+            <!-- crown -->
+            <g fill="url(#goldCase)" stroke="#5e4a22"><rect x="335" y="270" width="18" height="20" rx="4"/><line x1="338" y1="274" x2="338" y2="286" stroke="#5e4a22"/><line x1="343" y1="274" x2="343" y2="286" stroke="#5e4a22"/><line x1="348" y1="274" x2="348" y2="286" stroke="#5e4a22"/></g>
+            <ellipse cx="200" cy="280" rx="118" ry="118" fill="url(#glass)"/>
+            <path d="M110 210 Q140 160 200 150 Q120 170 98 235 Z" fill="#fff" opacity=".09"/>
+          </svg>
+          <div class="watch-caption">
+            <div class="pulse" aria-hidden="true"></div>
+            <p><strong id="heroTime">10:09:42</strong> — live · Calibre AV-72 in motion</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-foot">
+      <p>Scroll to enter the Maison</p><div class="scroll-line"><span></span></div>
+      <div class="hero-prices"><span>Meridian 41 — from CHF 18,400</span><span class="dot">·</span><span>Noctis — from CHF 24,900</span><span class="dot">·</span><span>Aurelia — from CHF 32,500</span></div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marqueeTrack">
+    <span>Grand Feu Enamel</span><i>◆</i><span>72-Hour Reserve</span><i>◆</i><span>Hand-Bevelled</span><i>◆</i><span>Vallée de Joux</span><i>◆</i><span>COSC Certified</span><i>◆</i><span>Eleven Pieces a Month</span><i>◆</i>
+    <span>Grand Feu Enamel</span><i>◆</i><span>72-Hour Reserve</span><i>◆</i><span>Hand-Bevelled</span><i>◆</i><span>Vallée de Joux</span><i>◆</i><span>COSC Certified</span><i>◆</i><span>Eleven Pieces a Month</span><i>◆</i>
+  </div></div>
+
+  <!-- MAISON -->
+  <section class="maison" id="maison">
+    <div class="wrap maison-grid">
+      <div class="maison-media reveal">
+        <div class="atelier-card">
+          <div class="atelier-top"><span class="live-dot"></span> Atelier No.3 — Live finishing bench</div>
+          <div class="bench" aria-hidden="true">
+            <div class="gear g1">✺</div><div class="gear g2">✺</div><div class="gear g3">✺</div>
+            <div class="loupe"></div>
+          </div>
+          <div class="atelier-row"><div><strong>Elise Marchand</strong><span>Master finisher, 31 yrs</span></div><div class="temp">21.4°C · 48% RH</div></div>
+        </div>
+        <div class="stamp">Poinçon<br />Aevum</div>
+      </div>
+      <div class="maison-copy">
+        <p class="eyebrow gold reveal"><span class="line"></span> The Maison</p>
+        <h2 class="reveal">A century of quiet obsession.</h2>
+        <p class="reveal">Founded in 1897 by watchmaker Auguste Veyre, Aevum — from <em>aevum</em>, the time of angels — has remained wilfully small. One valley. One atelier. Twenty-three artisans who sign every bridge they bevel.</p>
+        <div class="quote reveal"><p>“We do not make watches to tell the time. We make them to honour it.”</p><cite>— Auguste Veyre, 1902 notebook</cite></div>
+        <ul class="ticks reveal">
+          <li><strong>✓</strong> Every calibre assembled twice, cased once</li>
+          <li><strong>✓</strong> Dials fired in-house, rejected at the faintest blister</li>
+          <li><strong>✓</strong> Lifetime care — return to Joux, forever</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTION -->
+  <section class="collection" id="collection">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow gold"><span class="line"></span> The Collection</p><h2>Three studies<br />in permanence.</h2></div>
+        <p class="sec-sub">All cases 18k gold or platinum. All dials made under our roof. Hover to turn the light — click to configure.</p>
+      </div>
+      <div class="cards" id="cards">
+        <article class="card reveal" data-model="meridian" tabindex="0">
+          <div class="card-tag">Icon · 41mm</div>
+          <div class="mini-watch m-meridian" aria-hidden="true"><div class="mv-dial"><span class="mv-xii">XII</span><span class="mv-h" style="--r:55deg"></span><span class="mv-m" style="--r:18deg"></span><span class="mv-s" style="--r:210deg"></span><span class="mv-pin"></span></div></div>
+          <h3>Meridian 41</h3><p class="card-desc">Onyx lacquer, dauphine hands, small seconds. The everyday monument.</p>
+          <ul class="specs"><li>AV-72 automatic</li><li>72 h reserve</li><li>50 m</li></ul>
+          <div class="card-foot"><span class="price">CHF 18,400</span><button class="link" data-config="meridian">Configure →</button></div>
+        </article>
+        <article class="card reveal" data-model="noctis" tabindex="0">
+          <div class="card-tag dark">New · 39mm</div>
+          <div class="mini-watch m-noctis" aria-hidden="true"><div class="mv-dial"><span class="moon"></span><span class="stars"></span><span class="mv-h" style="--r:310deg"></span><span class="mv-m" style="--r:95deg"></span><span class="mv-pin"></span></div></div>
+          <h3>Noctis Éclipse</h3><p class="card-desc">Aventurine glass, astronomical moon, platinum case. Night, worn.</p>
+          <ul class="specs"><li>AV-91 moonphase</li><li>122-yr moon</li><li>30 m</li></ul>
+          <div class="card-foot"><span class="price">CHF 24,900</span><button class="link" data-config="noctis">Configure →</button></div>
+        </article>
+        <article class="card reveal" data-model="aurelia" tabindex="0">
+          <div class="card-tag gold-tag">Atelier · 36mm</div>
+          <div class="mini-watch m-aurelia" aria-hidden="true"><div class="mv-dial"><span class="mv-xii">XII</span><span class="mv-h" style="--r:125deg"></span><span class="mv-m" style="--r:260deg"></span><span class="mv-pin"></span></div></div>
+          <h3>Aurelia Dorée</h3><p class="card-desc">Champagne grand-feu enamel, hand-engraved lotus. Eleven per year.</p>
+          <ul class="specs"><li>AV-60 hand-wound</li><li>96 h reserve</li><li>Enamel</li></ul>
+          <div class="card-foot"><span class="price">CHF 32,500</span><button class="link" data-config="aurelia">Configure →</button></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAVOIR -->
+  <section class="savoir" id="savoir">
+    <div class="wrap savoir-grid">
+      <div>
+        <p class="eyebrow gold"><span class="line"></span> Savoir-Faire</p>
+        <h2>312 hours.<br />One wrist.</h2>
+        <p class="muted">Each movement passes through 214 operations. Côtes de Genève are cut, then broken by hand so light falls softly. Angles are bevelled to 45° and mirror-polished — including the ones you will never see.</p>
+        <div class="bars">
+          <div class="bar-row"><div class="bar-head"><span>Hand bevelling & polishing</span><span>124 h</span></div><div class="bar"><span data-w="72"></span></div></div>
+          <div class="bar-row"><div class="bar-head"><span>Dial & enamel</span><span>68 h</span></div><div class="bar"><span data-w="48"></span></div></div>
+          <div class="bar-row"><div class="bar-head"><span>Assembly & regulation</span><span>86 h</span></div><div class="bar"><span data-w="58"></span></div></div>
+          <div class="bar-row"><div class="bar-head"><span>Testing · 21 days</span><span>34 h</span></div><div class="bar"><span data-w="30"></span></div></div>
+        </div>
+      </div>
+      <div class="calibre">
+        <div class="calibre-head"><span>Calibre AV-72</span><span class="chip">COSC −1/+3 s/day</span></div>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="bridge" role="tab">Bridge</button>
+          <button class="tab" data-tab="esc" role="tab">Escapement</button>
+          <button class="tab" data-tab="barrel" role="tab">Barrel</button>
+        </div>
+        <div class="calibre-view" id="calibreView" aria-live="polite">
+          <svg viewBox="0 0 320 220" class="movement" aria-hidden="true">
+            <rect x="8" y="8" width="304" height="204" rx="24" fill="#131316" stroke="#3a3323"/>
+            <g id="calBridge"><ellipse cx="160" cy="110" rx="110" ry="78" fill="#1d1d22" stroke="#c8a86a" stroke-width="1.2"/><circle cx="110" cy="105" r="34" fill="none" stroke="#c8a86a" stroke-width="1"/><circle cx="205" cy="125" r="46" fill="none" stroke="#c8a86a" stroke-width="1"/><circle cx="110" cy="105" r="6" fill="#c8a86a"/><circle cx="205" cy="125" r="8" fill="#c8a86a"/><path d="M60 70 L260 150 M70 150 L250 70" stroke="#fff" stroke-opacity=".06"/></g>
+            <g id="calExtra" opacity="0"><circle cx="160" cy="110" r="58" fill="none" stroke="#e8d5a3" stroke-dasharray="4 6"/><circle cx="160" cy="110" r="38" fill="none" stroke="#c84a3a"/><circle cx="160" cy="110" r="5" fill="#e8d5a3"/></g>
+          </svg>
+          <div class="calibre-copy">
+            <h4 id="calTitle">Hand-bevelled bridge</h4>
+            <p id="calText">Solid German silver, frosted by hand, bevels polished to a black mirror. Signed by its finisher.</p>
+            <dl><div><dt>Jewels</dt><dd>29</dd></div><div><dt>Frequency</dt><dd>28,800 vph</dd></div><div><dt>Reserve</dt><dd>72 hours</dd></div></dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ATELIER / CONFIGURATOR -->
+  <section class="atelier" id="atelier">
+    <div class="wrap">
+      <div class="sec-head light"><div><p class="eyebrow gold"><span class="line"></span> The Atelier</p><h2>Compose your Aevum.</h2></div>
+      <p class="sec-sub light">Priced transparently, finished identically — whether onyx or glacier. Your composition is reserved for 72 hours.</p></div>
+      <div class="atelier-grid">
+        <div class="preview">
+          <div class="preview-stage" id="previewStage">
+            <div class="mini-watch big" id="configWatch" aria-hidden="true"><div class="mv-dial" id="configDial"><span class="mv-xii">XII</span><span class="mv-h" id="cH"></span><span class="mv-m" id="cM"></span><span class="mv-pin"></span></div></div>
+            <div class="engrave" id="engravePrev">A. Veyre — 1897</div>
+          </div>
+          <div class="preview-foot"><span id="configName">Meridian 41 · Onyx · Yellow Gold</span><strong id="configPrice">CHF 18,400</strong></div>
+        </div>
+        <div class="options">
+          <div class="opt-group"><h4>01 — Model</h4><div class="pills" id="modelPills">
+            <button class="pill active" data-model="meridian" data-price="18400">Meridian 41</button>
+            <button class="pill" data-model="noctis" data-price="24900">Noctis 39</button>
+            <button class="pill" data-model="aurelia" data-price="32500">Aurelia 36</button>
+          </div></div>
+          <div class="opt-group"><h4>02 — Dial</h4><div class="swatches" id="dialSwatches">
+            <button class="sw active" data-dial="Onyx" data-c1="#0d0e12" data-c2="#000" style="--s:#111"></button>
+            <button class="sw" data-dial="Glacier" data-c1="#dfe6ea" data-c2="#aebcc4" style="--s:#dfe6ea"></button>
+            <button class="sw" data-dial="Champagne" data-c1="#f0dcae" data-c2="#c9a25e" style="--s:#ecd3a0"></button>
+            <button class="sw" data-dial="Aventurine" data-c1="#141d3a" data-c2="#070b1d" style="--s:#1a2450"></button>
+            <button class="sw" data-dial="Burgundy" data-c1="#4a1420" data-c2="#1c060c" style="--s:#5c1a28"></button>
+          </div><p class="opt-note" id="dialNote">Onyx lacquer — 7 layers, mirror-polished.</p></div>
+          <div class="opt-group"><h4>03 — Case metal</h4><div class="pills" id="metalPills">
+            <button class="pill active" data-metal="Yellow Gold" data-add="0">Yellow Gold</button>
+            <button class="pill" data-metal="Rose Gold" data-add="1200">Rose Gold +1,200</button>
+            <button class="pill" data-metal="Platinum" data-add="4800">Platinum +4,800</button>
+          </div></div>
+          <div class="opt-group"><h4>04 — Strap</h4><div class="pills" id="strapPills">
+            <button class="pill active" data-strap="Alligator · Noir">Alligator · Noir</button>
+            <button class="pill" data-strap="Alligator · Cognac">Alligator · Cognac</button>
+            <button class="pill" data-strap="Calf · Slate">Calf · Slate</button>
+            <button class="pill" data-strap="Gold bracelet">Gold bracelet</button>
+          </div></div>
+          <div class="opt-group"><h4>05 — Caseback engraving</h4><input class="engrave-input" id="engraveInput" maxlength="28" placeholder="e.g. A. Veyre — 1897" value="A. Veyre — 1897" /></div>
+          <div class="reserve-row"><button class="btn-gold full" id="reserveBtn">Reserve this piece →</button><p class="fine">No payment today. A concierge writes within 24h. · 5-year warranty · 30-day return</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNAL -->
+  <section class="journal" id="journal">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow gold"><span class="line"></span> Journal & Voices</p><h2>Worn by those who keep time.</h2></div>
+      <div class="slider-nav"><button id="prevT" aria-label="Previous">←</button><button id="nextT" aria-label="Next">→</button></div></div>
+      <div class="t-viewport"><div class="t-track" id="tTrack">
+        <figure class="t-card"><blockquote>“It doesn't shout. At dinner in Kyoto, one chef noticed — and we spoke for an hour about enamel.”</blockquote><figcaption><span class="avatar">MK</span><span><strong>M. Keller</strong>Meridian 41 · Owner since 2019</span></figcaption></figure>
+        <figure class="t-card"><blockquote>“The moonphase has not drifted a day in three years. My grandfather's watch cannot say that.”</blockquote><figcaption><span class="avatar">AL</span><span><strong>A. Laurent</strong>Noctis · Collector</span></figcaption></figure>
+        <figure class="t-card"><blockquote>“I toured the atelier. One woman polishes a single bridge for two days. I understood the price.”</blockquote><figcaption><span class="avatar">SR</span><span><strong>S. Rao</strong>Aurelia · Waiting list 2024</span></figcaption></figure>
+      </div></div>
+      <div class="press"><span>LE TEMPS</span><span>MONOCHROME</span><span>REVOLUTION</span><span>FINANCIAL TIMES</span><span>GQ</span></div>
+    </div>
+  </section>
+
+  <!-- RESERVE -->
+  <section class="reserve" id="reserve">
+    <div class="wrap reserve-grid">
+      <div>
+        <p class="eyebrow gold"><span class="line"></span> Private Viewing</p>
+        <h2>See it in person.<br />Hear it tick.</h2>
+        <p class="muted">Boutiques in Geneva · Paris · Kyoto · New York. Or a travelling concierge with the full collection in a single case.</p>
+        <ul class="reserve-list"><li><span>◷</span> 45 minutes, one client at a time</li><li><span>✦</span> Try all three references, loupe included</li><li><span>○</span> No obligation — tea is excellent regardless</li></ul>
+        <div class="count"><span>Next Geneva salon opens in</span><strong id="countdown">12d : 08h : 24m : 10s</strong></div>
+      </div>
+      <form class="form" id="reserveForm" novalidate>
+        <h3>Request invitation</h3>
+        <label>Full name<input name="name" required placeholder="Ada Veyre" autocomplete="name" /></label>
+        <label>Email<input name="email" type="email" required placeholder="you@example.com" autocomplete="email" /></label>
+        <div class="two"><label>Boutique<select name="city"><option>Geneva</option><option>Paris</option><option>Kyoto</option><option>New York</option><option>Travelling concierge</option></select></label>
+        <label>Interest<select name="ref"><option>Meridian 41</option><option>Noctis Éclipse</option><option>Aurelia Dorée</option><option>Undecided</option></select></label></div>
+        <p class="form-err" id="formErr" role="alert"></p>
+        <button class="btn-gold full" type="submit">Request Invitation</button>
+        <p class="fine">By requesting you agree to be contacted once. No newsletter unless you ask.</p>
+        <div class="form-ok" id="formOk" hidden><span>✓</span><div><strong>Thank you.</strong><p id="okText">Your request is noted.</p></div></div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap foot-grid">
+      <div><div class="brand">AEVUM<span class="brand-dot">.</span></div><p class="muted small">Haute horlogerie from Vallée de Joux.<br />Eleven watches a month. Forever.</p><p class="small muted">CHF prices incl. VAT · 5-year warranty</p></div>
+      <div><h5>Maison</h5><a href="#maison">Our story</a><a href="#savoir">Savoir-faire</a><a href="#journal">Journal</a><a href="#reserve">Boutiques</a></div>
+      <div><h5>Collection</h5><a href="#collection">Meridian 41</a><a href="#collection">Noctis Éclipse</a><a href="#collection">Aurelia Dorée</a><a href="#atelier">Atelier</a></div>
+      <div><h5>Care</h5><a href="#reserve">Service & restoration</a><a href="#reserve">Warranty</a><a href="#reserve">Contact concierge</a></div>
+    </div>
+    <div class="wrap foot-base"><span>© 2026 Aevum Horlogerie SA — A fictional maison, crafted for demonstration.</span><span>Geneva · Paris · Kyoto · New York</span></div>
+  </footer>
+</main>
+
+<!-- Toast + Modal -->
+<div class="toast" id="toast" role="status"></div>
+<div class="modal" id="modal" hidden><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <button class="modal-x" id="modalX" aria-label="Close">×</button>
+  <p class="eyebrow gold">Reservation held · 72h</p>
+  <h3 id="mTitle">Meridian 41</h3>
+  <p class="muted" id="mDesc">Onyx · Yellow Gold · Alligator Noir</p>
+  <div class="modal-price"><span>Total</span><strong id="mPrice">CHF 18,400</strong></div>
+  <p class="fine">Show this reference at your viewing: <strong id="mRef">AV-18400-X</strong></p>
+  <button class="btn-gold full" id="mGo">Continue to Private Viewing ↓</button>
+</div></div>
+
+<script src="app.js"></script>
+</body>
+</html>

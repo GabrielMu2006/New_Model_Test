@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FloorPlan Studio — 2D Floor-Plan Editor</title>
+<style>
+  :root{
+    --bg:#14161d; --panel:#1f2230; --panel2:#2a2e40; --border:#373c52;
+    --text:#eef0f7; --muted:#9aa1b8; --accent:#6c8cff; --accent2:#2dd4a7;
+    --warn:#ff6b6b; --door:#c98a3d; --win:#38bdf8;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;overflow:hidden}
+  header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+  header h1{font-size:15px;margin:0;letter-spacing:.4px;white-space:nowrap}
+  header h1 span{color:var(--accent2)}
+  header .sub{font-size:12px;color:var(--muted)}
+  header .spacer{flex:1}
+  button,select{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:13px;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  button.primary{background:var(--accent2);border-color:var(--accent2);color:#08251d;font-weight:700}
+  button.danger{border-color:#5a2b2b}
+  button:disabled{opacity:.4;cursor:default}
+  .layout{flex:1;display:flex;min-height:0}
+  .left{width:196px;background:var(--panel);border-right:1px solid var(--border);padding:12px;display:flex;flex-direction:column;gap:12px;overflow-y:auto}
+  .left label,.right label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px}
+  .tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .tool-grid button{font-size:13px;padding:9px 6px}
+  .lib{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .lib button{font-size:12px}
+  .hint{font-size:12px;color:var(--muted);line-height:1.6;background:#161824;border:1px solid var(--border);border-radius:8px;padding:8px}
+  kbd{background:#0d0f16;border:1px solid var(--border);border-radius:4px;padding:0 5px;font-size:11px}
+  .center{flex:1;display:flex;flex-direction:column;min-width:0}
+  .canvas-toolbar{display:flex;gap:8px;align-items:center;padding:8px 12px;background:#181b26;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted);flex-wrap:wrap}
+  .canvas-toolbar b{color:var(--text)}
+  #wrap{flex:1;overflow:auto;background:#0f1118;background-image:radial-gradient(circle at 1px 1px,#22263a 1px,transparent 1px);background-size:22px 22px;display:grid;place-items:start center;padding:24px;position:relative}
+  #stage{background:#fafaf7;border:1px solid #00000055;box-shadow:0 14px 60px rgba(0,0,0,.55);border-radius:4px;cursor:crosshair;touch-action:none}
+  .right{width:286px;background:var(--panel);border-left:1px solid var(--border);padding:12px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
+  .card{background:#181b28;border:1px solid var(--border);border-radius:10px;padding:10px}
+  .card h3{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}
+  .stat{display:flex;justify-content:space-between;font-size:13px;padding:3px 0}
+  .stat b{font-variant-numeric:tabular-nums}
+  .row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .row input[type=number],.row input[type=text]{background:var(--panel2);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:6px 8px;font-size:13px;width:100%}
+  .wall-list{max-height:150px;overflow:auto;font-size:12px;display:flex;flex-direction:column;gap:4px}
+  .wall-item{display:flex;justify-content:space-between;background:var(--panel2);border:1px solid var(--border);border-radius:7px;padding:5px 8px;cursor:pointer}
+  .wall-item.sel{border-color:var(--accent)}
+  footer{background:var(--panel);border-top:1px solid var(--border);padding:7px 14px;font-size:12px;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap}
+  footer b{color:var(--text)}
+  input[type=checkbox]{accent-color:var(--accent)}
+  input[type=range]{accent-color:var(--accent);width:100%}
+  .legend{display:flex;gap:10px;font-size:12px;flex-wrap:wrap}
+  .dot{display:inline-block;width:14px;height:6px;border-radius:2px;vertical-align:middle;margin-right:4px}
+  @media(max-width:1100px){.right{display:none}.left{width:170px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>▦ FloorPlan <span>Studio</span></h1>
+  <span class="sub">draw walls · doors &amp; windows · drag furniture · live dimensions</span>
+  <div class="spacer"></div>
+  <button id="undoBtn" title="Undo (Ctrl+Z)">↩ Undo</button>
+  <button id="redoBtn" title="Redo (Ctrl+Y)">↪ Redo</button>
+  <button id="sampleBtn" title="Load sample apartment">🏠 Sample</button>
+  <button id="clearBtn" class="danger" title="Clear everything">🗑 Clear</button>
+  <button id="pngBtn" class="primary">⬇ PNG</button>
+</header>
+
+<div class="layout">
+  <aside class="left">
+    <div>
+      <label>Tool</label>
+      <div class="tool-grid">
+        <button id="t-select" class="active" title="Select / drag (V)">➤ Select</button>
+        <button id="t-wall" title="Draw walls (W)">🧱 Wall</button>
+        <button id="t-door" title="Draw doors (D)">🚪 Door</button>
+        <button id="t-window" title="Draw windows (N)">🪟 Window</button>
+        <button id="t-erase" title="Click to delete (E)">🧽 Erase</button>
+        <button id="t-measure" title="Measure distance (M)">📏 Measure</button>
+      </div>
+    </div>
+    <div>
+      <label>Add furniture (click, then drag)</label>
+      <div class="lib" id="lib"></div>
+    </div>
+    <div>
+      <label>Options</label>
+      <div class="row"><label style="display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0;font-size:13px;color:var(--text)"><input type="checkbox" id="snapChk" checked /> Snap to 0.5 m</label></div>
+      <div class="row"><label style="display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0;font-size:13px;color:var(--text)"><input type="checkbox" id="dimChk" checked /> Show dimensions</label></div>
+      <div class="row"><label style="display:flex;gap:6px;align-items:center;text-transform:none;letter-spacing:0;font-size:13px;color:var(--text)"><input type="checkbox" id="gridChk" checked /> Show grid</label></div>
+      <div style="margin-top:8px"><label>Scale</label>
+        <select id="scaleSel" style="width:100%">
+          <option value="30" selected>30 px = 1 m (1 ft ≈ 9.1 px)</option>
+          <option value="40">40 px = 1 m (large)</option>
+          <option value="20">20 px = 1 m (small)</option>
+        </select>
+      </div>
+      <div style="margin-top:8px"><label>Wall thickness</label>
+        <input type="range" id="thickRange" min="4" max="16" value="8" />
+      </div>
+    </div>
+    <div class="hint">
+      <b style="color:var(--text)">How to use</b><br/>
+      • <kbd>W</kbd> drag on canvas = wall (hold <kbd>Shift</kbd> = straight). Length shows live.<br/>
+      • <kbd>D</kbd>/<kbd>N</kbd> drag = door / window. Overlaps cut a gap in the wall.<br/>
+      • <kbd>V</kbd> select: drag bodies to move, drag ● endpoints to stretch, <kbd>Del</kbd> removes.<br/>
+      • Furniture: click a library item, then drag items anywhere.<br/>
+      • <kbd>M</kbd> measure: drag between two points.
+    </div>
+  </aside>
+
+  <div class="center">
+    <div class="canvas-toolbar">
+      <span>Cursor: <b id="cursorLabel">—</b></span>
+      <span>Drawing: <b id="drawLabel">—</b></span>
+      <span class="legend"><span><i class="dot" style="background:#23242c"></i>wall</span><span><i class="dot" style="background:#c98a3d"></i>door</span><span><i class="dot" style="background:#38bdf8"></i>window</span></span>
+      <span style="flex:1"></span>
+      <button id="saveBtn">💾 Save</button>
+      <button id="loadBtn">📂 Load</button>
+      <button id="jsonBtn">{} JSON</button>
+    </div>
+    <main id="wrap"><canvas id="stage"></canvas></main>
+  </div>
+
+  <aside class="right">
+    <div class="card">
+      <h3>Room dimensions</h3>
+      <div class="stat"><span>Walls</span><b id="stWalls">0</b></div>
+      <div class="stat"><span>Total wall length</span><b id="stLen">0 m</b></div>
+      <div class="stat"><span>Footprint (bbox)</span><b id="stBox">—</b></div>
+      <div class="stat"><span>Enclosed room area</span><b id="stArea" style="color:var(--accent2)">—</b></div>
+      <div class="stat"><span>Doors / Windows</span><b id="stOpen">0 / 0</b></div>
+      <div class="stat"><span>Furniture</span><b id="stFurn">0</b></div>
+      <div id="roomNote" style="font-size:12px;color:var(--muted);margin-top:6px">Close a wall loop to auto-compute floor area.</div>
+    </div>
+    <div class="card">
+      <h3>Selection</h3>
+      <div id="selEmpty" style="font-size:13px;color:var(--muted)">Nothing selected. Click a wall, opening or furniture.</div>
+      <div id="selBody" style="display:none">
+        <div class="stat"><span>Type</span><b id="selType">—</b></div>
+        <div class="stat"><span>Size</span><b id="selSize">—</b></div>
+        <div class="row" style="margin-top:8px">
+          <button id="rotBtn" style="flex:1" title="Rotate furniture 15° (R)">⟳ Rotate</button>
+          <button id="dupBtn" style="flex:1">⧉ Duplicate</button>
+          <button id="delBtn" class="danger" style="flex:1">✕ Delete</button>
+        </div>
+        <div id="furnEdit" style="display:none;margin-top:8px">
+          <label>Label</label>
+          <div class="row"><input type="text" id="labelInput" maxlength="18" /></div>
+          <div class="row" style="margin-top:6px">
+            <div style="flex:1"><label>W (m)</label><input type="number" id="wInput" step="0.1" min="0.3" max="6" /></div>
+            <div style="flex:1"><label>H (m)</label><input type="number" id="hInput" step="0.1" min="0.3" max="6" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Walls list (click to select)</h3>
+      <div class="wall-list" id="wallList"></div>
+    </div>
+    <div class="card">
+      <h3>Tips</h3>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Doors &amp; windows snap to the grid and visually cut the wall. Drag an opening's endpoints to resize it. Use Save — plan persists in this browser via localStorage.</div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <span>Tool: <b id="toolLabel">select</b></span>
+  <span>Scale: <b id="scaleLabel">30 px/m</b></span>
+  <span>Selected: <b id="selLabel">none</b></span>
+  <span>History: <b id="histLabel">0</b></span>
+</footer>
+
+<script>
+(() => {
+"use strict";
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+const wrap = document.getElementById('wrap');
+const $ = id => document.getElementById(id);
+
+let PPM = 30;                 // px per meter
+let SNAP = 15;                // 0.5m snap in px @30
+let WALL_T = 8;
+let showDims = true, showGrid = true, snapOn = true;
+
+const CW = 1200, CH = 800;    // canvas plan size
+const DPR = Math.min(2, window.devicePixelRatio || 1);
+canvas.width = CW * DPR; canvas.height = CH * DPR;
+canvas.style.width = CW + 'px'; canvas.style.height = CH + 'px';
+ctx.scale(DPR, DPR);
+
+let walls = [];     // {x1,y1,x2,y2}
+let openings = [];  // {kind:'door'|'window', x1,y1,x2,y2}
+let furns = [];     // {x,y,w,h,label,color,icon,rot}
+let measures = [];  // persistent? just one temp
+let tool = 'select';
+let selected = null; // {kind:'wall'|'opening'|'furn', i}
+let drag = null;     // active drag state
+let hover = null;
+
+let undoStack = [], redoStack = [];
+const MAXH = 80;
+
+// ---------- furniture library ----------
+const LIB = [
+  {label:'Bed',   w:2.0,h:1.6,color:'#7c8db0',icon:'🛏'},
+  {label:'Sofa',  w:2.0,h:0.9,color:'#8a9b6e',icon:'🛋'},
+  {label:'Table', w:1.4,h:0.9,color:'#b08968',icon:'🍽'},
+  {label:'Desk',  w:1.2,h:0.6,color:'#9a8c98',icon:'🖥'},
+  {label:'Chair', w:0.5,h:0.5,color:'#c9ada7',icon:'🪑'},
+  {label:'Plant', w:0.5,h:0.5,color:'#6a994e',icon:'🪴'},
+  {label:'Bath',  w:1.7,h:0.8,color:'#90bece',icon:'🛁'},
+  {label:'Rug',   w:2.0,h:1.4,color:'#d68c45',icon:'▦'},
+];
+const libEl = $('lib');
+LIB.forEach((f,idx)=>{
+  const b=document.createElement('button');
+  b.textContent=f.icon+' '+f.label;
+  b.title=`Add ${f.label} (${f.w}×${f.h} m)`;
+  b.onclick=()=>{ pushHist(); addFurn(idx, CW/2 + (Math.random()*80-40), CH/2 + (Math.random()*80-40)); setTool('select'); };
+  libEl.appendChild(b);
+});
+function addFurn(li,x,y){
+  const t=LIB[li];
+  const f={x:x-t.w*PPM/2,y:y-t.h*PPM/2,w:t.w*PPM,h:t.h*PPM,label:t.label,color:t.color,icon:t.icon,rot:0};
+  furns.push(f); selected={kind:'furn',i:furns.length-1}; syncSel(); render();
+}
+
+// ---------- history ----------
+function snap(){ return JSON.stringify({walls,openings,furns}); }
+function restore(s){ const o=JSON.parse(s); walls=o.walls;openings=o.openings;furns=o.furns; selected=null; syncSel(); render(); }
+function pushHist(){ undoStack.push(snap()); if(undoStack.length>MAXH)undoStack.shift(); redoStack=[]; hist(); }
+function hist(){ $('histLabel').textContent = undoStack.length+' / '+(undoStack.length+redoStack.length); $('undoBtn').disabled=!undoStack.length; $('redoBtn').disabled=!redoStack.length; }
+function undo(){ if(!undoStack.length)return; redoStack.push(snap()); restore(undoStack.pop()); hist(); }
+function redo(){ if(!redoStack.length)return; undoStack.push(snap()); restore(redoStack.pop()); hist(); }
+$('undoBtn').onclick=undo; $('redoBtn').onclick=redo;
+
+// ---------- tools ----------
+const toolBtns={select:$('t-select'),wall:$('t-wall'),door:$('t-door'),window:$('t-window'),erase:$('t-erase'),measure:$('t-measure')};
+function setTool(t){ tool=t; for(const k in toolBtns) toolBtns[k].classList.toggle('active',k===t);
+  $('toolLabel').textContent=t; canvas.style.cursor = t==='select'?'default':t==='erase'?'not-allowed':'crosshair'; }
+for(const k in toolBtns) toolBtns[k].onclick=()=>setTool(k);
+
+// ---------- options ----------
+$('snapChk').onchange=e=>snapOn=e.target.checked;
+$('dimChk').onchange=e=>{showDims=e.target.checked;render();};
+$('gridChk').onchange=e=>{showGrid=e.target.checked;render();};
+$('scaleSel').onchange=e=>{ const old=PPM; PPM=+e.target.value; const s=PPM/old;
+  walls.forEach(w=>{w.x1*=s;w.y1*=s;w.x2*=s;w.y2*=s;});
+  openings.forEach(w=>{w.x1*=s;w.y1*=s;w.x2*=s;w.y2*=s;});
+  furns.forEach(f=>{f.x*=s;f.y*=s;f.w*=s;f.h*=s;});
+  SNAP=PPM/2; $('scaleLabel').textContent=PPM+' px/m'; render(); };
+$('thickRange').oninput=e=>{WALL_T=+e.target.value;render();};
+
+// ---------- geometry helpers ----------
+function evPos(e){ const r=canvas.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; }
+function doSnap(p){ if(!snapOn) return p; return {x:Math.round(p.x/SNAP)*SNAP, y:Math.round(p.y/SNAP)*SNAP}; }
+function straighten(a,b){ // shift: lock to horiz/vert/45
+  const dx=b.x-a.x, dy=b.y-a.y;
+  const ang=Math.atan2(dy,dx), step=Math.PI/4;
+  const q=Math.round(ang/step)*step, len=Math.hypot(dx,dy);
+  return {x:a.x+Math.cos(q)*len, y:a.y+Math.sin(q)*len};
+}
+const mOf = px => px/PPM;
+function fmtLen(px){ const m=mOf(px), ft=m*3.28084; return `${m.toFixed(2)} m · ${ft.toFixed(1)}′`; }
+function fmtArea(m2){ return `${m2.toFixed(1)} m² · ${(m2*10.7639).toFixed(0)} ft²`; }
+function segLen(s){ return Math.hypot(s.x2-s.x1, s.y2-s.y1); }
+function distPtSeg(p,a,b){ const dx=b.x-a.x,dy=b.y-a.y,L2=dx*dx+dy*dy||1;
+  let t=((p.x-a.x)*dx+(p.y-a.y)*dy)/L2; t=Math.max(0,Math.min(1,t));
+  return {d:Math.hypot(p.x-(a.x+t*dx),p.y-(a.y+t*dy)), t}; }
+function endHit(p,s,r=9){ if(Math.hypot(p.x-s.x1,p.y-s.y1)<r)return 1; if(Math.hypot(p.x-s.x2,p.y-s.y2)<r)return 2; return 0; }
+function pick(p){
+  // furniture first (topmost last)
+  for(let i=furns.length-1;i>=0;i--){ const f=furns[i];
+    // account rotation approx by bbox expand
+    const cx=f.x+f.w/2, cy=f.y+f.h/2, rad=Math.hypot(f.w,f.h)/2;
+    if(Math.hypot(p.x-cx,p.y-cy)>rad+6) continue;
+    // inverse rotate
+    const a=-f.rot*Math.PI/180, dx=p.x-cx, dy=p.y-cy;
+    const lx=cx+dx*Math.cos(a)-dy*Math.sin(a), ly=cy+dx*Math.sin(a)+dy*Math.cos(a);
+    if(lx>=f.x-3&&lx<=f.x+f.w+3&&ly>=f.y-3&&ly<=f.y+f.h+3) return {kind:'furn',i};
+  }
+  let best=null,bd=12;
+  openings.forEach((s,i)=>{ const r=distPtSeg(p,s,s); if(r.d<bd){bd=r.d;best={kind:'opening',i};} });
+  walls.forEach((s,i)=>{ const r=distPtSeg(p,{x:s.x1,y:s.y1},{x:s.x2,y:s.y2}); if(r.d<bd){bd=r.d;best={kind:'wall',i};} });
+  return best;
+}
+function getSeg(kind,i){ return kind==='wall'?walls[i]:openings[i]; }
+
+// ---------- mouse interactions ----------
+canvas.addEventListener('contextmenu',e=>e.preventDefault());
+canvas.addEventListener('mousedown',e=>{
+  if(e.button===2){ setTool('select'); return; }
+  const raw=evPos(e), p=doSnap(raw);
+  if(tool==='wall'||tool==='door'||tool==='window'||tool==='measure'){
+    pushHist(); redoStack=[];
+    let b = (e.shiftKey&&tool==='wall')?p:p;
+    drag={mode:'draw', kind:tool, a:{...p}, b:{...b}, shiftAtStart:e.shiftKey};
+    if(tool==='measure') measures=[];
+  } else if(tool==='erase'){
+    const hit=pick(raw); if(hit){ pushHist(); removeSel(hit); }
+  } else { // select
+    const hit=pick(raw);
+    if(!hit){ selected=null; syncSel(); render(); return; }
+    selected=hit; syncSel();
+    const s = hit.kind==='furn'?null:getSeg(hit.kind,hit.i);
+    let endpoint=0;
+    if(s) endpoint=endHit(raw,s);
+    const f = hit.kind==='furn'?furns[hit.i]:null;
+    pushHist();
+    if(endpoint){ drag={mode:'endpoint', ...hit, endpoint, moved:false}; }
+    else if(f){ drag={mode:'moveFurn', i:hit.i, dx:raw.x-f.x, dy:raw.y-f.y, moved:false}; }
+    else { const sg=getSeg(hit.kind,hit.i);
+      drag={mode:'moveSeg', ...hit, dx:raw.x-(sg.x1+sg.x2)/2, dy:raw.y-(sg.y1+sg.y2)/2, moved:false}; }
+    render();
+  }
+  canvas.setPointerCapture&&canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('mousemove',e=>{
+  const raw=evPos(e), p=doSnap(raw);
+  $('cursorLabel').textContent=`${mOf(raw.x).toFixed(2)}, ${mOf(raw.y).toFixed(2)} m`;
+  if(!drag){
+    hover = tool==='select'?pick(raw):null;
+    canvas.style.cursor = tool==='select'?(hover?'move':'default'):canvas.style.cursor;
+    if(hover) renderHover(raw); else render();
+    return;
+  }
+  if(drag.mode==='draw'){
+    let b = (e.shiftKey||drag.shiftAtStart)&&drag.kind==='wall'?straighten(drag.a,p):p;
+    // default min length preview
+    drag.b=b;
+    const L=Math.hypot(b.x-drag.a.x,b.y-drag.a.y);
+    $('drawLabel').textContent = L<2?'click/drag':fmtLen(L);
+    render(true);
+  } else if(drag.mode==='moveFurn'){
+    const f=furns[drag.i]; let nx=raw.x-drag.dx, ny=raw.y-drag.dy;
+    if(snapOn){ nx=Math.round(nx/SNAP)*SNAP; ny=Math.round(ny/SNAP)*SNAP; }
+    f.x=Math.max(0,Math.min(CW-f.w,nx)); f.y=Math.max(0,Math.min(CH-f.h,ny));
+    drag.moved=true; render(true);
+  } else if(drag.mode==='moveSeg'){
+    const s=getSeg(drag.kind,drag.i);
+    const cx=(s.x1+s.x2)/2, cy=(s.y1+s.y2)/2;
+    let ncx=raw.x-drag.dx, ncy=raw.y-drag.dy;
+    if(snapOn){ ncx=Math.round(ncx/SNAP)*SNAP; ncy=Math.round(ncy/SNAP)*SNAP; }
+    s.x1+=ncx-cx; s.y1+=ncy-cy; s.x2+=ncx-cx; s.y2+=ncy-cy;
+    clampSeg(s); drag.moved=true; render(true);
+  } else if(drag.mode==='endpoint'){
+    const s=getSeg(drag.kind,drag.i);
+    if(drag.endpoint===1){s.x1=p.x;s.y1=p.y;} else {s.x2=p.x;s.y2=p.y;}
+    clampSeg(s); drag.moved=true; render(true);
+  }
+});
+window.addEventListener('mouseup',e=>{
+  if(!drag) return;
+  if(drag.mode==='draw'){
+    const L=Math.hypot(drag.b.x-drag.a.x,drag.b.y-drag.a.y);
+    undoStack.pop(); hist(); // we'll re-push only if valid
+    if(L>8){
+      // single-click door/window → default size centered
+      pushHist();
+      if(drag.kind==='wall') walls.push({x1:drag.a.x,y1:drag.a.y,x2:drag.b.x,y2:drag.b.y});
+      else if(drag.kind==='measure'){ measures=[{x1:drag.a.x,y1:drag.a.y,x2:drag.b.x,y2:drag.b.y}]; undoStack.pop(); hist(); }
+      else openings.push({kind:drag.kind,x1:drag.a.x,y1:drag.a.y,x2:drag.b.x,y2:drag.b.y});
+      if(drag.kind!=='measure'){ const arr=drag.kind==='wall'?walls:openings; selected={kind:drag.kind==='wall'?'wall':'opening',i:arr.length-1}; }
+      syncSel();
+    } else if(drag.kind==='door'||drag.kind==='window'){
+      // click = place default-size opening horizontal
+      pushHist();
+      const w=(drag.kind==='door'?0.9:1.5)*PPM, a=drag.a;
+      openings.push({kind:drag.kind,x1:a.x-w/2,y1:a.y,x2:a.x+w/2,y2:a.y});
+      selected={kind:'opening',i:openings.length-1}; syncSel();
+    }
+    $('drawLabel').textContent='—';
+    render();
+  } else {
+    if(!drag.moved){ undoStack.pop(); hist(); } // click w/o move = select only
+    else { redoStack=[]; hist(); syncSel(); render(); }
+  }
+  drag=null;
+});
+function clampSeg(s){ s.x1=Math.max(0,Math.min(CW,s.x1)); s.y1=Math.max(0,Math.min(CH,s.y1)); s.x2=Math.max(0,Math.min(CW,s.x2)); s.y2=Math.max(0,Math.min(CH,s.y2)); }
+function removeSel(hit){
+  if(hit.kind==='wall') walls.splice(hit.i,1);
+  else if(hit.kind==='opening') openings.splice(hit.i,1);
+  else furns.splice(hit.i,1);
+  if(selected&&selected.kind===hit.kind&&selected.i===hit.i) selected=null;
+  syncSel(); render();
+}
+
+// keyboard
+window.addEventListener('keydown',e=>{
+  const tag=(e.target.tagName||'').toLowerCase();
+  if(tag==='input'||tag==='select'||tag==='textarea') return;
+  const k=e.key.toLowerCase();
+  if((e.ctrlKey||e.metaKey)&&k==='z'){e.preventDefault();e.shiftKey?redo():undo();}
+  else if((e.ctrlKey||e.metaKey)&&k==='y'){e.preventDefault();redo();}
+  else if(k==='v')setTool('select'); else if(k==='w')setTool('wall');
+  else if(k==='d')setTool('door'); else if(k==='n')setTool('window');
+  else if(k==='e')setTool('erase'); else if(k==='m')setTool('measure');
+  else if((e.key==='Delete'||e.key==='Backspace')&&selected){pushHist();removeSel(selected);}
+  else if(k==='r'&&selected&&selected.kind==='furn'){pushHist();furns[selected.i].rot=(furns[selected.i].rot+15)%360;render();}
+  else if(k==='escape'){selected=null;measures=[];syncSel();render();}
+});
+$('delBtn').onclick=()=>{ if(selected){pushHist();removeSel(selected);} };
+$('dupBtn').onclick=()=>{ if(!selected)return; pushHist();
+  if(selected.kind==='wall'){const s=walls[selected.i];walls.push({...s,x1:s.x1+20,y1:s.y1+20,x2:s.x2+20,y2:s.y2+20});selected={kind:'wall',i:walls.length-1};}
+  else if(selected.kind==='opening'){const s=openings[selected.i];openings.push({...s,x1:s.x1+20,y1:s.y1+20,x2:s.x2+20,y2:s.y2+20});selected={kind:'opening',i:openings.length-1};}
+  else{const f=furns[selected.i];furns.push({...f,x:f.x+20,y:f.y+20});selected={kind:'furn',i:furns.length-1};}
+  syncSel();render(); };
+$('rotBtn').onclick=()=>{ if(selected&&selected.kind==='furn'){pushHist();furns[selected.i].rot=(furns[selected.i].rot+15)%360;render();} };
+
+// selection panel
+function syncSel(){
+  const has=!!selected;
+  $('selEmpty').style.display=has?'none':'block';
+  $('selBody').style.display=has?'block':'none';
+  $('selLabel').textContent=has?`${selected.kind} #${selected.i+1}`:'none';
+  $('furnEdit').style.display=(has&&selected.kind==='furn')?'block':'none';
+  if(!has){renderWallList();updateStats();return;}
+  if(selected.kind==='wall'){const s=walls[selected.i];if(!s){selected=null;syncSel();return;}
+    $('selType').textContent='🧱 Wall';$('selSize').textContent=fmtLen(segLen(s));}
+  else if(selected.kind==='opening'){const s=openings[selected.i];if(!s){selected=null;syncSel();return;}
+    $('selType').textContent=s.kind==='door'?'🚪 Door':'🪟 Window';$('selSize').textContent=fmtLen(segLen(s));}
+  else{const f=furns[selected.i];if(!f){selected=null;syncSel();return;}
+    $('selType').textContent=`${f.icon} ${f.label}`;$('selSize').textContent=`${mOf(f.w).toFixed(2)} × ${mOf(f.h).toFixed(2)} m`;
+    $('labelInput').value=f.label;$('wInput').value=mOf(f.w).toFixed(2);$('hInput').value=mOf(f.h).toFixed(2);}
+  document.querySelectorAll('.wall-item').forEach((el,idx)=>el.classList.toggle('sel',selected&&selected.kind==='wall'&&selected.i===idx));
+  renderWallList();updateStats();
+}
+$('labelInput').oninput=e=>{ if(selected&&selected.kind==='furn'){furns[selected.i].label=e.target.value;render();} };
+function numEdit(){ if(!(selected&&selected.kind==='furn'))return; const f=furns[selected.i];
+  const w=parseFloat($('wInput').value),h=parseFloat($('hInput').value);
+  if(w>0&&h>0){pushHist();const cx=f.x+f.w/2,cy=f.y+f.h/2;f.w=w*PPM;f.h=h*PPM;f.x=cx-f.w/2;f.y=cy-f.h/2;render();syncSel();} }
+$('wInput').onchange=numEdit; $('hInput').onchange=numEdit;
+
+// ---------- stats: bbox + enclosed area ----------
+function allPts(){ const p=[]; walls.forEach(w=>{p.push([w.x1,w.y1],[w.x2,w.y2]);}); return p; }
+function roomArea(){
+  if(walls.length<3) return null;
+  // try ordering walls into a loop by endpoint matching (tolerance 6px)
+  const TOL=8, segs=walls.map(w=>({a:[w.x1,w.y1],b:[w.x2,w.y2],used:false}));
+  let loop=[segs[0].a, segs[0].b]; segs[0].used=true;
+  for(let n=0;n<segs.length;n++){
+    const tip=loop[loop.length-1]; let found=false;
+    for(const s of segs){ if(s.used)continue;
+      if(Math.hypot(s.a[0]-tip[0],s.a[1]-tip[1])<TOL){loop.push(s.b);s.used=true;found=true;break;}
+      if(Math.hypot(s.b[0]-tip[0],s.b[1]-tip[1])<TOL){loop.push(s.a);s.used=true;found=true;break;}
+    }
+    if(!found) break;
+  }
+  const closed = Math.hypot(loop[0][0]-loop[loop.length-1][0],loop[0][1]-loop[loop.length-1][1])<TOL;
+  const allUsed = segs.every(s=>s.used);
+  if(closed&&allUsed&&loop.length>=4){
+    let a=0; for(let i=0;i<loop.length-1;i++) a+=loop[i][0]*loop[i+1][1]-loop[i+1][0]*loop[i][1];
+    return Math.abs(a/2)/(PPM*PPM);
+  }
+  return null;
+}
+function updateStats(){
+  $('stWalls').textContent=walls.length;
+  const tot=walls.reduce((s,w)=>s+segLen(w),0);
+  $('stLen').textContent=`${mOf(tot).toFixed(1)} m · ${(mOf(tot)*3.28084).toFixed(0)} ft`;
+  $('stOpen').textContent=`${openings.filter(o=>o.kind==='door').length} / ${openings.filter(o=>o.kind==='window').length}`;
+  $('stFurn').textContent=furns.length;
+  const pts=allPts();
+  if(!pts.length){$('stBox').textContent='—';}
+  else{const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);
+    const w=(Math.max(...xs)-Math.min(...xs))/PPM,h=(Math.max(...ys)-Math.min(...ys))/PPM;
+    $('stBox').textContent=`${w.toFixed(1)} × ${h.toFixed(1)} m`;}
+  const ar=roomArea();
+  if(ar==null){$('stArea').textContent='—';$('roomNote').textContent='Close a wall loop (endpoints touching) to auto-compute floor area.';}
+  else{$('stArea').textContent=fmtArea(ar);$('roomNote').textContent=`✓ Enclosed room detected (${walls.length} walls).`;}
+}
+function renderWallList(){
+  const el=$('wallList'); el.innerHTML='';
+  if(!walls.length){el.innerHTML='<span style="color:var(--muted)">No walls yet — press W and drag.</span>';return;}
+  walls.forEach((w,i)=>{
+    const d=document.createElement('div');d.className='wall-item'+(selected&&selected.kind==='wall'&&selected.i===i?' sel':'');
+    d.innerHTML=`<span>Wall ${i+1}</span><b>${mOf(segLen(w)).toFixed(2)} m</b>`;
+    d.onclick=()=>{selected={kind:'wall',i};syncSel();render();};
+    el.appendChild(d);
+  });
+}
+
+// ---------- header actions ----------
+$('clearBtn').onclick=()=>{ if(!confirm('Clear entire plan?'))return; pushHist(); walls=[];openings=[];furns=[];measures=[];selected=null;syncSel();render(); };
+$('saveBtn').onclick=()=>{ localStorage.setItem('floorplan-v1',snap()); alert('Saved to browser ✓'); };
+$('loadBtn').onclick=()=>{ const s=localStorage.getItem('floorplan-v1'); if(!s){alert('No saved plan');return;} pushHist(); restore(s); };
+$('jsonBtn').onclick=()=>{
+  const blob=new Blob([JSON.stringify({walls,openings,furns,ppm:PPM},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='floorplan.json';a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+};
+$('pngBtn').onclick=()=>{
+  const out=document.createElement('canvas');out.width=CW*2;out.height=CH*2;
+  const o=out.getContext('2d');o.scale(2,2);paint(o,false);
+  out.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='floorplan.png';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000);});
+};
+$('sampleBtn').onclick=()=>{ pushHist(); loadSample(); selected=null; syncSel(); render(); };
+function loadSample(){
+  const M=PPM, x0=300, y0=180, Wd=6*M, Ht=4.5*M;
+  walls=[
+    {x1:x0,y1:y0,x2:x0+Wd,y2:y0},
+    {x1:x0+Wd,y1:y0,x2:x0+Wd,y2:y0+Ht},
+    {x1:x0+Wd,y1:y0+Ht,x2:x0,y2:y0+Ht},
+    {x1:x0,y1:y0+Ht,x2:x0,y2:y0},
+    {x1:x0+Wd*0.55,y1:y0,x2:x0+Wd*0.55,y2:y0+Ht},       // divider
+    {x1:x0,y1:y0+Ht*0.55,x2:x0+Wd*0.55,y2:y0+Ht*0.55},  // divider
+  ];
+  openings=[
+    {kind:'door',x1:x0+Wd*0.55-0.45*M,y1:y0+Ht*0.55,x2:x0+Wd*0.55+0.45*M,y2:y0+Ht*0.55},
+    {kind:'door',x1:x0+Wd-0.45*M,y1:y0+Ht,x2:x0+Wd+0.45*M,y2:y0+Ht},
+    {kind:'window',x1:x0+1*M,y1:y0,x2:x0+2.6*M,y2:y0},
+    {kind:'window',x1:x0+Wd,y1:y0+1*M,x2:x0+Wd,y2:y0+2.6*M},
+  ];
+  furns=[
+    {x:x0+0.3*M,y:0+y0+0.3*M,w:2*M,h:1.6*M,label:'Bed',color:'#7c8db0',icon:'🛏',rot:0},
+    {x:x0+Wd*0.55+0.3*M,y:y0+0.3*M,w:1.4*M,h:0.9*M,label:'Table',color:'#b08968',icon:'🍽',rot:0},
+    {x:x0+Wd*0.55+0.4*M,y:y0+Ht-1.3*M,w:2*M,h:0.9*M,label:'Sofa',color:'#8a9b6e',icon:'🛋',rot:0},
+    {x:x0+0.4*M,y:y0+Ht-1.1*M,w:0.5*M,h:0.5*M,label:'Plant',color:'#6a994e',icon:'🪴',rot:0},
+  ];
+}
+
+// ---------- rendering ----------
+function paint(g, interactive){
+  g.save(); g.clearRect(0,0,CW,CH);
+  // paper
+  g.fillStyle='#fbfaf6'; g.fillRect(0,0,CW,CH);
+  // grid 0.5m minor / 1m major
+  if(showGrid){
+    g.lineWidth=1;
+    for(let x=0;x<=CW;x+=SNAP){ g.strokeStyle = Math.round(x/PPM)===x/PPM?'#d8dce6':'#eceff4';
+      g.beginPath();g.moveTo(x+.5,0);g.lineTo(x+.5,CH);g.stroke(); }
+    for(let y=0;y<=CH;y+=SNAP){ g.strokeStyle = Math.round(y/PPM)===y/PPM?'#d8dce6':'#eceff4';
+      g.beginPath();g.moveTo(0,y+.5);g.lineTo(CW,y+.5);g.stroke(); }
+  }
+  // border ruler ticks each meter
+  g.fillStyle='#8a90a6'; g.font='10px system-ui';
+  for(let x=0;x<=CW;x+=PPM) g.fillText((x/PPM)+'m',x+2,10);
+  const drawSeg=(s,color,width)=>{ g.strokeStyle=color;g.lineWidth=width;g.lineCap='round';g.beginPath();g.moveTo(s.x1,s.y1);g.lineTo(s.x2,s.y2);g.stroke(); };
+
+  // walls
+  walls.forEach((w,i)=>{
+    const sel=selected&&selected.kind==='wall'&&selected.i===i;
+    // shadow casing
+    drawSeg(w, sel?'#6c8cff':'#23242c', WALL_T+ (sel?4:2));
+    drawSeg(w, sel?'#8fa2ff':'#3a3b45', WALL_T-2);
+    if(interactive&&(tool==='select')) drawHandles(w,sel);
+  });
+  // openings cut gaps then draw style
+  openings.forEach((o,i)=>{
+    const sel=selected&&selected.kind==='opening'&&selected.i===i;
+    // erase wall beneath
+    drawSeg(o,'#fbfaf6',WALL_T+3);
+    if(o.kind==='door'){
+      drawSeg(o, sel?'#7a4d12':'#c98a3d', 5);
+      // swing arc from start point
+      const len=segLen(o), r=Math.min(len, 0.9*PPM);
+      const ang=Math.atan2(o.y2-o.y1,o.x2-o.x1);
+      g.strokeStyle=sel?'#7a4d12':'#c98a3d'; g.lineWidth=1.5;
+      g.beginPath(); g.arc(o.x1,o.y1,r,ang,ang-Math.PI/2,true); g.stroke();
+      g.fillStyle='#7a4d12';
+      g.beginPath();g.arc(o.x1,o.y1,3,0,7);g.fill();
+      g.beginPath();g.arc(o.x2,o.y2,3,0,7);g.fill();
+      // gap posts
+      g.fillStyle='#23242c'; g.fillRect(o.x1-2,o.y1-5,4,10); g.fillRect(o.x2-2,o.y2-5,4,10);
+    } else {
+      drawSeg(o, sel?'#0369a1':'#38bdf8', 6);
+      drawSeg(o,'#ffffff', 2.5);
+      g.fillStyle='#23242c'; g.fillRect(o.x1-2,o.y1-5,4,10); g.fillRect(o.x2-2,o.y2-5,4,10);
+    }
+    if(interactive&&tool==='select') drawHandles(o,sel);
+  });
+  // furniture
+  furns.forEach((f,i)=>{
+    const sel=selected&&selected.kind==='furn'&&selected.i===i;
+    g.save(); g.translate(f.x+f.w/2,f.y+f.h/2); g.rotate(f.rot*Math.PI/180);
+    g.fillStyle=f.color+'55'; g.strokeStyle=sel?'#6c8cff':f.color; g.lineWidth=sel?3:2;
+    const rx=8;
+    g.beginPath();
+    if(g.roundRect) g.roundRect(-f.w/2,-f.h/2,f.w,f.h,rx); else g.rect(-f.w/2,-f.h/2,f.w,f.h);
+    g.fill(); g.stroke();
+    g.fillStyle='#1d2030'; g.textAlign='center'; g.textBaseline='middle';
+    const fs=Math.max(11,Math.min(20,f.h*0.28));
+    g.font=`${fs}px system-ui`;
+    g.fillText(`${f.icon||''} ${f.label||''}`,0,0,Math.max(10,f.w-8));
+    g.restore();
+    if(sel&&interactive){
+      g.strokeStyle='#6c8cff';g.setLineDash([5,4]);g.lineWidth=1.5;
+      const pad=8, cx=f.x+f.w/2, cy=f.y+f.h/2;
+      g.save();g.translate(cx,cy);g.rotate(f.rot*Math.PI/180);
+      g.strokeRect(-f.w/2-pad,-f.h/2-pad,f.w+pad*2,f.h+pad*2);g.restore();g.setLineDash([]);
+    }
+  });
+  // dimension labels
+  if(showDims){
+    g.font='600 11px ui-monospace,monospace'; g.textAlign='center'; g.textBaseline='bottom';
+    const label=(x,y,txt,bg)=>{ const w=g.measureText(txt).width+12;
+      g.fillStyle=bg||'rgba(20,22,35,.88)'; const bx=x-w/2,by=y-20;
+      g.beginPath(); if(g.roundRect)g.roundRect(bx,by,w,18,5);else g.rect(bx,by,w,18); g.fill();
+      g.fillStyle='#fff'; g.fillText(txt,x,y-6); };
+    walls.forEach(w=>label((w.x1+w.x2)/2,(w.y1+w.y2)/2-6,`${mOf(segLen(w)).toFixed(2)} m`,'rgba(35,36,44,.92)'));
+    openings.forEach(o=>label((o.x1+o.x2)/2,(o.y1+o.y2)/2-4,`${mOf(segLen(o)).toFixed(2)}m`,o.kind==='door'?'rgba(122,77,18,.92)':'rgba(3,105,161,.92)'));
+    if(interactive) furns.forEach(f=>{ if(selected&&selected.kind==='furn'&&furns[selected.i]===f)
+      label(f.x+f.w/2,f.y-6,`${mOf(f.w).toFixed(1)}×${mOf(f.h).toFixed(1)}m`,'rgba(108,140,255,.95)'); });
+  }
+  // in-progress drawing preview
+  if(interactive&&drag&&drag.mode==='draw'){
+    const a=drag.a,b=drag.b;
+    const col=drag.kind==='wall'?'#23242c':drag.kind==='door'?'#c98a3d':drag.kind==='window'?'#38bdf8':'#e11d48';
+    g.strokeStyle=col;g.lineWidth=drag.kind==='measure'?2:WALL_T;g.setLineDash(drag.kind==='measure'?[7,5]:[]);
+    g.beginPath();g.moveTo(a.x,a.y);g.lineTo(b.x,b.y);g.stroke();g.setLineDash([]);
+    const L=Math.hypot(b.x-a.x,b.y-a.y);
+    if(L>4){ g.fillStyle='#111';g.font='700 12px ui-monospace,monospace';g.textAlign='center';
+      g.save();g.fillStyle='rgba(17,17,25,.9)';
+      const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,t=`📏 ${fmtLen(L)}`;
+      const w=g.measureText(t).width+14;g.fillRect(mx-w/2,my-30,w,20);
+      g.fillStyle='#fff';g.fillText(t,mx,my-15);g.restore(); }
+    // endpoints
+    [a,b].forEach(p=>{g.fillStyle='#fff';g.strokeStyle=col;g.lineWidth=2;g.beginPath();g.arc(p.x,p.y,5,0,7);g.fill();g.stroke();});
+  }
+  // measure
+  measures.forEach(s=>{ g.strokeStyle='#e11d48';g.lineWidth=2;g.setLineDash([7,5]);
+    g.beginPath();g.moveTo(s.x1,s.y1);g.lineTo(s.x2,s.y2);g.stroke();g.setLineDash([]);
+    const mx=(s.x1+s.x2)/2,my=(s.y1+s.y2)/2;
+    g.font='700 12px ui-monospace,monospace';const t=fmtLen(segLen(s));const w=g.measureText(t).width+14;
+    g.fillStyle='#e11d48';g.fillRect(mx-w/2,my-28,w,20);g.fillStyle='#fff';g.textAlign='center';g.fillText(t,mx,my-13); });
+  g.restore();
+}
+function drawHandles(s,sel){
+  ctx.fillStyle=sel?'#6c8cff':'#fff';ctx.strokeStyle=sel?'#fff':'#6c8cff';ctx.lineWidth=2;
+  [[s.x1,s.y1],[s.x2,s.y2]].forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,6,0,7);ctx.fill();ctx.stroke();});
+  ctx.fillStyle=sel?'#fff':'#6c8cff';ctx.beginPath();ctx.arc((s.x1+s.x2)/2,(s.y1+s.y2)/2,4,0,7);ctx.fill();
+}
+function render(preview){ paint(ctx,true); updateStats(); }
+function renderHover(raw){
+  paint(ctx,true);
+  if(hover){ ctx.save();ctx.strokeStyle='#6c8cff';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+    if(hover.kind==='furn'){const f=furns[hover.i];ctx.strokeRect(f.x-4,f.y-4,f.w+8,f.h+8);}
+    else{const s=getSeg(hover.kind,hover.i);ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();}
+    ctx.restore(); }
+}
+
+// init
+loadSample(); undoStack=[]; redoStack=[]; hist(); syncSel(); render();
+try{ const s=localStorage.getItem('floorplan-v1'); if(s){ const o=JSON.parse(s); if(o.walls&&o.walls.length){ restore(s); undoStack=[];hist(); } } }catch(e){}
+})();
+</script>
+</body>
+</html>

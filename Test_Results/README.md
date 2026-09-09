@@ -3,6 +3,9 @@
 目录按 **模型 → 阶段** 组织。
 
 - [DeepSeek-V4.1-Flash-Exp-0910 / Phase 1](DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/README.md)：保留 15 个任务的原始成果、截图、测试脚本和 Reviews。_DSH 是历史文件夹名称，实际模型与 harness 在元数据中区分。
+- [Muse-Spark-1.3 / Phase 1](Muse-Spark-1.3_Opencode/phase-01/README.md)：Muse Spark 1.3（opencode harness）的 15 项交付物、逐字 prompt（事后补录）、人工评价、执行复盘与 AI 评价 v1。_Opencode 为历史文件夹名称。
+
+> 两个阶段的目录布局一致（扁平 `task-*/` + `Reviews/`），便于同题对照；Muse 档案的 AI 评价按 `Reviews/ai/<评价者>-vN/` 接口组织，可继续追加其他评价。
 
 后续运行目录和字段见 `../docs/result-interface.md`，接入网站步骤见 `../docs/adding-results.md`，隔离/防作弊方案见 `../docs/testing-protocol.md`。
 
