@@ -1,15 +1,17 @@
 # 展示站数据模型 / Website data model
 
-生产索引由 `website/scripts/import-data.mjs` 从归档来源确定性生成到 `website/data/catalog.json`。稳定实体为 Phase、Task、Model、Run、Artifact、Review；任务需求变更时递增 `version`，同题重复执行新增 Run，不覆盖旧记录。
+生产索引由 `website/scripts/import-data.mjs` 从归档来源确定性生成到 `website/data/catalog.json`。导入采用「编排器 + 显式注册的批次适配器」：编排器负责加载、合并、关联校验与写出，解析规则在 `website/scripts/adapters/<批次>.mjs`。稳定实体为 Phase、Task、Model、Run、Artifact、Review，另有批次指标 Batch 与阶段评估 Assessment；任务需求变更时递增 `version`，同题重复执行新增 Run，不覆盖旧记录。
 
-- Phase 引用 `taskId@version`；Task 保留逐字原始 Prompt、译文、理论成果、后补验收建议及来源行。
+- Phase 引用 `taskId@version`；Task 保留逐字原始 Prompt、译文、理论成果、后补验收建议及来源行。同一 phase 的 Task 被多个模型复用（同题不同模型 = 多条 Run）。
 - Model 只记录来源可确认的身份；未知值用 `null`。
-- Run 把模型身份与实际 harness、会话、补充轮及指标分离。
-- Artifact 使用显式文件清单、入口、预览权限和归档提交；构建不会递归发布整个任务目录。
-- Review 按 human / ai 独立记录，评分方法和原始报告定位不合并。
+- Run 把模型身份与实际 harness、会话、补充轮及指标分离；另带 `prompt`（路径、SHA-256、是否事后补录）、`isolation.level`、`contamination.status` 与 `status`。
+- Artifact 使用显式文件清单、入口、预览权限和**自己的**归档提交（`artifact.commit`）；构建不会递归发布整个任务目录。
+- Review 按 human / ai 独立记录，评分方法和原始报告定位不合并；同一 Run 允许挂多份 AI 评价，`translated` 标明结论是否为他语译文。
+- Batch 记录该模型在该阶段的批次指标（用时/token/API/工具/失败/费用）与来源，页面分开展示，不合成跨批次排名。
+- Assessment 记录阶段级评估（评分、口径、来源、免责声明）；不同评委的分数并列保留，不互相覆盖。
 
 缺失值必须为 `null`，不能用 0 代替。token 输入、输出、缓存读取分列；批次费用不拆分为单题费用。
 
-当前实现限制：导入器和部分页面只支持第一阶段固定记录；模板和 fixture 不代表通用多阶段接入已完成。后续字段契约见 [result-interface.md](result-interface.md)，必要适配见 [adding-results.md](adding-results.md)。
+`catalog.schemaVersion` 当前为 2。模板和 fixture 仅作字段参考；后续字段契约见 [result-interface.md](result-interface.md)，接入清单与已完成的适配见 [adding-results.md](adding-results.md)。
 
-目录迁移后 source.path/artifact.sourcePath 采用当前仓库位置（PROMPT/ 和 Test_Results/模型/phase-01/），catalog.sourcePathMappings 将其映射回 archiveCommit 内的原路径生成固定版本链接。该映射仅用于首批档案；后续批次须逐来源绑定自己的 commit/path。
+来源链接：`catalog.sourcePathMappings` 带 `commit` 维度——只有路径与该提交匹配时才套用历史路径映射。第一阶段目录迁移后的当前路径（`PROMPT/`、`Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/`）映射回 `archiveCommit` 内的原路径；Muse Spark 批次没有迁移，直接用其归档提交与当前路径。每个批次的运行必须绑定自己的提交，不能把新目录拼到旧 SHA 上。

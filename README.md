@@ -15,7 +15,7 @@
 
 本仓库用于公开记录和展示新模型测试。每个阶段保存当期使用的原始 prompt、模型交付物、运行或测试方法、视觉证据以及复盘报告。目标不是只展示“最好看的结果”，而是尽量保留从任务输入到成果、验证和问题分析的完整链路。
 
-当前内容为 **第一阶段（Phase 1）**：使用 15 个任务评估 `DeepSeek-V4.1-Flash-Exp-0910` 在以下能力上的表现：
+当前内容为 **第一阶段（Phase 1）**：两个模型在 15 个任务上的成果、运行证据与独立评价——`DeepSeek-V4.1-Flash-Exp-0910`（DSH harness）与 `Muse Spark 1.3`（opencode harness）。评估的能力包括：
 
 - SVG 视觉生成与精确约束遵循；
 - 单文件网页、游戏和创作工具；
@@ -27,9 +27,12 @@
 
 ### 当前阶段
 
-| 阶段 | 被测模型 | 任务数 | 核心完成率 | 内部综合评估 | 状态 |
-| --- | --- | ---: | ---: | ---: | --- |
-| Phase 1 | DeepSeek-V4.1-Flash-Exp-0910 | 15 | 15/15 | 93.6/100 | 已完成 |
+| 阶段 | 被测模型 | Harness | 任务数 | 核心完成率 | 内部综合评估 | 状态 |
+| --- | --- | --- | ---: | ---: | ---: | --- |
+| Phase 1 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 15 | 15/15 | 93.6/100（历史 AI 报告引用） | 已完成 |
+| Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 交付（2 题交付方式待改） | 84.9/100（维护 agent 非盲评 v1） | 已完成 |
+
+> 两行的评分来自不同评委与不同口径，**不可直接比较**；Harness、预算与隔离等级也不同。
 
 > 综合分数来自仓库内的阶段性人工与自动化评估，用于总结本次测试，不应被视为跨模型通用排行榜分数。
 
@@ -144,7 +147,7 @@ npm test
 
 This repository publicly documents and showcases new-model evaluations. Each phase preserves the original prompts, model-produced artifacts, run or test instructions, visual evidence, and retrospective reports. The goal is not to present only the most attractive outputs, but to keep a traceable path from task input to result, verification, and issue analysis.
 
-The current archive is **Phase 1**, consisting of 15 tasks completed with `DeepSeek-V4.1-Flash-Exp-0910`. The suite examines:
+The current archive is **Phase 1**: two models — `DeepSeek-V4.1-Flash-Exp-0910` (DSH harness) and `Muse Spark 1.3` (opencode harness) — on the same 15 tasks, with run evidence and independent reviews. The suite examines:
 
 - SVG generation and compliance with exact visual constraints;
 - self-contained web pages, games, and creative tools;
@@ -156,9 +159,12 @@ The repository is designed to grow. Future results can be added under Test_Resul
 
 ### Current phase
 
-| Phase | Model under test | Tasks | Core completion | Internal evaluation | Status |
-| --- | --- | ---: | ---: | ---: | --- |
-| Phase 1 | DeepSeek-V4.1-Flash-Exp-0910 | 15 | 15/15 | 93.6/100 | Complete |
+| Phase | Model under test | Harness | Tasks | Core completion | Internal evaluation | Status |
+| --- | --- | --- | ---: | ---: | ---: | --- |
+| Phase 1 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 15 | 15/15 | 93.6/100 (quoted historical AI report) | Complete |
+| Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 delivered (2 flagged as delivery-method issues) | 84.9/100 (maintenance-agent non-blind v1) | Complete |
+
+> The two rows come from different reviewers and rubrics and must not be compared directly; harness, budget and isolation level also differ.
 
 > The aggregate score comes from the human and automated evaluation stored in this repository. It summarizes this phase and is not intended as a universal cross-model leaderboard score.
 

@@ -1,0 +1,10 @@
+{
+  "id": "muse-spark-1-3",
+  "name": "Muse Spark 1.3",
+  "version": "1.3",
+  "provider": "Meta Superintelligence Labs",
+  "notes": {
+    "zh": "本次运行为 contributor-free 档（providerID=opencode，思考档位 xhigh），经 opencode 1.18.29 调用；harness 与模型身份在运行记录中分列。",
+    "en": "This run used the contributor-free tier (providerID=opencode, reasoning variant xhigh) through opencode 1.18.29; harness and model identity are recorded separately from the model entity."
+  }
+}

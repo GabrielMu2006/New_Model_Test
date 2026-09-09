@@ -62,7 +62,7 @@
 
 - **隔离/作弊检查证据未封存**：组织者已判定本次通过（见 2.1），档案中 `contamination.status` 记为 **`clean（组织者判定）`**，范围仅限已声明的 `workspace-only` 控制措施（配置 + 提示词约束 + 复盘四维检查）。**判定所依据的原始证据未随档案封存**（宿主 `~/.local/share/opencode/opencode.db` 与 `/tmp` 临时脚本），因此该 `clean` 无法在档案内独立复核，也不能解释为"训练数据无污染"；如需可复现证据，应补封存或重跑。
 - **独立盲评**：现有 AI 评价为维护 agent 出具（非盲评），独立 AI 评价待补；新增评价按 `Reviews/ai/<评价者>-vN/` 接口存放。
-- **网站接入未做**：导入器、页面计数、路由、查询与校验仍为第一阶段硬编码，接入按 `docs/adding-results.md` 清单单独执行（组织者决定另开任务）。
+- ~~网站接入未做~~ → **已完成（2026-09-09）**：导入器改为编排器 + 批次适配器，新增 `batches`/`assessments` 实体，页面/路由/查询/校验全部按实体生成，Muse 的 15 个运行与 30 条评价已上线。仍缺：通用批次扫描器、新阶段 `runs/<run-id>/` 导入适配器。
 
 ## 3. 网站能力待办
 
@@ -74,7 +74,8 @@
 
 ### 3.2 多阶段 / 多模型接入
 
-- 见 `docs/adding-results.md` 的适配清单。当前 `import-data.mjs`、`AppPage.astro` 的计数与文案、路由生成、`runForTask()`、`validate-data.mjs`、`check-dist.mjs` 均写死第一阶段（15 / 1 / phase-01 / 78 页）。
+- **多模型（同阶段）已完成**：`website/scripts/import-data.mjs` 为编排器，`scripts/adapters/deepseek-phase1.mjs` 与 `scripts/adapters/muse-spark-phase1.mjs` 分别适配；页面计数、批次统计、路由、`runsForTask()`、`validate-data.mjs`、`check-dist.mjs` 均按实体推导（当前 2 模型 / 1 阶段 / 15 任务 / 30 运行 / 60 评价 / 110 页）。
+- **多阶段仍未做**：新阶段若采用 `runs/<run-id>/` 布局，需要新增对应适配器；通用目录扫描器不存在，也不会自动接入。
 
 ## 4. 已定方案（非缺陷，供后续遵循）
 

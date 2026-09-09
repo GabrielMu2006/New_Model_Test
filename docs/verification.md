@@ -1,5 +1,16 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-09 Muse Spark 网站接入（多模型 / 同阶段）
+
+- 导入层重构：`scripts/import-data.mjs` 改为编排器 + 两个显式注册的批次适配器（`adapters/deepseek-phase1.mjs`、`adapters/muse-spark-phase1.mjs`）；新增 `batches`、`assessments` 实体；catalog `schemaVersion` 升到 2。DeepSeek 实体逐字段回归比对：**0 处语义差异**。
+- 数据结果：2 模型 / 1 阶段 / 15 任务 / 30 运行 / 60 评价（每个运行 1 人工 + 1 AI）/ 2 批次 / 2 阶段评估；页面 110 个（由实体推导，原 78）。
+- 页面与查询：首页计数与批次统计、模型列表/详情、阶段详情、任务详情（列出全部运行）、运行详情（逐字输入 + 隔离/污染 + 多条评价）、对比页（同题两模型并排）、方法页（两批批次表 + 两份评估并列）全部按数据生成。
+- 历史层：每条运行绑定自己的 `artifact.commit`；`sourcePathMappings` 增加 commit 维度，仅第一阶段迁移路径套用映射。
+- 门禁：`import:data`、`validate:data`（2 模型/15 任务/30 运行/60 评价/2 批次/2 评估，含首批 15/15/30 回归）、`check`（0 errors / 0 warnings / 1 hint）、`npm test`（5/5）、`build`（110 页 + 26 个 HTML 成果，静态链接检查通过）全部通过。
+- 浏览器验证：`test:e2e` 在 Chromium 与 WebKit 通过——任务搜索命中两模型、模型筛选收敛、英文详情直达、双语验收建议、同题双运行对比恢复、懒加载预览、Muse 运行页两条评价 + 隔离/污染/事后补录标注、390/768/1440 无横向溢出、30/30 成果入口加载；Muse 计算器（ES module）经 HTTP 服务计算 1+2=3 正确。本机 Firefox 仍因沙箱 `Target crashed` 未纳入，需 CI 或容器复跑。
+- 封面：新增 `scripts/capture-covers.mjs`（手动运行，不入 CI），为 9 个 Muse HTML 成果生成封面图并入库；SVG 成果直接渲染，无需封面。
+- 发布与公网核验：见下条「本次接入发布记录」。
+
 ## 2026-09-09 展示站数据缺陷修复（known-issues 1.1–1.4）
 
 - 修复 `website/scripts/import-data.mjs`：`bilingualList()` 同时接受全角 `：` 与半角 `:`（英文验收建议由 0 条恢复为每题 4 条）；人工评价结论只在「一、评价总览」小节内解析且要求 ≥ 4 列（task-01/02/05/10 的中文结论恢复）；英文页历史 AI 评价改为明确标注 `Original Chinese verdict (not translated)`，不臆造英译。

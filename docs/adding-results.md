@@ -12,20 +12,20 @@
 
 ## 2. 适配网站，而非仅复制模板
 
-现有 import-data.mjs 只解析首批固定 Markdown 和 15 个任务数组，每次重写 catalog。新增 phase/model 模板文件不会自动接入；仅手改 catalog.json 会被下次 check/test/build 覆盖。
+导入器已改为「编排器 + 显式注册的批次适配器」：`scripts/import-data.mjs` 只做加载、合并、关联校验与写出，具体解析在 `scripts/adapters/<批次>.mjs`。当前已注册两个适配器——第一阶段 DeepSeek 与 Muse Spark phase-01。仍然**没有通用目录扫描器**：新批次必须新增一个适配器文件并在编排器里注册，不会自动接入；仅手改 catalog.json 会被下次 check/test/build 覆盖。
 
-首次扩展时必须逐项适配：
+Muse Spark 接入时已逐项完成的适配（可作为后续批次的参照）：
 
-- 导入层：保留第一阶段适配器，新增明确注册的批次适配器或结构化输入，确定性合并实体，拒绝重复主键，不覆盖旧记录。不扫描运行任意脚本。
-- 关联层：Task 版本、Phase 任务列表、Model、Run、Review 的引用校验；缺失数字接受 null，其他非有限/负数拒绝。
-- 历史层：各条 source 和 artifact 独立绑定提交与该提交的路径，保留第一阶段不可变链接及旧公开 URL。
-- 路由层：`src/pages/[locale]/[...path].astro` 的阶段详情当前只有 phase-01，要按实体生成。
-- 页面层：AppPage.astro 有第一阶段文案、15/1 计数、DS 标识和批次统计硬编码，模型详情没有完整按模型筛选；须按数据计算和分组，不能向所有模型展示首批全部运行。
-- 查询层：runForTask() 当前只返回首条结果，任务详情须列出所有真实运行。比较必须同时检查 taskId/taskVersion，并处理跨题、缺失值和无效选择。
-- 统计层：不同批次与预算的费用/token/时间不直接合成误导性排名，污染状态和缺失覆盖要展示。
-- 测试层：validate-data.mjs 和 check-dist.mjs 当前写死 15/78；通用校验改为由实体推导，但保留首批 15 tasks/15 runs/30 reviews 的独立回归检查。
+- 导入层：两个适配器返回同构实体，编排器按 id 确定性合并并拒绝冲突定义；新增 `batches`（批次指标）与 `assessments`（阶段评估）实体。
+- 关联层：Phase↔Task 版本、Model/Run/Task、Review/Run、Batch/Assessment→Model 全部在导入阶段校验。
+- 历史层：每条运行绑定自己的 `artifact.commit`；`sourcePathMappings` 增加 commit 维度，只有匹配该提交时才套用历史路径映射。
+- 路由层：阶段页、模型页、任务页、运行页全部由实体生成（`phases/<id>/`、`models/<id>/`、`tasks/<id>/`、`runs/<id>/`）。
+- 页面层：首页计数、批次统计、成果类型计数、模型列表与详情均由数据推导；模型详情只展示该模型的运行。
+- 查询层：`runsForTask()` 返回该任务的全部运行并在任务详情列出；对比页按 taskId + taskVersion 取运行，同题两模型可直接并排。
+- 统计层：批次指标分开展示（不合成排名），运行详情展示 `isolation.level` 与 `contamination.status`，缺失值显示“未记录”。
+- 测试层：`validate-data.mjs` 的通用校验由实体推导，同时保留首批 15 tasks/15 runs/30 reviews 的独立回归；`check-dist.mjs` 的页面总数由实体推导并保留第一阶段运行页存在性检查。
 
-上述是接入任务的必要清单，**不是当前已经完成的能力**。不要在只写接口的维护任务中全面重构；也不能在以后接入新数据时跳过必要适配。
+仍然未实现的部分（后续接入新阶段时仍需处理）：通用批次扫描器、按运行挂多份 AI 评价的网站展示（数据层已支持一个运行多条评价，页面按运行渲染全部评价）、以及新阶段 `runs/<run-id>/` 布局的导入适配器。
 
 ## 3. 验证、发布与交付
 

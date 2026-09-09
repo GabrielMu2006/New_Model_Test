@@ -1,0 +1,20 @@
+---
+import { compact, href, modelById, type Locale, type Run } from '../lib/catalog';
+interface Props { locale: Locale; run: Run; }
+const { locale, run } = Astro.props;
+const model = modelById(run.modelId);
+const l = locale === 'zh';
+const labels = {
+  duration: l ? '累计用时' : 'Total duration',
+  view: l ? '查看详情' : 'View details',
+};
+---
+<article class="run-row">
+  <div><span class="status-dot"></span><strong>{model?.name}</strong><small>{run.id}</small></div>
+  <dl>
+    <div><dt>{labels.duration}</dt><dd>{run.metrics.durationLabel}</dd></div>
+    <div><dt>Tokens</dt><dd>{compact(run.metrics.totalTokens, locale)}</dd></div>
+    <div><dt>API</dt><dd>{run.metrics.apiCalls}</dd></div>
+  </dl>
+  <a class="button quiet" href={href(locale, `runs/${run.id}/`)}>{labels.view} →</a>
+</article>
