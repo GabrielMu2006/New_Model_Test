@@ -66,6 +66,7 @@ New_Model_Test/
 │           ├── README.md
 │           ├── Reviews/
 │           └── task-01-.../ ... task-15-.../
+├── test-workspace/            # 后续阶段测试脚手架（隔离规则、启动方案、模板）
 ├── website/
 ├── docs/
 └── .github/workflows/
@@ -78,6 +79,7 @@ New_Model_Test/
 - [Agent 协作规范](AGENTS.md)
 - [结果交接接口](docs/result-interface.md)与[接入操作步骤](docs/adding-results.md)
 - [测试隔离与防答案污染](docs/testing-protocol.md)
+- [测试工作区启动方案](test-workspace/README.md)：按阶段建任务目录、逐题隔离测试、汇总归档。
 - [网站维护、发布及回退](docs/deployment.md)
 
 - [15 条原始 Prompt、双语理论成果与验收内容](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)
@@ -193,6 +195,7 @@ New_Model_Test/
 │           ├── README.md
 │           ├── Reviews/
 │           └── task-01-.../ ... task-15-.../
+├── test-workspace/            # Test scaffolding for later phases (isolation rules, runbook, templates)
 ├── website/
 ├── docs/
 └── .github/workflows/
@@ -205,6 +208,7 @@ Future phases live inside each model folder under Test_Results/. The root README
 - [Agent instructions](AGENTS.md)
 - [Result interface](docs/result-interface.md) and [integration workflow](docs/adding-results.md)
 - [Test isolation and anti-contamination protocol](docs/testing-protocol.md)
+- [Test workspace runbook](test-workspace/README.md): phase scaffolding, per-task isolation, summary and archiving.
 - [Deployment and rollback](docs/deployment.md)
 
 - [15 original prompts with bilingual expected outcomes and acceptance checks](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)

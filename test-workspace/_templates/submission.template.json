@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-<模型slug>-task-NN-r1",
+  "phaseId": "phase-NN",
+  "taskId": "task-NN",
+  "taskVersion": 1,
+  "model": {
+    "id": "<model-id>",
+    "name": "<显示名>",
+    "version": null,
+    "provider": null
+  },
+  "prompt": {
+    "path": "test-workspace/phase-NN/task-NN-<slug>/prompt.txt",
+    "sha256": "<prompt 文件哈希>",
+    "version": 1,
+    "verbatimInputPath": "runs/<run-id>/prompt.txt",
+    "followups": []
+  },
+  "environment": {
+    "harness": "<DSH / opencode / …>",
+    "harnessVersion": null,
+    "surface": "<desktop | headless | web | sdk | acp>",
+    "os": null,
+    "runtime": null,
+    "sessionId": null,
+    "sharedContext": false,
+    "continuationTurns": 0,
+    "sampling": null,
+    "startedAt": null,
+    "endedAt": null,
+    "timezone": "Asia/Shanghai"
+  },
+  "budget": {
+    "wallClockSeconds": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "toolCalls": null,
+    "retries": null,
+    "followupTurns": null,
+    "networkPolicy": "<off | allowlist:<domains> | open>"
+  },
+  "metrics": {
+    "durationSeconds": null,
+    "durationBasis": null,
+    "apiCalls": null,
+    "toolCalls": null,
+    "failures": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "cacheReadTokens": null,
+    "totalTokens": null
+  },
+  "cost": {
+    "amount": null,
+    "currency": null,
+    "scope": "<task | batch>",
+    "source": null
+  },
+  "artifacts": {
+    "type": "<html | svg | other>",
+    "entry": "<入口文件>",
+    "files": [],
+    "sourcePath": "Test_Results/<model-folder>/phase-NN/runs/<run-id>/artifacts",
+    "fileSha256": {},
+    "cover": null,
+    "preview": {
+      "lazy": true,
+      "sandbox": "allow-scripts allow-downloads allow-forms",
+      "note": null
+    }
+  },
+  "source": {
+    "commit": null,
+    "path": null
+  },
+  "runRelation": {
+    "parentRunId": null,
+    "reason": null
+  },
+  "status": "completed",
+  "isolation": {
+    "level": "<container | os-user-isolation | workspace-only>",
+    "environment": null,
+    "readOnlyInputs": [],
+    "mounts": [],
+    "network": null,
+    "probeResultPath": "runs/<run-id>/evidence/_probe.txt",
+    "sharedContext": false
+  },
+  "contamination": {
+    "status": "<clean | suspected | contaminated | unknown>",
+    "events": [],
+    "evidencePaths": [],
+    "note": "clean 仅指在声明的隔离范围内通过检查，不代表训练数据无污染"
+  },
+  "testEvidence": {
+    "command": null,
+    "cwd": null,
+    "environment": null,
+    "date": null,
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "evidencePaths": [],
+    "limitations": null
+  },
+  "reviews": []
+}

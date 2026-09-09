@@ -84,3 +84,24 @@ website/ docs/ .git/
 人工评价、AI 评分、自动测试结果分别保存；视觉质量不能只由文件能加载推出。测试报告列出命令、环境、通过/失败/跳过、预期与实际、证据文件、评分方法和时间。不同范围的百分比不可直接平均。
 
 交接字段按 `docs/result-interface.md`。首次测试可以先由组织者给出无未知关键项的测试配置，agent 不得替用户补造模型身份、缺失的原始输入或未经授权的预算。
+
+## 8. 测试工作区目录法（`test-workspace/`）
+
+`test-workspace/` 是测试脚手架：维护 agent 按题目数量生成 `phase-NN/task-NN-<slug>/`，每题目录内含逐字 `prompt.txt`、隔离规则 `AGENTS.md`、可选只读 `assets/`；组织者在该目录逐题开新会话测试；测试结束后汇总并归档到 `Test_Results/`。完整操作见 [`test-workspace/README.md`](../test-workspace/README.md)，被测会话的约束见 [`test-workspace/AGENTS.md`](../test-workspace/AGENTS.md) 与 `_templates/task-AGENTS.md`。
+
+**当前决定（2026-09-09）**：后续阶段测试统一采用本方案，隔离等级记为 `workspace-only`，并配套组织者探针与事后日志审计；不再要求每次另建独立用户或容器。环境级隔离保留为可选升级路径。
+
+**必须如实认识这套方案的效力边界**（本仓库已实测并记录）：
+
+- `AGENTS.md` 属于**策略级约束**，是"请求模型不要看"，不是"模型看不到"。被测会话可以在技术上忽略它；它挡手滑，挡不住有意读取。
+- DSH 当前的文件沙箱（`read-only` / `workspace-write` / `danger-full-access`）**只围栏写入与编辑，读取始终直接通过**；macOS 上实际执行的 Seatbelt profile 为 `(allow default)(deny file-write*)…`，白名单只加在写操作上。`dsh-tool-fs` 的配置项只有读取大小上限，没有路径白/黑名单；`read`/`glob`/`grep` 工具不经过沙箱。
+- 因此 `workspace-only` 的结论只能写「策略级约束 + 事后审计」，**不得**表述为「强制隔离」「无污染」。
+- 可选升级路径（需要更强结论时）：任务目录放到**仓库之外**并配合**独立标准用户**（本仓库已验证：仓库位于权限 700 的 `Documents` 之下，其他标准用户无法进入），或使用**容器/虚拟机**（DSH 可用官方 CLI 的 headless 模式运行，使文件与 shell 能力都落在容器内）。
+
+**统计口径**：`workspace-only` 的运行**可以**计入本阶段汇总，但必须同时满足——① 每个 run 在 `PLAN.md` 与档案中写明 `isolation.level`、网络策略、探针结果与 `contamination.status`；② 事后审计结果与该 run 一并归档；③ 每处展示附带「策略级约束 + 事后审计」标注。缺少审计结果的运行不得计入汇总；审计发现越界的运行记 `suspected`/`contaminated`，排除出汇总并报告数量。
+
+**给被测会话的文件只写绝对规则**：`test-workspace/AGENTS.md` 与 `_templates/task-AGENTS.md` 不得包含「这是策略级约束」「技术上你其实能读到」「去探测边界」之类的表述——那会把越界方法直接写给被测模型；探针必须由**组织者**在开测前执行并把输出存为 `_probe.txt`。关于隔离效力、探针、审计的说明只写在组织者文件（`test-workspace/README.md`、本文件、`PLAN.md`）中。
+
+**事后审计是配套取证，不是替代品**。DSH 会话日志（`session.jsonl.zstd`）记录 `tool/call`、`tool/result`、PTC 模式下 `run_code` 内嵌的 `tools.*` 调用、`sandbox/mode`、`approval/policy` 与推理文本；审计应覆盖工具清单、工作区外绝对路径、网络命令与越界读写，并与组织者写入的各任务 `_probe.txt` 交叉核对。审计结论只能写「未发现越界」，并注明未覆盖渠道（如训练数据、外部搜索无法验证）；审计不得由被测模型自评。
+
+任何使用本方案的运行，必须在 `PLAN.md` 与最终档案中记录：`isolation.level`、实际执行环境、网络策略、探针结果、`contamination.status`（默认 `unknown`/`suspected`，除非有环境级证据支持更强结论）。

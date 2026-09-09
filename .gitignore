@@ -20,3 +20,6 @@ website/public/artifacts/
 .env
 .env.*
 !.env.example
+
+# 测试脚手架中间产物（测试期间不入库；成果归档到 Test_Results/ 后才提交）
+test-workspace/phase-*/
