@@ -1,6 +1,6 @@
 # 部署 / Deployment
 
-公开站点：https://gabrielmu2006.cn/New_Model_Test/
+公开站点：https://vibetest.gabrielmu2006.cn/
 
 `website-check.yml` 在 PR 与相关推送中只执行展示站的数据校验、类型检查、逻辑测试和静态构建；不会运行归档模型产物中的脚本。`website-deploy.yml` 仅在 `main` 的相关路径变化或手动触发时，以 `contents: read`、`pages: write`、`id-token: write` 部署 `website/dist`。
 

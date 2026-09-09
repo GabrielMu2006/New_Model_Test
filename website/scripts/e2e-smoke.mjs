@@ -2,7 +2,7 @@ import { chromium, firefox, webkit } from 'playwright';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 const catalog = JSON.parse(fs.readFileSync(new URL('../data/catalog.json', import.meta.url)));
-const base = 'http://127.0.0.1:4322/New_Model_Test';
+const base = 'http://127.0.0.1:4322';
 spawnSync('./node_modules/.bin/astro', ['preview', '--host', '127.0.0.1', '--port', '4322'], { stdio: 'ignore' });
 for (let i = 0; i < 50; i++) { try { if ((await fetch(`${base}/zh/`)).ok) break; } catch {} await new Promise((r) => setTimeout(r, 100)); }
 try {

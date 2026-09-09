@@ -11,7 +11,7 @@ for (const file of htmlFiles) {
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
     const url = match[1];
     if (/^(https?:|#|mailto:|tel:|data:)/.test(url) || url.includes('${')) continue;
-    const clean = url.split(/[?#]/)[0].replace(/^\/New_Model_Test\/?/, '');
+    const clean = url.split(/[?#]/)[0].replace(/^\/+/, '');
     let target = url.startsWith('/') ? path.join(root, clean) : path.resolve(path.dirname(file), clean);
     if (url.endsWith('/')) target = path.join(target, 'index.html');
     if (!fs.existsSync(target)) failures.push(`${path.relative(root, file)} -> ${url}`);
