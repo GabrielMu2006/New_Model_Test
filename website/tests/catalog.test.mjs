@@ -9,6 +9,17 @@ test('production data is source-faithful and complete', () => {
   assert.equal(catalog.tasks[0].promptOriginal, 'Build a beautiful landing page for a fictional luxury watch brand called "Aevum".\nUse only HTML, CSS and JavaScript.\nDo not use external images or libraries.\nMake it feel like a real premium product website.');
   assert.deepEqual(catalog.reviews.filter((review) => review.runId.includes('task-06')).map((review) => review.type).sort(), ['ai', 'human']);
 });
+test('every task keeps a bilingual verification list and every review keeps both conclusions', () => {
+  for (const task of catalog.tasks) {
+    assert.ok(task.verification.zh.length > 0, `${task.id}: empty zh verification`);
+    assert.equal(task.verification.en.length, task.verification.zh.length, `${task.id}: verification zh/en length mismatch`);
+    assert.ok(task.expectedOutcome.zh && task.expectedOutcome.en, `${task.id}: expected outcome not bilingual`);
+  }
+  for (const review of catalog.reviews) {
+    assert.ok(review.conclusion.zh, `${review.id}: empty zh conclusion`);
+    assert.ok(review.conclusion.en, `${review.id}: empty en conclusion`);
+  }
+});
 test('fixture-only phase, model and repeat run expand without component changes', () => {
   const expanded = { phases: [...catalog.phases, ...fixture.phases], models: [...catalog.models, ...fixture.models], tasks: [...catalog.tasks, ...fixture.tasks], runs: [...catalog.runs, ...fixture.runs] };
   assert.equal(expanded.phases.length, 2); assert.equal(expanded.models.length, 2); assert.equal(expanded.tasks.length, 16);

@@ -1,0 +1,99 @@
+# 已知问题与待办 / Known issues and backlog
+
+> 本文件记录**已确认**的展示站缺陷、后续接入缺口与组织者决定。修复时按小节逐项处理，完成后更新 `verification.md` 并勾掉本文件对应条目。
+> 记录时间：2026-09-09（维护 agent 只读复核产出）。
+> **状态（2026-09-09 更新）**：第 1 节的 1.1–1.4 已全部修复并发布，记录保留用于追溯；第 2、3 节仍未处理。
+
+## 1. 展示站数据缺陷（DeepSeek Phase 1）——✅ 已修复
+
+### 1.1 英文任务页「Additional verification guidance」列表为空（15/15）
+
+**状态：✅ 已修复（2026-09-09）** —— `bilingualList()` 改为同时接受 `：` 与 `:`；15 个英文页各显示 4 条，新增门禁断言。
+
+| 项目 | 内容 |
+| --- | --- |
+| 现象 | `/en/tasks/task-*/` 的验收建议列表渲染为 `<ul></ul>`；`/zh/tasks/task-*/` 正常显示每题 4 条 |
+| 根因 | `website/scripts/import-data.mjs` 的 `bilingualList()` 正则 `^- \*\*(中文\|English)：?\*\*` 只接受全角冒号；题目文档英文行使用半角 `**English:**`，因此 `verification.en` 恒为 `[]` |
+| 证据 | `website/data/catalog.json` 中 15 个任务的 `verification.en` 全为 `[]`；线上 `/en/tasks/task-01/` 实测输出 `<ul></ul>` |
+| 影响 | 英文页缺失一整个板块（不影响成果预览与数字） |
+| 修复方向 | 正则同时接受 `：` 与 `:`；或改为分别匹配 `- **中文**：` 与 `- **English:**` 两种前缀 |
+| 验收标准 | 15 个英文任务页各显示 4 条；新增断言：`verification.zh.length === verification.en.length` 且均非空 |
+
+### 1.2 4 个人工评价的中文结论为空（task-01 / 02 / 05 / 10）
+
+**状态：✅ 已修复（2026-09-09）** —— 导入器改为只在「一、评价总览」小节内解析，且要求该行 ≥ 4 列；15 条人工评价中文结论全部非空。
+
+| 项目 | 内容 |
+| --- | --- |
+| 现象 | `/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-0{1,2,5}-r1/`、`...-task-10-r1/` 人工评价卡片标题为空 |
+| 根因 | `.../phase-01/Reviews/Personal_Review.md` 中「一、评价总览」四列表（第 13–27 行）与「其他具体问题」两列表（第 112–115 行）都匹配 `^\| T\d+ \|`；后者 `cells[3]` 为 `undefined`，覆盖了先解析到的结论 |
+| 证据 | `catalog.json` 中 `review-human-task-01/02/05/10-r1` 的 `conclusion.zh` 为空字符串，其余 11 条正常 |
+| 修复方向 | 只在「一、评价总览」小节范围内解析；或要求该行单元格数 ≥ 4 才写入 |
+| 验收标准 | 15 条人工评价 `conclusion.zh` 全部非空 |
+
+### 1.3 门禁未覆盖上述两类缺陷
+
+**状态：✅ 已修复（2026-09-09）** —— `validate-data.mjs` 与 `catalog.test.mjs` 新增双语验收建议非空/长度一致、双语 expectedOutcome、评价结论双语非空、AI 评价需评分与评分方法等断言；15/15/30 基线保留。
+
+- 现状：`website/scripts/validate-data.mjs` 只校验数量、ID 关联、数字有限性、路径边界与文件存在；`website/tests/catalog.test.mjs` 只断言 15 tasks / 15 runs / 30 reviews、task-01 原始 prompt、评价类型分离与 fixture 数组扩展。
+- 后果：1.1、1.2 两个缺陷可通过全部门禁上线。
+- 修复方向：新增「双语字段非空且长度一致」「评价结论非空」「AI 评价中英分离」断言；保留首批 15/15/30 基线回归，不删除既有断言。
+
+### 1.4 英文页的历史 AI 评价未翻译
+
+**状态：✅ 已处理（2026-09-09）** —— 英文页不再伪装成译文，改为明确标注 `Original Chinese verdict (not translated): …`，正文说明原文为中文且不提供英译（不臆造翻译）。
+
+- 现象：`/en/runs/*` 显示 `AI assessment: 直接通过 (translated label).`，正文为固定占位句。
+- 说明：属展示文案问题，不影响数据真实性；与 1.1/1.2 一并处理更经济。
+
+## 2. Muse Spark 档案（`Test_Results/Muse-Spark-1.3_Opencode/`，尚未入库）
+
+### 2.1 本次判定（组织者决定）
+
+- **原始 Prompt**：组织者确认档案中 15 题与实际使用题目一致；档案内不再另存逐字 prompt 副本。
+- **隔离与作弊检查**：本次判定通过，按现有材料接受；后续运行必须按 `docs/testing-protocol.md` 执行并封存证据。
+- **AI 评价**：因额度不足未跑完；后续补齐。网站侧需支持一个运行挂多份 AI 评价（见 3.1）。
+- **task-12 计算器 / task-15 图书追踪**：标记为**交付方式问题**，不是功能逻辑缺陷。复核证据见 `Test_Results/Muse-Spark-1.3_Opencode/phase-01/Reviews/复核说明-交付方式.md`（原始人工判定原文保留，不改写）。
+
+### 2.2 正式接入网站前需补齐
+
+- `runs/<run-id>/` 目录结构、`submission.json`、`evidence/`（隔离与作弊检查证据封存），字段契约见 `docs/result-interface.md`。
+- 每题 README 或统一说明；外部依赖如实记录（task-14 引用 Google Fonts、task-13 引用 Open-Meteo）。
+- 隔离等级需显式标注：本次为「配置/提示词约束 + 15 题共用工作区」，只能记 `workspace-only`，不能声称强制隔离。
+- 网站适配按 `docs/adding-results.md` 的清单执行；当前导入器、页面计数、路由、查询与校验均为第一阶段硬编码。
+
+## 3. 网站能力待办
+
+### 3.1 支持一个运行挂多份 AI 评价
+
+- 现状：每个 run 固定 1 条人工 + 1 条 AI，共 30 条；`reviewsFor(runId)` 已能返回全部，但导入层与校验层按 30 条硬编码。
+- 要求：同一 `runId` 允许多条 `type: "ai"`（不同评委、不同时间、不同评分口径），各自保留 `reviewId`、作者、日期、评分方法与来源定位。
+- 约束：不同标准的分数不得合成为排行榜；页面需并列展示，不互相覆盖。
+
+### 3.2 多阶段 / 多模型接入
+
+- 见 `docs/adding-results.md` 的适配清单。当前 `import-data.mjs`、`AppPage.astro` 的计数与文案、路由生成、`runForTask()`、`validate-data.mjs`、`check-dist.mjs` 均写死第一阶段（15 / 1 / phase-01 / 78 页）。
+
+## 4. 已定方案（非缺陷，供后续遵循）
+
+### 4.1 后续阶段测试的隔离方案（2026-09-09 决定）
+
+- **采用**：`test-workspace/AGENTS.md` 绝对规则 + 组织者开测前探针 + 事后会话日志审计；隔离等级统一记为 `workspace-only`。
+- **不要求**每次另建独立用户或容器；环境级隔离（独立标准用户 / 容器）保留为可选升级路径。
+- **标注要求**：每个 run 记录 `isolation.level`、网络策略、探针结果、`contamination.status`；展示时附「策略级约束 + 事后审计」，不得写成「强制隔离」或「无污染」。
+- **统计要求**：有审计结果的 `workspace-only` 运行可计入本阶段汇总；无审计结果的不计入；审计发现越界的记 `suspected`/`contaminated` 并排除，报告排除数量。
+- **诚实边界**：该方案挡手滑、可取证，挡不住有意读取；DSH 沙箱只限制写、不限制读（详见 `docs/testing-protocol.md` 第 8 节）。
+- **操作手册**：`test-workspace/README.md`。
+
+### 4.2 被测会话规则文件的写法
+
+- 给被测会话的文件只写**绝对规则**，不得包含「这是策略级约束」「技术上你其实能读到」「去探测边界」等表述；
+- 探针由**组织者**执行，不写进被测会话的指令；
+- 隔离效力、探针、审计等说明只写在组织者文件中（`test-workspace/README.md`、`docs/testing-protocol.md`、`PLAN.md`）。
+
+## 5. 相关记录
+
+- `docs/verification.md`：门禁与公网验证记录（修复后在此追加）。
+- `docs/source-audit.md`：来源映射与保留的分歧。
+- `docs/result-interface.md`、`docs/adding-results.md`：后续接入字段与步骤。
+- `test-workspace/README.md`：测试工作区启动方案（隔离、探针、汇总、归档）。

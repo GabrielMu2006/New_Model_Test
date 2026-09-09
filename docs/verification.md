@@ -1,5 +1,14 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-09 展示站数据缺陷修复（known-issues 1.1–1.4）
+
+- 修复 `website/scripts/import-data.mjs`：`bilingualList()` 同时接受全角 `：` 与半角 `:`（英文验收建议由 0 条恢复为每题 4 条）；人工评价结论只在「一、评价总览」小节内解析且要求 ≥ 4 列（task-01/02/05/10 的中文结论恢复）；英文页历史 AI 评价改为明确标注 `Original Chinese verdict (not translated)`，不臆造英译。
+- 新增门禁断言：`validate-data.mjs` 校验双语验收建议非空且长度一致、`expectedOutcome` 双语非空、评价结论双语非空、AI 评价必须带评分与评分方法；`tests/catalog.test.mjs` 新增同款用例，保留 15 tasks / 15 runs / 30 reviews 基线。
+- 门禁实测：`import:data`、`validate:data`、`check`（0 errors / 0 warnings / 3 既有 hints）、`npm test`（3/3）、`build`（78 个生成页 + 17 个 HTML 成果，静态链接检查通过）全部通过。
+- 浏览器验证：`test:e2e` 在 Chromium 与 WebKit 下全流程通过（搜索、英文详情直达、对比深链恢复、懒加载预览、390/768/1440 无横向溢出、Breakout 交互、PNG 下载、15/15 成果入口）。本机 Firefox 在 Playwright 下 `browser.newPage: Target crashed`（沙箱环境限制，非代码问题），三浏览器全套待 CI 或容器复跑。
+- 产物核对（dist 实测）：`/en/tasks/task-01|06|15/` 验收建议各 4 条；`/zh/runs/…task-01|02|05|10-r1/` 人工评价标题分别为「通过 · 细节待改进 / 通过 · 存在疑点 / 通过 · 有瑕疵 / 通过 · 有 BUG」；`/en/runs/…task-01-r1/` AI 评价显示「Original Chinese verdict (not translated): 直接通过」。
+- 发布状态：**未推送**。本次执行环境无法访问 `github.com`（`api.github.com` 可达、`github.com` 连接超时，`git push`/`git ls-remote` 均挂起），因此提交、回退标签与线上核验待网络可达后执行。本地已创建回退标签 `website-rollback-20260909-dba1c39`（指向上一成功部署 `dba1c39`，Actions run 34321767657）。
+
 ## 2026-09-09 目录与维护规范整理
 
 - 相对整理前提交 `09b10d475acb0cd2a656e28841361ff3f536d904`，逐文件 SHA-256 对照通过：198 个成果/报告 + 1 份原始题目均未改变内容。成果移入 `Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/`；第一阶段题目沿用并行整理后的 `PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md` 文件名。

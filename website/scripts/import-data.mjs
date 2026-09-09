@@ -44,7 +44,8 @@ function bilingualParagraph(value) {
 }
 
 function bilingualList(value) {
-  const rows = [...value.matchAll(/^- \*\*(中文|English)：?\*\*\s*(.*)$/gm)];
+  // 中文行用全角冒号（**中文：**），英文行用半角冒号（**English:**），两者都要接受。
+  const rows = [...value.matchAll(/^- \*\*(中文|English)\s*[:：]\s*\*\*\s*(.*)$/gm)];
   return {
     zh: rows.filter((row) => row[1] === '中文').map((row) => row[2].trim()),
     en: rows.filter((row) => row[1] === 'English').map((row) => row[2].trim()),
@@ -101,8 +102,13 @@ for (const row of metricsText.split('\n').filter((line) => /^\| task-\d{2} \|/.t
 const humanDetails = new Map();
 for (const match of humanText.matchAll(/^### T(\d+) ·[^\n]*\n\n> ([^\n]+)/gm)) humanDetails.set(`task-${match[1].padStart(2, '0')}`, match[2].trim());
 const humanSummary = new Map();
-for (const row of humanText.split('\n').filter((line) => /^\| T\d+ \|/.test(line))) {
+// 只解析「一、评价总览」四列表；后文的「共性反馈」两列表不得覆盖结论。
+const overviewStart = humanText.indexOf('## 一、评价总览');
+const overviewEnd = overviewStart >= 0 ? humanText.indexOf('\n## ', overviewStart + 1) : -1;
+const overviewBlock = overviewStart >= 0 ? humanText.slice(overviewStart, overviewEnd > 0 ? overviewEnd : undefined) : humanText;
+for (const row of overviewBlock.split('\n').filter((line) => /^\| T\d+ \|/.test(line))) {
   const cells = row.split('|').slice(1, -1).map((cell) => cell.trim());
+  if (cells.length < 4 || !cells[3]) continue;
   humanSummary.set(`task-${cells[0].slice(1).padStart(2, '0')}`, cells[3]);
 }
 const aiSections = new Map();
@@ -139,7 +145,7 @@ for (const [index, match] of taskSections.entries()) {
   reviews.push({ id: `review-human-${id}-r1`, runId, type: 'human', authorLabel: 'Personal Review', date: null, conclusion: { zh: humanSummary.get(id) ?? '', en: humanTranslations[index] }, body: { zh: humanTextValue, en: humanTranslations[index] }, score: null, source: { path: humanPath, lines: lineRange(humanText, `### T${index + 1} ·`, `### T${index + 1} ·`) } });
   const ai = aiSections.get(id);
   if (!ai) throw new Error(`Missing AI assessment for ${id}`);
-  reviews.push({ id: `review-ai-${id}-r1`, runId, type: 'ai', authorLabel: '15-task completion quality assessment', date: '2026-09-09', conclusion: { zh: ai.verdict, en: `AI assessment: ${ai.verdict} (translated label).` }, body: { zh: ai.body, en: 'The detailed historical AI assessment is retained in Chinese at the source link.' }, score: ai.score, scoreMethod: 'Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.', source: { path: aiPath, lines: lineRange(aiText, `### Task ${number} ·`, `### Task ${number} ·`) } });
+  reviews.push({ id: `review-ai-${id}-r1`, runId, type: 'ai', authorLabel: '15-task completion quality assessment', date: '2026-09-09', conclusion: { zh: ai.verdict, en: `Original Chinese verdict (not translated): ${ai.verdict}` }, body: { zh: ai.body, en: 'This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided.' }, score: ai.score, scoreMethod: 'Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.', source: { path: aiPath, lines: lineRange(aiText, `### Task ${number} ·`, `### Task ${number} ·`) } });
 }
 
 const phase = JSON.parse(fs.readFileSync(path.join(siteRoot, 'data/phases/phase-01.json'), 'utf8'));

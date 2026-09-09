@@ -79,7 +79,12 @@
           "检查品牌一致性、视觉层级、排版、留白、色彩、动效节制及高端产品氛围；验证按钮、菜单、配置或表单等交互均有正确状态反馈。",
           "使用键盘完成主要操作，检查语义标题、表单标签、焦点可见性、合理对比度以及减少动态效果偏好。"
         ],
-        "en": []
+        "en": [
+          "Open the page offline and confirm there are no external requests, missing assets, or console errors; verify that only HTML/CSS/JavaScript is used and all imagery is local or generated inline.",
+          "Test desktop, tablet, and mobile viewports for navigation, hero, content, forms, and CTAs, with no overflow, clipping, overlap, or unreadable text.",
+          "Review brand consistency, hierarchy, typography, spacing, color, restrained motion, and premium feel; verify correct feedback for buttons, menus, configurators, or forms.",
+          "Complete primary flows by keyboard and check semantic headings, form labels, visible focus, sufficient contrast, and reduced-motion support."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -108,7 +113,12 @@
           "检查自行车关键结构和鹈鹕接触关系，确保身体位于车座区域、翼或脚与操控和踩踏动作形成可信联系。",
           "在缩略图和放大视图下检查轮廓、层级、颜色对比及元素是否被画布裁切。"
         ],
-        "en": []
+        "en": [
+          "Open the file in a browser and SVG viewer to confirm valid XML/SVG syntax, no broken references, and lossless scaling.",
+          "Use a blind visual review to confirm the subject is first identifiable as a pelican and the action is clearly understood as bicycle riding.",
+          "Inspect bicycle anatomy and contact relationships so the body sits near the saddle and wings or feet credibly connect to steering and pedaling.",
+          "Check silhouette, layering, contrast, and canvas clipping at both thumbnail and enlarged sizes."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -137,7 +147,12 @@
           "检查 SVG 可独立打开、缩放无锯齿、无裁切、无外部依赖。",
           "让观察者读表，确认多数人能在不看文件名的情况下判断为 6:25。"
         ],
-        "en": []
+        "en": [
+          "Verify that the 12 hour markers are spaced at 30-degree intervals and share the face center.",
+          "Verify a 150-degree minute-hand angle and approximately 192.5 degrees for the hour hand; ensure all three hands differ visibly in length or style.",
+          "Confirm the SVG opens independently, scales cleanly, is not clipped, and has no external dependencies.",
+          "Ask reviewers to read the clock without seeing the filename and confirm that most identify 6:25."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -166,7 +181,12 @@
           "验证表盘元素同心、刻度均匀、指针前后层级合理，缩放及不同浏览器显示正常。",
           "进行不带提示的人工读表，确认时间可被稳定识别为 11:52:30。"
         ],
-        "en": []
+        "en": [
+          "Check continuous-motion angles: 180 degrees for seconds, about 315 degrees for minutes, and about 356.25 degrees for hours, clockwise from 12.",
+          "Ensure the hour hand does not point directly at 11 and the minute hand does not ignore the 30-second fractional advance.",
+          "Verify concentric geometry, even markers, sensible hand layering, and correct rendering across scales and browsers.",
+          "Conduct an unprompted visual reading test and confirm consistent recognition of 11:52:30."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -195,7 +215,12 @@
           "检查严格侧视构图、自行车结构完整性、人物比例、关节连贯和层级遮挡。",
           "验证 SVG 语法、画布边界、缩放清晰度和离线独立性。"
         ],
-        "en": []
+        "en": [
+          "Trace the left and right limbs to confirm the left foot contacts the lower pedal and the right foot contacts the upper pedal, with no floating foot or reversed pedal assignment.",
+          "Confirm that each hand contacts the handlebars; one-handed contact, crossed ambiguity, or mere proximity should not pass.",
+          "Inspect the strict side-view composition, bicycle completeness, human proportions, joint continuity, and visual layering.",
+          "Validate SVG syntax, canvas bounds, scaling clarity, and offline independence."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -224,7 +249,12 @@
           "检查手部握姿、剪刀转轴和刀刃方向是否合理，避免穿模和错误层叠。",
           "验证 SVG 可离线打开、缩放清晰，且所有元素位于 viewBox 内。"
         ],
-        "en": []
+        "en": [
+          "Confirm all three subjects are recognizable and form a continuous physical contact chain from hand to scissors to paper.",
+          "Verify that the blades intersect the paper at the cut and that the sheet visibly shows an opened or separating cut.",
+          "Review grip, pivot geometry, blade direction, intersections, and layer order for plausibility.",
+          "Confirm offline rendering, clean scaling, and that all elements remain inside the viewBox."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -253,7 +283,12 @@
           "让观察者在“推/拉”二选一中判断，结果应稳定为“推”。",
           "验证 SVG 语法、缩放、层级关系和画布裁切情况。"
         ],
-        "en": []
+        "en": [
+          "Establish the travel direction and verify that the front wheel leads, the person stands behind the handles, and the applied force points toward the barrow.",
+          "Check the single wheel, tray, supports, and handles for completeness and verify both-hand contact with the handles.",
+          "Ask reviewers to choose between “pushing” and “pulling”; the result should consistently be “pushing.”",
+          "Validate SVG syntax, scaling, layering, and canvas clipping."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -282,7 +317,12 @@
           "在不同帧率与球速下检查墙面、挡板和砖块碰撞，确认不会卡死、无限水平运动或明显穿模。",
           "使用键盘、鼠标和触摸（若支持）操作，并在窄屏与宽屏验证画面完整、HUD 可读。"
         ],
-        "en": []
+        "en": [
+          "Open the single file offline and confirm there are no missing dependencies, console exceptions, or server-only requirements.",
+          "Exercise start, launch, movement, brick hits, scoring, ball loss, pause, resume, game over, restart, and victory flows end to end.",
+          "Test wall, paddle, and brick collisions across frame rates and ball speeds, checking for stalls, endless horizontal paths, or obvious tunneling.",
+          "Test keyboard, mouse, and touch where supported, and verify a complete playfield and readable HUD on narrow and wide screens."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -311,7 +351,12 @@
           "检验作物阶段、日期或时间推进、浇水等生长条件，以及收获后库存或货币的正确更新。",
           "连续随机输入和长时间运行，确认无死循环、状态损坏、严重性能下降或控制台错误；在不同视口检查可玩性。"
         ],
-        "en": []
+        "en": [
+          "Open the file offline and complete a full planting-to-harvest cycle from a new game, confirming visible state changes at every step.",
+          "Verify movement, map boundaries, obstacle collision, tool switching, interaction range, resource deductions, and insufficient-resource feedback.",
+          "Test crop stages, day or time progression, growth conditions such as watering, and correct inventory or currency updates after harvest.",
+          "Run prolonged and randomized input to detect loops, state corruption, major performance degradation, or console errors; verify playability across viewports."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -340,7 +385,12 @@
           "执行多步绘制—撤销—重做—撤销后新绘制，确认历史顺序正确且新分支会清空重做栈。",
           "多级缩放后检查边缘无平滑模糊、画布数据不变；导出 PNG 并核对签名、宽高、像素颜色、alpha 和放大规则。"
         ],
-        "en": []
+        "en": [
+          "Verify pixel data for clicks, slow and fast drags, multiple brush sizes, and strokes at canvas boundaries.",
+          "Confirm erasing creates transparent rather than white pixels and that color changes affect only future strokes.",
+          "Perform a multi-step edit, undo, redo, undo, and new edit; confirm correct history order and redo-branch invalidation.",
+          "Check that multiple zoom levels remain crisp and data-invariant; export PNG and verify signature, dimensions, pixel colors, alpha, and scale behavior."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -369,7 +419,12 @@
           "添加、选择、拖动和删除对象，检查命中测试、层级、坐标、吸附以及撤销/重做后的完整状态恢复。",
           "缩放和平移后重复编辑，确认屏幕坐标到世界坐标转换正确；验证尺寸单位、实时更新、保存/载入及异常数据处理。"
         ],
-        "en": []
+        "en": [
+          "Draw a rectangle and a multi-room plan with T-junctions; verify endpoint snapping, closed-loop detection, room count, width, height, and area.",
+          "Add doors and windows to different walls and drag them; ensure they do not detach, cross endpoints, or become invalid after wall resizing.",
+          "Add, select, drag, and delete objects; verify hit testing, layering, coordinates, snapping, and full state restoration through undo/redo.",
+          "Repeat edits after zooming and panning to validate screen-to-world conversion; check units, live dimension updates, save/load, and malformed-data handling."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -398,7 +453,12 @@
           "检查清除、退格、正负号、连续按等号或连续运算符时的状态机一致性，并确认无控制台异常。",
           "在桌面和窄屏检查按键布局、焦点、可读性和触控目标；运行自动化测试并在修复后完整回归。"
         ],
-        "en": []
+        "en": [
+          "Run the real app and use both buttons and keyboard for basic, chained, decimal, negative, and precedence-sensitive calculations against known results.",
+          "Cover cases such as `0.1 + 0.2`, division by zero, repeated decimal points, leading operators, long input, overflow, and recovery after an error.",
+          "Check state-machine consistency for clear, backspace, sign toggle, repeated equals, and consecutive operators, with no console exceptions.",
+          "Review keypad layout, focus, readability, and touch targets on desktop and narrow screens; run automated tests and a full regression after fixes."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -427,7 +487,12 @@
           "在手机、平板、桌面、浅色/深色及多种天气状态下截图检查溢出、遮挡、对比度、图标含义和图表尺寸。",
           "操作搜索、定位、单位切换、主题、刷新和预报详情；检查键盘访问、焦点、ARIA 状态、减少动态效果和控制台错误。"
         ],
-        "en": []
+        "en": [
+          "Exercise successful load, loading, network failure, no-result, and cached/offline states in a real browser, ensuring clear and non-misleading feedback.",
+          "Test multiple time zones, midnight boundaries, Celsius/Fahrenheit, and wind and precipitation units for consistency across current, hourly, and daily views.",
+          "Review screenshots across phone, tablet, desktop, light/dark themes, and varied weather states for overflow, overlap, contrast, icon meaning, and chart sizing.",
+          "Exercise search, geolocation, unit switching, theme, refresh, and forecast details; check keyboard access, focus, ARIA state, reduced motion, and console errors."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -456,7 +521,12 @@
           "对贷款、储蓄或其他金融计算器使用已知样例和边界值验算，核对货币、百分比、期限、舍入和无效输入处理。",
           "在桌面和手机检查表格、表单、导航、对比度、键盘焦点、标签、错误提示和敏感信息警告；确认无真实网络提交。"
         ],
-        "en": []
+        "en": [
+          "Traverse primary navigation from the home page and verify links, menus, mobile drawers, breadcrumbs or current-page states, with no dead ends or broken links.",
+          "Review products, rates, fees, CTAs, sign-in/application, and help content for completeness and hierarchy; clearly disclose all fictional information and non-submitting forms.",
+          "Validate loan, savings, or other financial calculators using known examples and boundary values, checking currency, percentages, terms, rounding, and invalid input.",
+          "On desktop and mobile, inspect tables, forms, navigation, contrast, keyboard focus, labels, validation errors, and sensitive-data warnings; confirm no real submission occurs."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -485,7 +555,12 @@
           "组合搜索、筛选和排序，使用大小写、空格、标签和无结果输入，确认计数与结果稳定且不丢数据。",
           "检查评分范围、日期合法性、页数边界、重复书籍、损坏存储及导入导出往返；在键盘和窄屏环境验证可用性。"
         ],
-        "en": []
+        "en": [
+          "Complete add, view, edit, delete, undo where available, and reload-recovery flows, confirming field values, list order, and persisted state.",
+          "Exercise transitions among want-to-read, reading, paused, finished, and abandoned states, checking current page, total pages, start/finish dates, and progress-log coherence.",
+          "Combine search, filtering, and sorting with case, whitespace, tags, and no-result queries, confirming stable counts and no data loss.",
+          "Validate rating ranges, dates, page bounds, duplicates, corrupt storage, and import/export round trips; verify keyboard and narrow-screen usability."
+        ]
       },
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
@@ -1156,7 +1231,7 @@
       "authorLabel": "Personal Review",
       "date": null,
       "conclusion": {
-        "zh": "",
+        "zh": "通过 · 细节待改进",
         "en": "Overall it fits a premium luxury brand site. Some watch details need work, but the customization feature is impressive and the overall finish is very high."
       },
       "body": {
@@ -1177,11 +1252,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "直接通过",
-        "en": "AI assessment: 直接通过 (translated label)."
+        "en": "Original Chinese verdict (not translated): 直接通过"
       },
       "body": {
         "zh": "实际打开 `index.html` 后，页面形成了完整的高端腕表品牌叙事：主视觉、机芯、系列、配置器、指标、工坊、媒体引言、预约表单和页脚均存在。腕表、机芯和表盘视觉由内联 SVG/CSS 生成，断网检查未发现外部请求或缺失资源。桌面 1440 px 下页面宽度与视口一致；390 px 移动视口同样无横向溢出。滚动触发后 26 个 reveal 元素全部显示，页面无控制台异常。\n\n视觉上已达到真实高端产品站的完成度，排版、暗色材质、金色点缀和产品配置交互保持一致。单文件、纯 HTML/CSS/JavaScript、无外部图片或库等硬约束均满足。\n\n改进建议：预约表单采用 `novalidate` 和自定义校验，后续可将关键必填约束同时反映到原生语义属性中，进一步增强无脚本降级和辅助技术提示。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 96,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1197,7 +1272,7 @@
       "authorLabel": "Personal Review",
       "date": null,
       "conclusion": {
-        "zh": "",
+        "zh": "通过 · 存在疑点",
         "en": "Basically fine, although this version appears to be static rather than animated."
       },
       "body": {
@@ -1218,11 +1293,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "直接通过",
-        "en": "AI assessment: 直接通过 (translated label)."
+        "en": "Original Chinese verdict (not translated): 直接通过"
       },
       "body": {
         "zh": "SVG 经 `xmllint` 检查语法有效，并成功渲染为位图。鹈鹕的长喙、喉囊、鸟体和翅膀特征清楚；自行车的车轮、车架、车座、曲柄、踏板和车把完整。主体位于车座上方，双腿与踏板形成联系，动作能被直接理解为“骑自行车”。构图有道路、远景、阳光等辅助元素，缩放后线条仍清晰。\n\n改进建议：鹈鹕与车把之间的操控关系可以再明确一些，目前一侧翅膀与车把的接触不如脚—踏板关系醒目，但不影响核心语义判断。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 94,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1259,11 +1334,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "通过，有一项无障碍文本小问题",
-        "en": "AI assessment: 通过，有一项无障碍文本小问题 (translated label)."
+        "en": "Original Chinese verdict (not translated): 通过，有一项无障碍文本小问题"
       },
       "body": {
         "zh": "SVG 有效且渲染正常。代码中的分针角度为 150°，时针角度为 192.5°，秒针为 0°，分别准确对应 6:25:00；12 个主刻度和分钟刻度分布清晰，三根指针在长度、粗细和颜色上可区分。视觉读表结果明确为 6:25。\n\n问题位于 SVG 的 `<desc>`：描述称时针位于“从 6 到 7 的四分之一”，而 25 分钟实际应是该小时跨度的 5/12。图形角度是正确的，错误只影响文本描述精度。建议将描述改为“five-twelfths of the way”或直接写明 192.5°。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 94,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1300,11 +1375,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "直接通过",
-        "en": "AI assessment: 直接通过 (translated label)."
+        "en": "Original Chinese verdict (not translated): 直接通过"
       },
       "body": {
         "zh": "SVG 有效且渲染正常。秒针 180°、分针 315°、时针 356.25°，完整考虑了 30 秒对分针和时针的连续推进，准确对应 11:52:30。时针接近但未到 12，分针位于 10 与 11 之间，秒针指向 6；视觉和文本描述相互一致。表盘层级、刻度、中心轴和缩放表现均良好。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 98,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1320,7 +1395,7 @@
       "authorLabel": "Personal Review",
       "date": null,
       "conclusion": {
-        "zh": "",
+        "zh": "通过 · 有瑕疵",
         "en": "No issues, except there is an unexplained “7” in the image."
       },
       "body": {
@@ -1341,11 +1416,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "通过，但显式姿态约束的视觉自证仍可加强",
-        "en": "AI assessment: 通过，但显式姿态约束的视觉自证仍可加强 (translated label)."
+        "en": "Original Chinese verdict (not translated): 通过，但显式姿态约束的视觉自证仍可加强"
       },
       "body": {
         "zh": "SVG 有效，人物、自行车和严格侧面构图均清晰。两个轮子、车架、车把、曲柄和踏板结构完整；双臂均延伸到车把，双脚分别连接高低踏板。源文件也明确将低位踏板标为左脚、高位踏板标为右脚，说明实现意图与 prompt 一致。\n\n主要扣分点是：单一侧视轮廓下，左右肢体的视觉身份并不天然明确。当前近侧/远侧腿的颜色和遮挡有一定区分，但不了解图层注释的观察者难以可靠判断“左脚在下、右脚在上”，只能确认“一脚在下、一脚在上”。建议用更明确的远近侧配色、衣物标记、踏板层级或轻微三分之二视角，使左右身份无需阅读源码即可验证。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 86,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1382,11 +1457,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "直接通过",
-        "en": "AI assessment: 直接通过 (translated label)."
+        "en": "Original Chinese verdict (not translated): 直接通过"
       },
       "body": {
         "zh": "SVG 有效，手、剪刀和纸张三类主体可直接辨认。手指进入剪刀握环，刀刃在转轴处闭合并与纸张边缘相交；已经剪开的纸条、当前切口和后续虚线路径共同表达“正在剪”，不是剪刀仅悬停在纸面上。层级、阴影和动作区域清楚。\n\n改进建议：剪刀刀刃比例较长且透视略夸张，手指与两个握环的分配还可更符合真实握姿，但不影响原始任务完成。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 92,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1423,11 +1498,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "直接通过",
-        "en": "AI assessment: 直接通过 (translated label)."
+        "en": "Original Chinese verdict (not translated): 直接通过"
       },
       "body": {
         "zh": "SVG 有效。独轮车具备单个前轮、车斗、支架和把手，人物位于把手后方，身体面向车体并前倾，双手向前施力；后脚动作线进一步强调前进方向。人工判断不会将其误读为“拉独轮车”，因此准确满足 prompt 中“pushing, not pulling”的核心对比要求。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 95,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1464,11 +1539,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "直接通过",
-        "en": "AI assessment: 直接通过 (translated label)."
+        "en": "Original Chinese verdict (not translated): 直接通过"
       },
       "body": {
         "zh": "`index.html` 不引用外部资源，离线打开无控制台错误。实测点击“开始游戏”后标题遮罩隐藏，空格可发球，HUD 正确显示第 1/6 关、3 条生命和初始分数。画面在 1440×900 与 390×844 视口均无页面溢出，霓虹视觉、说明、状态面板和静音控制完整，已达到“polished, playable”的要求。\n\n实现代码包含开始、暂停、失败、胜利、重开、六关、道具、计分和本地最高分等完整状态。README 记录了更深的物理回归，但对应测试脚本位于历史临时路径，当前项目内无法一键复现；因此稳健性评分未给满分。移动端可操作，但部分可见按钮最小边约 34 px，低于常见 44 px 触控建议。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 92,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1505,11 +1580,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "通过，有移动端和测试复现性改进空间",
-        "en": "AI assessment: 通过，有移动端和测试复现性改进空间 (translated label)."
+        "en": "Original Chinese verdict (not translated): 通过，有移动端和测试复现性改进空间"
       },
       "body": {
         "zh": "单文件、无外部资源，离线打开无控制台错误。实测可从标题页开始新游戏，方向键移动后游戏时间由 6:00 推进至 6:02，HUD、工具栏、金钱、体力、水量和种子状态正常。俯视农场、房屋、水域、土地、角色和作物栏的视觉区分清楚，核心循环与操作说明完整。\n\n在 390 px 视口下页面本身不会横向滚动，但游戏采用整体缩放，内部内容固有宽度约 579 px，可见按钮最小尺寸约 16 px；同时没有专门的移动虚拟方向控制，因此手机触控可玩性有限。prompt 未强制移动端，故不构成核心失败。README 中提及的 61 项回归位于临时脚本，未随项目保存，建议将其纳入仓库并提供固定测试命令。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 88,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1525,7 +1600,7 @@
       "authorLabel": "Personal Review",
       "date": null,
       "conclusion": {
-        "zh": "",
+        "zh": "通过 · 有 BUG",
         "en": "The basic functionality is implemented, but there is a bug if the canvas size is not selected on the first use."
       },
       "body": {
@@ -1546,11 +1621,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "通过，有测试资产和移动触控改进空间",
-        "en": "AI assessment: 通过，有测试资产和移动触控改进空间 (translated label)."
+        "en": "Original Chinese verdict (not translated): 通过，有测试资产和移动触控改进空间"
       },
       "body": {
         "zh": "单文件离线运行无错误，绘制、擦除、填充、取色、颜色、1–8 px 画笔、撤销/重做、缩放、网格、画布设置和 PNG 导出控件均存在。实测在画布点击绘制后撤销按钮启用；撤销后重做按钮启用；重做成功。PNG 下载实际产生，文件名符合 `pixel-art-32x32-时间戳.png` 规则，文件大小 1,590 字节。页面在桌面和 390 px 视口均无横向溢出。\n\n主要不足是 README 所述的 40 项浏览器验证脚本仍指向 `/tmp/px-verify.cjs`，当前交付中无法复跑；建议将测试脚本和固定入口加入项目。移动视口上部分按钮最小边约 28 px，触控精度仍可加强。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 91,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1587,11 +1662,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "直接通过",
-        "en": "AI assessment: 直接通过 (translated label)."
+        "en": "Original Chinese verdict (not translated): 直接通过"
       },
       "body": {
         "zh": "实际运行 `npm test`：21 项几何单元测试全部通过，52 项真实 Chromium 浏览器检查全部通过。覆盖墙体绘制与链式吸附、T 形连接和房间检测、尺寸与面积、门窗放置和沿墙拖动、家具拖动、选择与框选、墙端点调整、撤销/重做、旋转/复制/翻转、缩放/平移、自动保存和 PNG 导出；运行中无页面异常。\n\n视觉检查显示墙、门窗、家具、房间标签、尺寸线和属性面板层级明确。实现明显超过“simple editor”的最低要求，同时保持零依赖和从 `file://` 运行能力。已知限制（不支持曲墙、自交墙和家具碰撞）均在 README 中明确，且不违背原 prompt。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 97,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1628,11 +1703,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "直接通过",
-        "en": "AI assessment: 直接通过 (translated label)."
+        "en": "Original Chinese verdict (not translated): 直接通过"
       },
       "body": {
         "zh": "实际运行 `npm test`：198 项计算引擎检查和 69 项真实浏览器检查全部通过。测试覆盖优先级、结合性、一元运算、百分比、浮点格式、错误路径、输入状态机、内存、历史、键盘映射、随机表达式对照、按钮布局、持久化和控制台健康度。\n\n应用实质上完成了 prompt 要求的“选择技术—运行—测试—修复”。计算核心与 UI 分层，无 `eval`，错误被建模为可恢复状态；截图显示桌面布局和历史面板清楚。README 还保留了测试发现并修复的缺陷清单，可追溯性良好。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 98,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1669,11 +1744,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "应用本体优秀，但验证入口存在可复现缺陷",
-        "en": "AI assessment: 应用本体优秀，但验证入口存在可复现缺陷 (translated label)."
+        "en": "Original Chinese verdict (not translated): 应用本体优秀，但验证入口存在可复现缺陷"
       },
       "body": {
         "zh": "逻辑层 `npm test` 的 112 项断言全部通过。手动在 8877 端口启动项目后，四个视口 × 两种主题的渲染审计全部通过：每次均渲染 24 个小时、7 天预报和 8 张详情卡，无溢出、缺失可视化、控制台错误或请求错误。深色主题对比度检查 203 个文本元素，无失败或临界项。搜索、城市切换、单位、详情、主题、刷新、定位拒绝提示等 10/11 项交互检查通过。\n\n本轮发现三类问题：\n\n1. `npm run verify` 先执行单测，随后直接调用默认访问 `127.0.0.1:8777` 的截图工具，却没有启动服务器。在本机该端口恰被其他目录的服务占用，最终于 `capture.js:80` 读取不存在节点时失败；在空闲环境通常会直接连接失败。README 将该命令描述为完整验证入口，因此属于确定的测试编排缺陷。\n2. 单独启动正确服务后，交互测试将页面已四舍五入的 `25°C` 再换算并期望 `77°F`，而应用从未四舍五入的原始温度换算后显示 `76°F`。核心转换公式已被单测覆盖，应用行为合理；失败来自测试的“双重舍入”假设，应改为从原始温度或允许 1°F 的显示舍入差异验证。\n3. 浅色主题对比度工具对风向罗盘的 10 px 粗体字母 “N” 报告 3.84:1，低于普通小文本 4.5:1 建议。该项被工具归为 borderline，但仍建议提高文字或罗盘背景对比度。\n\n这些问题不会否定“精致天气仪表盘”的核心完成度，但会影响 prompt 中“运行、检查、修复并重复”的闭环可信度，因此扣除测试工程分。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 90,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1710,11 +1785,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "通过，完成度远超原始 prompt，但有一项合规表达风险",
-        "en": "AI assessment: 通过，完成度远超原始 prompt，但有一项合规表达风险 (translated label)."
+        "en": "Original Chinese verdict (not translated): 通过，完成度远超原始 prompt，但有一项合规表达风险"
       },
       "body": {
         "zh": "网站包含 9 个完整页面。实际运行测试得到 49 项金融计算断言和 73 项浏览器交互断言全部通过；桌面 1440×900 和移动 390×844 对 9 个页面分别审计，共 18 页次、0 项布局/对比度/可访问性问题。登录演示、开户向导、利率筛选、计算器、表单、安全清单、分行筛选和响应式导航均有真实前端行为。\n\n虚构身份和不提交数据的说明存在于页脚、登录、开户、帮助和安全页面，关键表单也有显著提示。风险在于首页首屏和元描述高显著性地使用 “Member FDIC / Insured to $250,000”，而“虚构机构”说明主要位于长页面页脚；普通用户在看到免责声明前可能误判为真实银行。建议在全站顶部或首屏附近增加持续可见的 “Fictional design demo” 标识，并避免虚构品牌直接使用无修饰的 FDIC/Equal Housing Lender 身份声明。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 94,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
@@ -1751,11 +1826,11 @@
       "date": "2026-09-09",
       "conclusion": {
         "zh": "直接通过，为本组综合质量最高的交付之一",
-        "en": "AI assessment: 直接通过，为本组综合质量最高的交付之一 (translated label)."
+        "en": "Original Chinese verdict (not translated): 直接通过，为本组综合质量最高的交付之一"
       },
       "body": {
         "zh": "实际运行 `npm test`：3,861 项引擎断言和 244 项真实 Chromium 浏览器检查全部通过。覆盖记录规范化、日期、ISBN 校验、阅读状态机、进度与速度、搜索/筛选/排序、统计、重复合并、JSON/CSV、Goodreads 导入、随机测试，以及真实 UI 的新增、编辑、状态变化、删除撤销、键盘、对话框、持久化和损坏存储降级。\n\n应用从空书架开始，提供样例库但不强迫写入；数据只存本地。视觉检查显示信息密度高但层级清楚，书架、状态、筛选、统计、进度和数据入口均可发现。引擎确定性、测试规模、异常处理和数据可迁移性均明显超过原 prompt 的最低要求。",
-        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+        "en": "This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided."
       },
       "score": 99,
       "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",

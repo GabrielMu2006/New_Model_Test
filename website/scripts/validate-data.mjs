@@ -21,6 +21,11 @@ for (const task of catalog.tasks) {
   if (!phaseIds.has(task.phaseId)) fail(`${task.id}: missing phase ${task.phaseId}`);
   if (!task.promptOriginal || !task.promptTranslation) fail(`${task.id}: prompt or translation is empty`);
   if (!Number.isInteger(task.version) || task.version < 1) fail(`${task.id}: invalid version`);
+  if (!task.expectedOutcome?.zh || !task.expectedOutcome?.en) fail(`${task.id}: expected outcome must be bilingual and non-empty`);
+  const zhVerification = task.verification?.zh ?? [];
+  const enVerification = task.verification?.en ?? [];
+  if (!zhVerification.length) fail(`${task.id}: verification list is empty`);
+  if (zhVerification.length !== enVerification.length) fail(`${task.id}: verification zh/en length mismatch (${zhVerification.length} vs ${enVerification.length})`);
 }
 for (const run of catalog.runs) {
   if (!modelIds.has(run.modelId) || !taskIds.has(run.taskId)) fail(`${run.id}: broken relationship`);
@@ -33,5 +38,9 @@ for (const run of catalog.runs) {
   }
   for (const [key, value] of Object.entries(run.metrics)) if (key !== 'durationLabel' && (!Number.isFinite(value) || value < 0)) fail(`${run.id}: invalid metric ${key}`);
 }
-for (const review of catalog.reviews) if (!runIds.has(review.runId)) fail(`${review.id}: missing run ${review.runId}`);
+for (const review of catalog.reviews) {
+  if (!runIds.has(review.runId)) fail(`${review.id}: missing run ${review.runId}`);
+  if (!review.conclusion?.zh || !review.conclusion?.en) fail(`${review.id}: conclusion must be non-empty in both locales`);
+  if (review.type === 'ai' && (review.score == null || !review.scoreMethod)) fail(`${review.id}: AI review needs a score and a score method`);
+}
 console.log('Data validation passed: 15 tasks, 15 runs, 30 independent reviews.');
