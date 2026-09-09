@@ -165,7 +165,7 @@ const metricItems = currentRun ? [
       const runs = runsFor();
       const options = runs.map((run: any) => `<option value="${esc(run.id)}">${esc(run.id)}</option>`).join('');
       leftSelect.innerHTML = options;
-      rightSelect.innerHTML = `<option value="">—</option>${options}`;
+      rightSelect.innerHTML = `<option value="">-</option>${options}`;
       const wantedLeft = params.get('left'); const wantedRight = params.get('right');
       if (runs.some((run: any) => run.id === wantedLeft)) leftSelect.value = wantedLeft;
       if (runs.some((run: any) => run.id === wantedRight) && wantedRight !== leftSelect.value) rightSelect.value = wantedRight;

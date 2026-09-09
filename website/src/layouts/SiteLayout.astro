@@ -42,8 +42,14 @@ const copy = locale === 'zh' ? {
     </header>
     <main id="main"><slot /></main>
     <footer>
-      <span>{copy.brand} · 2026</span>
-      <span>{locale === 'zh' ? '忠实引用归档来源，不生成综合排名。' : 'Source-faithful archive. No synthetic leaderboard.'}</span>
+      <div class="footer-copy">
+        <span>{copy.brand} · 2026</span>
+        <span>{locale === 'zh' ? '忠实引用归档来源，不生成综合排名。' : 'Source-faithful archive. No synthetic leaderboard.'}</span>
+      </div>
+      <div class="footer-links" aria-label={locale === 'zh' ? '联系方式' : 'Contact links'}>
+        <a href="mailto:limuzhi2006@stu.pku.edu.cn">limuzhi2006@stu.pku.edu.cn</a>
+        <a href="https://gabrielmu2006.cn/" target="_blank" rel="me noopener">{locale === 'zh' ? '个人网站 ↗' : 'Personal website ↗'}</a>
+      </div>
     </footer>
     <script is:inline>
       (() => {
