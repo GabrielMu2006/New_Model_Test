@@ -6,6 +6,8 @@
 | 评价版本 | v1 |
 | 评价日期 | 2026-09-09 |
 | 本题得分 | **86/100** |
+| 结论（中） | 墙/门/窗/拖拽/尺寸均在；缺少专业软件特征 |
+| Conclusion (EN) | Walls, doors, windows, drag and dimensions present; lacks professional features. |
 | 阶段总评 | [phase-summary.md](phase-summary.md) |
 | 人工评价 | [../../Personal_Review.md](../../Personal_Review.md) |
 | 交付方式复核 | [../../复核说明-交付方式.md](../../复核说明-交付方式.md)（仅 task-12 / task-15） |

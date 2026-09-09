@@ -6,6 +6,8 @@
 | 评价版本 | v1 |
 | 评价日期 | 2026-09-09 |
 | 本题得分 | **83/100** |
+| 结论（中） | 推/拉方向正确且自证；人体结构待人工判断 |
+| Conclusion (EN) | Push direction correct and self-documented; body structure needs human review. |
 | 阶段总评 | [phase-summary.md](phase-summary.md) |
 | 人工评价 | [../../Personal_Review.md](../../Personal_Review.md) |
 | 交付方式复核 | [../../复核说明-交付方式.md](../../复核说明-交付方式.md)（仅 task-12 / task-15） |

@@ -36,12 +36,12 @@ try {
 
     // Muse 运行页：两条评价 + 隔离/污染标注 + 逐字输入标注
     await page.goto(`${base}/zh/runs/run-muse-spark-1-3-task-06-r1/`);
-    if (await page.locator('.review-card').count() !== 2) throw new Error(`${name}: Muse run page did not render two reviews`);
+    if (await page.locator('.review-card').count() !== 3) throw new Error(`${name}: Muse run page did not render human + two AI reviews`);
     const runText = await page.locator('.detail-page').textContent();
     if (!runText?.includes('workspace-only')) throw new Error(`${name}: isolation level missing`);
     if (!runText?.includes('事后补录')) throw new Error(`${name}: prompt provenance missing`);
-    // 评价正文按 Markdown 渲染，且原始 HTML 必须被转义
-    const aiCard = page.locator('.review-card.ai').first();
+    // 评价正文按 Markdown 渲染，且原始 HTML 必须被转义（维护 agent v1 的正文含列表与行内代码）
+    const aiCard = page.locator('.review-card.ai').filter({ hasText: '维护 agent' }).first();
     if (await aiCard.locator('ul li').count() < 1) throw new Error(`${name}: AI review markdown list not rendered`);
     if (await aiCard.locator('code').count() < 1) throw new Error(`${name}: AI review inline code not rendered`);
     const aiHtml = await aiCard.innerHTML();

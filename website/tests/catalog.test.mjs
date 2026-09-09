@@ -17,10 +17,10 @@ test('production data keeps the Phase 1 regression baseline', () => {
   assert.deepEqual(catalog.reviews.filter((review) => review.runId.includes('deepseek') && review.runId.includes('task-06')).map((review) => review.type).sort(), ['ai', 'human']);
 });
 
-test('Muse Spark Phase 1 is imported with prompts, isolation and two reviews per run', () => {
+test('Muse Spark Phase 1 is imported with prompts, isolation and every archived AI review', () => {
   const muse = runsOf('muse-spark-1-3');
   assert.equal(muse.length, 15);
-  assert.equal(reviewsOf(muse).length, 30);
+  assert.equal(reviewsOf(muse).length, 45, '1 human + 2 AI reviews per run');
   for (const run of muse) {
     assert.equal(run.taskVersion, 1);
     assert.equal(run.prompt?.provenance, 'post-hoc-reconstruction');
@@ -28,8 +28,13 @@ test('Muse Spark Phase 1 is imported with prompts, isolation and two reviews per
     assert.equal(run.isolation.level, 'workspace-only');
     assert.equal(run.contamination.status, 'clean');
     const reviews = catalog.reviews.filter((review) => review.runId === run.id);
-    assert.equal(reviews.length, 2, `${run.id}: expected human + AI review`);
-    assert.deepEqual(reviews.map((review) => review.type).sort(), ['ai', 'human']);
+    assert.equal(reviews.length, 3, `${run.id}: expected human + two AI reviews`);
+    assert.deepEqual(reviews.map((review) => review.type).sort(), ['ai', 'ai', 'human']);
+    assert.deepEqual(
+      [...new Set(reviews.filter((review) => review.type === 'ai').map((review) => review.id.split('-r1-').slice(1).join('-r1-')))].sort(),
+      ['codex-v1', 'maintenance-agent-v1'],
+      `${run.id}: both AI evaluators must be present`,
+    );
   }
 });
 

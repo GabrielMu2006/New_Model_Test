@@ -7,7 +7,7 @@ Muse Spark 1.3 在 **Phase 1 十五道题**上的交付物、运行记录与评�
 | 模型 | `muse-spark-1.3-contributor-free`（providerID=opencode，variant=xhigh） |
 | Harness | opencode 1.18.29（`agent=build`） |
 | 会话 | 15 个任务 / 15 个会话（严格一对一） |
-| 交付物 | 15 个任务目录；本档案共 66 个文件（含逐字 prompt、证据与评价） |
+| 交付物 | 15 个任务目录；本档案共 83 个文件（含逐字 prompt、证据与评价） |
 | 累计用时 | 25 分 45 秒 |
 | 工具调用 / 失败 | 178 / 8 |
 | Token 过路量 | 3,669,385（输入 384,338 + 输出 154,563 + 缓存读 3,130,484） |
@@ -19,25 +19,25 @@ Muse Spark 1.3 在 **Phase 1 十五道题**上的交付物、运行记录与评�
 
 ## 一、任务一览
 
-| # | 目录 | 交付物 | 运行方式 | AI v1 | 人工评价 |
+| # | 目录 | 交付物 | 运行方式 | AI：维护 / codex | 人工评价 |
 | ---: | --- | --- | --- | ---: | --- |
-| 01 | `task-01-aevum-luxury-watch-landing-page/` | index.html + app.js + style.css | 直接打开 | **91** | 通过 · 细节待提升 |
-| 02 | `task-02-pelican-on-bicycle/` | pelican-bicycle.svg | 直接打开 | **88** | 通过 |
-| 03 | `task-03-analog-clock-6-25/` | analog-clock-6-25.svg | 直接打开 | **88** | 通过 · 精度欠佳 |
-| 04 | `task-04-analog-clock-11-52-30/` | clock.svg | 直接打开 | **92** | 通过 |
-| 05 | `task-05-bicycle-rider/` | bicycle-rider.svg | 直接打开 | **85** | 通过 · 有瑕疵 |
-| 06 | `task-06-scissors-cutting-paper/` | hand-cutting-paper.svg | 直接打开 | **73** | 需改进 |
-| 07 | `task-07-pushing-wheelbarrow/` | pushing-wheelbarrow.svg | 直接打开 | **83** | 通过 · 有瑕疵 |
-| 08 | `task-08-breakout-game/` | index.html | 直接打开 | **88** | 通过 · 有显示问题 |
-| 09 | `task-09-topdown-farming-game/` | index.html | 直接打开 | **84** | 通过 · UI 可提升 |
-| 10 | `task-10-pixel-art-editor/` | index.html | 直接打开 | **89** | 通过 |
-| 11 | `task-11-floor-plan-editor/` | index.html | 直接打开 | **86** | 通过 · 缺专业特性 |
-| 12 | `task-12-calculator/` | index.html + app.js + calculator.js + style.css + test.mjs | **需 HTTP 服务**（ES module） | **80** | 未通过 |
-| 13 | `task-13-weather-dashboard/` | index.html | 直接打开（联网取 Open-Meteo） | **88** | 通过 · 表现优秀 |
-| 14 | `task-14-bank-website/` | index.html + app.js + styles.css | 直接打开（引 Google Fonts） | **80** | 通过 |
-| 15 | `task-15-book-tracker/` | index.html + app.js + books.js + style.css + test.mjs | **需 HTTP 服务**（ES module） | **78** | 未通过 |
+| 01 | `task-01-aevum-luxury-watch-landing-page/` | index.html + app.js + style.css | 直接打开 | 91 / 94 | 通过 · 细节待提升 |
+| 02 | `task-02-pelican-on-bicycle/` | pelican-bicycle.svg | 直接打开 | 88 / 93 | 通过 |
+| 03 | `task-03-analog-clock-6-25/` | analog-clock-6-25.svg | 直接打开 | 88 / 96 | 通过 · 精度欠佳 |
+| 04 | `task-04-analog-clock-11-52-30/` | clock.svg | 直接打开 | 92 / 98 | 通过 |
+| 05 | `task-05-bicycle-rider/` | bicycle-rider.svg | 直接打开 | 85 / 83 | 通过 · 有瑕疵 |
+| 06 | `task-06-scissors-cutting-paper/` | hand-cutting-paper.svg | 直接打开 | 73 / 82 | 需改进 |
+| 07 | `task-07-pushing-wheelbarrow/` | pushing-wheelbarrow.svg | 直接打开 | 83 / 86 | 通过 · 有瑕疵 |
+| 08 | `task-08-breakout-game/` | index.html | 直接打开 | 88 / 88 | 通过 · 有显示问题 |
+| 09 | `task-09-topdown-farming-game/` | index.html | 直接打开 | 84 / 84 | 通过 · UI 可提升 |
+| 10 | `task-10-pixel-art-editor/` | index.html | 直接打开 | 89 / 93 | 通过 |
+| 11 | `task-11-floor-plan-editor/` | index.html | 直接打开 | 86 / 84 | 通过 · 缺专业特性 |
+| 12 | `task-12-calculator/` | index.html + app.js + calculator.js + style.css + test.mjs | **需 HTTP 服务**（ES module） | 80 / 78 | 未通过 |
+| 13 | `task-13-weather-dashboard/` | index.html | 直接打开（联网取 Open-Meteo） | 88 / 94 | 通过 · 表现优秀 |
+| 14 | `task-14-bank-website/` | index.html + app.js + styles.css | 直接打开（引 Google Fonts） | 80 / 88 | 通过 |
+| 15 | `task-15-book-tracker/` | index.html + app.js + books.js + style.css + test.mjs | **需 HTTP 服务**（ES module） | 78 / 80 | 未通过 |
 
-> **AI v1** 为维护 agent 评价（非盲评，2026-09-09），口径见 `Reviews/ai/maintenance-agent-v1/README.md`；**不可与第一阶段 DeepSeek 的 93.6/100 直接比较**。
+> **AI 列**为两份非盲评的分数（维护 agent v1 / Codex-GPT-5 v1），口径不同、**不可平均或排名**，也不可与第一阶段 DeepSeek 的 93.6/100 直接比较。
 > **task-12 / task-15** 的"未通过"已复核为**交付方式问题**：交付物使用 ES module，`file://` 直接打开时被浏览器按 CORS 拦截，经 HTTP 提供服务则功能正常（证据见 `Reviews/复核说明-交付方式.md`）。
 
 ---
@@ -50,7 +50,8 @@ Muse Spark 1.3 在 **Phase 1 十五道题**上的交付物、运行记录与评�
 | `Personal_Review.md` | 人工评价 Markdown 整理版（总览表 + 逐条原文 + 共性反馈） |
 | `Muse-Spark-1.3-任务评测复盘.md` | 执行复盘：会话映射、逐题用时/token/API/工具调用、失败、作弊嫌疑专项、金额 |
 | `复核说明-交付方式.md` | task-12 / task-15 的交付方式复核（含 http/file:// 实测证据） |
-| `ai/maintenance-agent-v1/` | AI 评价 v1：`README.md`（元信息+总览）、`phase-summary.md`（总评）、`task-01…15.md`（每题一条） |
+| `ai/maintenance-agent-v1/` | AI 评价 v1（维护 agent，非盲评，84.9/100）：`README.md`（元信息+总览）、`phase-summary.md`（总评）、`task-01…15.md`（每题一条） |
+| `ai/codex-v1/` | AI 评价 v1（Codex Desktop 0.153.4 / GPT-5，非盲评，88.1/100）：原 `Reviews/15-任务完成质量评估.md` 归档而来，含阶段总评与每题一条 |
 
 **后续新增 AI 评价的接口**：新建同级目录 `Reviews/ai/<评价者标识>-v<N>/`，按同一结构存放，不覆盖既有评价。
 
@@ -97,7 +98,7 @@ Muse Spark 1.3 在 **Phase 1 十五道题**上的交付物、运行记录与评�
 
 1. **逐字 prompt 为事后补录**（见第三节），非当时封存。
 2. **隔离与作弊检查的证据未随档案封存**：复盘报告的结论基于宿主 `~/.local/share/opencode/opencode.db` 与 `/tmp` 临时脚本；原始日志、探针结果不在本档案内，无法独立复核。
-3. **无独立盲评**：现有 AI 评价由维护 agent 出具（非盲评），独立 AI 评价仍待补。
+3. **两份 AI 评价均为非盲评**：维护 agent v1（84.9/100）与 Codex/GPT-5 v1（88.1/100）各自使用不同量表，**不可平均或排名**；独立盲评仍待补。
 4. **外部依赖**：task-13 使用 Open-Meteo 四个接口（联网）；task-14 引用 Google Fonts（`fonts.googleapis.com`、`fonts.gstatic.com`）。
 5. **未在维护宿主执行成果**：视觉与运行期行为未复验；task-08 人工反馈的显示问题待浏览器复现。
 6. **task-12 / task-15 需 HTTP 服务运行**，直接双击打开不可用。

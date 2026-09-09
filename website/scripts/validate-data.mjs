@@ -113,7 +113,18 @@ if (deepseekRuns.length !== 15) fail(`Phase 1 regression: expected 15 DeepSeek r
 if (deepseekReviews.length !== 30) fail(`Phase 1 regression: expected 30 DeepSeek reviews, found ${deepseekReviews.length}`);
 const museRuns = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3');
 if (museRuns.length !== 15) fail(`Muse regression: expected 15 Muse runs, found ${museRuns.length}`);
-if (catalog.reviews.filter((review) => museRuns.some((run) => run.id === review.runId)).length !== 30) fail('Muse regression: expected 30 Muse reviews');
+const museReviews = catalog.reviews.filter((review) => museRuns.some((run) => run.id === review.runId));
+if (museReviews.length !== 45) fail(`Muse regression: expected 45 Muse reviews (1 human + 2 AI per run), found ${museReviews.length}`);
+// 每个 Muse 运行必须同时挂人工评价与每一份已归档的 AI 评价
+const aiEvaluations = new Set(museReviews.filter((review) => review.type === 'ai').map((review) => review.id.split('-r1-').slice(1).join('-r1-')));
+for (const run of museRuns) {
+  const reviews = museReviews.filter((review) => review.runId === run.id);
+  if (reviews.filter((review) => review.type === 'human').length !== 1) fail(`${run.id}: expected exactly one human review`);
+  const aiIds = new Set(reviews.filter((review) => review.type === 'ai').map((review) => review.id.split('-r1-').slice(1).join('-r1-')));
+  for (const evaluator of aiEvaluations) {
+    if (!aiIds.has(evaluator)) fail(`${run.id}: missing AI review from ${evaluator}`);
+  }
+}
 
 console.log(
   `Data validation passed: ${catalog.models.length} models, ${catalog.tasks.length} tasks, ${catalog.runs.length} runs, `

@@ -15,7 +15,7 @@ const archiveRoot = 'Test_Results/Muse-Spark-1.3_Opencode/phase-01';
 const archiveCommit = 'b8d0235e89ac803dc62948b8e3b20f81983922d2';
 const metricsPath = `${archiveRoot}/Reviews/Muse-Spark-1.3-任务评测复盘.md`;
 const humanPath = `${archiveRoot}/Reviews/Personal_Review.md`;
-const aiDir = `${archiveRoot}/Reviews/ai/maintenance-agent-v1`;
+const aiRoot = `${archiveRoot}/Reviews/ai`;
 
 // 交付物清单：只包含模型产出，不含 prompt.txt / README / 评价等档案材料。
 const artifacts = {
@@ -69,29 +69,61 @@ const humanVerdictEn = {
   'task-14': 'Pass', 'task-15': 'Fail',
 };
 
-// AI 评价结论英文译文（原结论为中文）。
-const aiConclusionEn = {
-  'task-01': 'Structurally complete, real interactions, no external dependencies.',
-  'task-02': 'Rich elements and gradients with accessibility markup; recognizability needs human review.',
-  'task-03': 'Hand angles exact; human perception differs from this assessment.',
-  'task-04': 'Angles exact, plus a digital label and aria-label.',
-  'task-05': 'Pose requirements explicitly modeled; body appearance needs human review.',
-  'task-06': 'The hand has only 4 digits (1 thumb + 3 fingers), conflicting with an ordinary hand.',
-  'task-07': 'Push direction correct and self-documented; body structure needs human review.',
-  'task-08': 'Score, lives, levels and pause all present; the reported display issue needs reproduction.',
-  'task-09': 'Planting, watering, harvest, day-night and save present; UI could improve.',
-  'task-10': 'All seven required features present (PNG export, undo/redo, zoom).',
-  'task-11': 'Walls, doors, windows, drag and dimensions present; lacks professional features.',
-  'task-12': 'Engine is well layered and tested; ES modules make file:// unusable.',
-  'task-13': 'Live APIs plus skeleton and offline fallback; no caching strategy.',
-  'task-14': 'Single page with 12 sections and disclaimers; no security section, pulls Google Fonts.',
-  'task-15': 'Domain engine with 18 exports and tests; ES modules make file:// unusable.',
-};
+/** 从 "**82/100**" 这类文本里取分数，避免把 "/100" 也当成数字。 */
+function parseScore(text) {
+  const match = String(text ?? '').match(/(\d+(?:\.\d+)?)\s*\/\s*100/) ?? String(text ?? '').match(/(\d+(?:\.\d+)?)/);
+  return match ? Number(match[1]) : null;
+}
+
+/** 读取某个评委目录：README 元信息 + 每题一条评价文件。 */
+function loadAiEvaluations(repoRoot, aiRootRel) {
+  const rootAbs = path.join(repoRoot, aiRootRel);
+  if (!fs.existsSync(rootAbs)) return [];
+  const evaluations = [];
+  for (const name of fs.readdirSync(rootAbs).sort()) {
+    const dirAbs = path.join(rootAbs, name);
+    if (!fs.statSync(dirAbs).isDirectory()) continue;
+    const readme = fs.readFileSync(path.join(dirAbs, 'README.md'), 'utf8');
+    const meta = {};
+    for (const line of readme.split('\n')) {
+      const match = line.match(/^\|\s*([^|]+?)\s*\|\s*(.*?)\s*\|\s*$/);
+      if (match) meta[match[1]] = match[2].replaceAll('**', '').trim();
+    }
+    const tasks = new Map();
+    for (const file of fs.readdirSync(dirAbs).filter((item) => /^task-\d{2}\.md$/.test(item)).sort()) {
+      const text = fs.readFileSync(path.join(dirAbs, file), 'utf8');
+      const rows = {};
+      for (const line of text.split('\n')) {
+        const match = line.match(/^\|\s*([^|]+?)\s*\|\s*(.*?)\s*\|\s*$/);
+        if (match) rows[match[1]] = match[2].trim();
+      }
+      const score = parseScore(rows['本题得分']);
+      if (!Number.isFinite(score)) throw new Error(`[muse-spark-phase1] ${name}/${file}: missing score`);
+      const conclusionZh = rows['结论（中）'];
+      const conclusionEn = rows['Conclusion (EN)'];
+      if (!conclusionZh || !conclusionEn) throw new Error(`[muse-spark-phase1] ${name}/${file}: missing bilingual conclusion`);
+      tasks.set(file.replace('.md', ''), {
+        score, conclusionZh, conclusionEn,
+        body: text.slice(text.indexOf('---\n\n') + 5).trim(),
+      });
+    }
+    evaluations.push({
+      id: name,
+      dir: `${aiRootRel}/${name}`,
+      authorLabel: meta['评价者'] ?? name,
+      date: meta['日期'] ?? null,
+      scoreMethod: meta['评分口径'] ?? meta['方法'] ?? null,
+      averageScore: parseScore(meta['平均分']),
+      summary: meta['类型'] ?? null,
+      tasks,
+    });
+  }
+  return evaluations;
+}
 
 export function load({ read, repoRoot, siteRoot }) {
   const metricsText = read(metricsPath);
   const humanText = read(humanPath);
-  const aiIndexText = read(`${aiDir}/README.md`);
 
   // 逐题指标表（复盘报告第 84 行起）。
   const perTask = new Map();
@@ -123,14 +155,9 @@ export function load({ read, repoRoot, siteRoot }) {
     humanBody.set(`task-${match[1].padStart(2, '0')}`, match[2].trim());
   }
 
-  // AI 评价：README 总览表（分数 + 结论），逐题文件正文。
-  const aiSummary = new Map();
-  for (const row of aiIndexText.split('\n').filter((line) => /^\| \d{2} \|/.test(line))) {
-    const cells = tableCells(row, { stripBold: true });
-    if (cells.length < 9) continue;
-    const taskId = `task-${cells[0]}`;
-    aiSummary.set(taskId, { score: Number(cells[7]), conclusion: cells[8] });
-  }
+  // AI 评价：逐个评委目录加载（Reviews/ai/<评委>-vN/），每个目录一份元信息 + 每题一条。
+  const aiEvaluations = loadAiEvaluations(repoRoot, aiRoot);
+  if (!aiEvaluations.length) throw new Error('[muse-spark-phase1] no AI evaluation folders found');
 
   const tasks = [];
   const runs = [];
@@ -141,9 +168,6 @@ export function load({ read, repoRoot, siteRoot }) {
     if (!metrics) throw new Error(`[muse-spark-phase1] missing metrics for ${taskId}`);
     const human = humanSummary.get(taskId);
     if (!human) throw new Error(`[muse-spark-phase1] missing human verdict for ${taskId}`);
-    const ai = aiSummary.get(taskId);
-    if (!ai) throw new Error(`[muse-spark-phase1] missing AI verdict for ${taskId}`);
-
     const { sessionId, ...runMetrics } = metrics;
     const runId = `run-muse-spark-1-3-${taskId}-r1`;
     const folder = fs.readdirSync(path.join(repoRoot, archiveRoot)).find((name) => name.startsWith(`${taskId}-`));
@@ -152,9 +176,6 @@ export function load({ read, repoRoot, siteRoot }) {
 
     const promptText = fs.readFileSync(path.join(repoRoot, sourcePath, 'prompt.txt'), 'utf8');
     const promptSha256 = crypto.createHash('sha256').update(Buffer.from(promptText)).digest('hex');
-
-    const aiBody = fs.readFileSync(path.join(repoRoot, aiDir, `${taskId}.md`), 'utf8');
-    const aiBodyZh = aiBody.slice(aiBody.indexOf('---\n\n') + 5).trim();
 
     runs.push({
       id: runId, modelId: 'muse-spark-1-3', taskId, taskVersion: 1,
@@ -203,15 +224,22 @@ export function load({ read, repoRoot, siteRoot }) {
       source: { path: humanPath, lines: lineRange(humanText, `### T${Number(number)} ·`, `### T${Number(number)} ·`) },
     });
 
-    reviews.push({
-      id: `review-ai-muse-${taskId}-r1-maintenance-agent-v1`, runId, type: 'ai',
-      authorLabel: 'maintenance-agent-v1 (non-blind)', date: '2026-09-09',
-      conclusion: { zh: ai.conclusion, en: aiConclusionEn[taskId] },
-      body: { zh: aiBodyZh, en: 'This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided.' },
-      translated: false, score: ai.score,
-      scoreMethod: 'Self-defined rubric (requirements 40 / completeness 20 / correctness 20 / visual 10 / engineering 10), scored by the maintenance agent; non-blind and not comparable to the Phase 1 DeepSeek AI report.',
-      source: { path: `${aiDir}/${taskId}.md`, lines: '1' },
-    });
+    for (const evaluation of aiEvaluations) {
+      const entry = evaluation.tasks.get(taskId);
+      if (!entry) throw new Error(`[muse-spark-phase1] ${evaluation.id} missing ${taskId}`);
+      reviews.push({
+        id: `review-ai-muse-${taskId}-r1-${evaluation.id}`, runId, type: 'ai',
+        authorLabel: evaluation.authorLabel, date: evaluation.date,
+        conclusion: { zh: entry.conclusionZh, en: entry.conclusionEn },
+        body: {
+          zh: entry.body,
+          en: 'This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided.',
+        },
+        translated: false, score: entry.score,
+        scoreMethod: evaluation.scoreMethod,
+        source: { path: `${evaluation.dir}/${taskId}.md`, lines: '1' },
+      });
+    }
   }
 
   const model = JSON.parse(read('website/data/models/muse-spark-1-3.json'));
@@ -233,14 +261,15 @@ export function load({ read, repoRoot, siteRoot }) {
       },
       source: { path: metricsPath, lines: '37-50' },
     }],
-    assessments: [{
-      id: 'assessment-muse-spark-1-3-phase-01-maintenance-agent-v1',
+    assessments: aiEvaluations.map((evaluation) => ({
+      id: `assessment-muse-spark-1-3-phase-01-${evaluation.id}`,
       modelId: model.id, phaseId: 'phase-01', scope: 'phase',
-      score: 84.9, coreSummary: '15/15 delivered, 2 flagged as delivery-method issues',
-      label: { zh: '维护 agent AI 评价 v1（非盲评）', en: 'Maintenance-agent AI review v1 (non-blind)' },
-      source: { path: `${aiDir}/phase-summary.md`, lines: '1' },
-      disclaimer: 'Produced by the maintenance agent, not blind, and not comparable to the Phase 1 DeepSeek AI report; no independent blind review exists yet.',
-    }],
+      score: evaluation.averageScore,
+      coreSummary: evaluation.summary,
+      label: { zh: `AI 评价 ${evaluation.id}（非盲评）`, en: `AI review ${evaluation.id} (non-blind)` },
+      source: { path: `${evaluation.dir}/phase-summary.md`, lines: '1' },
+      disclaimer: `${evaluation.authorLabel} — non-blind, own rubric; not comparable to other reviewers or to the Phase 1 DeepSeek AI report.`,
+    })),
     sourcePathMappings: [],
   };
 }

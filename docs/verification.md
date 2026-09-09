@@ -1,5 +1,14 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-09 归档 Codex 的 Muse 评价并接入网站（第二份 AI 评价）
+
+- 来源：Codex Desktop 0.153.4 / GPT-5 于 2026-09-09 写出的 `Reviews/15-任务完成质量评估.md`（综合 88.1/100，含 Chromium 实际渲染复验）。内容未改动，按既定接口归档为 `Reviews/ai/codex-v1/`（阶段总评 + 每题一条），并补齐 `README.md` 元信息。
+- 接口通用化：Muse 适配器改为遍历 `Reviews/ai/<评委>-vN/`，从每个评委目录的 README 与逐题文件解析元信息、分数与双语结论；两份评价（维护 agent v1 84.9、codex-v1 88.1）作为**并列的 AI 评价**挂在同一个运行上，不做平均或排名。`maintenance-agent-v1` 的逐题文件补上 `结论（中）` 与 `Conclusion (EN)` 行以统一接口。
+- 数据结果：2 模型 / 15 任务 / 30 运行 / **75 评价**（DeepSeek 30 + Muse 45：每题 1 人工 + 2 AI）/ 2 批次 / **3 阶段评估**；页面仍为 110。
+- 门禁：import、validate（含 Muse「每运行 1 人工 + 每个已归档 AI 评委各一条」校验）、check（0 errors）、`npm test`（9/9）、build 全部通过；e2e 在 Chromium 与 WebKit 通过，Muse 运行页断言改为「3 条评价」并针对维护 agent 卡片校验 Markdown 列表/行内代码渲染与 HTML 转义。
+- 分数解析修正：`82/100` 这类文本此前被拼成 `82100`，已改为只取分子；模型页现显示两份阶段评估（88.1 / 84.9）。
+- 发布与公网核验：见下条「Codex 评价接入发布记录」。
+
 ## 2026-09-09 Muse Spark 网站接入（多模型 / 同阶段）
 
 - 导入层重构：`scripts/import-data.mjs` 改为编排器 + 两个显式注册的批次适配器（`adapters/deepseek-phase1.mjs`、`adapters/muse-spark-phase1.mjs`）；新增 `batches`、`assessments` 实体；catalog `schemaVersion` 升到 2。DeepSeek 实体逐字段回归比对：**0 处语义差异**。

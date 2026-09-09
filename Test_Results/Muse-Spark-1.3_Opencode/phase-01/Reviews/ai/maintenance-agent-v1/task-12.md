@@ -6,6 +6,8 @@
 | 评价版本 | v1 |
 | 评价日期 | 2026-09-09 |
 | 本题得分 | **80/100** |
+| 结论（中） | 引擎分层清晰且带测试；**ES module 导致 file:// 不可用** |
+| Conclusion (EN) | Engine is well layered and tested; ES modules make file:// unusable. |
 | 阶段总评 | [phase-summary.md](phase-summary.md) |
 | 人工评价 | [../../Personal_Review.md](../../Personal_Review.md) |
 | 交付方式复核 | [../../复核说明-交付方式.md](../../复核说明-交付方式.md)（仅 task-12 / task-15） |

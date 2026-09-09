@@ -54,7 +54,7 @@
 
 - **原始 Prompt**：组织者确认档案中 15 题与实际使用题目一致；入库时按题目文档**事后补录** `prompt.txt`（已逐字比对 15/15，标注为补录而非当时封存）。
 - **隔离与作弊检查**：本次判定通过，按现有材料接受；后续运行必须按 `docs/testing-protocol.md` 执行并封存证据。
-- **AI 评价**：组织者侧的独立 AI 评价因额度不足未跑完；**维护 agent 已补出 v1 版**（`phase-01/Reviews/ai/maintenance-agent-v1/`：每题一条 + 阶段总评，非盲评、未执行成果，平均 84.9/100，口径与第一阶段不可比）。独立盲评仍待补。网站侧需支持一个运行挂多份 AI 评价（见 3.1）。
+- **AI 评价**：已有两份并存——`phase-01/Reviews/ai/maintenance-agent-v1/`（维护 agent，非盲评，84.9/100，静态分析）与 `phase-01/Reviews/ai/codex-v1/`（Codex Desktop / GPT-5，非盲评，88.1/100，含 Chromium 实际渲染复验）。两份口径不同，**不得平均或排名**；均为非盲评，独立盲评仍待补。网站已支持一个运行挂多份 AI 评价（见 3.1）。
 - **task-12 计算器 / task-15 图书追踪**：标记为**交付方式问题**，不是功能逻辑缺陷。复核证据见 `phase-01/Reviews/复核说明-交付方式.md`（原始人工判定原文保留，不改写）。
 - **测试期配置**：原 `phase-01/AGENTS.md` 与 `opencode.json` 已改名为 `evidence/isolation-rules.md` 与 `evidence/tool-config.json`，避免被后续会话自动加载为仓库指令；正文未改动。
 
@@ -74,7 +74,7 @@
 
 ### 3.2 多阶段 / 多模型接入
 
-- **多模型（同阶段）已完成**：`website/scripts/import-data.mjs` 为编排器，`scripts/adapters/deepseek-phase1.mjs` 与 `scripts/adapters/muse-spark-phase1.mjs` 分别适配；页面计数、批次统计、路由、`runsForTask()`、`validate-data.mjs`、`check-dist.mjs` 均按实体推导（当前 2 模型 / 1 阶段 / 15 任务 / 30 运行 / 60 评价 / 110 页）。
+- **多模型（同阶段）已完成**：`website/scripts/import-data.mjs` 为编排器，`scripts/adapters/deepseek-phase1.mjs` 与 `scripts/adapters/muse-spark-phase1.mjs` 分别适配；Muse 适配器按 `Reviews/ai/<评委>-vN/` **通用加载任意多份 AI 评价**。页面计数、批次统计、路由、`runsForTask()`、`validate-data.mjs`、`check-dist.mjs` 均按实体推导（当前 2 模型 / 1 阶段 / 15 任务 / 30 运行 / 75 评价 / 3 阶段评估 / 110 页）。
 - **多阶段仍未做**：新阶段若采用 `runs/<run-id>/` 布局，需要新增对应适配器；通用目录扫描器不存在，也不会自动接入。
 
 ## 4. 已定方案（非缺陷，供后续遵循）
