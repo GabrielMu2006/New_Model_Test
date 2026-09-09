@@ -1,6 +1,6 @@
 # 模型评测展示网站实施计划
 
-状态：待执行。本文是网站建设规范，不代表网站已经实现或部署。  
+状态：历史建站计划。网站已上线；以下保留原始 M0–M7 目标与当时目录示例，不作为全部能力已实现的证明。当前目录、域名、维护与授权见 [AGENTS.md](../AGENTS.md) 和 [文档索引](README.md)。多阶段自动接入尚待实际接入任务改造，见 [接入说明](adding-results.md)。
 目标仓库：`GabrielMu2006/New_Model_Test`  
 工作目录：`/Users/gabrielmu/Documents/New_Model_Test`  
 关联启动指令：[WEBSITE_START_PROMPT.md](WEBSITE_START_PROMPT.md)

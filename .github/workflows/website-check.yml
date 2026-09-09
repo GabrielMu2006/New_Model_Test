@@ -1,10 +1,10 @@
 name: Check evaluation website
 on:
   pull_request:
-    paths: ['website/**', 'docs/**', '15_TEST_PROMPTS_BILINGUAL.md', 'DeepSeek-V4.1-Flash-Exp-0910_DSH/**', '.github/workflows/website-*.yml']
+    paths: ['website/**', 'docs/**', 'PROMPT/**', 'Test_Results/**', 'AGENTS.md', 'README.md', '.github/workflows/website-*.yml']
   push:
     branches-ignore: [main]
-    paths: ['website/**', 'docs/**', '15_TEST_PROMPTS_BILINGUAL.md', 'DeepSeek-V4.1-Flash-Exp-0910_DSH/**', '.github/workflows/website-*.yml']
+    paths: ['website/**', 'docs/**', 'PROMPT/**', 'Test_Results/**', 'AGENTS.md', 'README.md', '.github/workflows/website-*.yml']
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v5
         with: { node-version: 24, cache: npm, cache-dependency-path: website/package-lock.json }
       - run: npm ci
-      - run: npm run validate:data
+      - run: npm run import:data && npm run validate:data
       - run: npm run check
       - run: npm test
       - run: npm run build

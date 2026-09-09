@@ -23,7 +23,7 @@
 - 几何、计算、数据状态与错误处理；
 - 响应式设计、可访问性、视觉完成度和自动化测试。
 
-仓库将保留后续阶段扩展能力。未来可在根目录增加新的模型/阶段文件夹，并继续沿用“任务 → 原始 prompt → 成果 → 测试 → 评估”的归档方式。
+仓库将保留后续阶段扩展能力。未来可在 Test_Results/ 下增加模型文件夹，并在模型目录中增加阶段文件夹，并继续沿用“任务 → 原始 prompt → 成果 → 测试 → 评估”的归档方式。
 
 ### 当前阶段
 
@@ -58,41 +58,48 @@
 ```text
 New_Model_Test/
 ├── README.md
-├── 15_TEST_PROMPTS_BILINGUAL.md
-├── website/                              # Astro 静态展示站
-├── docs/                                 # 数据、验证、部署与维护说明
-└── DeepSeek-V4.1-Flash-Exp-0910_DSH/     # Phase 1
-    ├── README.md                          # 阶段索引与运行说明
-    ├── Reviews/                           # 统计复盘、人工评价与质量评估
-    ├── task-01-.../
-    ├── ...
-    └── task-15-.../
+├── AGENTS.md
+├── PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md
+├── Test_Results/
+│   └── DeepSeek-V4.1-Flash-Exp-0910_DSH/
+│       └── phase-01/
+│           ├── README.md
+│           ├── Reviews/
+│           └── task-01-.../ ... task-15-.../
+├── website/
+├── docs/
+└── .github/workflows/
 ```
 
-未来阶段将以新的同级目录加入；根 README 负责维护阶段索引，阶段目录保存独立、完整的任务与证据。
+后续结果按 Test_Results/模型/阶段/ 加入；根 README 维护索引。接入步骤见 docs/adding-results.md。
 
 ### 关键文档
 
-- [15 条原始 Prompt、双语理论成果与验收内容](15_TEST_PROMPTS_BILINGUAL.md)
-- [第一阶段项目索引与运行说明](DeepSeek-V4.1-Flash-Exp-0910_DSH/README.md)
-- [15 项任务完成质量评估](DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md)
-- [任务执行统计与评测复盘](DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md)
-- [人工评价汇总](DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md)
+- [Agent 协作规范](AGENTS.md)
+- [结果交接接口](docs/result-interface.md)与[接入操作步骤](docs/adding-results.md)
+- [测试隔离与防答案污染](docs/testing-protocol.md)
+- [网站维护、发布及回退](docs/deployment.md)
+
+- [15 条原始 Prompt、双语理论成果与验收内容](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)
+- [第一阶段项目索引与运行说明](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/README.md)
+- [15 项任务完成质量评估](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/Reviews/15-任务完成质量评估.md)
+- [任务执行统计与评测复盘](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md)
+- [人工评价汇总](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/Reviews/Personal_Review.md)
 
 ### 查看与运行
 
 任务 01–10 的主要成果可以直接打开，无需安装依赖：
 
 ```bash
-open DeepSeek-V4.1-Flash-Exp-0910_DSH/task-01-aevum-luxury-watch-landing-page/index.html
-open DeepSeek-V4.1-Flash-Exp-0910_DSH/task-03-analog-clock-6-25/clock-625.svg
-open DeepSeek-V4.1-Flash-Exp-0910_DSH/task-08-breakout-game/index.html
+open Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/task-01-aevum-luxury-watch-landing-page/index.html
+open Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/task-03-analog-clock-6-25/clock-625.svg
+open Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/task-08-breakout-game/index.html
 ```
 
 任务 11–15 带有项目内测试。多数项目无需 `npm install`，Node.js 主要用于执行测试：
 
 ```bash
-cd DeepSeek-V4.1-Flash-Exp-0910_DSH/task-12-calculator
+cd Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/task-12-calculator
 npm test
 
 cd ../task-15-book-tracker
@@ -110,7 +117,7 @@ npm test
 - task-14：49 项金融断言、73 项交互断言，以及 9 页桌面/移动审计通过；
 - task-15：3,861 项引擎断言与 244 项浏览器检查通过。
 
-更完整的扣分理由、风险和改进优先级见[质量评估报告](DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md)。
+更完整的扣分理由、风险和改进优先级见[质量评估报告](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/Reviews/15-任务完成质量评估.md)。
 
 ### 后续阶段约定
 
@@ -143,7 +150,7 @@ The current archive is **Phase 1**, consisting of 15 tasks completed with `DeepS
 - geometry, arithmetic, data state, and error handling;
 - responsive design, accessibility, visual finish, and automated testing.
 
-The repository is designed to grow. Future phases can be added as sibling model or phase directories while retaining the same “task → original prompt → artifact → test → evaluation” archive pattern.
+The repository is designed to grow. Future results can be added under Test_Results/<model-folder>/phase-NN/ while retaining the same “task → original prompt → artifact → test → evaluation” archive pattern.
 
 ### Current phase
 
@@ -178,39 +185,48 @@ The repository is designed to grow. Future phases can be added as sibling model 
 ```text
 New_Model_Test/
 ├── README.md
-├── 15_TEST_PROMPTS_BILINGUAL.md
-└── DeepSeek-V4.1-Flash-Exp-0910_DSH/     # Phase 1
-    ├── README.md                          # Phase index and run instructions
-    ├── Reviews/                           # Metrics, human review, and quality report
-    ├── task-01-.../
-    ├── ...
-    └── task-15-.../
+├── AGENTS.md
+├── PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md
+├── Test_Results/
+│   └── DeepSeek-V4.1-Flash-Exp-0910_DSH/
+│       └── phase-01/
+│           ├── README.md
+│           ├── Reviews/
+│           └── task-01-.../ ... task-15-.../
+├── website/
+├── docs/
+└── .github/workflows/
 ```
 
-Future phases should be added as sibling directories. The root README maintains the phase index, while every phase remains a self-contained collection of tasks and evidence.
+Future phases live inside each model folder under Test_Results/. The root README maintains the index; see docs/adding-results.md for integration requirements.
 
 ### Key documents
 
-- [15 original prompts with bilingual expected outcomes and acceptance checks](15_TEST_PROMPTS_BILINGUAL.md)
-- [Phase 1 index and run instructions](DeepSeek-V4.1-Flash-Exp-0910_DSH/README.md)
-- [Quality evaluation of all 15 completed tasks](DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md)
-- [Execution metrics and evaluation retrospective](DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md)
-- [Human-review summary](DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md)
+- [Agent instructions](AGENTS.md)
+- [Result interface](docs/result-interface.md) and [integration workflow](docs/adding-results.md)
+- [Test isolation and anti-contamination protocol](docs/testing-protocol.md)
+- [Deployment and rollback](docs/deployment.md)
+
+- [15 original prompts with bilingual expected outcomes and acceptance checks](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)
+- [Phase 1 index and run instructions](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/README.md)
+- [Quality evaluation of all 15 completed tasks](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/Reviews/15-任务完成质量评估.md)
+- [Execution metrics and evaluation retrospective](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md)
+- [Human-review summary](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/Reviews/Personal_Review.md)
 
 ### View and run
 
 The primary artifacts for tasks 01–10 open directly without installing dependencies:
 
 ```bash
-open DeepSeek-V4.1-Flash-Exp-0910_DSH/task-01-aevum-luxury-watch-landing-page/index.html
-open DeepSeek-V4.1-Flash-Exp-0910_DSH/task-03-analog-clock-6-25/clock-625.svg
-open DeepSeek-V4.1-Flash-Exp-0910_DSH/task-08-breakout-game/index.html
+open Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/task-01-aevum-luxury-watch-landing-page/index.html
+open Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/task-03-analog-clock-6-25/clock-625.svg
+open Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/task-08-breakout-game/index.html
 ```
 
 Tasks 11–15 include in-project tests. Most do not require `npm install`; Node.js is primarily used as the test runner:
 
 ```bash
-cd DeepSeek-V4.1-Flash-Exp-0910_DSH/task-12-calculator
+cd Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/task-12-calculator
 npm test
 
 cd ../task-15-book-tracker
@@ -228,7 +244,7 @@ See each task's `README.md` for full commands and known limitations. In particul
 - Task 14: 49 finance assertions, 73 interaction assertions, and desktop/mobile audits across all 9 pages passed.
 - Task 15: 3,861 engine assertions and 244 browser checks passed.
 
-See the [quality evaluation report](DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md) for detailed deductions, risks, and prioritized improvements.
+See the [quality evaluation report](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/Reviews/15-任务完成质量评估.md) for detailed deductions, risks, and prioritized improvements.
 
 ### Convention for future phases
 

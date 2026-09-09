@@ -2,8 +2,13 @@ name: Deploy evaluation website
 on:
   push:
     branches: [main]
-    paths: ['website/**', 'docs/**', 'README.md', '15_TEST_PROMPTS_BILINGUAL.md', 'DeepSeek-V4.1-Flash-Exp-0910_DSH/**', '.github/workflows/website-*.yml']
+    paths: ['website/**', 'docs/**', 'README.md', 'AGENTS.md', 'PROMPT/**', 'Test_Results/**', '.github/workflows/website-*.yml']
   workflow_dispatch:
+    inputs:
+      source_ref:
+        description: 'Known-good commit SHA or immutable rollback tag; leave empty for the current revision'
+        required: false
+        type: string
 permissions: { contents: read, pages: write, id-token: write }
 concurrency: { group: pages, cancel-in-progress: false }
 jobs:
@@ -12,6 +17,8 @@ jobs:
     defaults: { run: { working-directory: website } }
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: '${{ inputs.source_ref || github.sha }}'
       - uses: actions/setup-node@v5
         with: { node-version: 24, cache: npm, cache-dependency-path: website/package-lock.json }
       - run: npm ci
@@ -19,7 +26,7 @@ jobs:
       - run: npm test
       - run: npm run build
       - uses: actions/upload-pages-artifact@v4
-        with: { path: website/dist }
+        with: { path: website/dist, retention-days: 30 }
   deploy:
     environment: { name: github-pages, url: '${{ steps.deployment.outputs.page_url }}' }
     runs-on: ubuntu-latest

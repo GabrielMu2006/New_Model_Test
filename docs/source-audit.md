@@ -1,5 +1,7 @@
 # M0 来源审计 / Source audit
 
+2026-09-09 目录迁移：当前题目位于 PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md，成果位于 Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/。下方基线提交中的旧路径保留；通过 sourcePathMappings 生成历史源码链接。迁移不更改原始题目或成果文件内容。
+
 审计基线提交：`5776d3a1d94dc4b04d83fa94d482e04478fd4076`。15 条任务均从 `15_TEST_PROMPTS_BILINGUAL.md` 映射；会话与指标从评测复盘第 29–70 行映射；人工评价与 AI 评价分别来自 `Personal_Review.md` 和 `15-任务完成质量评估.md`。
 
 ## 映射

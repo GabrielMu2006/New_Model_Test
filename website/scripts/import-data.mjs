@@ -5,9 +5,9 @@ import { fileURLToPath } from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(here, '..');
 const repoRoot = path.resolve(siteRoot, '..');
-const archiveRoot = 'DeepSeek-V4.1-Flash-Exp-0910_DSH';
+const archiveRoot = 'Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01';
 const archiveCommit = '5776d3a1d94dc4b04d83fa94d482e04478fd4076';
-const promptPath = '15_TEST_PROMPTS_BILINGUAL.md';
+const promptPath = 'PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md';
 const metricsPath = `${archiveRoot}/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md`;
 const humanPath = `${archiveRoot}/Reviews/Personal_Review.md`;
 const aiPath = `${archiveRoot}/Reviews/15-任务完成质量评估.md`;
@@ -148,6 +148,10 @@ const catalog = {
   schemaVersion: 1,
   generatedAt: null,
   archiveCommit,
+  sourcePathMappings: [
+    { current: `${archiveRoot}/`, archived: 'DeepSeek-V4.1-Flash-Exp-0910_DSH/' },
+    { current: promptPath, archived: '15_TEST_PROMPTS_BILINGUAL.md' },
+  ],
   repository: 'https://github.com/GabrielMu2006/New_Model_Test',
   phases: [phase], models: [model], tasks, runs, reviews,
   batchMetrics: { totalTasks: 15, sessions: 12, durationSeconds: 8282, apiCalls: 693, toolCalls: 735, failures: 42, inputTokens: 334670, outputTokens: 1072534, cacheReadTokens: 63042176, totalTokens: 64449380, costCny: 9.3, source: { path: metricsPath, lines: '10-25' } },

@@ -12,7 +12,11 @@ export const href = (locale: Locale, path = '') => `${base}/${locale}/${path}`.r
 export const asset = (path: string) => `${base}/${path}`.replace(/(?<!:)\/+/g, '/');
 export const sourceUrl = (path: string, lines?: string) => {
   const anchor = lines ? `#L${lines.split(/[-,]/)[0]}` : '';
-  return `${catalog.repository}/blob/${catalog.archiveCommit}/${encodeURI(path)}${anchor}`;
+  // Working-tree paths moved; the immutable archive commit still uses its original paths.
+  const mapping = catalog.sourcePathMappings.find((entry) =>
+    entry.current.endsWith('/') ? path.startsWith(entry.current) : path === entry.current);
+  const archivedPath = mapping ? mapping.archived + path.slice(mapping.current.length) : path;
+  return `${catalog.repository}/blob/${catalog.archiveCommit}/${encodeURI(archivedPath)}${anchor}`;
 };
 export const taskById = (id?: string) => catalog.tasks.find((task) => task.id === id);
 export const runById = (id?: string) => catalog.runs.find((run) => run.id === id);

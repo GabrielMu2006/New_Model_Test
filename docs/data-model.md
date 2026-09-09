@@ -9,3 +9,7 @@
 - Review 按 human / ai 独立记录，评分方法和原始报告定位不合并。
 
 缺失值必须为 `null`，不能用 0 代替。token 输入、输出、缓存读取分列；批次费用不拆分为单题费用。
+
+当前实现限制：导入器和部分页面只支持第一阶段固定记录；模板和 fixture 不代表通用多阶段接入已完成。后续字段契约见 [result-interface.md](result-interface.md)，必要适配见 [adding-results.md](adding-results.md)。
+
+目录迁移后 source.path/artifact.sourcePath 采用当前仓库位置（PROMPT/ 和 Test_Results/模型/phase-01/），catalog.sourcePathMappings 将其映射回 archiveCommit 内的原路径生成固定版本链接。该映射仅用于首批档案；后续批次须逐来源绑定自己的 commit/path。

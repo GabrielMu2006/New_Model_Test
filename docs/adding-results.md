@@ -1,11 +1,36 @@
-# 新增结果 / Adding results
+# Agent 接入后续结果操作步骤
 
-模板位于 `website/data/templates/`。新增真实数据后执行 `npm run import:data && npm run validate:data && npm test && npm run build`。
+先读根目录 `AGENTS.md`、`result-interface.md`；发起测试时还须读 `testing-protocol.md`。用户要求只制定扩展规范，当前未实现通用批次扫描器。以下是未来 agent 收到真实接入任务后的工作流程。
 
-1. 新模型：复制 `model.template.json` 到 `website/data/models/`，使用稳定小写 ID，未知字段保留 `null`。
-2. 新任务：在来源 Prompt 文档加入版本化需求，再按 `task.template.json` 建模；不可把后补验收项写成原始硬约束。
-3. 新运行：按 `run.template.json` 新建唯一 Run，保持 task/version 关联，列出公开所需的最小资源清单。
-4. 新阶段：按 `phase.template.json` 新增 Phase，并列出 `taskId@version`。
-5. 新评价：按 `review.template.json` 分来源添加，不覆盖或合并已有评价。
+## 1. 接收与归档
 
-`tests/fixtures/extension-catalog.json` 已演练第二模型、第二阶段、新任务与 task-01 重复运行；测试确认计数和同题多运行选择由数据扩展，fixture 不被导入生产 `catalog.json` 或 `dist/`。
+1. 确认实际模型、phaseId、原始题目/版本、运行与成果对应关系，以及重复执行、追加提示或污染情况。必要输入不明先问；可选实测指标未知用 null。
+2. 原始测试提示词放 `PROMPT/`，保留逐字原文及明确标注的译文/补充说明。
+3. 结果放 `Test_Results/<model-folder>/phase-NN/`，新运行按接口使用 `runs/<run-id>/`。保留原结果与内部相对资源结构，记录哈希。
+4. 阶段 README 写明入口、实际输入、harness、配置、预算、追加轮、隔离/污染状态、已执行测试、失败和限制。人工与 AI 评价各自保存。
+5. 检查公开清单和敏感信息，封存原始证据，脱敏副本明确标注。不要在维护宿主运行成果脚本。
+
+## 2. 适配网站，而非仅复制模板
+
+现有 import-data.mjs 只解析首批固定 Markdown 和 15 个任务数组，每次重写 catalog。新增 phase/model 模板文件不会自动接入；仅手改 catalog.json 会被下次 check/test/build 覆盖。
+
+首次扩展时必须逐项适配：
+
+- 导入层：保留第一阶段适配器，新增明确注册的批次适配器或结构化输入，确定性合并实体，拒绝重复主键，不覆盖旧记录。不扫描运行任意脚本。
+- 关联层：Task 版本、Phase 任务列表、Model、Run、Review 的引用校验；缺失数字接受 null，其他非有限/负数拒绝。
+- 历史层：各条 source 和 artifact 独立绑定提交与该提交的路径，保留第一阶段不可变链接及旧公开 URL。
+- 路由层：`src/pages/[locale]/[...path].astro` 的阶段详情当前只有 phase-01，要按实体生成。
+- 页面层：AppPage.astro 有第一阶段文案、15/1 计数、DS 标识和批次统计硬编码，模型详情没有完整按模型筛选；须按数据计算和分组，不能向所有模型展示首批全部运行。
+- 查询层：runForTask() 当前只返回首条结果，任务详情须列出所有真实运行。比较必须同时检查 taskId/taskVersion，并处理跨题、缺失值和无效选择。
+- 统计层：不同批次与预算的费用/token/时间不直接合成误导性排名，污染状态和缺失覆盖要展示。
+- 测试层：validate-data.mjs 和 check-dist.mjs 当前写死 15/78；通用校验改为由实体推导，但保留首批 15 tasks/15 runs/30 reviews 的独立回归检查。
+
+上述是接入任务的必要清单，**不是当前已经完成的能力**。不要在只写接口的维护任务中全面重构；也不能在以后接入新数据时跳过必要适配。
+
+## 3. 验证、发布与交付
+
+在 website/ 运行 `npm run import:data && npm run validate:data && npm run check && npm test && npm run build`，构建后运行 `npm run test:e2e`。临时 fixture 必须经过真实导入、校验、构建和页面行为，覆盖新增阶段、模型、重复运行；完成后确保 fixture 未混入正式 catalog、dist 或发布包。
+
+检查新数据的中英文详情、直接刷新、模型/阶段过滤、正确版本 Prompt、两个运行的比较、评价独立性、成果入口、来源提交链接和移动布局。复验原第一阶段和页脚联系链接。
+
+最后更新根 README 索引、来源审计和验证记录；保留最近成功版本的远端回退标签。通过后自动推送 main，等待 Actions 和公网核验；流程及回退命令见 deployment.md。不能以“文件已上传”代替网站已接入的验收。
