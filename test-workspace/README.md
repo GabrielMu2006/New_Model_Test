@@ -227,13 +227,15 @@ find / -maxdepth 4 -name .git -type d 2>/dev/null | head -3
 ## 9. 快速检查清单
 
 ```text
-[ ] PLAN.md 已写：模型 / harness / 题目版本 / 任务数 / 预算 / 隔离等级 / 网络策略
+[ ] PLAN.md 已写：模型 / harness / 题目版本 / 任务数 / 预算 / 隔离等级 / 网络策略 / 仓库可达性
 [ ] 每题 prompt.txt 只含原始 Prompt，SHA-256 已记录
 [ ] 每题目录都有 AGENTS.md，taskId / runId 正确
 [ ] 测试会话逐题独立，未共享上下文
-[ ] 每题 _probe.txt 已生成并核对
+[ ] 每题 _probe.txt 已生成并核对（含 git_exit 与工作区外 .git 发现结果）
+[ ] 已确认被测会话无法访问任何仓库（本地其他仓库 / 远端仓库 / 代码托管平台）
 [ ] 会话日志已导出 + 哈希，未篡改
-[ ] SUMMARY.md 已写：状态 / 隔离等级 / 污染状态 / 限制
+[ ] 审计已覆盖「仓库查询」维度（docs/audit-method.md 4.5），结论含该维度的通过情况
+[ ] SUMMARY.md 已写：状态 / 隔离等级 / 仓库可达性 / 污染状态 / 限制
 [ ] 归档到 runs/<run-id>/，逐文件哈希核对
 [ ] docs/source-audit.md、docs/verification.md 已更新
 ```
