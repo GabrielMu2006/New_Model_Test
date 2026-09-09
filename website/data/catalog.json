@@ -1,0 +1,1784 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": null,
+  "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+  "repository": "https://github.com/GabrielMu2006/New_Model_Test",
+  "phases": [
+    {
+      "id": "phase-01",
+      "number": 1,
+      "name": {
+        "zh": "第一阶段 · 15 项基准任务",
+        "en": "Phase 1 · 15 benchmark tasks"
+      },
+      "description": {
+        "zh": "覆盖 SVG 绘制、单文件交互应用和多文件网页应用。",
+        "en": "SVG illustration, single-file interactive apps, and multi-file web applications."
+      },
+      "taskVersions": [
+        "task-01@1",
+        "task-02@1",
+        "task-03@1",
+        "task-04@1",
+        "task-05@1",
+        "task-06@1",
+        "task-07@1",
+        "task-08@1",
+        "task-09@1",
+        "task-10@1",
+        "task-11@1",
+        "task-12@1",
+        "task-13@1",
+        "task-14@1",
+        "task-15@1"
+      ]
+    }
+  ],
+  "models": [
+    {
+      "id": "deepseek-v4-1-flash-exp-0910",
+      "name": "DeepSeek-V4.1-Flash-Exp-0910",
+      "version": "0910",
+      "provider": "DeepSeek",
+      "notes": {
+        "zh": "模型身份按归档目录记录。",
+        "en": "Model identity follows the archived directory label."
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-01",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "Aevum 奢侈腕表落地页",
+        "en": "Aevum Luxury Watch Landing Page"
+      },
+      "category": "website",
+      "promptOriginal": "Build a beautiful landing page for a fictional luxury watch brand called \"Aevum\".\nUse only HTML, CSS and JavaScript.\nDo not use external images or libraries.\nMake it feel like a real premium product website.",
+      "promptTranslation": "为名为“Aevum”的虚构奢侈腕表品牌制作一个精美的落地页。只使用 HTML、CSS 和 JavaScript，不使用外部图片或第三方库，并使页面具备真实高端产品官网的质感。",
+      "expectedOutcome": {
+        "zh": "应交付一个可直接在现代浏览器中打开的完整品牌落地页。页面需建立一致的高端视觉语言，包括品牌标识、主视觉、产品故事、腕表系列或核心卖点、工艺与材质说明、明确的行动入口以及完整页脚。所有视觉资源应由 HTML、CSS、内联 SVG、Canvas 或程序化图形生成，不依赖外部图片、字体、框架或组件库。成品应兼具品牌叙事、信息层级、交互反馈、响应式布局与可访问性，使其看起来像可公开发布的真实奢侈品网站，而不是简单原型。",
+        "en": "The deliverable should be a complete landing page that opens directly in a modern browser. It should establish a coherent premium visual language through branding, a strong hero, product storytelling, collections or key selling points, craftsmanship and material details, clear calls to action, and a finished footer. All visuals should be produced with HTML, CSS, inline SVG, Canvas, or procedural graphics, with no external imagery, fonts, frameworks, or component libraries. The result should combine narrative, hierarchy, responsive behavior, interaction feedback, and accessibility so it feels publishable rather than like a basic prototype."
+      },
+      "verification": {
+        "zh": [
+          "断网打开页面，确认无外部网络请求、资源缺失或控制台错误；检查仅使用 HTML/CSS/JavaScript，且所有图片效果均为本地或内联生成。",
+          "在桌面、平板和手机视口检查导航、主视觉、内容区、表单或 CTA，无横向溢出、遮挡、错位和不可读文本。",
+          "检查品牌一致性、视觉层级、排版、留白、色彩、动效节制及高端产品氛围；验证按钮、菜单、配置或表单等交互均有正确状态反馈。",
+          "使用键盘完成主要操作，检查语义标题、表单标签、焦点可见性、合理对比度以及减少动态效果偏好。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "7-39"
+      }
+    },
+    {
+      "id": "task-02",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "骑自行车的鹈鹕",
+        "en": "Pelican Riding a Bicycle"
+      },
+      "category": "svg-illustration",
+      "promptOriginal": "Generate an SVG of a pelican riding a bicycle.",
+      "promptTranslation": "生成一幅鹈鹕骑自行车的 SVG 图像。",
+      "expectedOutcome": {
+        "zh": "应交付一个有效、可独立打开的 SVG 文件，清楚表现“鹈鹕正在骑自行车”这一动作。画面中需能辨认鹈鹕的典型特征，例如长喙、喉囊、翅膀与鸟类体态；自行车应具有车轮、车架、车把、座椅和踏板等关键结构。鹈鹕与自行车之间的姿态关系应合理，能传达骑乘而非站在、飞过或靠近自行车。构图应完整、比例协调，缩放后仍保持清晰。",
+        "en": "The deliverable should be a valid, standalone SVG that clearly depicts a pelican riding a bicycle. The pelican should be recognizable through characteristic features such as its long bill, throat pouch, wings, and avian body shape, while the bicycle should include essential structures such as wheels, frame, handlebars, saddle, and pedals. Their pose and contact points should communicate riding rather than merely standing near or flying over the bicycle. The composition should be complete, balanced, and crisp at different scales."
+      },
+      "verification": {
+        "zh": [
+          "在浏览器和 SVG 查看器中打开文件，确认 XML/SVG 语法有效、无缺失引用，并可无损缩放。",
+          "由人工盲看确认主体首先被识别为鹈鹕，其次能明确理解为正在骑自行车。",
+          "检查自行车关键结构和鹈鹕接触关系，确保身体位于车座区域、翼或脚与操控和踩踏动作形成可信联系。",
+          "在缩略图和放大视图下检查轮廓、层级、颜色对比及元素是否被画布裁切。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "39-68"
+      }
+    },
+    {
+      "id": "task-03",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "模拟时钟 6:25",
+        "en": "Analog Clock at 6:25"
+      },
+      "category": "svg-clock",
+      "promptOriginal": "Create an SVG of an analog clock showing exactly 6:25.\nInclude hour markers and three hands.",
+      "promptTranslation": "创建一个准确显示 6:25 的模拟时钟 SVG，并包含小时刻度和三根指针。",
+      "expectedOutcome": {
+        "zh": "应交付一个独立 SVG 时钟图。表盘应包含清晰、均匀分布的小时刻度，以及时针、分针、秒针三根可区分的指针。分针应指向第 25 分钟，即数字 5 的方向；时针不应仍正对 6，而应从 6 向 7 移动约十二分之五的小时跨度；秒针可采用明确且不与“6:25”冲突的约定位置。整体应以共同中心点旋转，表盘几何准确且易读。",
+        "en": "The deliverable should be a standalone SVG clock face with clear, evenly spaced hour markers and three distinguishable hands. The minute hand should point to minute 25, toward the numeral 5. The hour hand should not remain exactly on 6; it should be advanced roughly five-twelfths of the way toward 7. The second hand may use a clearly defined conventional position that does not undermine the stated 6:25 reading. All hands should rotate around a shared center, and the face should be geometrically accurate and legible."
+      },
+      "verification": {
+        "zh": [
+          "核对 12 个小时刻度是否按 30° 等距排列，中心点与表盘同心。",
+          "核对分针角度为 150°（从 12 点顺时针），时针约为 192.5°；三根指针长度和样式可区分。",
+          "检查 SVG 可独立打开、缩放无锯齿、无裁切、无外部依赖。",
+          "让观察者读表，确认多数人能在不看文件名的情况下判断为 6:25。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "68-98"
+      }
+    },
+    {
+      "id": "task-04",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "模拟时钟 11:52:30",
+        "en": "Analog Clock at 11:52:30"
+      },
+      "category": "svg-clock",
+      "promptOriginal": "Create an SVG analog clock showing 11:52:30.",
+      "promptTranslation": "创建一个显示 11:52:30 的模拟时钟 SVG。",
+      "expectedOutcome": {
+        "zh": "应交付一个可独立显示的模拟时钟 SVG，准确编码 11 时 52 分 30 秒。秒针应位于 6 点方向；分针应位于 52 分并因 30 秒继续前进半分钟；时针应位于 11 与 12 之间、非常接近 12，但仍保持可辨识。表盘、刻度、中心轴和三根指针应构成完整且易读的时钟，而不是仅用文字标注时间。",
+        "en": "The deliverable should be a standalone analog-clock SVG that accurately encodes 11:52:30. The second hand should point to 6. The minute hand should show 52 minutes with an additional half-minute advance, and the hour hand should sit between 11 and 12, close to but clearly before 12. The face, markers, center pin, and three hands should form a complete and readable clock rather than merely displaying the time as text."
+      },
+      "verification": {
+        "zh": [
+          "按连续走时公式核对角度：秒针 180°、分针约 315°、时针约 356.25°（均从 12 点顺时针）。",
+          "检查时针没有错误地直接指向 11，分针没有简单对齐整数 52 分而忽略 30 秒。",
+          "验证表盘元素同心、刻度均匀、指针前后层级合理，缩放及不同浏览器显示正常。",
+          "进行不带提示的人工读表，确认时间可被稳定识别为 11:52:30。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "98-127"
+      }
+    },
+    {
+      "id": "task-05",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "侧面骑自行车的人",
+        "en": "Side-View Bicycle Rider"
+      },
+      "category": "svg-illustration",
+      "promptOriginal": "Generate an SVG of a person riding a bicycle viewed from the side.\nThe left foot must be on the lower pedal and the right foot on the upper pedal.\nBoth hands must be holding the handlebars.",
+      "promptTranslation": "生成一幅从侧面观察的人骑自行车的 SVG。左脚必须踩在下方踏板上，右脚必须踩在上方踏板上，并且双手都必须握住车把。",
+      "expectedOutcome": {
+        "zh": "应交付一幅可独立打开的侧视 SVG，完整表现骑手、自行车和规定姿态。自行车的两个车轮应呈侧视圆形，车架、曲柄、上下踏板、车座和车把关系清楚。骑手左腿应延伸至下方踏板，右腿应屈曲并连接上方踏板，且左右身份不能因画面镜像而含糊；双臂应分别延伸到车把，两只手都形成明确接触。整体人体关节、重心和遮挡顺序应使动作可信。",
+        "en": "The deliverable should be a standalone side-view SVG showing the rider, bicycle, and all required pose constraints. Both wheels should appear as side-view circles, and the frame, crank, upper and lower pedals, saddle, and handlebars should relate clearly. The rider's left leg must extend to the lower pedal, while the right leg bends to the upper pedal; left/right identity should remain unambiguous despite the side view. Both arms should reach the handlebars with visible hand contact. Joint placement, balance, and occlusion should make the action believable."
+      },
+      "verification": {
+        "zh": [
+          "标注或追踪左右肢体，确认左脚连接下踏板、右脚连接上踏板，且不存在脚悬空或踏板位置反转。",
+          "确认两只手各自与车把接触，不把单手接触、手臂交叉或仅靠近车把误判为满足条件。",
+          "检查严格侧视构图、自行车结构完整性、人物比例、关节连贯和层级遮挡。",
+          "验证 SVG 语法、画布边界、缩放清晰度和离线独立性。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "127-158"
+      }
+    },
+    {
+      "id": "task-06",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "手持剪刀剪纸",
+        "en": "Hand Cutting Paper with Scissors"
+      },
+      "category": "svg-illustration",
+      "promptOriginal": "Draw an SVG of a hand using scissors to cut a sheet of paper.",
+      "promptTranslation": "绘制一幅手拿剪刀剪开一张纸的 SVG。",
+      "expectedOutcome": {
+        "zh": "应交付一个独立 SVG，画面同时包含手、剪刀和纸张，并通过接触点与动作线索明确表达“正在剪”。手指应合理握住剪刀环，剪刀双刃应在转轴处连接并夹住纸张边缘；纸上宜出现切口、分离边缘或剪切路径，以区别于手仅拿着剪刀悬停在纸旁。构图应使关键动作区域清晰，不被手或其他元素完全遮挡。",
+        "en": "The deliverable should be a standalone SVG containing a hand, scissors, and a sheet of paper, with contact and action cues that clearly communicate active cutting. Fingers should plausibly occupy the scissor loops, the two blades should meet at a pivot and engage the paper edge, and the paper should show a slit, separated edge, or cut path. This must read differently from a hand merely holding scissors beside a sheet. The composition should keep the action area visible rather than obscured."
+      },
+      "verification": {
+        "zh": [
+          "检查三类主体均可辨认，并确认手—剪刀—纸形成连续的物理接触链。",
+          "检查刀刃与纸张在切口处相交，纸张存在已经剪开或正在分离的视觉证据。",
+          "检查手部握姿、剪刀转轴和刀刃方向是否合理，避免穿模和错误层叠。",
+          "验证 SVG 可离线打开、缩放清晰，且所有元素位于 viewBox 内。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "158-187"
+      }
+    },
+    {
+      "id": "task-07",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "推独轮车的人",
+        "en": "Person Pushing a Wheelbarrow"
+      },
+      "category": "svg-illustration",
+      "promptOriginal": "Draw an SVG of a person pushing, not pulling, a wheelbarrow.",
+      "promptTranslation": "绘制一幅一个人正在推、而不是拉独轮车的 SVG。",
+      "expectedOutcome": {
+        "zh": "应交付一个可独立打开的 SVG，明确显示人物位于独轮车把手后方，身体朝向独轮车前进方向，双手向前握住车把，从而表达“推”。独轮车应具有单个前轮、承载斗、支架和两根把手等可识别结构。人物姿态可通过前倾躯干、前后分开的步态或受力关系增强推进感，并应避免人物位于车前、面向车后或将把手拖在身后等“拉”的视觉信号。",
+        "en": "The deliverable should be a standalone SVG that clearly places the person behind the wheelbarrow handles, facing the direction of travel and gripping forward to communicate pushing. The wheelbarrow should be recognizable through a single front wheel, tray, supports, and two handles. A leaning torso, walking stride, or force relationship may reinforce forward motion. The composition must avoid pulling cues such as placing the person in front, facing backward, or dragging the handles behind them."
+      },
+      "verification": {
+        "zh": [
+          "判断前进方向，并确认独轮车前轮在前、人物在把手后方，人物施力方向朝向车体。",
+          "检查独轮车单轮、车斗、支架和把手是否结构完整，人物双手与把手接触。",
+          "让观察者在“推/拉”二选一中判断，结果应稳定为“推”。",
+          "验证 SVG 语法、缩放、层级关系和画布裁切情况。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "187-216"
+      }
+    },
+    {
+      "id": "task-08",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "单文件打砖块游戏",
+        "en": "Single-File Breakout Game"
+      },
+      "category": "game",
+      "promptOriginal": "Create a polished, playable Breakout game in a single HTML file.",
+      "promptTranslation": "在单个 HTML 文件中创建一个精致且可玩的打砖块游戏。",
+      "expectedOutcome": {
+        "zh": "应交付一个无需构建即可运行的单一 HTML 文件，内含所有结构、样式、脚本和必要资源。游戏应具备挡板、球、砖块、碰撞、得分、生命或失败条件、开始/暂停/重开流程，并形成可以真正完成或失败的闭环。操作应响应及时，物理反馈一致，高速情况下不应频繁穿透砖块或挡板。所谓“精致”还应体现为清楚的 HUD、统一视觉风格、适度动画与音效、明确状态提示、响应式布局及基本可访问输入支持。",
+        "en": "The deliverable should be one self-contained HTML file containing all markup, styles, scripts, and required assets, runnable without a build step. The game should include a paddle, ball, bricks, collision handling, scoring, lives or a loss condition, and coherent start, pause, restart, win, and fail states. Controls should feel responsive, physics should be consistent, and fast motion should not routinely tunnel through bricks or the paddle. “Polished” should also mean a clear HUD, cohesive art direction, restrained animation and sound, explicit state messaging, responsive layout, and basic accessible input support."
+      },
+      "verification": {
+        "zh": [
+          "断网直接打开单文件，确认无缺失依赖、控制台异常或必须通过服务器才能运行的问题。",
+          "完整执行开始、发球、移动、击砖、得分、丢球、暂停、继续、失败、重开和通关流程。",
+          "在不同帧率与球速下检查墙面、挡板和砖块碰撞，确认不会卡死、无限水平运动或明显穿模。",
+          "使用键盘、鼠标和触摸（若支持）操作，并在窄屏与宽屏验证画面完整、HUD 可读。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "216-245"
+      }
+    },
+    {
+      "id": "task-09",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "单文件俯视角农场游戏",
+        "en": "Single-File Top-Down Farming Game"
+      },
+      "category": "game",
+      "promptOriginal": "Create a playable top-down farming game in a single HTML file.",
+      "promptTranslation": "在单个 HTML 文件中创建一个可玩的俯视角农场游戏。",
+      "expectedOutcome": {
+        "zh": "应交付一个完全自包含的 HTML 文件，以俯视视角提供可操作角色和可辨识农场空间，并至少形成“准备土地—播种—照料—生长—收获”的核心循环。游戏需要有明确的输入方式、状态反馈、资源或时间变化，以及可持续进行的目标或进度。地图、角色、作物阶段和可交互区域应视觉可辨；碰撞、边界和操作距离应一致。若包含金钱、商店、天气、体力或存档，它们应服务于核心循环且状态一致。",
+        "en": "The deliverable should be one fully self-contained HTML file with a controllable character and a recognizable farm presented from a top-down view. It should provide at least a complete loop of preparing soil, planting, tending, growth, and harvesting. The game needs clear controls, state feedback, changing resources or time, and a goal or progression that can be sustained over multiple cycles. The map, avatar, crop stages, and interactive areas should be visually distinguishable, while collisions, boundaries, and interaction distance remain consistent. Optional money, shops, weather, stamina, or saving systems should support the core loop and maintain coherent state."
+      },
+      "verification": {
+        "zh": [
+          "断网直接打开文件并从新游戏完成一次完整种植到收获循环，确认每一步都有可见状态变化。",
+          "检查移动、地图边界、障碍碰撞、工具切换、交互距离、资源扣除和不足资源时的反馈。",
+          "检验作物阶段、日期或时间推进、浇水等生长条件，以及收获后库存或货币的正确更新。",
+          "连续随机输入和长时间运行，确认无死循环、状态损坏、严重性能下降或控制台错误；在不同视口检查可玩性。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "245-274"
+      }
+    },
+    {
+      "id": "task-10",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "像素画编辑器",
+        "en": "Pixel-Art Editor"
+      },
+      "category": "creative-tool",
+      "promptOriginal": "Build a small pixel-art editor.\nIt should support:\ndrawing,\nerasing,\ncolor selection,\nbrush size,\nundo/redo,\nzoom,\nand exporting the result as PNG.",
+      "promptTranslation": "构建一个小型像素画编辑器。它应支持绘制、擦除、颜色选择、画笔大小、撤销/重做、缩放以及将结果导出为 PNG。",
+      "expectedOutcome": {
+        "zh": "应交付一个轻量但完整可用的像素画编辑器。编辑区应基于离散像素网格，绘制和擦除精确作用于逻辑像素；用户可选择颜色与画笔大小，连续拖动不应产生非预期断点。撤销和重做应按操作恢复完整画布状态，并正确处理新分支操作。缩放必须保持最近邻硬边效果，不改变底层作品数据。PNG 导出应生成有效文件，尺寸和透明通道符合界面设定，且导出的图像不包含编辑网格或光标叠加层。",
+        "en": "The deliverable should be a lightweight but complete pixel-art editor. Its workspace should use a discrete pixel grid, with drawing and erasing operating precisely on logical pixels and continuous strokes avoiding unintended gaps. Users should be able to choose color and brush size. Undo and redo must restore complete canvas states and correctly handle a new edit branch. Zooming should preserve nearest-neighbor hard edges without changing artwork data. PNG export should produce a valid file with the configured dimensions and transparency, excluding editor grids and cursor overlays."
+      },
+      "verification": {
+        "zh": [
+          "逐像素核对单击、慢速拖动、快速拖动、不同笔刷尺寸及边界处绘制的颜色和覆盖范围。",
+          "检查擦除结果为透明像素而非白色；切换颜色后只影响后续笔画，不回溯修改已有像素。",
+          "执行多步绘制—撤销—重做—撤销后新绘制，确认历史顺序正确且新分支会清空重做栈。",
+          "多级缩放后检查边缘无平滑模糊、画布数据不变；导出 PNG 并核对签名、宽高、像素颜色、alpha 和放大规则。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "274-311"
+      }
+    },
+    {
+      "id": "task-11",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "2D 户型图编辑器",
+        "en": "2D Floor-Plan Editor"
+      },
+      "category": "productivity-tool",
+      "promptOriginal": "Build a simple 2D floor-plan editor where I can draw walls, add doors and windows, drag objects, and see room dimensions.",
+      "promptTranslation": "构建一个简单的 2D 户型图编辑器，让我可以绘制墙体、添加门窗、拖动物体并查看房间尺寸。",
+      "expectedOutcome": {
+        "zh": "应交付一个可交互的二维户型编辑器，至少包含墙体绘制、门窗依附墙体放置、对象添加与拖拽、房间尺寸显示四项核心能力。坐标、比例和吸附规则应一致；墙体端点连接后应形成可识别的封闭房间，门窗移动时保持在所属墙体上。对象拖拽需保留选择状态与位置精度。尺寸应明确单位和测量口径，并随几何修改实时更新。界面需提供可发现的工具状态、选择反馈及误操作恢复能力。",
+        "en": "The deliverable should be an interactive 2D floor-plan editor with at least four core capabilities: wall drawing, doors and windows attached to walls, object placement and dragging, and room-dimension display. Coordinates, scale, and snapping should be consistent. Connected wall endpoints should form recognizable enclosed rooms, and openings should remain attached to their wall when moved. Object dragging should preserve selection and positional accuracy. Dimensions should state their units and measurement convention and update live when geometry changes. The UI should make tools and selection states discoverable and provide recovery from mistakes."
+      },
+      "verification": {
+        "zh": [
+          "绘制矩形和包含 T 形连接的多房间平面，确认端点吸附、闭环识别、房间数量、宽高和面积正确。",
+          "在不同墙段添加门窗并沿墙拖动，确认其不会脱离墙体、越过端点或在调整墙长后产生无效位置。",
+          "添加、选择、拖动和删除对象，检查命中测试、层级、坐标、吸附以及撤销/重做后的完整状态恢复。",
+          "缩放和平移后重复编辑，确认屏幕坐标到世界坐标转换正确；验证尺寸单位、实时更新、保存/载入及异常数据处理。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "311-340"
+      }
+    },
+    {
+      "id": "task-12",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "计算器应用",
+        "en": "Calculator App"
+      },
+      "category": "utility",
+      "promptOriginal": "Create a working calculator app.\nChoose the technology yourself.\nRun it.\nTest it.\nFix any issues you find.\nDo not ask me questions unless you are genuinely blocked.",
+      "promptTranslation": "创建一个可工作的计算器应用。技术由你自行选择。运行它、测试它，并修复发现的所有问题。除非确实受阻，否则不要向我提问。",
+      "expectedOutcome": {
+        "zh": "应交付一个能够实际运行、已经过测试和问题修复的计算器应用，并由实现者自行选择适合的技术栈。最小能力包括数字输入、小数、基本四则运算、清除、退格、正负号与等号；理想实现还应处理运算优先级、连续计算、键盘输入、错误状态和数值格式。计算核心应具备确定性，除零、非法表达式、溢出及浮点显示误差应以可理解方式处理，不能使界面崩溃。交付内容应包含运行方式、测试方法和修复后的验证证据。",
+        "en": "The deliverable should be a calculator application that actually runs and has been tested and repaired, using a technology stack chosen by the implementer. Minimum capabilities include digit and decimal entry, the four basic operations, clear, backspace, sign toggle, and equals. A strong implementation should also handle precedence, chained calculations, keyboard input, error states, and number formatting. The calculation core should be deterministic; division by zero, malformed expressions, overflow, and floating-point display noise should be handled intelligibly without crashing the UI. The handoff should include run instructions, a test method, and evidence that discovered defects were fixed."
+      },
+      "verification": {
+        "zh": [
+          "运行实际应用并通过按钮和键盘完成基础、连续、带小数、带负数和优先级运算，比较已知正确结果。",
+          "覆盖 `0.1 + 0.2`、除以零、重复小数点、前导运算符、超长输入、溢出、清错后继续输入等边界情形。",
+          "检查清除、退格、正负号、连续按等号或连续运算符时的状态机一致性，并确认无控制台异常。",
+          "在桌面和窄屏检查按键布局、焦点、可读性和触控目标；运行自动化测试并在修复后完整回归。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "340-374"
+      }
+    },
+    {
+      "id": "task-13",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "天气仪表盘",
+        "en": "Weather Dashboard"
+      },
+      "category": "data-dashboard",
+      "promptOriginal": "Build a polished weather dashboard.\n\nAfter implementing it:\n1. Run the application.\n2. Open it in the browser.\n3. Inspect the rendered result yourself.\n4. Fix any visual or functional issues you notice.\n5. Repeat until you are satisfied.",
+      "promptTranslation": "构建一个精致的天气仪表盘。实现后：1）运行应用；2）在浏览器中打开；3）自行检查渲染结果；4）修复发现的视觉或功能问题；5）重复上述过程，直到满意为止。",
+      "expectedOutcome": {
+        "zh": "应交付一个在浏览器中实际运行并经过多轮视觉与功能自检的天气仪表盘。页面应清晰呈现地点、当前天气、温度、体感、关键气象指标以及逐小时或多日预报，并对加载、失败、空数据和刷新状态提供反馈。若使用实时 API，应妥善处理时区、单位、网络超时和缺失字段；若无网络，应提供明确降级状态。所谓“精致”应体现在一致的视觉系统、数据层级、天气状态表达、响应式布局、交互细节、可访问性和无明显渲染缺陷。实现者应亲自在浏览器中反复检查并修复，而非仅完成代码。",
+        "en": "The deliverable should be a browser-run weather dashboard that has undergone repeated visual and functional self-review. It should clearly present location, current conditions, temperature, feels-like values, key metrics, and hourly or multi-day forecasts, with feedback for loading, failure, empty data, and refresh states. If live APIs are used, time zones, units, network timeouts, and missing fields must be handled correctly; offline behavior should be explicitly communicated. “Polished” should appear in the visual system, data hierarchy, weather-state presentation, responsive layout, interaction detail, accessibility, and absence of obvious rendering defects. The implementer is expected to inspect and repair the rendered app iteratively, not merely write code."
+      },
+      "verification": {
+        "zh": [
+          "在真实浏览器加载成功、加载中、网络失败、无结果和缓存/离线等状态，确认页面始终有清楚且不误导的反馈。",
+          "用不同时区、跨午夜、摄氏/华氏、不同风速和降水单位的数据，核对当前、逐小时和每日预报的一致性。",
+          "在手机、平板、桌面、浅色/深色及多种天气状态下截图检查溢出、遮挡、对比度、图标含义和图表尺寸。",
+          "操作搜索、定位、单位切换、主题、刷新和预报详情；检查键盘访问、焦点、ARIA 状态、减少动态效果和控制台错误。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "374-410"
+      }
+    },
+    {
+      "id": "task-14",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "银行网站",
+        "en": "Bank Website"
+      },
+      "category": "website",
+      "promptOriginal": "Make me a website for a bank.",
+      "promptTranslation": "为我制作一个银行网站。",
+      "expectedOutcome": {
+        "zh": "由于原 prompt 非常开放，合理的理论成果应是一套可信、专业且明确标注演示性质的银行网站。至少应包含品牌首页、个人或企业产品概览、账户/贷款/利率等核心信息、登录或开户入口、帮助与安全说明。页面应建立清晰导航、稳健视觉语言、准确的信息层级和响应式体验。任何利率、费用、身份验证或申请流程若为模拟内容，都必须明确免责声明，不能暗示真实收款、存款保障或数据传输。表单、计算器和流程应在前端正确工作，并重视安全提示、隐私、可访问性和金融数字格式。",
+        "en": "Because the original prompt is highly open-ended, a reasonable expected outcome is a credible, professional bank website that is clearly identified as a demonstration. It should include at least a branded home page, personal or business product overviews, core account, loan, or rate information, sign-in or account-opening entry points, and help and security guidance. The site should provide clear navigation, a trustworthy visual language, accurate information hierarchy, and responsive behavior. Any fictional rates, fees, authentication, or application flows must carry explicit disclaimers and must not imply real payments, insured deposits, or data transmission. Forms, calculators, and flows should function correctly on the front end, with attention to security messaging, privacy, accessibility, and financial formatting."
+      },
+      "verification": {
+        "zh": [
+          "从首页完成主要导航路径，检查所有链接、菜单、移动抽屉、面包屑或当前页状态，无死链和不可返回流程。",
+          "检查产品、利率、费用、CTA、登录/开户和帮助内容是否完整、层级清楚；所有虚构信息和无后端表单均有醒目说明。",
+          "对贷款、储蓄或其他金融计算器使用已知样例和边界值验算，核对货币、百分比、期限、舍入和无效输入处理。",
+          "在桌面和手机检查表格、表单、导航、对比度、键盘焦点、标签、错误提示和敏感信息警告；确认无真实网络提交。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "410-439"
+      }
+    },
+    {
+      "id": "task-15",
+      "version": 1,
+      "phaseId": "phase-01",
+      "title": {
+        "zh": "读书追踪应用",
+        "en": "Book-Tracking App"
+      },
+      "category": "productivity-tool",
+      "promptOriginal": "Build an app for keeping track of books.",
+      "promptTranslation": "构建一个用于追踪书籍的应用。",
+      "expectedOutcome": {
+        "zh": "由于 prompt 未限定平台和范围，合理的理论成果应是一个可运行的个人书库与阅读进度应用。用户至少可以新增、查看、编辑和删除书籍，并记录书名、作者及阅读状态；更完整的实现可支持页数进度、开始/完成日期、评分、标签、收藏、搜索、筛选、排序、统计和本地持久化。状态转换应保持数据一致，例如完成时设置完成日期与最终进度，重新阅读时合理清理冲突字段。数据导入导出若存在，应可往返恢复且避免静默重复。界面应对空书库、无搜索结果、无效输入和损坏存储提供明确反馈。",
+        "en": "Since the prompt does not constrain platform or scope, a reasonable expected outcome is a working personal-library and reading-progress application. At minimum, users should be able to add, view, edit, and delete books and record title, author, and reading status. A fuller implementation may include page progress, start and finish dates, ratings, tags, favorites, search, filters, sorting, statistics, and local persistence. Status transitions must keep data coherent—for example, finishing should set the finish date and final progress, while reopening should resolve conflicting fields. If import/export exists, data should round-trip and avoid silent duplication. The UI should clearly handle an empty library, zero search results, invalid input, and corrupt storage."
+      },
+      "verification": {
+        "zh": [
+          "完成新增、查看、编辑、删除、撤销（若有）和刷新恢复流程，确认书籍字段、列表顺序及持久化状态一致。",
+          "覆盖“想读、在读、暂停、读完、弃读”等状态转换，核对当前页、总页数、开始/完成日期和进度日志的一致性。",
+          "组合搜索、筛选和排序，使用大小写、空格、标签和无结果输入，确认计数与结果稳定且不丢数据。",
+          "检查评分范围、日期合法性、页数边界、重复书籍、损坏存储及导入导出往返；在键盘和窄屏环境验证可用性。"
+        ],
+        "en": []
+      },
+      "source": {
+        "path": "15_TEST_PROMPTS_BILINGUAL.md",
+        "lines": "439-470"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-01-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-01",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "89716f93",
+        "continuationTurns": 1
+      },
+      "metrics": {
+        "durationLabel": "4分51秒",
+        "durationSeconds": 291,
+        "apiCalls": 24,
+        "toolCalls": 22,
+        "failures": 4,
+        "inputTokens": 18812,
+        "outputTokens": 79314,
+        "cacheReadTokens": 1888256,
+        "totalTokens": 1986382
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-01-aevum-luxury-watch-landing-page",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": "covers/run-deepseek-v4-1-flash-exp-0910-task-01-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-02-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-02",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "0e1e035d",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "14分38秒",
+        "durationSeconds": 878,
+        "apiCalls": 48,
+        "toolCalls": 47,
+        "failures": 3,
+        "inputTokens": 30423,
+        "outputTokens": 26707,
+        "cacheReadTokens": 1300992,
+        "totalTokens": 1358122
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "pelican-on-bicycle.svg",
+        "files": [
+          "pelican-on-bicycle.svg"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-02-pelican-on-bicycle",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": null,
+        "preview": {
+          "lazy": false,
+          "sandbox": null,
+          "note": null
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-03-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-03",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "17e6215c",
+        "continuationTurns": 1
+      },
+      "metrics": {
+        "durationLabel": "51秒",
+        "durationSeconds": 51,
+        "apiCalls": 6,
+        "toolCalls": 4,
+        "failures": 1,
+        "inputTokens": 27115,
+        "outputTokens": 9719,
+        "cacheReadTokens": 110080,
+        "totalTokens": 146914
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "clock-625.svg",
+        "files": [
+          "clock-625.svg"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-03-analog-clock-6-25",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": null,
+        "preview": {
+          "lazy": false,
+          "sandbox": null,
+          "note": null
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-04-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-04",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "17e6215c",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "18秒",
+        "durationSeconds": 18,
+        "apiCalls": 2,
+        "toolCalls": 1,
+        "failures": 0,
+        "inputTokens": 3328,
+        "outputTokens": 4946,
+        "cacheReadTokens": 69248,
+        "totalTokens": 77522
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "clock-11-52-30.svg",
+        "files": [
+          "clock-11-52-30.svg"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-04-analog-clock-11-52-30",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": null,
+        "preview": {
+          "lazy": false,
+          "sandbox": null,
+          "note": null
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-05-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-05",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "4a0d64ce",
+        "continuationTurns": 1
+      },
+      "metrics": {
+        "durationLabel": "1分20秒",
+        "durationSeconds": 80,
+        "apiCalls": 6,
+        "toolCalls": 4,
+        "failures": 1,
+        "inputTokens": 5991,
+        "outputTokens": 25584,
+        "cacheReadTokens": 188544,
+        "totalTokens": 220119
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "bicycle_rider.svg",
+        "files": [
+          "bicycle_rider.svg"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-05-bicycle-rider",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": null,
+        "preview": {
+          "lazy": false,
+          "sandbox": null,
+          "note": null
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-06-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-06",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "4a0d64ce",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "1分11秒",
+        "durationSeconds": 71,
+        "apiCalls": 3,
+        "toolCalls": 2,
+        "failures": 0,
+        "inputTokens": 2610,
+        "outputTokens": 16812,
+        "cacheReadTokens": 173568,
+        "totalTokens": 192990
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "scissors_cutting_paper.svg",
+        "files": [
+          "scissors_cutting_paper.svg"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-06-scissors-cutting-paper",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": null,
+        "preview": {
+          "lazy": false,
+          "sandbox": null,
+          "note": null
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-07-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-07",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "4a0d64ce",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "48秒",
+        "durationSeconds": 48,
+        "apiCalls": 3,
+        "toolCalls": 2,
+        "failures": 0,
+        "inputTokens": 2647,
+        "outputTokens": 15704,
+        "cacheReadTokens": 230528,
+        "totalTokens": 248879
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "pushing_wheelbarrow.svg",
+        "files": [
+          "pushing_wheelbarrow.svg"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-07-pushing-wheelbarrow",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": null,
+        "preview": {
+          "lazy": false,
+          "sandbox": null,
+          "note": null
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-08-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-08",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "2579bde9",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "11分57秒",
+        "durationSeconds": 717,
+        "apiCalls": 46,
+        "toolCalls": 54,
+        "failures": 2,
+        "inputTokens": 16817,
+        "outputTokens": 66542,
+        "cacheReadTokens": 2910592,
+        "totalTokens": 2993951
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-08-breakout-game",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": "covers/run-deepseek-v4-1-flash-exp-0910-task-08-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-09-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-09",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "28e77186",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "11分34秒",
+        "durationSeconds": 694,
+        "apiCalls": 42,
+        "toolCalls": 41,
+        "failures": 2,
+        "inputTokens": 18291,
+        "outputTokens": 94946,
+        "cacheReadTokens": 3526912,
+        "totalTokens": 3640149
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-09-topdown-farming-game",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": "covers/run-deepseek-v4-1-flash-exp-0910-task-09-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-10-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-10",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "da8df324",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "7分17秒",
+        "durationSeconds": 437,
+        "apiCalls": 34,
+        "toolCalls": 40,
+        "failures": 2,
+        "inputTokens": 13517,
+        "outputTokens": 52144,
+        "cacheReadTokens": 1728512,
+        "totalTokens": 1794173
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-10-pixel-art-editor",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": "covers/run-deepseek-v4-1-flash-exp-0910-task-10-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-11-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-11",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "2d2be5e2",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "12分10秒",
+        "durationSeconds": 730,
+        "apiCalls": 81,
+        "toolCalls": 80,
+        "failures": 4,
+        "inputTokens": 27635,
+        "outputTokens": 125649,
+        "cacheReadTokens": 7634432,
+        "totalTokens": 7787716
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "app.js",
+          "geometry.js",
+          "screenshot.png"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-11-floor-plan-editor",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": "artifacts/run-deepseek-v4-1-flash-exp-0910-task-11-r1/screenshot.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-12-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-12",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "f87c54e3",
+        "continuationTurns": 1
+      },
+      "metrics": {
+        "durationLabel": "6分20秒",
+        "durationSeconds": 380,
+        "apiCalls": 89,
+        "toolCalls": 90,
+        "failures": 6,
+        "inputTokens": 32431,
+        "outputTokens": 94869,
+        "cacheReadTokens": 7376128,
+        "totalTokens": 7503428
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "styles.css",
+          "app.js",
+          "calc-engine.js",
+          "screenshot.png"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-12-calculator",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": "artifacts/run-deepseek-v4-1-flash-exp-0910-task-12-r1/screenshot.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-13-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-13",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "31de8e10",
+        "continuationTurns": 1
+      },
+      "metrics": {
+        "durationLabel": "27分17秒",
+        "durationSeconds": 1637,
+        "apiCalls": 111,
+        "toolCalls": 137,
+        "failures": 9,
+        "inputTokens": 48805,
+        "outputTokens": 142513,
+        "cacheReadTokens": 12535680,
+        "totalTokens": 12726998
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "styles.css",
+          "js/api.js",
+          "js/app.js",
+          "js/charts.js",
+          "js/effects.js",
+          "js/icons.js",
+          "js/weather.js",
+          "screenshot.png"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-13-weather-dashboard",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": "artifacts/run-deepseek-v4-1-flash-exp-0910-task-13-r1/screenshot.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "Live weather requests may be unavailable; the artifact includes cached and offline fallbacks."
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-14-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-14",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "214420b0",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "23分4秒",
+        "durationSeconds": 1384,
+        "apiCalls": 123,
+        "toolCalls": 137,
+        "failures": 4,
+        "inputTokens": 49198,
+        "outputTokens": 192140,
+        "cacheReadTokens": 16419584,
+        "totalTokens": 16660922
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "personal.html",
+          "business.html",
+          "loans.html",
+          "rates.html",
+          "security.html",
+          "help.html",
+          "login.html",
+          "open-account.html",
+          "robots.txt",
+          "site.webmanifest",
+          "assets/css/site.css",
+          "assets/favicon.svg",
+          "assets/js/site.js",
+          "assets/js/finance.js",
+          "assets/js/calculators.js",
+          "assets/js/forms.js",
+          "assets/js/rates.js",
+          "assets/js/login.js",
+          "assets/js/apply.js"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-14-bank-website",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": "covers/run-deepseek-v4-1-flash-exp-0910-task-14-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-15-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-15",
+      "taskVersion": 1,
+      "environment": {
+        "harness": "DSH",
+        "sessionId": "b25a11c4",
+        "continuationTurns": 0
+      },
+      "metrics": {
+        "durationLabel": "14分26秒",
+        "durationSeconds": 866,
+        "apiCalls": 75,
+        "toolCalls": 74,
+        "failures": 4,
+        "inputTokens": 37050,
+        "outputTokens": 124945,
+        "cacheReadTokens": 6949120,
+        "totalTokens": 7111115
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "styles.css",
+          "app.js",
+          "book-engine.js",
+          "screenshot.png"
+        ],
+        "sourcePath": "DeepSeek-V4.1-Flash-Exp-0910_DSH/task-15-book-tracker",
+        "archiveCommit": "5776d3a1d94dc4b04d83fa94d482e04478fd4076",
+        "cover": "artifacts/run-deepseek-v4-1-flash-exp-0910-task-15-r1/screenshot.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+        }
+      },
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+        "lines": "54-70"
+      }
+    }
+  ],
+  "reviews": [
+    {
+      "id": "review-human-task-01-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-01-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "",
+        "en": "Overall it fits a premium luxury brand site. Some watch details need work, but the customization feature is impressive and the overall finish is very high."
+      },
+      "body": {
+        "zh": "整体来看符合一款高端奢侈品牌的网页，但是展示的表存在部分细节问题，定制功能很惊艳，整体完成度非常高",
+        "en": "Overall it fits a premium luxury brand site. Some watch details need work, but the customization feature is impressive and the overall finish is very high."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "33-33"
+      }
+    },
+    {
+      "id": "review-ai-task-01-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-01-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "直接通过",
+        "en": "AI assessment: 直接通过 (translated label)."
+      },
+      "body": {
+        "zh": "实际打开 `index.html` 后，页面形成了完整的高端腕表品牌叙事：主视觉、机芯、系列、配置器、指标、工坊、媒体引言、预约表单和页脚均存在。腕表、机芯和表盘视觉由内联 SVG/CSS 生成，断网检查未发现外部请求或缺失资源。桌面 1440 px 下页面宽度与视口一致；390 px 移动视口同样无横向溢出。滚动触发后 26 个 reveal 元素全部显示，页面无控制台异常。\n\n视觉上已达到真实高端产品站的完成度，排版、暗色材质、金色点缀和产品配置交互保持一致。单文件、纯 HTML/CSS/JavaScript、无外部图片或库等硬约束均满足。\n\n改进建议：预约表单采用 `novalidate` 和自定义校验，后续可将关键必填约束同时反映到原生语义属性中，进一步增强无脚本降级和辅助技术提示。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 96,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "52-52"
+      }
+    },
+    {
+      "id": "review-human-task-02-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-02-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "",
+        "en": "Basically fine, although this version appears to be static rather than animated."
+      },
+      "body": {
+        "zh": "基本没问题，但做的版本似乎不是动画，是静止的",
+        "en": "Basically fine, although this version appears to be static rather than animated."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "37-37"
+      }
+    },
+    {
+      "id": "review-ai-task-02-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-02-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "直接通过",
+        "en": "AI assessment: 直接通过 (translated label)."
+      },
+      "body": {
+        "zh": "SVG 经 `xmllint` 检查语法有效，并成功渲染为位图。鹈鹕的长喙、喉囊、鸟体和翅膀特征清楚；自行车的车轮、车架、车座、曲柄、踏板和车把完整。主体位于车座上方，双腿与踏板形成联系，动作能被直接理解为“骑自行车”。构图有道路、远景、阳光等辅助元素，缩放后线条仍清晰。\n\n改进建议：鹈鹕与车把之间的操控关系可以再明确一些，目前一侧翅膀与车把的接触不如脚—踏板关系醒目，但不影响核心语义判断。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 94,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "62-62"
+      }
+    },
+    {
+      "id": "review-human-task-03-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-03-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "通过",
+        "en": "No issues."
+      },
+      "body": {
+        "zh": "没问题",
+        "en": "No issues."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "41-41"
+      }
+    },
+    {
+      "id": "review-ai-task-03-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-03-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "通过，有一项无障碍文本小问题",
+        "en": "AI assessment: 通过，有一项无障碍文本小问题 (translated label)."
+      },
+      "body": {
+        "zh": "SVG 有效且渲染正常。代码中的分针角度为 150°，时针角度为 192.5°，秒针为 0°，分别准确对应 6:25:00；12 个主刻度和分钟刻度分布清晰，三根指针在长度、粗细和颜色上可区分。视觉读表结果明确为 6:25。\n\n问题位于 SVG 的 `<desc>`：描述称时针位于“从 6 到 7 的四分之一”，而 25 分钟实际应是该小时跨度的 5/12。图形角度是正确的，错误只影响文本描述精度。建议将描述改为“five-twelfths of the way”或直接写明 192.5°。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 94,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "70-70"
+      }
+    },
+    {
+      "id": "review-human-task-04-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-04-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "通过",
+        "en": "No issues."
+      },
+      "body": {
+        "zh": "没问题",
+        "en": "No issues."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "45-45"
+      }
+    },
+    {
+      "id": "review-ai-task-04-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-04-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "直接通过",
+        "en": "AI assessment: 直接通过 (translated label)."
+      },
+      "body": {
+        "zh": "SVG 有效且渲染正常。秒针 180°、分针 315°、时针 356.25°，完整考虑了 30 秒对分针和时针的连续推进，准确对应 11:52:30。时针接近但未到 12，分针位于 10 与 11 之间，秒针指向 6；视觉和文本描述相互一致。表盘层级、刻度、中心轴和缩放表现均良好。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 98,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "78-78"
+      }
+    },
+    {
+      "id": "review-human-task-05-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-05-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "",
+        "en": "No issues, except there is an unexplained “7” in the image."
+      },
+      "body": {
+        "zh": "没问题，但是不知道为什么图像中有个 7",
+        "en": "No issues, except there is an unexplained “7” in the image."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "49-49"
+      }
+    },
+    {
+      "id": "review-ai-task-05-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-05-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "通过，但显式姿态约束的视觉自证仍可加强",
+        "en": "AI assessment: 通过，但显式姿态约束的视觉自证仍可加强 (translated label)."
+      },
+      "body": {
+        "zh": "SVG 有效，人物、自行车和严格侧面构图均清晰。两个轮子、车架、车把、曲柄和踏板结构完整；双臂均延伸到车把，双脚分别连接高低踏板。源文件也明确将低位踏板标为左脚、高位踏板标为右脚，说明实现意图与 prompt 一致。\n\n主要扣分点是：单一侧视轮廓下，左右肢体的视觉身份并不天然明确。当前近侧/远侧腿的颜色和遮挡有一定区分，但不了解图层注释的观察者难以可靠判断“左脚在下、右脚在上”，只能确认“一脚在下、一脚在上”。建议用更明确的远近侧配色、衣物标记、踏板层级或轻微三分之二视角，使左右身份无需阅读源码即可验证。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 86,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "84-84"
+      }
+    },
+    {
+      "id": "review-human-task-06-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-06-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "需改进",
+        "en": "The scissors and hand both look strange."
+      },
+      "body": {
+        "zh": "剪刀和手都很奇怪",
+        "en": "The scissors and hand both look strange."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "53-53"
+      }
+    },
+    {
+      "id": "review-ai-task-06-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-06-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "直接通过",
+        "en": "AI assessment: 直接通过 (translated label)."
+      },
+      "body": {
+        "zh": "SVG 有效，手、剪刀和纸张三类主体可直接辨认。手指进入剪刀握环，刀刃在转轴处闭合并与纸张边缘相交；已经剪开的纸条、当前切口和后续虚线路径共同表达“正在剪”，不是剪刀仅悬停在纸面上。层级、阴影和动作区域清楚。\n\n改进建议：剪刀刀刃比例较长且透视略夸张，手指与两个握环的分配还可更符合真实握姿，但不影响原始任务完成。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 92,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "92-92"
+      }
+    },
+    {
+      "id": "review-human-task-07-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-07-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "需改进",
+        "en": "It clearly feels like pushing, but the person and cart structures look strange, and the wheel is misplaced."
+      },
+      "body": {
+        "zh": "确实有推的感觉，但人的结构很奇怪，车也很奇怪，轮子的位置不对",
+        "en": "It clearly feels like pushing, but the person and cart structures look strange, and the wheel is misplaced."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "57-57"
+      }
+    },
+    {
+      "id": "review-ai-task-07-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-07-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "直接通过",
+        "en": "AI assessment: 直接通过 (translated label)."
+      },
+      "body": {
+        "zh": "SVG 有效。独轮车具备单个前轮、车斗、支架和把手，人物位于把手后方，身体面向车体并前倾，双手向前施力；后脚动作线进一步强调前进方向。人工判断不会将其误读为“拉独轮车”，因此准确满足 prompt 中“pushing, not pulling”的核心对比要求。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 95,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "100-100"
+      }
+    },
+    {
+      "id": "review-human-task-08-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-08-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "通过",
+        "en": "The core functionality is fully implemented."
+      },
+      "body": {
+        "zh": "基本功能完全实现",
+        "en": "The core functionality is fully implemented."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "61-61"
+      }
+    },
+    {
+      "id": "review-ai-task-08-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-08-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "直接通过",
+        "en": "AI assessment: 直接通过 (translated label)."
+      },
+      "body": {
+        "zh": "`index.html` 不引用外部资源，离线打开无控制台错误。实测点击“开始游戏”后标题遮罩隐藏，空格可发球，HUD 正确显示第 1/6 关、3 条生命和初始分数。画面在 1440×900 与 390×844 视口均无页面溢出，霓虹视觉、说明、状态面板和静音控制完整，已达到“polished, playable”的要求。\n\n实现代码包含开始、暂停、失败、胜利、重开、六关、道具、计分和本地最高分等完整状态。README 记录了更深的物理回归，但对应测试脚本位于历史临时路径，当前项目内无法一键复现；因此稳健性评分未给满分。移动端可操作，但部分可见按钮最小边约 34 px，低于常见 44 px 触控建议。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 92,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "106-106"
+      }
+    },
+    {
+      "id": "review-human-task-09-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-09-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "通过 · UI 可提升",
+        "en": "All functionality is implemented. The UI could improve, but the overall result is good."
+      },
+      "body": {
+        "zh": "功能完全实现，UI 有提升空间，但整体表现良好",
+        "en": "All functionality is implemented. The UI could improve, but the overall result is good."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "65-65"
+      }
+    },
+    {
+      "id": "review-ai-task-09-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-09-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "通过，有移动端和测试复现性改进空间",
+        "en": "AI assessment: 通过，有移动端和测试复现性改进空间 (translated label)."
+      },
+      "body": {
+        "zh": "单文件、无外部资源，离线打开无控制台错误。实测可从标题页开始新游戏，方向键移动后游戏时间由 6:00 推进至 6:02，HUD、工具栏、金钱、体力、水量和种子状态正常。俯视农场、房屋、水域、土地、角色和作物栏的视觉区分清楚，核心循环与操作说明完整。\n\n在 390 px 视口下页面本身不会横向滚动，但游戏采用整体缩放，内部内容固有宽度约 579 px，可见按钮最小尺寸约 16 px；同时没有专门的移动虚拟方向控制，因此手机触控可玩性有限。prompt 未强制移动端，故不构成核心失败。README 中提及的 61 项回归位于临时脚本，未随项目保存，建议将其纳入仓库并提供固定测试命令。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 88,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "114-114"
+      }
+    },
+    {
+      "id": "review-human-task-10-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-10-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "",
+        "en": "The basic functionality is implemented, but there is a bug if the canvas size is not selected on the first use."
+      },
+      "body": {
+        "zh": "基础功能实现，但是第一遍不选择画布大小的话会有 BUG",
+        "en": "The basic functionality is implemented, but there is a bug if the canvas size is not selected on the first use."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "69-69"
+      }
+    },
+    {
+      "id": "review-ai-task-10-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-10-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "通过，有测试资产和移动触控改进空间",
+        "en": "AI assessment: 通过，有测试资产和移动触控改进空间 (translated label)."
+      },
+      "body": {
+        "zh": "单文件离线运行无错误，绘制、擦除、填充、取色、颜色、1–8 px 画笔、撤销/重做、缩放、网格、画布设置和 PNG 导出控件均存在。实测在画布点击绘制后撤销按钮启用；撤销后重做按钮启用；重做成功。PNG 下载实际产生，文件名符合 `pixel-art-32x32-时间戳.png` 规则，文件大小 1,590 字节。页面在桌面和 390 px 视口均无横向溢出。\n\n主要不足是 README 所述的 40 项浏览器验证脚本仍指向 `/tmp/px-verify.cjs`，当前交付中无法复跑；建议将测试脚本和固定入口加入项目。移动视口上部分按钮最小边约 28 px，触控精度仍可加强。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 91,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "122-122"
+      }
+    },
+    {
+      "id": "review-human-task-11-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-11-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "通过 · UI 欠佳",
+        "en": "The basic functionality is implemented; the UI is unattractive."
+      },
+      "body": {
+        "zh": "基本功能实现，UI 较丑",
+        "en": "The basic functionality is implemented; the UI is unattractive."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "73-73"
+      }
+    },
+    {
+      "id": "review-ai-task-11-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-11-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "直接通过",
+        "en": "AI assessment: 直接通过 (translated label)."
+      },
+      "body": {
+        "zh": "实际运行 `npm test`：21 项几何单元测试全部通过，52 项真实 Chromium 浏览器检查全部通过。覆盖墙体绘制与链式吸附、T 形连接和房间检测、尺寸与面积、门窗放置和沿墙拖动、家具拖动、选择与框选、墙端点调整、撤销/重做、旋转/复制/翻转、缩放/平移、自动保存和 PNG 导出；运行中无页面异常。\n\n视觉检查显示墙、门窗、家具、房间标签、尺寸线和属性面板层级明确。实现明显超过“simple editor”的最低要求，同时保持零依赖和从 `file://` 运行能力。已知限制（不支持曲墙、自交墙和家具碰撞）均在 README 中明确，且不违背原 prompt。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 97,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "130-130"
+      }
+    },
+    {
+      "id": "review-human-task-12-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-12-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "通过 · UI 欠佳",
+        "en": "The functionality is implemented; the UI is unattractive."
+      },
+      "body": {
+        "zh": "功能实现，UI 较丑",
+        "en": "The functionality is implemented; the UI is unattractive."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "77-77"
+      }
+    },
+    {
+      "id": "review-ai-task-12-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-12-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "直接通过",
+        "en": "AI assessment: 直接通过 (translated label)."
+      },
+      "body": {
+        "zh": "实际运行 `npm test`：198 项计算引擎检查和 69 项真实浏览器检查全部通过。测试覆盖优先级、结合性、一元运算、百分比、浮点格式、错误路径、输入状态机、内存、历史、键盘映射、随机表达式对照、按钮布局、持久化和控制台健康度。\n\n应用实质上完成了 prompt 要求的“选择技术—运行—测试—修复”。计算核心与 UI 分层，无 `eval`，错误被建模为可恢复状态；截图显示桌面布局和历史面板清楚。README 还保留了测试发现并修复的缺陷清单，可追溯性良好。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 98,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "138-138"
+      }
+    },
+    {
+      "id": "review-human-task-13-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-13-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "通过 · 亮色主题欠佳",
+        "en": "The result is very good, but the light theme looks poor. The dark theme is attractive and the functionality is complete."
+      },
+      "body": {
+        "zh": "效果很好，但主题切至亮色的时候很丑，暗色审美不错，功能完整",
+        "en": "The result is very good, but the light theme looks poor. The dark theme is attractive and the functionality is complete."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "81-81"
+      }
+    },
+    {
+      "id": "review-ai-task-13-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-13-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "应用本体优秀，但验证入口存在可复现缺陷",
+        "en": "AI assessment: 应用本体优秀，但验证入口存在可复现缺陷 (translated label)."
+      },
+      "body": {
+        "zh": "逻辑层 `npm test` 的 112 项断言全部通过。手动在 8877 端口启动项目后，四个视口 × 两种主题的渲染审计全部通过：每次均渲染 24 个小时、7 天预报和 8 张详情卡，无溢出、缺失可视化、控制台错误或请求错误。深色主题对比度检查 203 个文本元素，无失败或临界项。搜索、城市切换、单位、详情、主题、刷新、定位拒绝提示等 10/11 项交互检查通过。\n\n本轮发现三类问题：\n\n1. `npm run verify` 先执行单测，随后直接调用默认访问 `127.0.0.1:8777` 的截图工具，却没有启动服务器。在本机该端口恰被其他目录的服务占用，最终于 `capture.js:80` 读取不存在节点时失败；在空闲环境通常会直接连接失败。README 将该命令描述为完整验证入口，因此属于确定的测试编排缺陷。\n2. 单独启动正确服务后，交互测试将页面已四舍五入的 `25°C` 再换算并期望 `77°F`，而应用从未四舍五入的原始温度换算后显示 `76°F`。核心转换公式已被单测覆盖，应用行为合理；失败来自测试的“双重舍入”假设，应改为从原始温度或允许 1°F 的显示舍入差异验证。\n3. 浅色主题对比度工具对风向罗盘的 10 px 粗体字母 “N” 报告 3.84:1，低于普通小文本 4.5:1 建议。该项被工具归为 borderline，但仍建议提高文字或罗盘背景对比度。\n\n这些问题不会否定“精致天气仪表盘”的核心完成度，但会影响 prompt 中“运行、检查、修复并重复”的闭环可信度，因此扣除测试工程分。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 90,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "146-146"
+      }
+    },
+    {
+      "id": "review-human-task-14-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-14-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "通过",
+        "en": "The core functionality is complete and the UI style is good."
+      },
+      "body": {
+        "zh": "基本功能完整，UI 风格也不错",
+        "en": "The core functionality is complete and the UI style is good."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "85-85"
+      }
+    },
+    {
+      "id": "review-ai-task-14-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-14-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "通过，完成度远超原始 prompt，但有一项合规表达风险",
+        "en": "AI assessment: 通过，完成度远超原始 prompt，但有一项合规表达风险 (translated label)."
+      },
+      "body": {
+        "zh": "网站包含 9 个完整页面。实际运行测试得到 49 项金融计算断言和 73 项浏览器交互断言全部通过；桌面 1440×900 和移动 390×844 对 9 个页面分别审计，共 18 页次、0 项布局/对比度/可访问性问题。登录演示、开户向导、利率筛选、计算器、表单、安全清单、分行筛选和响应式导航均有真实前端行为。\n\n虚构身份和不提交数据的说明存在于页脚、登录、开户、帮助和安全页面，关键表单也有显著提示。风险在于首页首屏和元描述高显著性地使用 “Member FDIC / Insured to $250,000”，而“虚构机构”说明主要位于长页面页脚；普通用户在看到免责声明前可能误判为真实银行。建议在全站顶部或首屏附近增加持续可见的 “Fictional design demo” 标识，并避免虚构品牌直接使用无修饰的 FDIC/Equal Housing Lender 身份声明。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 94,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "160-160"
+      }
+    },
+    {
+      "id": "review-human-task-15-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-15-r1",
+      "type": "human",
+      "authorLabel": "Personal Review",
+      "date": null,
+      "conclusion": {
+        "zh": "通过",
+        "en": "The functionality is complete and the UI style is good."
+      },
+      "body": {
+        "zh": "功能完整，UI 风格不错",
+        "en": "The functionality is complete and the UI style is good."
+      },
+      "score": null,
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/Personal_Review.md",
+        "lines": "89-89"
+      }
+    },
+    {
+      "id": "review-ai-task-15-r1",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-15-r1",
+      "type": "ai",
+      "authorLabel": "15-task completion quality assessment",
+      "date": "2026-09-09",
+      "conclusion": {
+        "zh": "直接通过，为本组综合质量最高的交付之一",
+        "en": "AI assessment: 直接通过，为本组综合质量最高的交付之一 (translated label)."
+      },
+      "body": {
+        "zh": "实际运行 `npm test`：3,861 项引擎断言和 244 项真实 Chromium 浏览器检查全部通过。覆盖记录规范化、日期、ISBN 校验、阅读状态机、进度与速度、搜索/筛选/排序、统计、重复合并、JSON/CSV、Goodreads 导入、随机测试，以及真实 UI 的新增、编辑、状态变化、删除撤销、键盘、对话框、持久化和损坏存储降级。\n\n应用从空书架开始，提供样例库但不强迫写入；数据只存本地。视觉检查显示信息密度高但层级清楚，书架、状态、筛选、统计、进度和数据入口均可发现。引擎确定性、测试规模、异常处理和数据可迁移性均明显超过原 prompt 的最低要求。",
+        "en": "The detailed historical AI assessment is retained in Chinese at the source link."
+      },
+      "score": 99,
+      "scoreMethod": "Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.",
+      "source": {
+        "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+        "lines": "168-168"
+      }
+    }
+  ],
+  "batchMetrics": {
+    "totalTasks": 15,
+    "sessions": 12,
+    "durationSeconds": 8282,
+    "apiCalls": 693,
+    "toolCalls": 735,
+    "failures": 42,
+    "inputTokens": 334670,
+    "outputTokens": 1072534,
+    "cacheReadTokens": 63042176,
+    "totalTokens": 64449380,
+    "costCny": 9.3,
+    "source": {
+      "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/DeepSeek-V4.1-Flash-Exp-0910-任务评测复盘.md",
+      "lines": "10-25"
+    }
+  },
+  "historicalAssessment": {
+    "score": 93.6,
+    "coreSuccess": "15/15",
+    "source": {
+      "path": "DeepSeek-V4.1-Flash-Exp-0910_DSH/Reviews/15-任务完成质量评估.md",
+      "lines": "7-16,209-211"
+    },
+    "disclaimer": "Quoted from the historical AI assessment; not independently proven or recomputed by this website."
+  }
+}

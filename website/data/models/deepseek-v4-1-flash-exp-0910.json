@@ -1,0 +1,7 @@
+{
+  "id": "deepseek-v4-1-flash-exp-0910",
+  "name": "DeepSeek-V4.1-Flash-Exp-0910",
+  "version": "0910",
+  "provider": "DeepSeek",
+  "notes": { "zh": "模型身份按归档目录记录。", "en": "Model identity follows the archived directory label." }
+}

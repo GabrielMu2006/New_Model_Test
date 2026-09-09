@@ -1,0 +1,55 @@
+---
+import { asset, href, sourceUrl, type Locale, type Run, type Task } from '../lib/catalog';
+interface Props { locale: Locale; run: Run; task: Task; compact?: boolean; side?: string; }
+const { locale, run, task, compact = false, side = '' } = Astro.props;
+const artifactUrl = asset(`artifacts/${run.id}/${run.artifact.entry}`);
+const labels = locale === 'zh' ? { load: '加载交互预览', reload: '重新加载', expand: '扩大显示', open: '独立打开', source: '查看源码', download: '下载 SVG', note: '预览说明' } : { load: 'Load interactive preview', reload: 'Reload', expand: 'Expand', open: 'Open standalone', source: 'View source', download: 'Download SVG', note: 'Preview note' };
+---
+<section class:list={['artifact-preview', compact && 'compact']} data-preview data-side={side}>
+  <div class="preview-toolbar">
+    <div><span class="eyebrow">{task.id} · {run.artifact.type.toUpperCase()}</span><strong>{task.title[locale]}</strong></div>
+    <div class="button-row">
+      {run.artifact.type === 'svg' && <a class="button quiet" href={artifactUrl} download>{labels.download}</a>}
+      {run.artifact.type === 'html' && <button class="button quiet" type="button" data-reload disabled>{labels.reload}</button>}
+      <button class="button quiet" type="button" data-expand>{labels.expand}</button>
+      <a class="button quiet" href={artifactUrl} target="_blank" rel="noopener">{labels.open}</a>
+    </div>
+  </div>
+  <div class="preview-stage">
+    {run.artifact.type === 'svg' ? (
+      <img src={artifactUrl} alt={task.title[locale]} loading="lazy" />
+    ) : (
+      <div class="preview-cover" data-cover>
+        {run.artifact.cover && <img src={asset(run.artifact.cover)} alt="" loading="lazy" />}
+        <div class="cover-overlay"><span>{task.title[locale]}</span><button class="button primary" type="button" data-load data-src={artifactUrl} data-sandbox={run.artifact.preview.sandbox}>{labels.load}</button></div>
+      </div>
+    )}
+  </div>
+  {run.artifact.preview.note && <p class="preview-note"><strong>{labels.note}:</strong> {run.artifact.preview.note}</p>}
+  <div class="preview-links">
+    <a href={sourceUrl(`${run.artifact.sourcePath}/${run.artifact.entry}`)} target="_blank" rel="noopener">{labels.source} ↗</a>
+    <a href={href(locale, `runs/${run.id}/`)}>{run.id}</a>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-preview]').forEach((preview) => {
+    const stage = preview.querySelector<HTMLElement>('.preview-stage');
+    const load = preview.querySelector<HTMLButtonElement>('[data-load]');
+    const reload = preview.querySelector<HTMLButtonElement>('[data-reload]');
+    const expand = preview.querySelector<HTMLButtonElement>('[data-expand]');
+    const mount = () => {
+      if (!load || !stage) return;
+      const frame = document.createElement('iframe');
+      frame.src = load.dataset.src || '';
+      frame.sandbox.value = load.dataset.sandbox || '';
+      frame.loading = 'lazy';
+      frame.title = load.closest('[data-preview]')?.querySelector('strong')?.textContent || 'Artifact preview';
+      stage.replaceChildren(frame);
+      if (reload) reload.disabled = false;
+    };
+    load?.addEventListener('click', mount);
+    reload?.addEventListener('click', () => { const frame = stage?.querySelector('iframe'); if (frame) frame.src = frame.src; });
+    expand?.addEventListener('click', () => { preview.classList.toggle('expanded'); expand.setAttribute('aria-pressed', String(preview.classList.contains('expanded'))); });
+  });
+</script>

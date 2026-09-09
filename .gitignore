@@ -11,6 +11,10 @@ output/playwright/
 node_modules/
 coverage/
 *.log
+website/node_modules/
+website/dist/
+website/.astro/
+website/public/artifacts/
 
 # Environment files and local secrets
 .env

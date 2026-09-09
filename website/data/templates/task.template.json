@@ -1,0 +1,12 @@
+{
+  "id": "task-00",
+  "version": 1,
+  "phaseId": "phase-00",
+  "title": { "zh": "", "en": "" },
+  "category": "",
+  "promptOriginal": "",
+  "promptTranslation": "",
+  "expectedOutcome": { "zh": "", "en": "" },
+  "verification": { "zh": [], "en": [] },
+  "source": { "path": "", "lines": "" }
+}

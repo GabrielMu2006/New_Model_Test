@@ -1,0 +1,9 @@
+{
+  "phases": [{ "id": "phase-02", "number": 2, "name": { "zh": "测试阶段", "en": "Fixture phase" }, "description": { "zh": "仅测试", "en": "Tests only" }, "taskVersions": ["task-16@1"] }],
+  "models": [{ "id": "fixture-model", "name": "Fixture Model", "version": null, "provider": null, "notes": { "zh": "仅测试", "en": "Tests only" } }],
+  "tasks": [{ "id": "task-16", "version": 1, "phaseId": "phase-02", "title": { "zh": "测试任务", "en": "Fixture task" }, "category": "utility", "promptOriginal": "Fixture only", "promptTranslation": "仅测试", "expectedOutcome": { "zh": "", "en": "" }, "verification": { "zh": [], "en": [] }, "source": { "path": "tests/fixtures", "lines": "1" } }],
+  "runs": [
+    { "id": "run-fixture-model-task-16-r1", "modelId": "fixture-model", "taskId": "task-16", "taskVersion": 1 },
+    { "id": "run-fixture-model-task-01-r2", "modelId": "fixture-model", "taskId": "task-01", "taskVersion": 1 }
+  ]
+}

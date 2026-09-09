@@ -1,0 +1,14 @@
+---
+import AppPage from '../../components/AppPage.astro';
+import { catalog, locales, type Locale } from '../../lib/catalog';
+
+export function getStaticPaths() {
+  const paths = ['', 'phases/', 'phases/phase-01/', 'models/', 'tasks/', 'compare/', 'methodology/'];
+  paths.push(...catalog.models.map((model) => `models/${model.id}/`));
+  paths.push(...catalog.tasks.map((task) => `tasks/${task.id}/`));
+  paths.push(...catalog.runs.map((run) => `runs/${run.id}/`));
+  return locales.flatMap((locale) => paths.map((path) => ({ params: { locale, path: path || undefined }, props: { locale, path } })));
+}
+const { locale, path } = Astro.props as { locale: Locale; path: string };
+---
+<AppPage locale={locale} path={path} />

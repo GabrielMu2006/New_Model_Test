@@ -1,0 +1,10 @@
+{
+  "id": "review-id",
+  "runId": "run-model-task-00-r1",
+  "type": "human",
+  "authorLabel": "",
+  "date": null,
+  "conclusion": { "zh": "", "en": "" },
+  "score": null,
+  "source": { "path": "", "lines": "" }
+}

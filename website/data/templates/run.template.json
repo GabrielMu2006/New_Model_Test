@@ -1,0 +1,9 @@
+{
+  "id": "run-model-task-00-r1",
+  "modelId": "model-id",
+  "taskId": "task-00",
+  "taskVersion": 1,
+  "environment": { "harness": null, "sessionId": null, "continuationTurns": null },
+  "metrics": { "durationSeconds": null, "apiCalls": null, "toolCalls": null, "failures": null, "inputTokens": null, "outputTokens": null, "cacheReadTokens": null },
+  "artifact": { "type": "html", "entry": "index.html", "files": ["index.html"], "sourcePath": "", "archiveCommit": null }
+}

@@ -1,0 +1,191 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ArtifactPreview from './ArtifactPreview.astro';
+import { asset, catalog, compact, href, modelById, number, reviewsFor, runById, runForTask, sourceUrl, taskById, type Locale } from '../lib/catalog';
+
+interface Props { locale: Locale; path: string; }
+const { locale, path } = Astro.props;
+const bits = path.split('/').filter(Boolean);
+const section = bits[0] || 'home';
+const id = bits[1];
+const l = locale === 'zh';
+const labels = l ? {
+  overview: '第一阶段评测档案', intro: '浏览 15 项真实模型成果、原始需求、运行证据与彼此独立的评价来源。', browse: '浏览任务', compare: '同题对比', phase: '阶段', model: '模型', models: '模型', tasks: '任务', artifacts: '成果', runs: '运行', duration: '累计用时', tokens: 'Token 过路量', filters: '检索与筛选', search: '搜索任务标题或 Prompt', category: '全部类别', noResults: '没有符合条件的任务。', view: '查看详情', source: '来源', prompt: '原始 Prompt', translation: '中文译文', expected: '理论成果', verification: '后补验收建议', runDetails: '运行记录', metrics: '运行指标', reviews: '评价与证据', human: '人工评价', ai: '历史 AI 评价', method: '评测方法', notRecorded: '未记录', config: '执行配置', session: '会话', continuation: '补充轮', disclaimer: '引用结论，不代表网站独立复验', allTasks: '全部任务', allModels: '全部模型', phaseDetail: '阶段详情', modelDetail: '模型详情', methodology: '评测方法与边界', compareTitle: '同题运行对比', selectTask: '选择任务', left: '左侧运行', right: '右侧运行', unavailable: '当前任务只有一条真实运行记录，尚无第二项可比较。', invalid: '无效或不匹配的选择已被忽略。', share: '复制分享链接', copied: '链接已复制', archive: '归档版本', sourceReport: '原始报告', results: '项结果', total: '合计', perTask: '逐任务记录'
+} : {
+  overview: 'Phase 1 evaluation archive', intro: 'Browse 15 real model artifacts, original requests, run evidence, and independent review sources.', browse: 'Browse tasks', compare: 'Compare runs', phase: 'Phase', model: 'Model', models: 'Models', tasks: 'Tasks', artifacts: 'Artifacts', runs: 'Runs', duration: 'Total duration', tokens: 'Token throughput', filters: 'Search and filters', search: 'Search task title or prompt', category: 'All categories', noResults: 'No tasks match these filters.', view: 'View details', source: 'Source', prompt: 'Original prompt', translation: 'Chinese translation', expected: 'Expected outcome', verification: 'Additional verification guidance', runDetails: 'Run record', metrics: 'Run metrics', reviews: 'Reviews and evidence', human: 'Human review', ai: 'Historical AI review', method: 'Methodology', notRecorded: 'Not recorded', config: 'Execution configuration', session: 'Session', continuation: 'Continuation turns', disclaimer: 'Quoted conclusion; not independently reverified by this website', allTasks: 'All tasks', allModels: 'All models', phaseDetail: 'Phase details', modelDetail: 'Model details', methodology: 'Methodology and boundaries', compareTitle: 'Compare runs on one task', selectTask: 'Select task', left: 'Left run', right: 'Right run', unavailable: 'Only one real run exists for this task, so there is no second result to compare yet.', invalid: 'Invalid or mismatched selections were ignored.', share: 'Copy share link', copied: 'Link copied', archive: 'Archive version', sourceReport: 'Source report', results: 'results', total: 'Total', perTask: 'Per-task records'
+};
+const categoryNames: Record<string, string> = l ? { website: '网站', 'svg-illustration': 'SVG 插画', 'svg-clock': 'SVG 时钟', game: '游戏', 'creative-tool': '创作工具', 'productivity-tool': '效率工具', utility: '实用工具', 'data-dashboard': '数据仪表盘' } : { website: 'Website', 'svg-illustration': 'SVG illustration', 'svg-clock': 'SVG clock', game: 'Game', 'creative-tool': 'Creative tool', 'productivity-tool': 'Productivity tool', utility: 'Utility', 'data-dashboard': 'Data dashboard' };
+const currentTask = taskById(id);
+const currentRun = runById(id);
+const currentModel = modelById(id);
+const pageTitle = currentTask?.title[locale] || currentModel?.name || (section === 'compare' ? labels.compareTitle : section === 'methodology' ? labels.methodology : section === 'phases' ? labels.phaseDetail : section === 'models' ? labels.allModels : section === 'tasks' ? labels.allTasks : currentRun ? currentTask?.title[locale] : labels.overview);
+const alternatePath = path;
+const taskCards = catalog.tasks.map((task) => ({ task, run: runForTask(task.id)! }));
+const github = (path: string, lines?: string) => sourceUrl(path, lines);
+const metricItems = currentRun ? [
+  ['Duration', currentRun.metrics.durationLabel], ['API', number(currentRun.metrics.apiCalls, locale)], ['Tools', number(currentRun.metrics.toolCalls, locale)], ['Failures / retries', number(currentRun.metrics.failures, locale)], ['Input tokens', number(currentRun.metrics.inputTokens, locale)], ['Output tokens', number(currentRun.metrics.outputTokens, locale)], ['Cache read', number(currentRun.metrics.cacheReadTokens, locale)], ['Total tokens', number(currentRun.metrics.totalTokens, locale)]
+] : [];
+---
+<SiteLayout locale={locale} title={pageTitle || labels.overview} description={labels.intro} alternatePath={alternatePath}>
+  {section === 'home' && <>
+    <section class="hero shell">
+      <div class="hero-copy">
+        <span class="eyebrow">DEEPSEEK V4.1 / PHASE 01</span>
+        <h1>{labels.overview}</h1>
+        <p>{labels.intro}</p>
+        <div class="button-row"><a class="button primary" href={href(locale, 'tasks/')}>{labels.browse}</a><a class="button" href={href(locale, 'compare/')}>{labels.compare}</a></div>
+      </div>
+      <div class="signal-card" aria-label={l ? '归档概况' : 'Archive summary'}>
+        <span>ARCHIVE SIGNAL</span><b>15 / 15</b><i></i>
+        <dl><div><dt>{labels.model}</dt><dd>1</dd></div><div><dt>{labels.phase}</dt><dd>01</dd></div><div><dt>{labels.runs}</dt><dd>15</dd></div></dl>
+      </div>
+    </section>
+    <section class="stats shell" aria-label={l ? '批次指标' : 'Batch metrics'}>
+      <div><span>{labels.duration}</span><strong>138:02</strong><small>MM:SS</small></div>
+      <div><span>{labels.tokens}</span><strong>{compact(catalog.batchMetrics.totalTokens, locale)}</strong><small>{number(catalog.batchMetrics.totalTokens, locale)}</small></div>
+      <div><span>API</span><strong>{number(catalog.batchMetrics.apiCalls, locale)}</strong><small>{labels.total}</small></div>
+      <div><span>{labels.artifacts}</span><strong>6 SVG / 9 HTML</strong><small>{labels.results}</small></div>
+    </section>
+    <section class="shell section-block">
+      <div class="section-heading"><div><span class="eyebrow">CATALOG</span><h2>{labels.tasks}</h2></div><a href={href(locale, 'tasks/')}>{labels.allTasks} →</a></div>
+      <div class="artifact-strip">
+        {taskCards.slice(0, 6).map(({ task, run }) => <a class="artifact-tile" href={href(locale, `tasks/${task.id}/`)}>
+          <div class="tile-visual">{run.artifact.type === 'svg' ? <img src={asset(`artifacts/${run.id}/${run.artifact.entry}`)} alt="" /> : run.artifact.cover ? <img src={asset(run.artifact.cover)} alt="" /> : <span>{task.id}</span>}</div>
+          <span>{task.id} · {categoryNames[task.category]}</span><strong>{task.title[locale]}</strong>
+        </a>)}
+      </div>
+    </section>
+  </>}
+
+  {section === 'tasks' && !id && <section class="shell page-block">
+    <div class="page-heading"><span class="eyebrow">15 ENTRIES / PHASE 01</span><h1>{labels.allTasks}</h1><p>{labels.intro}</p></div>
+    <div class="filter-panel" data-filter-panel>
+      <label><span>{labels.search}</span><input type="search" data-search placeholder={labels.search} /></label>
+      <label><span>{l ? '任务类别' : 'Task category'}</span><select data-category><option value="">{labels.category}</option>{Object.entries(categoryNames).map(([value, name]) => <option value={value}>{name}</option>)}</select></label>
+    </div>
+    <div class="task-grid" data-task-grid>
+      {taskCards.map(({ task, run }) => <article class="task-card" data-task-card data-category={task.category} data-search={`${task.title.zh} ${task.title.en} ${task.promptOriginal}`.toLowerCase()}>
+        <a class="task-visual" href={href(locale, `tasks/${task.id}/`)}>{run.artifact.type === 'svg' ? <img src={asset(`artifacts/${run.id}/${run.artifact.entry}`)} alt="" loading="lazy" /> : run.artifact.cover ? <img src={asset(run.artifact.cover)} alt="" loading="lazy" /> : <span>{run.artifact.type}</span>}<em>{run.artifact.type.toUpperCase()}</em></a>
+        <div class="task-card-body"><span class="eyebrow">{task.id} · {categoryNames[task.category]}</span><h2>{task.title[locale]}</h2><p>{task.promptOriginal}</p><a href={href(locale, `tasks/${task.id}/`)}>{labels.view} →</a></div>
+      </article>)}
+    </div>
+    <p class="empty-state" data-empty hidden>{labels.noResults}</p>
+  </section>}
+
+  {section === 'tasks' && currentTask && (() => { const run = runForTask(currentTask.id)!; return <section class="shell page-block detail-page">
+    <div class="breadcrumb"><a href={href(locale, 'tasks/')}>{labels.tasks}</a><span>/</span><span>{currentTask.id}</span></div>
+    <div class="detail-heading"><div><span class="eyebrow">{currentTask.id} · V{currentTask.version} · {categoryNames[currentTask.category]}</span><h1>{currentTask.title[locale]}</h1></div><a class="button" href={href(locale, `compare/?task=${currentTask.id}&left=${run.id}`)}>{labels.compare}</a></div>
+    <ArtifactPreview locale={locale} task={currentTask} run={run} />
+    <div class="detail-columns">
+      <article class="prose-card"><span class="eyebrow">SOURCE REQUEST</span><h2>{labels.prompt}</h2><pre>{currentTask.promptOriginal}</pre><h3>{labels.translation}</h3><p>{currentTask.promptTranslation}</p><a href={github(currentTask.source.path, currentTask.source.lines)} target="_blank" rel="noopener">{labels.source} · {currentTask.source.path} ↗</a></article>
+      <article class="prose-card"><span class="eyebrow">EVALUATION FRAME</span><h2>{labels.expected}</h2><p>{currentTask.expectedOutcome[locale]}</p><h3>{labels.verification}</h3><ul>{currentTask.verification[locale].map((item) => <li>{item}</li>)}</ul></article>
+    </div>
+    <div class="section-heading"><div><span class="eyebrow">RUN</span><h2>{labels.runDetails}</h2></div><a href={href(locale, `runs/${run.id}/`)}>{labels.view} →</a></div>
+    <article class="run-row"><div><span class="status-dot"></span><strong>{modelById(run.modelId)?.name}</strong><small>{run.id}</small></div><dl><div><dt>{labels.duration}</dt><dd>{run.metrics.durationLabel}</dd></div><div><dt>Tokens</dt><dd>{compact(run.metrics.totalTokens, locale)}</dd></div><div><dt>API</dt><dd>{run.metrics.apiCalls}</dd></div></dl></article>
+  </section>; })()}
+
+  {section === 'runs' && currentRun && (() => { const task = taskById(currentRun.taskId)!; const model = modelById(currentRun.modelId)!; const reviews = reviewsFor(currentRun.id); return <section class="shell page-block detail-page">
+    <div class="breadcrumb"><a href={href(locale, 'tasks/')}>{labels.tasks}</a><span>/</span><a href={href(locale, `tasks/${task.id}/`)}>{task.id}</a><span>/</span><span>{labels.runs}</span></div>
+    <div class="detail-heading"><div><span class="eyebrow">RUN RECORD / {task.id}@{currentRun.taskVersion}</span><h1>{task.title[locale]}</h1><p>{currentRun.id}</p></div><span class="verified-badge">ARCHIVED · {currentRun.artifact.archiveCommit.slice(0, 7)}</span></div>
+    <ArtifactPreview locale={locale} task={task} run={currentRun} />
+    <section class="section-block"><div class="section-heading"><div><span class="eyebrow">MEASUREMENTS</span><h2>{labels.metrics}</h2></div><a href={github(currentRun.source.path, currentRun.source.lines)} target="_blank" rel="noopener">{labels.sourceReport} ↗</a></div>
+      <div class="metric-grid">{metricItems.map(([key, value]) => <div><span>{key}</span><strong>{value}</strong></div>)}</div>
+      <div class="config-line"><span>{labels.config}</span><b>Harness: {currentRun.environment.harness}</b><b>{labels.session}: {currentRun.environment.sessionId}</b><b>{labels.continuation}: {currentRun.environment.continuationTurns}</b></div>
+    </section>
+    <section class="section-block"><div class="section-heading"><div><span class="eyebrow">INDEPENDENT SOURCES</span><h2>{labels.reviews}</h2></div></div>
+      <div class="review-grid">{reviews.map((review) => <article class={`review-card ${review.type}`}><div class="review-meta"><span>{review.type === 'human' ? labels.human : labels.ai}</span>{review.score != null && <strong>{review.score}/100</strong>}</div><h3>{review.conclusion[locale]}</h3><p>{review.body[locale]}</p>{review.type === 'ai' && <small>{labels.disclaimer}</small>}<a href={github(review.source.path, review.source.lines)} target="_blank" rel="noopener">{review.authorLabel} ↗</a></article>)}</div>
+    </section>
+    <section class="source-card"><span>{labels.archive}</span><code>{currentRun.artifact.archiveCommit}</code><a href={github(currentRun.artifact.sourcePath)} target="_blank" rel="noopener">{currentRun.artifact.sourcePath} ↗</a></section>
+  </section>; })()}
+
+  {section === 'models' && !id && <section class="shell page-block"><div class="page-heading"><span class="eyebrow">MODEL INDEX</span><h1>{labels.allModels}</h1></div><div class="model-list">{catalog.models.map((model) => <a class="model-card" href={href(locale, `models/${model.id}/`)}><span class="model-monogram">DS</span><div><span class="eyebrow">{model.provider} · {model.version}</span><h2>{model.name}</h2><p>15 {labels.results} · Phase 01</p></div><b>→</b></a>)}</div></section>}
+  {section === 'models' && currentModel && <section class="shell page-block"><div class="breadcrumb"><a href={href(locale, 'models/')}>{labels.models}</a><span>/</span><span>{currentModel.id}</span></div><div class="page-heading"><span class="eyebrow">{currentModel.provider} · {currentModel.version}</span><h1>{currentModel.name}</h1><p>{currentModel.notes[locale]}</p></div><div class="task-grid compact-grid">{taskCards.map(({ task, run }) => <article class="run-tile"><span>{task.id}</span><h2>{task.title[locale]}</h2><dl><div><dt>{labels.duration}</dt><dd>{run.metrics.durationLabel}</dd></div><div><dt>Tokens</dt><dd>{compact(run.metrics.totalTokens, locale)}</dd></div></dl><a href={href(locale, `runs/${run.id}/`)}>{labels.view} →</a></article>)}</div></section>}
+
+  {section === 'phases' && !id && <section class="shell page-block"><div class="page-heading"><span class="eyebrow">PHASE INDEX</span><h1>{labels.phase}</h1></div>{catalog.phases.map((phase) => <a class="phase-card" href={href(locale, `phases/${phase.id}/`)}><b>01</b><div><span class="eyebrow">{phase.id}</span><h2>{phase.name[locale]}</h2><p>{phase.description[locale]}</p></div><strong>15 {labels.tasks} →</strong></a>)}</section>}
+  {section === 'phases' && id === 'phase-01' && <section class="shell page-block"><div class="breadcrumb"><a href={href(locale, 'phases/')}>{labels.phase}</a><span>/</span><span>phase-01</span></div><div class="page-heading"><span class="eyebrow">PHASE 01 · COMPLETE ARCHIVE</span><h1>{catalog.phases[0].name[locale]}</h1><p>{catalog.phases[0].description[locale]}</p></div><div class="timeline"><span></span><b>01</b><i></i><strong>15 {labels.tasks}</strong><i></i><strong>1 {labels.model}</strong><i></i><strong>15 {labels.runs}</strong></div><div class="task-grid compact-grid">{taskCards.map(({ task, run }) => <article class="run-tile"><span>{task.id}</span><h2>{task.title[locale]}</h2><p>{categoryNames[task.category]}</p><a href={href(locale, `tasks/${task.id}/`)}>{labels.view} →</a></article>)}</div></section>}
+
+  {section === 'compare' && <section class="shell page-block compare-page" data-compare-root data-locale={locale} data-base={href(locale)}>
+    <div class="page-heading"><span class="eyebrow">SIDE BY SIDE</span><h1>{labels.compareTitle}</h1><p>{l ? '选择同一任务版本下的两条运行。选择会写入 URL，可直接分享和刷新恢复。' : 'Choose two runs for the same task version. Selections are stored in the URL for sharing and refresh.'}</p></div>
+    <div class="compare-controls">
+      <label><span>{labels.selectTask}</span><select data-compare-task>{catalog.tasks.map((task) => <option value={task.id}>{task.id} · {task.title[locale]}</option>)}</select></label>
+      <label><span>{labels.left}</span><select data-compare-left></select></label>
+      <label><span>{labels.right}</span><select data-compare-right></select></label>
+      <button class="button" type="button" data-share>{labels.share}</button>
+    </div>
+    <p class="notice" data-compare-notice>{labels.unavailable}</p>
+    <div class="compare-grid"><div data-left-panel></div><div data-right-panel><div class="missing-panel"><span>02</span><p>{labels.unavailable}</p></div></div></div>
+    <script type="application/json" data-catalog set:html={JSON.stringify({ tasks: catalog.tasks, runs: catalog.runs, models: catalog.models, labels: { unavailable: labels.unavailable, invalid: labels.invalid, duration: labels.duration, tokens: labels.tokens, view: labels.view, copied: labels.copied } })}></script>
+  </section>}
+
+  {section === 'methodology' && <section class="shell page-block methodology"><div class="page-heading"><span class="eyebrow">PROVENANCE FIRST</span><h1>{labels.methodology}</h1><p>{l ? '本网站呈现可追溯的归档记录，不把缺失值解释为零，也不把不同口径的数字压成排行榜。' : 'This site presents traceable archive records. Missing values are not zero, and incompatible measurements are not collapsed into a leaderboard.'}</p></div>
+    <div class="principle-grid">{[
+      [l ? '来源优先' : 'Provenance first', l ? '每条运行指标、Prompt 和评价均保留文件与行定位。' : 'Every prompt, run metric, and review retains its source file and line location.'],
+      [l ? '评价分离' : 'Reviews stay separate', l ? '人工评价、历史 AI 报告和本次展示站验证不静默合并。' : 'Human reviews, historical AI reports, and this site verification are never silently merged.'],
+      [l ? '缺失即缺失' : 'Missing means missing', l ? '未知配置显示“未记录”，不推断单题费用或模型能力。' : 'Unknown configuration is shown as not recorded; per-task costs and capabilities are not inferred.'],
+      [l ? '同题才比较' : 'Compare like with like', l ? '只有同一任务版本的运行可进入对比；仅在口径一致时显示差值。' : 'Only runs for the same task version can be compared; deltas require matching measurement definitions.']
+    ].map(([title, body], index) => <article><span>0{index + 1}</span><h2>{title}</h2><p>{body}</p></article>)}</div>
+    <article class="prose-card wide"><h2>{l ? '历史结论如何展示' : 'How historical conclusions are presented'}</h2><p>{l ? '93.6/100 与 15/15 仅作为《15 项任务完成质量评估》的引用结论。它们不是本网站重新计算或独立证明的统一事实。任务 06、07 的人工观感与 AI 评估明显不同，两种判断在运行详情中并列保留。' : 'The 93.6/100 score and 15/15 statement are quoted only from the historical “15-task completion quality assessment.” They are not recomputed or independently proven by this website. For tasks 06 and 07, the human visual judgment differs materially from the AI assessment, so both are retained side by side.'}</p><a href={github(catalog.historicalAssessment.source.path, catalog.historicalAssessment.source.lines)} target="_blank" rel="noopener">{labels.sourceReport} ↗</a></article>
+    <div class="section-heading"><div><span class="eyebrow">BATCH MEASUREMENTS</span><h2>{labels.total}</h2></div></div><div class="metric-grid">{[['Tasks', 15], ['Sessions', 12], ['Duration', '8,282s'], ['API', 693], ['Tools', 735], ['Failures / retries', 42], ['Input tokens', '334,670'], ['Output tokens', '1,072,534'], ['Cache read', '63,042,176'], ['Batch cost', '¥9.30']].map(([key, value]) => <div><span>{key}</span><strong>{value}</strong></div>)}</div>
+  </section>}
+
+  {((section === 'tasks' && id && !currentTask) || (section === 'runs' && id && !currentRun) || (section === 'models' && id && !currentModel) || (section === 'phases' && id && id !== 'phase-01')) && <section class="shell error-page"><span>404</span><h1>{l ? '未找到这条归档记录' : 'Archive record not found'}</h1><p>{l ? '链接中的标识不存在，或这条记录尚未进入公开索引。' : 'The identifier does not exist or is not included in the public index.'}</p><a class="button primary" href={href(locale)}>{l ? '返回概览' : 'Back to overview'}</a></section>}
+</SiteLayout>
+
+<script>
+  // @ts-nocheck
+  const filterPanel = document.querySelector<HTMLElement>('[data-filter-panel]');
+  if (filterPanel) {
+    const search = filterPanel.querySelector<HTMLInputElement>('[data-search]')!;
+    const category = filterPanel.querySelector<HTMLSelectElement>('[data-category]')!;
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-task-card]')];
+    const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+    const apply = () => {
+      const query = search.value.trim().toLowerCase(); let visible = 0;
+      cards.forEach((card) => { const show = (!query || card.dataset.search?.includes(query)) && (!category.value || card.dataset.category === category.value); card.hidden = !show; if (show) visible++; });
+      empty.hidden = visible > 0;
+    };
+    search.addEventListener('input', apply); category.addEventListener('change', apply);
+  }
+
+  const compareRoot = document.querySelector<HTMLElement>('[data-compare-root]');
+  if (compareRoot) {
+    const data = JSON.parse(compareRoot.querySelector('[data-catalog]')!.textContent || '{}');
+    const taskSelect = compareRoot.querySelector<HTMLSelectElement>('[data-compare-task]')!;
+    const leftSelect = compareRoot.querySelector<HTMLSelectElement>('[data-compare-left]')!;
+    const rightSelect = compareRoot.querySelector<HTMLSelectElement>('[data-compare-right]')!;
+    const notice = compareRoot.querySelector<HTMLElement>('[data-compare-notice]')!;
+    const leftPanel = compareRoot.querySelector<HTMLElement>('[data-left-panel]')!;
+    const rightPanel = compareRoot.querySelector<HTMLElement>('[data-right-panel]')!;
+    const params = new URLSearchParams(location.search);
+    const requestedTask = params.get('task');
+    if (data.tasks.some((task: any) => task.id === requestedTask)) taskSelect.value = requestedTask;
+    const esc = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]!));
+    const runsFor = () => data.runs.filter((run: any) => run.taskId === taskSelect.value);
+    const fill = () => {
+      const runs = runsFor();
+      const options = runs.map((run: any) => `<option value="${esc(run.id)}">${esc(run.id)}</option>`).join('');
+      leftSelect.innerHTML = options;
+      rightSelect.innerHTML = `<option value="">—</option>${options}`;
+      const wantedLeft = params.get('left'); const wantedRight = params.get('right');
+      if (runs.some((run: any) => run.id === wantedLeft)) leftSelect.value = wantedLeft;
+      if (runs.some((run: any) => run.id === wantedRight) && wantedRight !== leftSelect.value) rightSelect.value = wantedRight;
+      render();
+    };
+    const panel = (runId: string, side: string) => {
+      const run = data.runs.find((entry: any) => entry.id === runId); if (!run) return `<div class="missing-panel"><span>02</span><p>${esc(data.labels.unavailable)}</p></div>`;
+      const task = data.tasks.find((entry: any) => entry.id === run.taskId); const model = data.models.find((entry: any) => entry.id === run.modelId);
+      const artifact = `${compareRoot.dataset.base?.replace(/\/(zh|en)\/$/, '/') || '/'}artifacts/${run.id}/${run.artifact.entry}`;
+      const visual = run.artifact.type === 'svg' ? `<img src="${esc(artifact)}" alt="${esc(task.title[compareRoot.dataset.locale])}">` : `<iframe src="${esc(artifact)}" sandbox="${esc(run.artifact.preview.sandbox)}" title="${esc(task.title[compareRoot.dataset.locale])}"></iframe>`;
+      return `<article class="comparison-panel"><span class="eyebrow">${esc(side)} · ${esc(run.id)}</span><h2>${esc(model.name)}</h2><div class="compare-preview">${visual}</div><dl><div><dt>${esc(data.labels.duration)}</dt><dd>${esc(run.metrics.durationLabel)}</dd></div><div><dt>${esc(data.labels.tokens)}</dt><dd>${new Intl.NumberFormat().format(run.metrics.totalTokens)}</dd></div><div><dt>API</dt><dd>${esc(run.metrics.apiCalls)}</dd></div><div><dt>Tools</dt><dd>${esc(run.metrics.toolCalls)}</dd></div></dl><a href="${esc(compareRoot.dataset.base)}runs/${esc(run.id)}/">${esc(data.labels.view)} →</a></article>`;
+    };
+    const render = () => {
+      if (rightSelect.value === leftSelect.value) rightSelect.value = '';
+      leftPanel.innerHTML = panel(leftSelect.value, '01'); rightPanel.innerHTML = panel(rightSelect.value, '02');
+      notice.hidden = runsFor().length > 1;
+      const next = new URL(location.href); next.searchParams.set('task', taskSelect.value); next.searchParams.set('left', leftSelect.value); rightSelect.value ? next.searchParams.set('right', rightSelect.value) : next.searchParams.delete('right'); history.replaceState({}, '', next);
+    };
+    taskSelect.addEventListener('change', fill); leftSelect.addEventListener('change', render); rightSelect.addEventListener('change', render);
+    compareRoot.querySelector('[data-share]')?.addEventListener('click', async (event) => { await navigator.clipboard.writeText(location.href); const button = event.currentTarget as HTMLButtonElement; const old = button.textContent; button.textContent = data.labels.copied; setTimeout(() => button.textContent = old, 1400); });
+    fill();
+  }
+</script>

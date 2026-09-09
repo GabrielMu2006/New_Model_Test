@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import { href, type Locale } from '../lib/catalog';
+interface Props { locale: Locale; title: string; description?: string; alternatePath?: string; }
+const { locale, title, description = '', alternatePath = '' } = Astro.props;
+const other: Locale = locale === 'zh' ? 'en' : 'zh';
+const copy = locale === 'zh' ? {
+  brand: '模型评测档案', home: '概览', phases: '阶段', models: '模型', tasks: '任务', compare: '对比', method: '方法', skip: '跳到主要内容', language: 'English', source: 'GitHub 仓库'
+} : {
+  brand: 'Model Evaluation Archive', home: 'Overview', phases: 'Phases', models: 'Models', tasks: 'Tasks', compare: 'Compare', method: 'Methodology', skip: 'Skip to content', language: '中文', source: 'GitHub repository'
+};
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <title>{title} · {copy.brand}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{copy.skip}</a>
+    <header class="site-header">
+      <a class="brand" href={href(locale)} aria-label={copy.brand}>
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><strong>{copy.brand}</strong><small>ARCHIVE / 001</small></span>
+      </a>
+      <nav aria-label={locale === 'zh' ? '主导航' : 'Primary navigation'}>
+        <a href={href(locale)}>{copy.home}</a>
+        <a href={href(locale, 'phases/')}>{copy.phases}</a>
+        <a href={href(locale, 'models/')}>{copy.models}</a>
+        <a href={href(locale, 'tasks/')}>{copy.tasks}</a>
+        <a href={href(locale, 'compare/')}>{copy.compare}</a>
+        <a href={href(locale, 'methodology/')}>{copy.method}</a>
+      </nav>
+      <div class="header-actions">
+        <a class="lang-switch" href={href(other, alternatePath)} data-language-switch>{copy.language}</a>
+        <a class="icon-link" href="https://github.com/GabrielMu2006/New_Model_Test" target="_blank" rel="noopener" aria-label={copy.source}>↗</a>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <footer>
+      <span>{copy.brand} · 2026</span>
+      <span>{locale === 'zh' ? '忠实引用归档来源，不生成综合排名。' : 'Source-faithful archive. No synthetic leaderboard.'}</span>
+    </footer>
+    <script is:inline>
+      (() => {
+        const switcher = document.querySelector('[data-language-switch]');
+        // @ts-ignore plain inline browser script
+        if (switcher && location.search) switcher.href += location.search;
+      })();
+    </script>
+  </body>
+</html>
