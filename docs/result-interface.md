@@ -47,7 +47,7 @@ Muse-Spark 例外（组织者 2026-09-09 决定）：`Test_Results/Muse-Spark-1.
 | 版本证据 | source.commit + 该提交内 source.path；本地尚未提交可暂 null，但不可把不存在的 SHA/path 当作已验证公开链接 |
 | 运行关系 | parentRunId、重试/修复原因；没有则 null；不可覆写父运行 |
 | 状态 | completed/partial/failed/timeout/infrastructure-error，含失败和未完成输出 |
-| 隔离 | isolation.level、实际执行环境、只读输入清单、挂载/网络白名单、开测前探针结果、共享上下文情况 |
+| 隔离 | isolation.level、实际执行环境、只读输入清单、网络规则、共享上下文情况 |
 | 污染 | contamination.status 为 clean/suspected/contaminated/unknown，事件和证据来源；clean 只针对声明的本轮控制措施 |
 | 测试证据 | command、cwd（不泄露私有宿主路径）、环境、日期、通过/失败/跳过、证据路径和限制；历史自述另列 |
 | 评价 | 独立 reviewId、runId、human/ai、作者、日期、双语结论/原文、评分及 scoreMethod、证据位置；译文显式标记 |

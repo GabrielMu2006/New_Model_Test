@@ -91,18 +91,17 @@
 
 ### 4.1 后续阶段测试的隔离方案（2026-09-09 决定）
 
-- **采用**：`test-workspace/AGENTS.md` 绝对规则 + 组织者开测前探针 + 事后会话日志审计；隔离等级统一记为 `workspace-only`。
-- **不要求**每次另建独立用户或容器；环境级隔离（独立标准用户 / 容器）保留为可选升级路径。
-- **标注要求**：每个 run 记录 `isolation.level`、网络策略、探针结果、`contamination.status`；展示时附「策略级约束 + 事后审计」，不得写成「强制隔离」或「无污染」。
-- **统计要求**：有审计结果的 `workspace-only` 运行可计入本阶段汇总；无审计结果的不计入；审计发现越界的记 `suspected`/`contaminated` 并排除，报告排除数量。
+- **采用**：`test-workspace/AGENTS.md` 两条绝对规则（不读当前目录以外的内容、不查询任何仓库）+ 收尾审查工具调用与统计；隔离等级统一记为 `workspace-only`。
+- **不跑探针、不另建独立用户或容器**；组织 agent 不得就隔离方案向用户征询意见（用户主动要求时除外）。
+- **标注要求**：每个 run 记录 `isolation.level`、网络策略与 `contamination.status`；展示时附「策略级约束 + 事后审查」，不得写成「强制隔离」或「无污染」。
+- **统计要求**：审查覆盖「越界读取 + 仓库查询 + 时间/token/工具调用核对」的运行可计入汇总；发现越界的记 `suspected`/`contaminated` 并排除，报告排除数量。
 - **诚实边界**：该方案挡手滑、可取证，挡不住有意读取；DSH 沙箱只限制写、不限制读（详见 `docs/testing-protocol.md` 第 8 节）。
 - **操作手册**：`test-workspace/README.md`。
 
 ### 4.2 被测会话规则文件的写法
 
 - 给被测会话的文件只写**绝对规则**，不得包含「这是策略级约束」「技术上你其实能读到」「去探测边界」等表述；
-- 探针由**组织者**执行，不写进被测会话的指令；
-- 隔离效力、探针、审计等说明只写在组织者文件中（`test-workspace/README.md`、`docs/testing-protocol.md`、`PLAN.md`）。
+- 隔离效力与收尾审查的说明只写在组织者文件中（`test-workspace/README.md`、`docs/testing-protocol.md`、`PLAN.md`）。
 - 被测规则必须显式禁止**查询任何仓库**（本地其他仓库、远端仓库、代码托管平台、代码搜索与包管理器源码拉取），审计也必须把「仓库查询」列为必查维度。
 
 ## 5. 相关记录
@@ -110,4 +109,4 @@
 - `docs/verification.md`：门禁与公网验证记录（修复后在此追加）。
 - `docs/source-audit.md`：来源映射与保留的分歧。
 - `docs/result-interface.md`、`docs/adding-results.md`：后续接入字段与步骤。
-- `test-workspace/README.md`：测试工作区启动方案（隔离、探针、汇总、归档）。
+- `test-workspace/README.md`：测试工作区标准流程（建脚手架 → 逐题测试 → 收尾审查与归档）。

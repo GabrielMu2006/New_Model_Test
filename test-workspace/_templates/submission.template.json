@@ -87,7 +87,6 @@
     "network": null,
     "repositoryReachability": "<unreachable | partial | reachable>",
     "repositoryBlocking": null,
-    "probeResultPath": "runs/<run-id>/evidence/_probe.txt",
     "sharedContext": false
   },
   "contamination": {

@@ -56,12 +56,12 @@ website/ docs/ .git/
 - 禁止访问**任何代码仓库**：本仓库的 GitHub/原始文件/Actions artifacts、其他模型或项目的仓库、代码托管平台（GitHub/GitLab/Gitee 等）及其镜像、fork、缓存快照；禁止执行 `git clone`/`fetch`/`pull`/`ls-remote`/`gh` 等仓库操作，也禁止通过包管理器或代码搜索拉取仓库源码。
 - 禁止访问 VibeTest 网站、其他参赛结果及其镜像；禁止通过搜索摘要、网页缓存、代理、翻译服务、代码搜索、剪贴板、MCP connector、共享聊天记录或其他 agent 间接取答案。
 - 不向被测环境提供 GitHub token、私人搜索索引、宿主浏览器登录态或共享向量库。需要模型 API 时由外部 harness 代理，不能把组织者通用凭据挂进去。
-- 网络白名单应由环境/网关执行并记录请求，不能只要求模型自觉遵守。隔离完成后，组织者用无敏感内容的探针验证：只读输入不能改、仓库与兄弟工作区不能读、禁止网络目的地不能访问。
+- 网络白名单应由环境/网关执行并记录请求，不能只要求模型自觉遵守。本仓库当前不采用探针验证，改为在收尾审查中按日志判定是否发生越界访问与仓库查询。
 - 不能保证严格联网隔离时如实标注 `network-policy-only` 或其他实际限制；该组成绩与有技术隔离保障的组分开描述。
 
 ## 5. 执行与封存
 
-1. 建立新 runId；确认输入清单、预算、只读挂载和网络规则。记录探针结果，不通过不能宣称清洁隔离开始。
+1. 建立新 runId；确认输入清单、预算与网络规则。
 2. 启动全新会话，只传入允许输入。禁止跨模型共享提示、失败经验、解题代码和隐藏测试反馈。
 3. 记录所有追加指令、工具调用、拒绝访问、失败、重试、时间/token 口径；日志含敏感内容时封存完整证据，发布单独脱敏副本。
 4. 到达终止条件即停止模型和后台工具，封存输出并计算 SHA-256。保留未完成作品，不在采集阶段修补。
@@ -91,19 +91,19 @@ website/ docs/ .git/
 
 `test-workspace/` 是测试脚手架：维护 agent 按题目数量生成 `phase-NN/task-NN-<slug>/`，每题目录内含逐字 `prompt.txt`、隔离规则 `AGENTS.md`、可选只读 `assets/`；组织者在该目录逐题开新会话测试；测试结束后汇总并归档到 `Test_Results/`。完整操作见 [`test-workspace/README.md`](../test-workspace/README.md)，被测会话的约束见 [`test-workspace/AGENTS.md`](../test-workspace/AGENTS.md) 与 `_templates/task-AGENTS.md`。
 
-**当前决定（2026-09-09）**：后续阶段测试统一采用本方案，隔离等级记为 `workspace-only`，并配套组织者探针与事后日志审计；不再要求每次另建独立用户或容器。环境级隔离保留为可选升级路径。
+**当前决定（2026-09-09）**：后续阶段测试统一采用本方案，隔离等级记为 `workspace-only`，配套收尾日志审查。**不跑探针、不另建独立用户或容器，也不再就隔离方案征询用户意见。**
 
 **必须如实认识这套方案的效力边界**（本仓库已实测并记录）：
 
 - `AGENTS.md` 属于**策略级约束**，是"请求模型不要看"，不是"模型看不到"。被测会话可以在技术上忽略它；它挡手滑，挡不住有意读取。
 - DSH 当前的文件沙箱（`read-only` / `workspace-write` / `danger-full-access`）**只围栏写入与编辑，读取始终直接通过**；macOS 上实际执行的 Seatbelt profile 为 `(allow default)(deny file-write*)…`，白名单只加在写操作上。`dsh-tool-fs` 的配置项只有读取大小上限，没有路径白/黑名单；`read`/`glob`/`grep` 工具不经过沙箱。
 - 因此 `workspace-only` 的结论只能写「策略级约束 + 事后审计」，**不得**表述为「强制隔离」「无污染」。
-- 可选升级路径（需要更强结论时）：任务目录放到**仓库之外**并配合**独立标准用户**（本仓库已验证：仓库位于权限 700 的 `Documents` 之下，其他标准用户无法进入），或使用**容器/虚拟机**（DSH 可用官方 CLI 的 headless 模式运行，使文件与 shell 能力都落在容器内）。
+- 该限制属于**已知事实记录**，不是行动项：除非用户主动要求，不提议升级到独立用户或容器。
 
-**统计口径**：`workspace-only` 的运行**可以**计入本阶段汇总，但必须同时满足——① 每个 run 在 `PLAN.md` 与档案中写明 `isolation.level`、网络策略、探针结果与 `contamination.status`；② 事后审计结果与该 run 一并归档；③ 每处展示附带「策略级约束 + 事后审计」标注。缺少审计结果的运行不得计入汇总；审计发现越界的运行记 `suspected`/`contaminated`，排除出汇总并报告数量。
+**统计口径**：`workspace-only` 的运行**可以**计入本阶段汇总，但必须同时满足——① 每个 run 在 `PLAN.md` 与档案中写明 `isolation.level`、网络策略与 `contamination.status`；② 事后审计结果与该 run 一并归档；③ 每处展示附带「策略级约束 + 事后审计」标注。缺少审计结果的运行不得计入汇总；审计发现越界的运行记 `suspected`/`contaminated`，排除出汇总并报告数量。
 
-**给被测会话的文件只写绝对规则**：`test-workspace/AGENTS.md` 与 `_templates/task-AGENTS.md` 不得包含「这是策略级约束」「技术上你其实能读到」「去探测边界」之类的表述——那会把越界方法直接写给被测模型；探针必须由**组织者**在开测前执行并把输出存为 `_probe.txt`。关于隔离效力、探针、审计的说明只写在组织者文件（`test-workspace/README.md`、本文件、`PLAN.md`）中。
+**给被测会话的文件只写绝对规则**：`test-workspace/AGENTS.md` 与 `_templates/task-AGENTS.md` 不得包含「这是策略级约束」「技术上你其实能读到」「去探测边界」之类的表述——那会把越界方法直接写给被测模型；关于隔离效力与审查的说明只写在组织者文件（`test-workspace/README.md`、本文件、`PLAN.md`）中。
 
-**事后审计是配套取证，不是替代品**。DSH 会话日志（`session.jsonl.zstd`）记录 `tool/call`、`tool/result`、PTC 模式下 `run_code` 内嵌的 `tools.*` 调用、`sandbox/mode`、`approval/policy` 与推理文本；审计应覆盖工具清单、工作区外绝对路径、网络命令与越界读写，并与组织者写入的各任务 `_probe.txt` 交叉核对。审计结论只能写「未发现越界」，并注明未覆盖渠道（如训练数据、外部搜索无法验证）；审计不得由被测模型自评。
+**事后审计是配套取证，不是替代品**。DSH 会话日志（`session.jsonl.zstd`）记录 `tool/call`、`tool/result`、PTC 模式下 `run_code` 内嵌的 `tools.*` 调用、`sandbox/mode`、`approval/policy` 与推理文本；审查应覆盖工具清单、工作区外绝对路径、仓库查询与越界读写。审计结论只能写「未发现越界」，并注明未覆盖渠道（如训练数据、外部搜索无法验证）；审计不得由被测模型自评。
 
-任何使用本方案的运行，必须在 `PLAN.md` 与最终档案中记录：`isolation.level`、实际执行环境、网络策略、探针结果、`contamination.status`（默认 `unknown`/`suspected`，除非有环境级证据支持更强结论）。
+任何使用本方案的运行，必须在 `PLAN.md` 与最终档案中记录：`isolation.level`、实际执行环境、网络策略、`contamination.status`（默认 `unknown`/`suspected`，除非有环境级证据支持更强结论）。
