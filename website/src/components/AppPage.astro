@@ -6,6 +6,7 @@ import {
   asset, assessmentsForModel, batchForModel, catalog, compact, duration, href, modelById, number,
   reviewsFor, runById, runCards, runsForModel, runsForTask, sourceUrl, taskById, type Locale,
 } from '../lib/catalog';
+import { renderMarkdown } from '../lib/markdown';
 
 interface Props { locale: Locale; path: string; }
 const { locale, path } = Astro.props;
@@ -137,7 +138,7 @@ const metricItems = (run: (typeof catalog.runs)[number]) => [
         {currentRun.contamination && <div class="config-line"><span>{labels.contamination}</span><b>{contaminationLabels[currentRun.contamination.status]?.[locale] ?? currentRun.contamination.status}</b>{currentRun.contamination.note && <small>{currentRun.contamination.note}</small>}</div>}
       </section>
       <section class="section-block"><div class="section-heading"><div><span class="eyebrow">INDEPENDENT SOURCES</span><h2>{labels.reviews}</h2></div></div>
-        <div class="review-grid">{reviews.map((review) => <article class={`review-card ${review.type}`}><div class="review-meta"><span>{review.type === 'human' ? labels.human : labels.ai}</span>{review.score != null && <strong>{review.score}/100</strong>}</div><h3>{review.conclusion[locale]}</h3><p>{review.body[locale]}</p>{review.translated === false && <small>{labels.translationNote}</small>}{review.translated === true && review.type === 'human' && <small>{labels.translatedNote}</small>}{review.type === 'ai' && <small>{labels.disclaimer}</small>}<a href={github(review.source.path, review.source.lines, currentRun.artifact.commit)} target="_blank" rel="noopener">{review.authorLabel} ↗</a></article>)}</div>
+        <div class="review-grid">{reviews.map((review) => <article class={`review-card ${review.type}`}><div class="review-meta"><span>{review.type === 'human' ? labels.human : labels.ai}</span>{review.score != null && <strong>{review.score}/100</strong>}</div><h3>{review.conclusion[locale]}</h3><div class="review-body" set:html={renderMarkdown(review.body[locale])} />{review.translated === false && <small>{labels.translationNote}</small>}{review.translated === true && review.type === 'human' && <small>{labels.translatedNote}</small>}{review.type === 'ai' && <small>{labels.disclaimer}</small>}<a href={github(review.source.path, review.source.lines, currentRun.artifact.commit)} target="_blank" rel="noopener">{review.authorLabel} ↗</a></article>)}</div>
       </section>
       <section class="source-card"><span>{labels.archive}</span><code>{currentRun.artifact.commit}</code><a href={github(currentRun.artifact.sourcePath, undefined, currentRun.artifact.commit)} target="_blank" rel="noopener">{currentRun.artifact.sourcePath} ↗</a></section>
     </section>;

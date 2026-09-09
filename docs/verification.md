@@ -9,6 +9,7 @@
 - 门禁：`import:data`、`validate:data`（2 模型/15 任务/30 运行/60 评价/2 批次/2 评估，含首批 15/15/30 回归）、`check`（0 errors / 0 warnings / 1 hint）、`npm test`（5/5）、`build`（110 页 + 26 个 HTML 成果，静态链接检查通过）全部通过。
 - 浏览器验证：`test:e2e` 在 Chromium 与 WebKit 通过——任务搜索命中两模型、模型筛选收敛、英文详情直达、双语验收建议、同题双运行对比恢复、懒加载预览、Muse 运行页两条评价 + 隔离/污染/事后补录标注、390/768/1440 无横向溢出、30/30 成果入口加载；Muse 计算器（ES module）经 HTTP 服务计算 1+2=3 正确。本机 Firefox 仍因沙箱 `Target crashed` 未纳入，需 CI 或容器复跑。
 - 封面：新增 `scripts/capture-covers.mjs`（手动运行，不入 CI），为 9 个 Muse HTML 成果生成封面图并入库；SVG 成果直接渲染，无需封面。
+- 评价正文改为 Markdown 渲染：新增 `src/lib/markdown.ts`（先转义再解析，不引入新依赖），支持段落/列表/粗体/斜体/行内代码/链接/引用/标题；链接仅允许 http(s)、mailto 与相对路径。单元测试覆盖渲染、HTML 转义与链接白名单（`tests/markdown.test.mjs`，Node 原生类型剥离直接导入 .ts），e2e 增加「AI 评价列表与行内代码已渲染、原始 HTML 未被注入」断言。
 - 发布记录：提交 `28c4af8` 已推送 `main`；Actions run `34338087847` 构建与 Pages 部署成功。发布前创建并推送回退标签 `website-rollback-20260909-405a957`（指向上一成功部署提交 `405a957`，run 34337020609）。
 - 公网核验（2026-09-09，匿名 HTTPS）：`/zh/`、`/en/`、`/zh/models/`、`/zh/models/muse-spark-1-3/`、`/zh/runs/run-muse-spark-1-3-task-06-r1/`、`/zh/compare/?task=task-06&left=<DeepSeek>&right=<Muse>`、`/zh/methodology/`、`/artifacts/run-muse-spark-1-3-task-12-r1/index.html` 及第一阶段运行页均返回 200。首页含两个模型与 `2 MODELS`、`12 SVG / 18 HTML`；Muse 运行页含「事后补录」「workspace-only」「73/100」与两类评价。
 

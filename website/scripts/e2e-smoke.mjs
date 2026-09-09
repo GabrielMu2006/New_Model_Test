@@ -40,6 +40,12 @@ try {
     const runText = await page.locator('.detail-page').textContent();
     if (!runText?.includes('workspace-only')) throw new Error(`${name}: isolation level missing`);
     if (!runText?.includes('事后补录')) throw new Error(`${name}: prompt provenance missing`);
+    // 评价正文按 Markdown 渲染，且原始 HTML 必须被转义
+    const aiCard = page.locator('.review-card.ai').first();
+    if (await aiCard.locator('ul li').count() < 1) throw new Error(`${name}: AI review markdown list not rendered`);
+    if (await aiCard.locator('code').count() < 1) throw new Error(`${name}: AI review inline code not rendered`);
+    const aiHtml = await aiCard.innerHTML();
+    if (aiHtml.includes('<title>') || aiHtml.includes('<desc>')) throw new Error(`${name}: raw HTML not escaped in review body`);
 
     for (const width of [390, 768, 1440]) { await page.setViewportSize({ width, height: 900 }); await page.goto(`${base}/zh/`); if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)) throw new Error(`${name}: horizontal overflow at ${width}`); }
     if (errors.length) throw new Error(`${name}: console errors: ${errors.join('; ')}`); await browser.close();

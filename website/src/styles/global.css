@@ -8,3 +8,12 @@
 .filter-panel{grid-template-columns:2fr 1fr 1fr}
 @media(max-width:900px){.filter-panel{grid-template-columns:1fr 1fr}.batch-table{grid-template-columns:1fr}}
 @media(max-width:560px){.filter-panel{grid-template-columns:1fr}}
+.review-body{color:#c5d4d0}
+.review-body p{margin:.5rem 0}
+.review-body ul,.review-body ol{margin:.5rem 0 1rem;padding-left:1.2rem}
+.review-body li{margin:.3rem 0}
+.review-body code{background:#07100f;border:1px solid var(--line);padding:.05rem .32rem;font:600 .78em ui-monospace,SFMono-Regular,monospace;border-radius:3px;overflow-wrap:anywhere}
+.review-body h4,.review-body h5,.review-body h6{margin:.9rem 0 .4rem;font-size:1rem}
+.review-body blockquote{border-left:3px solid var(--line);margin:.6rem 0;padding-left:.8rem;color:var(--muted)}
+.review-body hr{border:0;border-top:1px solid var(--line);margin:1rem 0}
+.review-body a{color:var(--acid)}
