@@ -7,7 +7,8 @@
 - 门禁实测：`import:data`、`validate:data`、`check`（0 errors / 0 warnings / 3 既有 hints）、`npm test`（3/3）、`build`（78 个生成页 + 17 个 HTML 成果，静态链接检查通过）全部通过。
 - 浏览器验证：`test:e2e` 在 Chromium 与 WebKit 下全流程通过（搜索、英文详情直达、对比深链恢复、懒加载预览、390/768/1440 无横向溢出、Breakout 交互、PNG 下载、15/15 成果入口）。本机 Firefox 在 Playwright 下 `browser.newPage: Target crashed`（沙箱环境限制，非代码问题），三浏览器全套待 CI 或容器复跑。
 - 产物核对（dist 实测）：`/en/tasks/task-01|06|15/` 验收建议各 4 条；`/zh/runs/…task-01|02|05|10-r1/` 人工评价标题分别为「通过 · 细节待改进 / 通过 · 存在疑点 / 通过 · 有瑕疵 / 通过 · 有 BUG」；`/en/runs/…task-01-r1/` AI 评价显示「Original Chinese verdict (not translated): 直接通过」。
-- 发布状态：**未推送**。本次执行环境无法访问 `github.com`（`api.github.com` 可达、`github.com` 连接超时，`git push`/`git ls-remote` 均挂起），因此提交、回退标签与线上核验待网络可达后执行。本地已创建回退标签 `website-rollback-20260909-dba1c39`（指向上一成功部署 `dba1c39`，Actions run 34321767657）。
+- 发布记录：提交 `51f497c`（缺陷修复）与 `6446a98`（测试脚手架与隔离文档）已推送 `main`；Actions run `34335478066` 构建与 Pages 部署成功。发布前创建并推送回退标签 `website-rollback-20260909-dba1c39`，指向上一成功部署提交 `dba1c39`（Actions run 34321767657）。
+- 公网核验（2026-09-09，匿名 HTTPS，带缓存绕过）：`/en/tasks/task-01|06|15/` 验收建议各 4 条（修复前为空）；`/zh/runs/…task-01|02|05|10-r1/` 人工评价标题分别为「通过 · 细节待改进 / 通过 · 存在疑点 / 通过 · 有瑕疵 / 通过 · 有 BUG」（修复前为空）；`/en/runs/…task-01-r1/` AI 评价显示「Original Chinese verdict (not translated): 直接通过」。均返回 HTTP 200。
 
 ## 2026-09-09 目录与维护规范整理
 
