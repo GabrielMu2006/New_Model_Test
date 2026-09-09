@@ -5,7 +5,7 @@
 
 [中文](#中文说明) · [English](#english)
 
-**公开展示站 / Public showcase:** https://gabrielmu2006.github.io/New_Model_Test/
+**公开展示站 / Public showcase:** https://gabrielmu2006.cn/New_Model_Test/
 
 浏览双语任务、真实成果预览、运行指标、独立评价来源与同题对比。Browse bilingual tasks, live artifacts, run metrics, independent reviews, and same-task comparisons.
 
