@@ -20,6 +20,9 @@
 - 门禁实测（Node 24.19.0，本机）：`import:data`（确定性，重跑与现有 `catalog.json` 一致）、`validate:data`、`check`（0 errors / 0 warnings / 1 hint）、`npm test`（**21/21**，新增 4 个用例）、`build`（174 页 + 43 个 HTML 成果，静态链接检查通过，**源码链接检查 796/796 全部存在于其固定提交**）、`test:e2e` 在 Chromium 与 WebKit 通过（55/55 成果入口）。本机 Firefox 仍为 `browser.newPage: Target crashed`（既有环境限制，待 CI 复跑）。
 - 交叉核验：全站溢出扫描 132 个「页面 × 宽度」组合 **0 溢出**（修复前对比页任何宽度都溢出）；155 个页面控制台与失败请求 **0 错误**；线上站点与修复前构建逐字节一致，故上述缺陷均已存在于生产。
 - 未处理项（需组织者决定，已记入 `known-issues.md` 第 6 节）：`suspected` 是否外显、模型列表显示哪个阶段评分、首页信号卡分母口径、时长格式、归档预览说明能否补译文、重复运行在任务网格的呈现、封面脚本接入方式。
+- 发布记录：修复提交 `8a9feb4` 推送 `main`；发布前创建不可变回退标签 `website-rollback-20260910-e699c95`，指向最近一次已成功部署且公网验证通过的提交 `e699c95`（Actions run `34449096652`）。本次 Actions run `34455303339` 构建与 Pages 部署成功（CI 内跑通 `npm run build`，含新增的源码链接提交级校验——浅克隆会在该步报错，两个 workflow 已设 `fetch-depth: 0`）。
+- 公网核验（2026-09-10，匿名 HTTPS）：`/`、`/zh/`、`/en/`、`/zh/tasks/`、`/zh/tasks/task-16/`、对比深链、`/zh/runs/run-muse-spark-1-3-task-06-r1/`、`/en/runs/run-gpt-5-6-sol-task-01-r1/`、`/zh/phases/phase-02/`、`/zh/models/muse-spark-1-3/`、`/zh/methodology/`、成果入口均 200；未知运行路径返回 404 并显示新的 404 页（含入口链接）。线上 `zh/compare`、`zh/tasks/task-16`、`zh/runs/…task-06-r1`、`zh/models/muse-spark-1-3`、`zh/index` 与本次构建产物**逐字节一致**。
+- 公网行为复核（Chromium + WebKit 直连线上）：对比页在 390/768/1440 **无横向溢出**且显示「Token 过路量 未记录」（修复前为 0）、默认右侧面板显示「请选择右侧运行以开始对比」；任务列表按「Muse」搜索命中且仅命中 `muse-spark-1-3`；模型下拉显示三个模型名（修复前为 `[object Object]`）；中文运行页不再出现英文专属的「原文为中文，未提供英译」。修复前 404 的三个源码链接（`codex-v1` 逐题评价、两批 phase-02 的 `README.md`）在 github.com 实测返回 **200**。
 
 ## 2026-09-10 测试工作区规则：禁止提交与网站改动
 

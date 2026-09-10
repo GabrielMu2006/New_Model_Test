@@ -33,6 +33,7 @@
 | 6.5 | 成果预览说明的语言 | phase-01 的说明由适配器撰写（可双语），phase-02 的说明来自归档 `submission.json`（属归档数据）；给归档文本补译文需要先定「展示层是否可添加译文」的口径 |
 | 6.6 | 重复运行（r2+）在任务网格中的呈现 | `runCards()` / 题图取首条运行，同一题同一模型的 r2 运行目前不出现在任何列表；需要定卡片是「一题一卡」还是「一运行一卡」 |
 | 6.7 | `capture-covers.mjs` 的接入方式 | 缺封面会让 `check-dist` 构建失败，而该脚本未进 CI；需要定「封面在 CI 生成」还是「归档时必须带截图」 |
+| 6.8 | E2E 是否纳入 CI | `website-check.yml` / `website-deploy.yml` 只跑 import/validate/check/test/build，**未跑 `test:e2e`**，浏览器流程目前只在本地验证；`AGENTS.md` 提到 Linux CI 需 `npx playwright install --with-deps`，但未接线。接线会增加 CI 时长与失败面（本机 Firefox 也会崩），需组织者决定是否接受 |
 
 ## 1. 展示站数据缺陷（DeepSeek Phase 1）——✅ 已修复
 
