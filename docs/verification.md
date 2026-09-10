@@ -2,16 +2,16 @@
 
 ## 2026-09-10 建立并行测试副本（同时测多个模型）
 
-- 需求：在不改动正在运行的 `test-workspace/`（其中 task-16～19 已有成果）的前提下，复制出两份**只含初始文档**的工作区，用于同时测试多个模型。
-- 产物：`test-workspace-2/`、`test-workspace-3/`（各 67 个文件）。每份含 `AGENTS.md`、`README.md`、`_templates/`（3 个）、`_tools/set-model.mjs`、`phase-02/PLAN.md`，以及 30 个 `task-NN-<slug>/`——**每题仅 `AGENTS.md` + `prompt.txt`**。
-- 逐项校验：两副本每题目录内非初始文档文件数 0；60 个 `prompt.txt` 与 `test-workspace/` 逐字节 `cmp` 全部一致（30 + 30）；副本内无 `.DS_Store`、无 `run-deepseek` 残留、无 `test-workspace/` 旧路径残留。
-- 规则可比性：副本 `AGENTS.md` 与被测规则第 1–8 节与 `test-workspace/` **逐字相同**（`sed -n '/^## 1\./,$p'` 后 `cmp` 通过）；仅替换路径头部与本题元信息（taskId / runId / 哈希）。三个副本的规则文本一致，便于成绩横向比较。
-- 模型绑定：副本**不预置模型**，每题 runId 为占位符 `run-<模型slug>-task-NN-r1`。组织 agent 开测前须询问用户本次副本的模型标识，再执行 `node _tools/set-model.mjs <模型slug> "<显示名>" --harness "<harness / 版本>"`，一次性写入 runId、`PLAN.md` 的模型 / harness / 开测时间字段，并生成 `.binding.json` 留痕。
-- 脚本实测（临时目录冒烟，未污染真实副本）：2 题目录 + PLAN 正确改写；重复绑定报错退出（需 `--force`）；非法 slug（含空格、大写）报错退出；改写后第 1–8 节规则与源逐字一致。真实副本保持未绑定状态（各 31 处业务占位符 + README / 模板 / 脚本中的说明性出现）。
-- 审计补强：`docs/audit-method.md` 新增 **4.11 同题并行副本（多副本并行时必查项）**，`checkedDimensions` 增加 `"siblingWorkspaces"`；`docs/testing-protocol.md` 第 8 节新增并行副本小节。理由是副本让「同题成果就在隔壁」，读取其他副本即记越界。
+- 需求：在不改动正在运行的 `test-workspace/`（其中 task-16～19 已有成果）的前提下，复制出两份工作区，用于同时测试多个模型。
+- 产物：`test-workspace-2/`、`test-workspace-3/`（各 **5 个文件**）。每份只有**框架**：`AGENTS.md`（被测规则）、`README.md`（组织手册）、`_templates/`（`PLAN.template.md`、`task-AGENTS.md`、`submission.template.json`）。
+- **不预置内容**：两个副本**没有** `phase-NN/` 目录、没有题目、没有 `prompt.txt`、没有模型、没有成果。测哪个阶段、哪些题、哪个模型，由组织 agent 在步骤 0 询问用户后按 `_templates/` **现场生成**，避免把不相干的题带进工作区（用户 2026-09-10 指出）。
+- 修正记录：初版复制曾一并带入 `phase-02/` 的 30 个任务目录（`AGENTS.md` + `prompt.txt`）与 `_tools/set-model.mjs`，假定副本用于第二阶段；该假设不成立，已删除并重建为纯框架（`phase-02/`、`_tools/` 均已移除）。提交 `642525b`、`2c3d730` 记录的是初版状态，本条为修正后的实际状态。
+- 规则可比性：副本 `AGENTS.md` 的第 1–8 节与 `test-workspace/AGENTS.md` **逐字相同**（`sed -n '/^## 1\./,$p'` 后 `cmp` 通过），只替换了路径头部（`test-workspace-2/README.md` 等）。三个工作区的规则文本一致，便于成绩横向比较。
+- 生成方式：副本 `README.md` 的步骤 0 写明「询问用户 phase / 题目范围 / 模型标识 / harness / 预算（**不问隔离方案**）」，步骤 1 用 `_templates/` 生成 `phase-NN/task-NN-<slug>/` 与 `PLAN.md`，`runId` 直接用确认后的模型 slug 写入，不留占位符。
+- 审计补强：`docs/audit-method.md` 新增 **4.11 同题并行副本（多副本并行时必查项）**（`checkedDimensions` 增加 `"siblingWorkspaces"`），`docs/testing-protocol.md` 第 8 节新增并行副本小节。理由是副本让同阶段成果可能就在隔壁，读取其他副本即记越界。
 - `.gitignore` 增加 `test-workspace-*/`：副本整份不入库，成果仍须归档到 `Test_Results/` 后提交。`test-workspace/` 未做任何改动（只读复制）。
-- 发布记录：提交 `642525b` 推送 `main`；发布前创建并推送不可变回退标签 `website-rollback-20260910-400c3cf`，指向上一已成功部署且公网验证通过的提交 `400c3cf`（本次为纯文档 + `.gitignore` 变更，站点内容无变化）。
-- 门禁与公网核验：本次为纯文档变更，按 AGENTS.md 只检查目录、链接与命令——`docs/audit-method.md`、`docs/testing-protocol.md` 相对链接 2 条全部存在。Actions run `34429384337` 构建与 Pages 部署成功；匿名 HTTPS 复核 `/`、`/en/`、`/zh/models/`、`/zh/phases/phase-01/`、`/zh/tasks/task-01/`、`/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-01-r1/`、`/en/compare/?runs=…task-01-r1` 均返回 HTTP 200，模型页仍显示 DeepSeek-V4.1-Flash-Exp-0910 与 Muse Spark 1.3 两个模型。
+- 发布记录：提交 `642525b`（副本 + 文档）、`2c3d730`（验证记录）推送 `main`；发布前创建并推送不可变回退标签 `website-rollback-20260910-400c3cf`，指向上一已成功部署且公网验证通过的提交 `400c3cf`（本次为纯文档 + `.gitignore` 变更，站点内容无变化）。
+- 门禁与公网核验：本次为纯文档变更，按 AGENTS.md 只检查目录、链接与命令——`docs/audit-method.md`、`docs/testing-protocol.md` 相对链接 2 条全部存在。Actions run `34429384337` 与 `34429518862` 构建与 Pages 部署均成功；匿名 HTTPS 复核 `/`、`/en/`、`/zh/models/`、`/zh/phases/phase-01/`、`/zh/tasks/task-01/`、`/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-01-r1/`、`/en/compare/?runs=…task-01-r1` 均返回 HTTP 200，模型页仍显示 DeepSeek-V4.1-Flash-Exp-0910 与 Muse Spark 1.3 两个模型。
 
 ## 2026-09-09 归档 Codex 的 Muse 评价并接入网站（第二份 AI 评价）
 

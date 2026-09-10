@@ -91,11 +91,11 @@ website/ docs/ .git/
 
 `test-workspace/` 是测试脚手架：维护 agent 按题目数量生成 `phase-NN/task-NN-<slug>/`，每题目录内含逐字 `prompt.txt`、隔离规则 `AGENTS.md`、可选只读 `assets/`；组织者在该目录逐题开新会话测试；测试结束后汇总并归档到 `Test_Results/`。完整操作见 [`test-workspace/README.md`](../test-workspace/README.md)，被测会话的约束见 [`test-workspace/AGENTS.md`](../test-workspace/AGENTS.md) 与 `_templates/task-AGENTS.md`。
 
-**并行副本（2026-09-10 起，同时测多个模型时）**：复制脚手架得到 `test-workspace-2/`、`test-workspace-3/` 等，每个副本只测一个模型。副本内只放**初始文档**——每题目录仅 `AGENTS.md` + `prompt.txt`，不含任何模型成果；**不预置模型**，开测前由组织 agent **询问用户**本次副本的模型标识，再运行副本内的 `node _tools/set-model.mjs <模型slug> "<显示名>" --harness "<harness / 版本>"` 写入 runId 与 `PLAN.md` 字段（同时写 `.binding.json` 留痕）。未被询问用户、未绑定的副本不得开测。
+**并行副本（2026-09-10 起，同时测多个模型时）**：复制**框架**得到 `test-workspace-2/`、`test-workspace-3/` 等，每个副本只测一个模型。副本初始只有三样东西：被测规则 `AGENTS.md`、组织手册 `README.md`、`_templates/`；**不预置任何 `phase-NN/` 目录、题目、模型或成果**。开测前由组织 agent **询问用户**本次的 phase、题目范围、模型标识（显示名 + slug）、harness 与预算，然后按 `_templates/` **现场生成** `phase-NN/task-NN-<slug>/`（`prompt.txt` 逐字原题 + `AGENTS.md` 第 0 节元信息 + `PLAN.md`），`runId` 直接用确认后的模型 slug 写入，不留占位符。未经询问用户确认参数的副本不得开测。
 
 - 副本的 `AGENTS.md` 与被测规则（第 1–8 节）与 `test-workspace/` **逐字相同**，只改路径头部与元信息（taskId / runId / 哈希），以保证不同模型成绩可比；不得借副本之名放宽规则。
 - 各副本的模型 slug 必须互不相同，否则归档 runId 冲突；每个副本是独立的 workspace 路径，DSH 会话日志按工作区分目录存放，互不重叠。
-- 副本之间互为「当前目录以外的内容」，规则第 1–2 节已覆盖；但因同题成果就在隔壁，收尾审计**必须逐条检查有没有访问本副本以外的副本目录**（`docs/audit-method.md` 4.11），命中即记越界。
+- 副本之间互为「当前目录以外的内容」，规则第 1–2 节已覆盖；但因同阶段成果可能就在隔壁，收尾审计**必须逐条检查有没有访问本副本以外的副本目录**（`docs/audit-method.md` 4.11），命中即记越界。
 - `test-workspace-*/` 已整体加入 `.gitignore`：副本在测试期间不入库，成果归档到 `Test_Results/` 后才提交。
 
 **当前决定（2026-09-09）**：后续阶段测试统一采用本方案，隔离等级记为 `workspace-only`，配套收尾日志审查。**不跑探针、不另建独立用户或容器，也不再就隔离方案征询用户意见。**
