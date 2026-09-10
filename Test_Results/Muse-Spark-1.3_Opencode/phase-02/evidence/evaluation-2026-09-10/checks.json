@@ -1,0 +1,169 @@
+{
+  "generatedAt": "2026-09-10T04:29:53.675Z",
+  "tool": "playwright/chromium (headless), 组织者自建静态服务",
+  "runs": {
+    "task-16": {
+      "runId": "run-muse-spark-1-3-xhigh-task-16-r1",
+      "entry": "pelican-bicycle.svg",
+      "consoleErrors": [],
+      "screenshots": [
+        "task-16-01-initial.png",
+        "task-16-02-paused.png",
+        "task-16-03-resumed.png"
+      ],
+      "observations": {
+        "svg": {
+          "hasRoot": true,
+          "viewBox": "0 0 800 450",
+          "animateCount": 42,
+          "hasPauseApi": true,
+          "controls": {
+            "pause": true,
+            "play": true
+          },
+          "title": "Pelican riding a bicycle",
+          "ariaLabel": "Animated pelican riding a bicycle from left to right"
+        },
+        "movingBeforePause": true,
+        "frozenWhilePaused": true,
+        "movingAfterResume": true,
+        "statusText": "paused"
+      },
+      "probeFailure": null
+    },
+    "task-17": {
+      "runId": "run-muse-spark-1-3-xhigh-task-17-r1",
+      "entry": "index.html",
+      "consoleErrors": [],
+      "screenshots": [
+        "task-17-01-initial.png",
+        "task-17-02-paused.png",
+        "task-17-03-speed-2.5.png"
+      ],
+      "observations": {
+        "dom": {
+          "svgCount": 1,
+          "animateCount": 0,
+          "gearLike": 13,
+          "pause": true,
+          "speed": "1",
+          "hands": [
+            0,
+            0,
+            0
+          ]
+        },
+        "movingBeforePause": true,
+        "frozenWhilePaused": true,
+        "movingAtHigherSpeed": true
+      },
+      "probeFailure": null
+    },
+    "task-18": {
+      "runId": "run-muse-spark-1-3-xhigh-task-18-r1",
+      "entry": "index.html",
+      "consoleErrors": [],
+      "screenshots": [
+        "task-18-01-idle.png",
+        "task-18-02-running.png",
+        "task-18-03-paused.png",
+        "task-18-04-after-reset.png"
+      ],
+      "observations": {
+        "dom": {
+          "canvas": 1,
+          "controls": [
+            "btnStart",
+            "btnPause",
+            "btnResume",
+            "btnReset",
+            "btnStep",
+            "btnStepSlow",
+            "btnSound"
+          ],
+          "speedSlider": true,
+          "hud": "Ready — press Start"
+        },
+        "hudRunning": "Running 1.00× — 1/8 done",
+        "hudPaused": "Paused — Step to inspect handoffs",
+        "hudReset": "Ready — press Start",
+        "frozenWhilePaused": false,
+        "stepChangedHud": false
+      },
+      "probeFailure": null
+    },
+    "task-19": {
+      "runId": "run-muse-spark-1-3-xhigh-task-19-r1",
+      "entry": "index.html",
+      "consoleErrors": [],
+      "screenshots": [
+        "task-19-01-initial.png",
+        "task-19-02-overview.png"
+      ],
+      "observations": {
+        "dom": {
+          "canvas": 1,
+          "viewName": "Solar System",
+          "controls": [
+            "btn-pause",
+            "btn-overview",
+            "btn-focus"
+          ],
+          "speedSlider": true,
+          "timeBadge": "Day 18.0"
+        },
+        "movingBeforePause": true,
+        "frozenWhilePaused": false,
+        "timeAdvancing": true,
+        "timeBefore": "Day 45.4",
+        "timeAfter": "Day 75.5"
+      },
+      "probeFailure": null
+    },
+    "task-20": {
+      "runId": "run-muse-spark-1-3-xhigh-task-20-r1",
+      "entry": "index.html",
+      "consoleErrors": [],
+      "screenshots": [
+        "task-20-01-initial.png",
+        "task-20-02-four-bar.png",
+        "task-20-03-after-drag.png",
+        "task-20-04-crank-slider.png"
+      ],
+      "observations": {
+        "dom": {
+          "canvas": 1,
+          "examples": [
+            "btnExFour",
+            "btnExSlider",
+            "btnNew"
+          ],
+          "io": [
+            "btnSaveFile",
+            "btnLoadFile"
+          ],
+          "tools": [
+            "select",
+            "fixed",
+            "joint",
+            "slider",
+            "track",
+            "link",
+            "delete"
+          ],
+          "hasTests": true
+        },
+        "fourBarMoving": false,
+        "crankSliderMoving": false,
+        "dragProducedChange": true,
+        "canvasBox": {
+          "x": 12,
+          "y": 138.78125,
+          "width": 914,
+          "height": 544
+        }
+      },
+      "probeFailure": null
+    }
+  }
+}

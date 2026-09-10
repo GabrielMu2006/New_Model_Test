@@ -1,0 +1,16 @@
+Create a standalone animated SVG showing a transparent mechanical wristwatch movement.
+
+It should include:
+- hour, minute, and second hands
+- multiple interlocking gears
+- an escapement mechanism
+- an oscillating balance wheel
+- a mainspring or power source
+- realistic relative rotation directions between connected gears
+- different gear rotation speeds
+- pause/resume controls
+- a speed control
+
+The mechanisms must behave as a coherent system rather than as unrelated decorative animations.
+
+Do not use external assets.

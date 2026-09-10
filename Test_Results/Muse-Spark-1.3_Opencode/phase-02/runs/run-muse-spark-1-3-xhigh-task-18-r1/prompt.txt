@@ -1,0 +1,14 @@
+Create an animated interactive Rube Goldberg machine in the browser.
+
+The machine must contain at least eight distinct stages forming one continuous causal chain.
+
+The user should be able to:
+- start the machine
+- pause it
+- resume it
+- reset it
+- step through the simulation slowly
+
+Each stage must visibly cause the next stage rather than merely playing on a fixed independent timer.
+
+Make the result visually polished and satisfying to watch.

@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-09-10T04:31:52.159Z",
+  "runs": {
+    "task-19": {
+      "runningChangedRatio": 0.0141,
+      "pausedChangedRatio": 0.0032,
+      "pausedChangedRatioLong": 0.0031,
+      "canvas": "940x714"
+    },
+    "task-20": {
+      "pausedIdleChangedRatio": 0,
+      "singleStepChangedGeometry": true,
+      "stableAfterStep": true
+    }
+  }
+}

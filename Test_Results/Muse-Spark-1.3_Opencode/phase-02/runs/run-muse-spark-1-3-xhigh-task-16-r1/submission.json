@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-muse-spark-1-3-xhigh-task-16-r1",
+  "phaseId": "phase-02",
+  "taskId": "task-16",
+  "taskVersion": 1,
+  "model": {
+    "id": "muse-spark-1.3-contributor-free",
+    "name": "Muse Spark 1.3 xhigh",
+    "version": null,
+    "provider": null
+  },
+  "prompt": {
+    "path": "test-workspace-3/phase-02/task-16-animated-pelican-bicycle/prompt.txt",
+    "sha256": "13e4465c50efbe8b3caef2291d35722c5a39a029fc9c2c2d89620f6c63f92308",
+    "version": 1,
+    "verbatimInputPath": "runs/run-muse-spark-1-3-xhigh-task-16-r1/prompt.txt",
+    "followups": []
+  },
+  "environment": {
+    "harness": "opencode",
+    "harnessVersion": "1.18.30",
+    "surface": "desktop",
+    "os": "Darwin arm64",
+    "runtime": "node/python3",
+    "sessionId": "ses_f76be5006ffeBq0iut6Oefv975",
+    "sharedContext": false,
+    "continuationTurns": 0,
+    "sampling": null,
+    "startedAt": "2026-09-10T02:59:38Z",
+    "endedAt": "2026-09-10T03:05:31Z",
+    "timezone": "Asia/Shanghai"
+  },
+  "budget": {
+    "wallClockSeconds": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "toolCalls": null,
+    "retries": 0,
+    "followupTurns": 0,
+    "networkPolicy": "off"
+  },
+  "metrics": {
+    "durationSeconds": 353,
+    "durationBasis": "harness session created->updated",
+    "apiCalls": null,
+    "toolCalls": 20,
+    "failures": 0,
+    "inputTokens": 58825,
+    "outputTokens": 14635,
+    "cacheReadTokens": 689349,
+    "totalTokens": 96140
+  },
+  "cost": {
+    "amount": 0.0,
+    "currency": null,
+    "scope": "task",
+    "source": "harness session record"
+  },
+  "artifacts": {
+    "type": "svg",
+    "entry": "pelican-bicycle.svg",
+    "files": [
+      "pelican-bicycle.svg"
+    ],
+    "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-16-r1/artifacts",
+    "fileSha256": {
+      "pelican-bicycle.svg": "bfaaa6ca98972caf5c650012cbb8730d9022e00032805542ffe82c6fc295aa76"
+    },
+    "cover": null,
+    "preview": {
+      "lazy": true,
+      "sandbox": "allow-scripts allow-downloads allow-forms",
+      "note": null
+    }
+  },
+  "source": {
+    "commit": null,
+    "path": null
+  },
+  "runRelation": {
+    "parentRunId": null,
+    "reason": null
+  },
+  "status": "completed",
+  "isolation": {
+    "level": "workspace-only",
+    "environment": "same-user local",
+    "readOnlyInputs": [
+      "prompt.txt"
+    ],
+    "mounts": [],
+    "network": "off",
+    "repositoryReachability": "unreachable",
+    "repositoryBlocking": null,
+    "sharedContext": false
+  },
+  "contamination": {
+    "status": "clean",
+    "events": [],
+    "evidencePaths": [
+      "runs/run-muse-spark-1-3-xhigh-task-16-r1/evidence/review.json"
+    ],
+    "note": "clean 仅指在声明的隔离范围内通过检查，不代表训练数据无污染"
+  },
+  "testEvidence": {
+    "command": null,
+    "cwd": null,
+    "environment": null,
+    "date": "2026-09-10",
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "evidencePaths": [],
+    "limitations": "organizer re-ran only task-20 suite; other tasks rely on in-session verification + organizer static checks (XML parse, no-external-ref scan)"
+  },
+  "reviews": [
+    {
+      "id": "review-ai-run-muse-spark-1-3-xhigh-task-16-r1-maintenance-agent-v2",
+      "runId": "run-muse-spark-1-3-xhigh-task-16-r1",
+      "type": "ai",
+      "evaluator": "maintenance-agent-v2",
+      "authorLabel": "维护 agent v2（AI，非盲评）",
+      "date": "2026-09-10",
+      "score": 85,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "path": "reviews/ai-maintenance-agent-v2.md",
+      "conclusion": {
+        "zh": "单文件零依赖的动画 SVG 成立，暂停/继续实测能整体冻结与恢复；最关键的「脚始终踩在踏板」只有模型自述与单帧视觉支持。",
+        "en": "A self-contained animated SVG that really freezes and resumes; the key feet-on-pedals requirement rests on self-report plus one visual frame."
+      }
+    }
+  ]
+}

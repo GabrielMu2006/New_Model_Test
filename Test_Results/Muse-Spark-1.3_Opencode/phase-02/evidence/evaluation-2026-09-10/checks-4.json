@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-09-10T04:37:57.765Z",
+  "samples": 22,
+  "jointNames": [
+    "P0",
+    "P1",
+    "A",
+    "B",
+    "C"
+  ],
+  "pairRanges": {
+    "P0-P1": {
+      "min": 59.947,
+      "max": 300,
+      "range": 240.053
+    },
+    "P0-A": {
+      "min": 69.973,
+      "max": 277.7,
+      "range": 207.727
+    },
+    "P0-B": {
+      "min": 190.546,
+      "max": 329.196,
+      "range": 138.649
+    },
+    "P0-C": {
+      "min": 74.781,
+      "max": 211.042,
+      "range": 136.261
+    },
+    "P1-A": {
+      "min": 229.951,
+      "max": 366.01,
+      "range": 136.059
+    },
+    "P1-B": {
+      "min": 179.952,
+      "max": 180.048,
+      "range": 0.096
+    },
+    "P1-C": {
+      "min": 108.963,
+      "max": 225.463,
+      "range": 116.5
+    },
+    "A-B": {
+      "min": 259.936,
+      "max": 260.076,
+      "range": 0.14
+    },
+    "A-C": {
+      "min": 141.085,
+      "max": 141.211,
+      "range": 0.125
+    },
+    "B-C": {
+      "min": 141.078,
+      "max": 141.245,
+      "range": 0.167
+    }
+  },
+  "solverErrorReadout": [
+    "max link error 0.0e+0 (rel 0.0e+0) · max slider off-track 0.0e+0 RIGID ✓",
+    "max link error 2.8e-14 (rel 1.6e-16) · max slider off-track 0.0e+0 RIGID ✓",
+    "max link error 1.4e-14 (rel 2.0e-16) · max slider off-track 0.0e+0 RIGID ✓"
+  ],
+  "pageErrors": []
+}

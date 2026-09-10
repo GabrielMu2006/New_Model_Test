@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-muse-spark-1-3-xhigh-task-17-r1",
+  "phaseId": "phase-02",
+  "taskId": "task-17",
+  "taskVersion": 1,
+  "model": {
+    "id": "muse-spark-1.3-contributor-free",
+    "name": "Muse Spark 1.3 xhigh",
+    "version": null,
+    "provider": null
+  },
+  "prompt": {
+    "path": "test-workspace-3/phase-02/task-17-watch-movement/prompt.txt",
+    "sha256": "bfae57d571daa0901d16971f08cab7bf8dc2f5746492bde5cee71841a7f83b27",
+    "version": 1,
+    "verbatimInputPath": "runs/run-muse-spark-1-3-xhigh-task-17-r1/prompt.txt",
+    "followups": []
+  },
+  "environment": {
+    "harness": "opencode",
+    "harnessVersion": "1.18.30",
+    "surface": "desktop",
+    "os": "Darwin arm64",
+    "runtime": "node/python3",
+    "sessionId": "ses_f76adeb68ffeio10WoK3kf7J2K",
+    "sharedContext": false,
+    "continuationTurns": 0,
+    "sampling": null,
+    "startedAt": "2026-09-10T03:17:32Z",
+    "endedAt": "2026-09-10T03:24:21Z",
+    "timezone": "Asia/Shanghai"
+  },
+  "budget": {
+    "wallClockSeconds": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "toolCalls": null,
+    "retries": 0,
+    "followupTurns": 0,
+    "networkPolicy": "off"
+  },
+  "metrics": {
+    "durationSeconds": 409,
+    "durationBasis": "harness session created->updated",
+    "apiCalls": null,
+    "toolCalls": 32,
+    "failures": 1,
+    "inputTokens": 60632,
+    "outputTokens": 25243,
+    "cacheReadTokens": 1577007,
+    "totalTokens": 111804
+  },
+  "cost": {
+    "amount": 0.0,
+    "currency": null,
+    "scope": "task",
+    "source": "harness session record"
+  },
+  "artifacts": {
+    "type": "html",
+    "entry": "index.html",
+    "files": [
+      "index.html",
+      "watch-movement.svg"
+    ],
+    "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-17-r1/artifacts",
+    "fileSha256": {
+      "index.html": "f20a8ce8660e05a3da1ceaea95362ce0b1d5b48fb5fbdc2d420180ae52663e26",
+      "watch-movement.svg": "4947dce1f122122a83ea6d2ae775675b734ebc5669ec5d2a340b55760ba41fbf"
+    },
+    "cover": null,
+    "preview": {
+      "lazy": true,
+      "sandbox": "allow-scripts allow-downloads allow-forms",
+      "note": null
+    }
+  },
+  "source": {
+    "commit": null,
+    "path": null
+  },
+  "runRelation": {
+    "parentRunId": null,
+    "reason": null
+  },
+  "status": "completed",
+  "isolation": {
+    "level": "workspace-only",
+    "environment": "same-user local",
+    "readOnlyInputs": [
+      "prompt.txt"
+    ],
+    "mounts": [],
+    "network": "off",
+    "repositoryReachability": "unreachable",
+    "repositoryBlocking": null,
+    "sharedContext": false
+  },
+  "contamination": {
+    "status": "clean",
+    "events": [],
+    "evidencePaths": [
+      "runs/run-muse-spark-1-3-xhigh-task-17-r1/evidence/review.json"
+    ],
+    "note": "clean 仅指在声明的隔离范围内通过检查，不代表训练数据无污染"
+  },
+  "testEvidence": {
+    "command": null,
+    "cwd": null,
+    "environment": null,
+    "date": "2026-09-10",
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "evidencePaths": [],
+    "limitations": "organizer re-ran only task-20 suite; other tasks rely on in-session verification + organizer static checks (XML parse, no-external-ref scan)"
+  },
+  "reviews": [
+    {
+      "id": "review-ai-run-muse-spark-1-3-xhigh-task-17-r1-maintenance-agent-v2",
+      "runId": "run-muse-spark-1-3-xhigh-task-17-r1",
+      "type": "ai",
+      "evaluator": "maintenance-agent-v2",
+      "authorLabel": "维护 agent v2（AI，非盲评）",
+      "date": "2026-09-10",
+      "score": 88,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "path": "reviews/ai-maintenance-agent-v2.md",
+      "conclusion": {
+        "zh": "齿轮反向啮合与转速差异经独立测量成立，暂停/调速不破坏相位；摆轮摆幅与齿面接触只有间接证据。",
+        "en": "Opposite gear rotation and clearly different speeds are independently measured; balance-wheel amplitude and tooth contact remain indirect."
+      }
+    }
+  ]
+}

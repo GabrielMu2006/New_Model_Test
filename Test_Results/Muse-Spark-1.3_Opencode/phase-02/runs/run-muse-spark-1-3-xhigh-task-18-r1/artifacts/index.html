@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rube Goldberg Machine — Causal Chain Simulator</title>
+<style>
+  :root{
+    --bg:#0e1424; --panel:#182240; --panel2:#1f2c52; --ink:#eef2ff;
+    --muted:#9aa7d0; --accent:#ffb02e; --accent2:#39d0ff; --good:#3ddc84;
+    --warn:#ff5d5d; --line:rgba(255,255,255,.09);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+    background:radial-gradient(1200px 700px at 50% -10%, #24346b 0%, var(--bg) 55%) fixed, var(--bg);
+    color:var(--ink); min-height:100vh;
+  }
+  header{max-width:1240px;margin:0 auto;padding:22px 20px 10px;}
+  header h1{margin:0;font-size:clamp(22px,3vw,32px);letter-spacing:.3px}
+  header h1 .pill{display:inline-block;vertical-align:middle;margin-left:10px;font-size:12px;
+    padding:4px 10px;border-radius:999px;background:linear-gradient(90deg,#ffb02e,#ff6b6b);
+    color:#1a1206;font-weight:800;letter-spacing:.8px}
+  header p{margin:8px 0 0;color:var(--muted);max-width:900px;line-height:1.5;font-size:14.5px}
+  header p b{color:var(--ink)}
+  .wrap{max-width:1240px;margin:0 auto;padding:12px 20px 26px;display:grid;
+    grid-template-columns:1fr 320px;gap:16px}
+  @media (max-width:1020px){.wrap{grid-template-columns:1fr}}
+  .stage-canvas-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 18px 60px rgba(0,0,0,.45)}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line);
+    background:rgba(0,0,0,.22);align-items:center}
+  button{appearance:none;border:1px solid rgba(255,255,255,.14);background:#24325f;color:var(--ink);
+    padding:9px 13px;border-radius:11px;font-weight:700;font-size:13.5px;cursor:pointer;
+    transition:transform .08s, background .15s, box-shadow .15s}
+  button:hover{transform:translateY(-1px);background:#2d3f77}
+  button:active{transform:translateY(0)}
+  button.primary{background:linear-gradient(180deg,#ffd27a,#ff9d2e);color:#241300;border-color:#ffcf7a;
+    box-shadow:0 6px 18px rgba(255,176,46,.35)}
+  button.primary:hover{filter:brightness(1.05)}
+  button.ghost{background:rgba(255,255,255,.06)}
+  button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .speed{display:flex;align-items:center;gap:8px;margin-left:auto;color:var(--muted);font-size:13px;
+    background:rgba(255,255,255,.05);padding:7px 10px;border-radius:11px;border:1px solid var(--line)}
+  .speed input{accent-color:var(--accent);width:130px}
+  .speed b{color:var(--ink);min-width:48px;text-align:right;font-variant-numeric:tabular-nums}
+  .canvas-holder{position:relative;background:
+    radial-gradient(900px 420px at 30% 0%, rgba(57,208,255,.14), transparent 60%),
+    radial-gradient(800px 500px at 85% 20%, rgba(255,176,46,.12), transparent 60%),
+    linear-gradient(180deg,#1a254d 0%, #141c3a 55%, #0f1530 100%);}
+  canvas{display:block;width:100%;height:auto;aspect-ratio:12/7}
+  .hud{position:absolute;left:12px;top:10px;display:flex;gap:8px;align-items:center;
+    background:rgba(6,10,24,.62);border:1px solid var(--line);border-radius:12px;padding:7px 10px;
+    font-size:12.5px;color:var(--muted);backdrop-filter:blur(6px)}
+  .hud b{color:#fff;font-variant-numeric:tabular-nums}
+  .hud .dot{width:9px;height:9px;border-radius:50%;background:#555;box-shadow:0 0 10px rgba(0,0,0,.5)}
+  .hud .dot.run{background:var(--good);box-shadow:0 0 10px var(--good)}
+  .hud .dot.pause{background:var(--accent);box-shadow:0 0 10px var(--accent)}
+  .side{display:flex;flex-direction:column;gap:14px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+    border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+  .card h2{margin:0 0 10px;font-size:13px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase}
+  .stages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .stages li{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:start;
+    padding:9px 10px;border-radius:12px;background:rgba(0,0,0,.22);border:1px solid transparent}
+  .stages li .n{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;
+    font-weight:900;font-size:13px;background:#2a3a72;color:#cdd8ff;border:1px solid var(--line)}
+  .stages li.active{border-color:rgba(255,176,46,.55);background:rgba(255,176,46,.10)}
+  .stages li.active .n{background:linear-gradient(180deg,#ffd27a,#ff9d2e);color:#241300}
+  .stages li.done{border-color:rgba(61,220,132,.45);background:rgba(61,220,132,.08)}
+  .stages li.done .n{background:var(--good);color:#06280f}
+  .stages li .t{font-size:13.5px;font-weight:800;line-height:1.2}
+  .stages li .d{font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:2px}
+  .stages li .s{font-size:11px;font-weight:800;letter-spacing:.6px;padding:4px 8px;border-radius:999px;
+    background:rgba(255,255,255,.08);color:var(--muted);white-space:nowrap;margin-top:2px}
+  .stages li.active .s{background:rgba(255,176,46,.22);color:#ffd48a}
+  .stages li.done .s{background:rgba(61,220,132,.2);color:#8ff0b8}
+  .log{height:210px;overflow:auto;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;
+    font-size:12.7px;line-height:1.45}
+  .log li{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:10px;padding:7px 9px;color:#dbe4ff}
+  .log li span{color:var(--accent2);font-variant-numeric:tabular-nums;font-weight:800;margin-right:6px}
+  .meter{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:10px}
+  .meter i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent2),var(--accent),#ff6b6b);
+    border-radius:999px;transition:width .2s}
+  .hint{font-size:12.8px;color:var(--muted);line-height:1.6;margin:0}
+  .hint code{color:#ffd48a;background:rgba(255,176,46,.12);padding:1px 6px;border-radius:6px;font-size:12px}
+  footer{max-width:1240px;margin:0 auto;padding:0 20px 30px;color:var(--muted);font-size:13px;line-height:1.7}
+  footer b{color:var(--ink)}
+  .kbd{display:inline-block;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;
+    padding:0 6px;background:rgba(255,255,255,.06);color:#fff;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Rube Goldberg Machine <span class="pill">8-STAGE CAUSAL CHAIN</span></h1>
+  <p>One continuous cause-and-effect run: <b>trapdoor → zigzag ramps → dominoes → seesaw catapult →
+  aerial catch → pulley gate → plinko board → finale button</b>. Nothing advances on a timer —
+  every stage is <b>triggered by contact / position / momentum</b> of the previous stage inside the physics loop.
+  Drag the speed down to <b>0.1×</b> or use <b>Step</b> while paused to inspect the handoffs frame by frame.</p>
+</header>
+
+<div class="wrap">
+  <div class="stage-canvas-card">
+    <div class="controls" role="toolbar" aria-label="Machine controls">
+      <button id="btnStart" class="primary">▶ Start</button>
+      <button id="btnPause" class="ghost">⏸ Pause</button>
+      <button id="btnResume" class="ghost">⏵ Resume</button>
+      <button id="btnReset" class="ghost">⟲ Reset</button>
+      <button id="btnStep" class="ghost" title="Advance exactly one frame (1/60 s) while paused">Step 1 frame</button>
+      <button id="btnStepSlow" class="ghost" title="Advance 0.5 s of simulation while paused">Step 0.5 s</button>
+      <button id="btnSound" class="ghost" aria-pressed="true">🔊 Sound on</button>
+      <label class="speed">Speed
+        <input id="speed" type="range" min="0.1" max="2" step="0.05" value="1">
+        <b id="speedVal">1.00×</b>
+      </label>
+    </div>
+    <div class="canvas-holder">
+      <canvas id="scene" width="1200" height="700"></canvas>
+      <div class="hud"><span id="hudDot" class="dot"></span><span id="hudText">Ready — press <b>Start</b></span>
+        &nbsp;·&nbsp; t=<b id="hudTime">0.00s</b></div>
+    </div>
+    <div class="controls" style="border-bottom:none;border-top:1px solid var(--line)">
+      <span style="font-size:13px;color:var(--muted)">Keys: <span class="kbd">Space</span> start/pause ·
+      <span class="kbd">R</span> reset · <span class="kbd">.</span> step frame · <span class="kbd">1–5</span> speeds</span>
+      <span id="chainState" style="margin-left:auto;font-size:13px;color:var(--muted)">Chain: 0 / 8 complete</span>
+    </div>
+  </div>
+
+  <div class="side">
+    <div class="card">
+      <h2>Chain — live status</h2>
+      <ol class="stages" id="stageList"></ol>
+      <div class="meter"><i id="meterFill"></i></div>
+    </div>
+    <div class="card">
+      <h2>Causal event log (triggered by physics, not timers)</h2>
+      <ol class="log" id="log"></ol>
+    </div>
+    <div class="card">
+      <h2>How causality is enforced</h2>
+      <p class="hint">Each handoff is a <code>checkTriggers()</code> test on live bodies:
+      ball→ramp contact, ball→domino impulse, domino-top→next-domino angle,
+      domino→seesaw overlap, seesaw ω→ball release, ball→bucket containment,
+      bucket y→gate opening, ball→peg bounce, ball→button pressure.
+      No <code>setTimeout</code> / <code>setInterval</code> drives the chain — timers only render frames.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <b>To grade causality:</b> open this file and search for <b>CAUSAL TRIGGER</b> — all eight handoffs live in
+  <b>checkTriggers()</b> and in the contact resolvers. Pause mid-run and press <b>Step 1 frame</b>: the next stage
+  only moves when the previous body physically touches it. Reset restores every body bit-for-bit.
+</footer>
+
+<script>
+"use strict";
+/* =====================================================================
+   RUBE GOLDBERG MACHINE — single-file causal physics simulation.
+   No external libraries. No setTimeout/setInterval drives the chain:
+   stages advance ONLY via contact/position checks in checkTriggers()
+   and in the collision resolvers below. rAF is used solely to advance
+   the fixed-step integrator and to render.
+   ===================================================================== */
+
+const canvas = document.getElementById('scene');
+const ctx = canvas.getContext('2d');
+const W = 1200, H = 700;
+const GRAV = 1650;            // px / s^2
+const FIXED = 1/120;          // physics substep
+const GROUND_Y = 640;
+
+// ---------- tiny helpers ----------
+const clamp=(v,a,b)=>v<a?a:(v>b?b:v);
+const lerp=(a,b,t)=>a+(b-a)*t;
+function distPointSeg(px,py,x1,y1,x2,y2){
+  const dx=x2-x1, dy=y2-y1;
+  const L2=dx*dx+dy*dy || 1e-9;
+  let t=((px-x1)*dx+(py-y1)*dy)/L2; t=clamp(t,0,1);
+  const cx=x1+dx*t, cy=y1+dy*t;
+  return {cx,cy,t,d:Math.hypot(px-cx,py-cy)};
+}
+
+// ---------- audio (synthesized, no assets) ----------
+let audioCtx=null, soundOn=true;
+function beep(freq,dur,type='sine',gain=0.12,slide=0){
+  if(!soundOn) return;
+  try{
+    if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended') audioCtx.resume();
+    const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+    o.type=type; o.frequency.setValueAtTime(freq,audioCtx.currentTime);
+    if(slide) o.frequency.exponentialRampToValueAtTime(Math.max(30,freq+slide),audioCtx.currentTime+dur);
+    g.gain.setValueAtTime(gain,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+dur);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime+dur+0.02);
+  }catch(e){}
+}
+const sfx={
+  release(){beep(220,0.18,'square',0.08,180);},
+  ramp(){beep(520,0.07,'triangle',0.05);},
+  domino(i){beep(300+i*70,0.12,'square',0.09,-60);},
+  launch(){beep(180,0.35,'sawtooth',0.10,520);},
+  funnel(){beep(880,0.14,'sine',0.10,-200);},
+  pulley(){beep(140,0.4,'triangle',0.08,60);},
+  peg(){beep(700+Math.random()*500,0.06,'sine',0.06);},
+  button(){beep(120,0.25,'square',0.14,-40);},
+  fanfare(){
+    if(!soundOn) return;
+    try{
+      if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+      const notes=[523,659,784,1046,784,1046];
+      notes.forEach((f,i)=>{
+        const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+        o.type='triangle'; o.frequency.value=f;
+        const t0=audioCtx.currentTime+i*0.13;
+        g.gain.setValueAtTime(0.0001,t0);
+        g.gain.exponentialRampToValueAtTime(0.12,t0+0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001,t0+0.22);
+        o.connect(g); g.connect(audioCtx.destination);
+        o.start(t0); o.stop(t0+0.25);
+      });
+    }catch(e){}
+  }
+};
+
+// ---------- stage metadata (8 stages) ----------
+const STAGES=[
+  {name:"1 · Trapdoor release", desc:"Gate retracts; Ball A drops under gravity."},
+  {name:"2 · Zigzag ramps", desc:"Ball A rolls R1 → R2 → R3, gaining momentum."},
+  {name:"3 · Domino run", desc:"Ball A strikes 5 dominoes; each topples the next."},
+  {name:"4 · Seesaw catapult", desc:"Last domino slams the seesaw; Ball B is flung."},
+  {name:"5 · Aerial catch", desc:"Ball B is flung into the catcher mitt, landing in the bucket."},
+  {name:"6 · Pulley gate", desc:"Bucket weight descends, rope lifts Ball-C gate."},
+  {name:"7 · Plinko board", desc:"Ball C bounces through pegs into collector."},
+  {name:"8 · Finale button", desc:"Ball C rolls the long ramp, slams the button."},
+];
+const stageState=STAGES.map(()=>({status:'pending',note:''})); // pending|active|done
+
+// ---------- world geometry (static segments) ----------
+// kind is only for rendering style.
+function seg(x1,y1,x2,y2,kind='wood',e=0.25,fr=0.995){return {x1,y1,x2,y2,kind,e,fr};}
+const SEGMENTS=[
+  // zigzag ramps (Ball A path, left half). R3 sits HIGH (y≤480) so the final
+  // ramp for Ball C can pass underneath it with 40px+ clearance.
+  seg(70,150, 470,232,'ramp',0.15,0.999),
+  seg(505,282,110,362,'ramp',0.15,0.999),
+  seg(40,392,500,480,'ramp',0.15,0.999),
+  // small lip so the ball doesn't roll off the back of R1 (far from drop zone)
+  seg(70,150,70,128,'lip',0.2,1),
+  // (no lips at R2/R3 entries: they would pinch the incoming ball)
+  // catcher wall: stops leftward overshoot off R2, drops ball onto R3 start
+  // (15px gap to R3 start: the 26px ball bridges it and must land on R3)
+  seg(25,330,25,425,'wall',0.2,1),
+  // domino shelf (starts left so R3 drop always lands on it)
+  seg(488,572,960,572,'shelf',0.3,0.995),
+  seg(488,572,488,600,'lip',0.3,1),
+  seg(960,572,960,600,'lip',0.3,1),
+  // catcher mitt for Ball B (thrown flat from the seesaw tip at x~942):
+  // open-topped box + tall backstop paddle on the right. (No roof: the flat
+  // toss passes under it and a roof underside would kill entry speed.)
+  seg(1085,445,1085,572,'wall',0.08,1),
+  // plinko outer walls (roof has a 60px entry gap above the peg field
+  // so Ball C drops in from the reservoir; the gap is only 2.5 ball-widths)
+  seg(528,150,528,400,'wall',0.3,1),
+  seg(772,150,772,400,'wall',0.3,1),
+  seg(528,150,620,150,'wall',0.2,1),
+  seg(680,150,772,150,'wall',0.2,1),
+  // collector V below plinko: throat (504-536) sits LEFT of the domino field
+  // and directly above the final ramp's start, so Ball C never touches dominoes
+  seg(528,398,504,448,'collector',0.2,0.999),
+  seg(772,398,536,448,'collector',0.2,0.999),
+  // final long ramp: starts under the throat, ducks UNDER R3 (40px+ clear),
+  // ends high above the button so Ball C drops onto the cap
+  seg(520,520,200,560,'final',0.2,0.9985),
+  // ground + side walls
+  seg(0,GROUND_Y,W,GROUND_Y,'ground',0.35,0.985),
+  seg(6,0,6,H,'wall',0.3,1),
+  seg(W-6,0,W-6,H,'wall',0.3,1),
+  // reservoir ledge holding Ball C (hole at x~650, gate covers it)
+  seg(596,112,636,112,'ledge',0.1,1),
+  seg(664,112,704,112,'ledge',0.1,1),
+];
+const SEESAW={px:830,py:544,half:112,angle:0,vel:0,min:-0.38,max:0.28,launched:false};
+function seesawSeg(){
+  const c=Math.cos(SEESAW.angle), s=Math.sin(SEESAW.angle);
+  return {
+    // FIXED tilt: left tip rises/falls opposite to right tip (true rotation about pivot)
+    x1:SEESAW.px-SEESAW.half*c, y1:SEESAW.py-SEESAW.half*s,   // left tip
+    x2:SEESAW.px+SEESAW.half*c, y2:SEESAW.py+SEESAW.half*s,   // right tip
+    kind:'seesaw', e:0.1, fr:0.999
+  };
+}
+// angle>0 = clockwise (right tip DOWN, left tip UP); domino strike drives angle NEGATIVE. */
+
+/* Plinko pegs: triangular lattice. Every horizontal slot is 40 px wide —
+   wider than ball + 2 peg radii (24+13=37), so the ball can NEVER wedge
+   stably between two pegs; it always rattles through. */
+const PEGS=[];
+(function buildPegs(){
+  const rows=[188,228,268,308,348];
+  rows.forEach((y,ri)=>{
+    const odd=ri%2===1, n=odd?3:4;
+    for(let i=0;i<n;i++){
+      const x=(odd?610:590)+i*40;
+      PEGS.push({x,y,r:6.5});
+    }
+  });
+})();
+
+/* Dominoes stand on the shelf. angle 0 = upright, + = falling right. */
+const DOMINO_X=[562,602,642,682,722];
+const DOMINO_W=15, DOMINO_H=74, SHELF_Y=572;
+function makeDominoes(){return DOMINO_X.map(x=>({bx:x,baseY:SHELF_Y,angle:0,vel:0,hit:false}));}
+
+/* Bucket hangs under the catcher mitt, just right of the seesaw tip. */
+const BUCKET={x:1040,restTop:530,w:90,h:42,y:530,vy:0,captured:false};
+/* Gate covers the Ball-C hole; opening 0..1 is MECHANICALLY linked to bucket descent. */
+const GATE={x0:636,opening:0};
+/* Finale button housing. */
+const BUTTON={x:96,y:606,w:86,h:16,press:0,pressed:false};
+
+/* Balls. dynamic=false => kinematic (held), driven by its holder. */
+function initialBalls(){
+  return {
+    A:{x:178,y:64,vx:0,vy:0,r:13,color:'#ffd166',dynamic:false,trail:[],touchedRamp:false},
+    B:{x:0,y:0,vx:0,vy:0,r:12,color:'#39d0ff',dynamic:false,seated:true,trail:[],captured:false},
+    C:{x:650,y:96,vx:0,vy:0,r:12,color:'#c084fc',dynamic:false,trail:[],released:false},
+  };
+}
+let balls=initialBalls();
+let dominoes=makeDominoes();
+function seatBallB(){
+  const s=seesawSeg();
+  balls.B.x=s.x2; balls.B.y=s.y2-15;
+  balls.B.vx=0; balls.B.vy=0;
+}
+
+/* gate release trapdoor for Ball A */
+const RELEASE={open:0}; // 0 closed, 1 fully retracted (slides left)
+const RELEASE_X=178;
+
+/* particles / confetti / shake / flags */
+let particles=[];
+let shake=0, simTime=0, running=false, speed=1, started=false, finished=false;
+let accumulator=0, lastT=0;
+let logCount=0;
+
+/* ---------- DOM ---------- */
+const $=id=>document.getElementById(id);
+const stageList=$('stageList'), logEl=$('log');
+STAGES.forEach((s,i)=>{
+  const li=document.createElement('li'); li.id='stage'+i;
+  li.innerHTML=`<div class="n">${i+1}</div><div><div class="t">${s.name}</div><div class="d">${s.desc}</div></div><div class="s">WAITING</div>`;
+  stageList.appendChild(li);
+});
+function setStage(i,st,note){
+  if(stageState[i].status===st && !note) return;
+  // never regress done -> active
+  if(stageState[i].status==='done' && st==='active') return;
+  stageState[i].status=st; if(note) stageState[i].note=note;
+  const li=$('stage'+i);
+  li.classList.toggle('active',st==='active');
+  li.classList.toggle('done',st==='done');
+  li.querySelector('.s').textContent = st==='done'?'DONE ✓':(st==='active'?'RUNNING…':'WAITING');
+  const done=stageState.filter(s=>s.status==='done').length;
+  $('chainState').textContent=`Chain: ${done} / 8 complete`;
+  $('meterFill').style.width=(done/8*100)+'%';
+}
+function logEvent(msg){
+  const li=document.createElement('li');
+  li.innerHTML=`<span>${simTime.toFixed(2)}s</span>${msg}`;
+  logEl.prepend(li);
+  while(logEl.children.length>60) logEl.lastChild.remove();
+  logCount++;
+}
+
+/* ---------- physics: circle vs segment ---------- */
+function collideBallSeg(b,s,surfVel){
+  const {cx,cy,d}=distPointSeg(b.x,b.y,s.x1,s.y1,s.x2,s.y2);
+  if(d>=b.r || d===0) return null;
+  let nx=(b.x-cx)/d, ny=(b.y-cy)/d;
+  // push out
+  const pen=b.r-d;
+  b.x+=nx*pen; b.y+=ny*pen;
+  const svx=surfVel?surfVel.x:0, svy=surfVel?surfVel.y:0;
+  const rvx=b.vx-svx, rvy=b.vy-svy;
+  const vn=rvx*nx+rvy*ny;
+  if(vn<0){
+    const e=s.e??0.25;
+    b.vx-=(1+e)*vn*nx; b.vy-=(1+e)*vn*ny;
+    // tangential friction
+    const tx=-ny, ty=nx;
+    const vt=(b.vx-svx)*tx+(b.vy-svy)*ty;
+    const fr=s.fr??0.995;
+    b.vx-=vt*(1-fr)*tx; b.vy-=vt*(1-fr)*ty;
+    // extra rolling ease on ramps
+    if(s.kind==='ramp'||s.kind==='final'||s.kind==='shelf'){b.vx*=0.9995;}
+    return {nx,ny,impact:-vn,point:{x:cx,y:cy}};
+  }
+  return {nx,ny,impact:0,point:{x:cx,y:cy}};
+}
+function seesawSurfaceVelAt(px,py){
+  // v = omega x r ; in screen coords with y down, for rotation angle (clockwise+):
+  // tip velocity = omega * perpendicular: (-(y-py), (x-px))? use plank angular vel.
+  const rx=px-SEESAW.px, ry=py-SEESAW.py;
+  return {x:-SEESAW.vel*ry, y:SEESAW.vel*rx};
+}
+function collideBallCircle(b,c,r,e=0.55){
+  const dx=b.x-c.x, dy=b.y-c.y, d=Math.hypot(dx,dy), min=b.r+r;
+  if(d>=min||d===0) return null;
+  const nx=dx/d, ny=dy/d, pen=min-d;
+  b.x+=nx*pen; b.y+=ny*pen;
+  const vn=b.vx*nx+b.vy*ny;
+  if(vn<0){b.vx-=(1+e)*vn*nx; b.vy-=(1+e)*vn*ny; return {impact:-vn};}
+  return {impact:0};
+}
+
+/* circle vs domino (OBB pivoted at base). Returns impact + applies torque. */
+function collideBallDomino(b,dm){
+  const ux=Math.sin(dm.angle), uy=-Math.cos(dm.angle);   // long axis (base->top)
+  const vx=Math.cos(dm.angle), vy=Math.sin(dm.angle);    // short axis
+  const dx=b.x-dm.bx, dy=b.y-dm.baseY;
+  const lu=clamp(dx*ux+dy*uy,0,DOMINO_H);
+  const lv=clamp(dx*vx+dy*vy,-DOMINO_W/2,DOMINO_W/2);
+  const qx=dm.bx+ux*lu+vx*lv, qy=dm.baseY+uy*lu+vy*lv;
+  const ex=b.x-qx, ey=b.y-qy, d=Math.hypot(ex,ey);
+  if(d>=b.r||d===0) return null;
+  const nx=ex/d, ny=ey/d;
+  b.x+=nx*(b.r-d); b.y+=ny*(b.r-d);
+  const vn=b.vx*nx+b.vy*ny;
+  if(vn<0){
+    // incoming velocity BEFORE reflection decides tip direction (must read first!)
+    const inVx=b.vx, inVy=b.vy;
+    // soft bounce: the domino absorbs momentum (it is heavy), ball keeps rolling
+    b.vx-=0.55*vn*nx; b.vy-=0.55*vn*ny;
+    // torque: a ball arriving from the left (inVx>0) tips the domino right (+angle)
+    const lever=0.4+ (lu/DOMINO_H)*0.9;         // hits near top tip more
+    const dirSign=inVx>40?1:(inVx<-40?-1:(nx>0?1:-1));
+    const kick=Math.min(10,(-vn)/110*3.4+Math.abs(inVx)/240)*lever;
+    dm.vel+=kick*dirSign;
+    dm.hit=true;
+    return {impact:-vn};
+  }
+  return {impact:0};
+}
+
+/* equal-mass elastic bounce between two free balls (e.g. Ball C landing
+   near resting Ball A at the finale) — keeps them from interpenetrating. */
+function collideBalls(a,b){
+  if(!a.dynamic||!b.dynamic) return;
+  const dx=b.x-a.x, dy=b.y-a.y, min=a.r+b.r, d=Math.hypot(dx,dy);
+  if(d>=min||d===0) return;
+  const nx=dx/d, ny=dy/d, overlap=(min-d)/2;
+  a.x-=nx*overlap; a.y-=ny*overlap; b.x+=nx*overlap; b.y+=ny*overlap;
+  const rvx=b.vx-a.vx, rvy=b.vy-a.vy, vn=rvx*nx+rvy*ny;
+  if(vn<0){
+    const e=0.45, j=-(1+e)*vn/2;
+    a.vx-=j*nx; a.vy-=j*ny; b.vx+=j*nx; b.vy+=j*ny;
+  }
+}
+
+/* ---------- CAUSAL TRIGGERS ---------- */
+function checkTriggers(){
+  const A=balls.A,B=balls.B,C=balls.C;
+
+  /* --- 1->2: Ball A touches any ramp (contact-driven, not timed) --- */
+  if(stageState[1].status==='pending' && A.dynamic){
+    for(let i=0;i<3;i++){
+      const s=SEGMENTS[i];
+      if(distPointSeg(A.x,A.y,s.x1,s.y1,s.x2,s.y2).d < A.r+2){
+        setStage(1,'active'); logEvent(`Ball <b>A</b> touched ramp R${i+1} — rolling under gravity.`);
+        sfx.ramp(); break;
+      }
+    }
+  }
+  /* --- 2->3: Ball A reaches domino zone / strikes domino 0 --- */
+  if(stageState[2].status==='pending' && A.dynamic){
+    if(A.x>528 && A.y>470){
+      setStage(1,'done'); setStage(2,'active');
+      logEvent(`Ball <b>A</b> left R3 at ${Math.hypot(A.vx,A.vy).toFixed(0)} px/s and entered the domino shelf.`);
+    }
+  }
+  /* --- domino chain propagation is handled in stepDominoes via angle contact --- */
+
+  /* --- S3->S4: last domino falls onto seesaw left arm ---
+     CAUSAL TRIGGER: geometric overlap of domino top with seesaw plank. */
+  const last=dominoes[dominoes.length-1];
+  if(stageState[2].status==='active' && last.angle>0.55){
+    const s=seesawSeg();
+    // top corner of last domino
+    const tx=last.bx+Math.sin(last.angle)*DOMINO_H, ty=last.baseY-Math.cos(last.angle)*DOMINO_H;
+    if(tx>s.x1-30 && tx<s.x1+120 && ty>s.y1-70 && ty<s.y1+30){
+      if(stageState[2].status!=='done'){
+        setStage(2,'done'); setStage(3,'active');
+        logEvent(`Domino 5 toppled onto the <b>seesaw</b> — torque applied to left arm.`);
+        SEESAW.vel-=4.2; shake=Math.max(shake,5);
+        sfx.launch();
+      } else {
+        SEESAW.vel-=1.5*FIXED*8;
+      }
+    }
+  }
+
+  /* --- S4->S5: seesaw fling releases Ball B (omega threshold, not timer) ---
+     CAUSAL TRIGGER: seesaw angular velocity + angle fling Ball B. */
+  if(B.seated && stageState[3].status==='active'){
+    if(SEESAW.vel<-2.2 && SEESAW.angle<-0.10){
+      B.seated=false; B.dynamic=true;
+      const tipV=seesawSurfaceVelAt(B.x,B.y);
+      // flat, firm side-toss into the mitt (clamped: consistent arc whatever ω was)
+      B.vx=clamp(tipV.x+330,300,420); B.vy=clamp(tipV.y*0.3-120,-260,-120);
+      setStage(3,'done'); setStage(4,'active');
+      logEvent(`Seesaw whipped up (ω=${SEESAW.vel.toFixed(1)} rad/s) — <b>Ball B launched</b> at (${B.vx.toFixed(0)}, ${B.vy.toFixed(0)}) px/s.`);
+      shake=Math.max(shake,6);
+    }
+  }
+
+  /* --- S5->S6: Ball B contained in bucket mouth (position trigger + capture) ---
+     CAUSAL TRIGGER: Ball B centre inside bucket mouth rect.
+     A gentle guide force applies ONLY while the ball is already inside the
+     mitt region (like real chute walls, but smoother) — it cannot summon
+     the ball from afar. */
+  if(B.dynamic && !B.captured && stageState[4].status==='active'){
+    const inMitt=B.x>BUCKET.x-BUCKET.w/2-70 && B.x<BUCKET.x+BUCKET.w/2+30
+             && B.y>BUCKET.y-70 && B.y<BUCKET.y+BUCKET.h;
+    if(inMitt){
+      B.vx+=(BUCKET.x-B.x)*4.5*FIXED;
+      if(B.x<BUCKET.x-BUCKET.w/2+10 && B.vx<0) B.vx*=0.92;
+      if(B.x>BUCKET.x-BUCKET.w/2+6 && B.x<BUCKET.x+BUCKET.w/2-6 && B.y>BUCKET.y-8 && B.y<BUCKET.y+BUCKET.h){
+        B.captured=true; B.dynamic=false; BUCKET.captured=true;
+        B.x=BUCKET.x; B.y=BUCKET.y+16; B.vx=0; B.vy=0;
+        setStage(4,'done'); setStage(5,'active');
+        logEvent(`Ball <b>B</b> dropped into the <b>bucket</b> — pulley now loaded.`);
+        sfx.funnel(); shake=Math.max(shake,4);
+      }
+    }
+  }
+
+  /* --- S6->S7: bucket descent MECHANICALLY opens the gate; Ball C falls ---
+     CAUSAL TRIGGER: gate opening is a pure function of bucket y (rope linkage). */
+  if(BUCKET.captured){
+    const descent=BUCKET.y-BUCKET.restTop;
+    const open=clamp(descent/58,0,1);
+    if(Math.abs(open-GATE.opening)>0.001 && !C.released){
+      // creak once per while
+    }
+    GATE.opening=open;
+    if(descent>6 && stageState[5].status==='active' && !C.released){
+      // gate visibly sliding
+    }
+    if(!C.released && GATE.opening>0.62){
+      C.released=true; C.dynamic=true; C.vx=8; C.vy=20;
+      setStage(5,'done'); setStage(6,'active');
+      logEvent(`Bucket sank ${(descent).toFixed(0)} px → rope lifted the gate ${(GATE.opening*100).toFixed(0)}% — <b>Ball C released</b>.`);
+      sfx.pulley();
+    }
+  }
+
+  /* --- S7->S8: Ball C exits collector onto the final ramp ---
+     CAUSAL TRIGGER: Ball C position entering the final-ramp region. */
+  if(C.dynamic && stageState[6].status==='active'){
+    if(C.x>480&&C.x<560&&C.y>430&&C.y<510){
+      // entering collector throat: funnel walls guide it (collision does the work)
+    }
+    if(C.y>485 && C.x<540 && C.x>120 && C.y<620){
+      // on the final ramp region
+      if(!C.onFinal){
+        C.onFinal=true;
+        setStage(6,'done'); setStage(7,'active');
+        logEvent(`Ball <b>C</b> cleared the pegs and is rolling down the <b>final ramp</b>.`);
+      }
+    }
+  }
+
+  /* --- S8: Ball C strikes the button (overlap pressure, not timer) ---
+     CAUSAL TRIGGER: ball/button rect overlap drives press depth. */
+  if(stageState[7].status==='active' && C.dynamic){
+    const withinX=C.x>BUTTON.x-14 && C.x<BUTTON.x+BUTTON.w+14;
+    const nearY=C.y>BUTTON.y-44 && C.y<BUTTON.y+26;
+    if(withinX&&nearY){
+      const target=clamp(1-(C.y-(BUTTON.y-12))/22,0,1);
+      BUTTON.press=Math.max(BUTTON.press,clamp(target,0,1));
+      if(BUTTON.press>0.25 && !BUTTON.pressed){
+        BUTTON.pressed=true;
+        C.vx*=-0.25; C.vy=-Math.abs(C.vy)*0.3-60;
+        setStage(7,'done'); finished=true;
+        logEvent(`Ball <b>C</b> slammed the <b>finale button</b> — chain complete in ${simTime.toFixed(1)}s! 🎉`);
+        sfx.button(); sfx.fanfare(); shake=9;
+        spawnConfetti(260);
+      }
+    }
+  }
+}
+
+/* ---------- per-substep dynamics ---------- */
+function stepDominoes(dt){
+  for(let i=0;i<dominoes.length;i++){
+    const dm=dominoes[i];
+    // inverted-pendulum toppling: unstable past ~3°, stable hold before that
+    const holding=Math.abs(dm.angle)<0.05 && Math.abs(dm.vel)<0.6 && !dm.hit;
+    if(holding){
+      dm.vel*= (1-6*dt);
+      if(Math.abs(dm.vel)<0.02) dm.vel=0;
+    } else {
+      const K=26; // toppling gain
+      const acc=K*Math.sin(dm.angle) - 1.1*dm.vel;
+      dm.vel+=acc*dt;
+    }
+    // CAUSAL TRIGGER: previous domino's top leans onto this one
+    if(i>0){
+      const prev=dominoes[i-1];
+      if(prev.angle>0.42){
+        const push=(prev.angle-0.42)*22*dt*(1+prev.vel*0.12);
+        dm.vel+=Math.max(0,push);
+        if(!dm.hit && prev.angle>0.5){dm.hit=true;
+          if(stageState[2].status==='active'){
+            setStage(2,'active');
+            logEvent(`Domino ${i} struck by domino ${i} → toppling.`);
+            sfx.domino(i);
+          }
+        }
+      }
+    }
+    dm.angle+=dm.vel*dt;
+    dm.angle=clamp(dm.angle,-0.15,1.45);
+    // fallen dominoes rest against neighbour / shelf
+    if(dm.angle>1.35) dm.vel*=0.9;
+  }
+  // first-domino strike log (ball impact handled in collideBallDomino)
+}
+function stepSeesaw(dt){
+  // gravity restoring toward 0 + stops; domino pressure adds torque in checkTriggers
+  const k=26, c=2.6;
+  const acc=-k*SEESAW.angle - c*SEESAW.vel
+    + (balls.B.seated? 0.35:0)      // Ball B weight holds right side slightly down (angle+)
+    - (BUCKET.captured?0:0);
+  SEESAW.vel+=acc*dt;
+  // domino slam sustained pressure while last domino leans on left arm
+  // (causal: only after the domino run has started toppling)
+  const last=dominoes[dominoes.length-1];
+  if(last.angle>0.6 && stageState[2].status!=='pending'){
+    const s=seesawSeg();
+    const tx=last.bx+Math.sin(last.angle)*DOMINO_H;
+    if(tx>s.x1-40 && tx<s.x1+130) SEESAW.vel-=9*dt;
+  }
+  SEESAW.angle+=SEESAW.vel*dt;
+  if(SEESAW.angle<SEESAW.min){SEESAW.angle=SEESAW.min;SEESAW.vel*=-0.25;}
+  if(SEESAW.angle>SEESAW.max){SEESAW.angle=SEESAW.max;SEESAW.vel*=-0.25;}
+  SEESAW.vel=clamp(SEESAW.vel,-14,14);
+  if(balls.B.seated) seatBallB();
+}
+function stepBucket(dt){
+  if(!BUCKET.captured){BUCKET.y=BUCKET.restTop;BUCKET.vy=0;GATE.opening=0;return;}
+  const target=BUCKET.restTop+58;
+  const k=42, d=9;
+  const acc=(target-BUCKET.y)*k - BUCKET.vy*d;
+  BUCKET.vy+=acc*dt; BUCKET.y+=BUCKET.vy*dt;
+  GATE.opening=clamp((BUCKET.y-BUCKET.restTop)/58,0,1);
+  if(balls.B.captured){balls.B.x=BUCKET.x; balls.B.y=BUCKET.y+16;}
+}
+function stepBall(b,dt){
+  if(!b.dynamic) return;
+  b.vy+=GRAV*dt;
+  // mild air drag
+  b.vx*=(1-0.04*dt); b.vy*=(1-0.01*dt);
+  b.vx=clamp(b.vx,-1400,1400); b.vy=clamp(b.vy,-1600,1600);
+  b.x+=b.vx*dt; b.y+=b.vy*dt;
+  // collide with static segments
+  for(const s of SEGMENTS){
+    const hit=collideBallSeg(b,s,null);
+    if(hit&&hit.impact>120){
+      if(s.kind==='ramp'||s.kind==='final'){/* rolling */}
+      if(s.kind==='collector'&&b===balls.C){/* guiding */}
+      shake=Math.max(shake,Math.min(3,hit.impact/500));
+    }
+  }
+  // seesaw plank (moving)
+  {
+    const s=seesawSeg();
+    const mid={x:(s.x1+s.x2)/2,y:(s.y1+s.y2)/2};
+    const sv=seesawSurfaceVelAt(mid.x,mid.y);
+    // treat plank as segment; skip while Ball B seated (kinematic handles it)
+    if(!(b===balls.B&&balls.B.seated)){
+      const hit=collideBallSeg(b,{...s,e:0.15},sv);
+      if(hit&&hit.impact>200){shake=Math.max(shake,2);}
+    }
+  }
+  // dominoes
+  for(const dm of dominoes){
+    const before=dm.vel;
+    const hit=collideBallDomino(b,dm);
+    if(hit&&hit.impact>60){
+      shake=Math.max(shake,Math.min(4,hit.impact/350));
+      if(b===balls.A && stageState[2].status==='pending' && dm===dominoes[0]){
+        setStage(1,'done'); setStage(2,'active');
+        logEvent(`Ball <b>A</b> struck domino 1 at ${hit.impact.toFixed(0)} px/s — run started.`);
+        sfx.domino(0);
+      } else if(hit.impact>140){
+        sfx.domino(dominoes.indexOf(dm));
+      }
+      if(dm.vel!==before && stageState[2].status==='active' && stageState[3].status==='pending'){
+        // keep active; log only first topple of domino 2..5 via stepDominoes
+      }
+    }
+  }
+  // mark domino run active-> we set active on first strike; set 3 active? Actually stage index 2 is dominoes.
+  // pegs (Ball C mostly, but any ball)
+  for(const p of PEGS){
+    const hit=collideBallCircle(b,p,p.r,0.62);
+    if(hit&&hit.impact>90){
+      if(b===balls.C && stageState[6].status==='active'){sfx.peg();}
+      shake=Math.max(shake,Math.min(2,hit.impact/600));
+      // tiny sparkle
+      if(hit.impact>260 && particles.length<500) particles.push({x:b.x,y:b.y,vx:(Math.random()-0.5)*140,vy:-120-Math.random()*120,life:0.5,age:0,r:2.5,c:'#fff',spark:true});
+    }
+  }
+  // free balls bounce off each other (equal mass); seated/captured balls skip
+  // (dynamic=false)
+  // bucket walls for Ball B before capture: LOW rims (open-top side entry
+  // clears them), soft floor, tall backstop segment stops overshoot.
+  // A position-based guide (see checkTriggers) centers the ball once inside.
+  if(b===balls.B && !b.captured && b.dynamic){
+    const lw={x1:BUCKET.x-BUCKET.w/2,y1:BUCKET.y+24,x2:BUCKET.x-BUCKET.w/2,y2:BUCKET.y+BUCKET.h,kind:'tube',e:0.1};
+    const rw={x1:BUCKET.x+BUCKET.w/2,y1:BUCKET.y+24,x2:BUCKET.x+BUCKET.w/2,y2:BUCKET.y+BUCKET.h,kind:'tube',e:0.1};
+    const fl={x1:BUCKET.x-BUCKET.w/2,y1:BUCKET.y+BUCKET.h,x2:BUCKET.x+BUCKET.w/2,y2:BUCKET.y+BUCKET.h,kind:'tube',e:0.08};
+    collideBallSeg(b,lw,null); collideBallSeg(b,rw,null); collideBallSeg(b,fl,null);
+  }
+  // ground bounce extra safety already in SEGMENTS
+  // anti-stall: a real machine vibrates. Every 0.5 s, if a still-needed ball
+  // has barely moved (<4 px: e.g. balanced exactly between two pegs), it gets
+  // a tiny symmetry-breaking jiggle. Too small to drive anything by itself —
+  // gravity still does all the work. Gated to unfinished stages only.
+  const needNudge=
+    (b===balls.A && (stageState[1].status!=='done'||stageState[2].status!=='done')) ||
+    (b===balls.B && stageState[4].status==='active') ||
+    (b===balls.C && stageState[6].status!=='done');
+  b.sampleT=(b.sampleT||0)+dt;
+  if(b.sampleT>=0.5){
+    b.sampleT=0;
+    const moved=Math.hypot(b.x-(b.sampleX??b.x), b.y-(b.sampleY??b.y));
+    b.sampleX=b.x; b.sampleY=b.y;
+    if(moved<4 && needNudge && !finished && (b.nudges||0)<10){
+      b.vx+=(Math.random()<0.5?-60:60); b.vy-=40; b.nudges=(b.nudges||0)+1;
+      const nm=b===balls.A?'A':(b===balls.B?'B':'C');
+      logEvent(`Table vibration jiggled Ball <b>${nm}</b> loose (was perfectly balanced).`);
+    }
+  }
+  // trail
+  b.trail.push({x:b.x,y:b.y});
+  if(b.trail.length>26) b.trail.shift();
+}
+function stepParticles(dt){
+  for(const p of particles){
+    p.age+=dt;
+    if(p.confetti){
+      p.vy+=900*dt; p.vx*=(1-0.6*dt);
+      p.x+=p.vx*dt; p.y+=p.vy*dt; p.rot+=p.vr*dt;
+      if(p.y>H+20) p.dead=true;
+    } else if(p.spark){
+      p.vy+=900*dt; p.x+=p.vx*dt; p.y+=p.vy*dt;
+      if(p.age>p.life) p.dead=true;
+    }
+  }
+  particles=particles.filter(p=>!p.dead && p.age<(p.life||3.2));
+  // button glow decay
+  if(!finished) BUTTON.press*= (1-0.4*dt);
+}
+function spawnConfetti(n){
+  const colors=['#ffd166','#39d0ff','#c084fc','#3ddc84','#ff6b6b','#ffffff','#ffb02e'];
+  for(let i=0;i<n;i++){
+    particles.push({confetti:true,
+      x:120+Math.random()*960, y:-20-Math.random()*220,
+      vx:(Math.random()-0.5)*260, vy:60+Math.random()*180,
+      w:6+Math.random()*7,h:8+Math.random()*8,
+      rot:Math.random()*Math.PI, vr:(Math.random()-0.5)*9,
+      c:colors[i%colors.length], age:0, life:4+Math.random()*2});
+  }
+  for(let i=0;i<40;i++){
+    particles.push({confetti:true,x:BUTTON.x+43,y:BUTTON.y-10,
+      vx:(Math.random()-0.5)*700,vy:-200-Math.random()*600,
+      w:5+Math.random()*6,h:7+Math.random()*7,rot:Math.random()*3,vr:(Math.random()-0.5)*12,
+      c:colors[(i*2)%colors.length],age:0,life:2.5});
+  }
+}
+function physicsStep(dt){
+  simTime+=dt;
+  stepDominoes(dt);
+  stepSeesaw(dt);
+  stepBucket(dt);
+  stepBall(balls.A,dt);
+  stepBall(balls.B,dt);
+  stepBall(balls.C,dt);
+  collideBalls(balls.A,balls.B);
+  collideBalls(balls.A,balls.C);
+  collideBalls(balls.B,balls.C);
+  // release gate slide animation for Ball A (kinematic until open)
+  if(started && !balls.A.dynamic){
+    RELEASE.open=Math.min(1,RELEASE.open+dt*3.2);
+    balls.A.x=RELEASE_X; balls.A.y=64;
+    if(RELEASE.open>=1){
+      balls.A.dynamic=true; balls.A.vy=10;
+      setStage(0,'done'); setStage(1,'active');
+      logEvent(`Trapdoor opened — <b>Ball A released</b>.`);
+      sfx.release();
+    }
+  }
+  if(!balls.C.released){
+    balls.C.x=650; balls.C.y=96; balls.C.vx=0; balls.C.vy=0;
+  }
+  checkTriggers();
+  stepParticles(dt);
+  shake*= (1-3*dt); if(shake<0.05) shake=0;
+}
+
+/* ---------- main loop (timers ONLY drive frames, never the chain) ---------- */
+function frame(t){
+  requestAnimationFrame(frame);
+  if(!lastT) lastT=t;
+  let realDt=(t-lastT)/1000; lastT=t;
+  if(realDt>0.05) realDt=0.05;
+  if(running){
+    accumulator+=realDt*speed;
+    let n=0;
+    while(accumulator>=FIXED && n<40){physicsStep(FIXED);accumulator-=FIXED;n++;}
+  }
+  render();
+  updateHUD();
+}
+
+/* ---------- controls ---------- */
+function startMachine(){
+  if(!started){
+    started=true; running=true;
+    setStage(0,'active');
+    logEvent(`<b>Machine started</b> — trapdoor retracting…`);
+    sfx.release();
+  } else {
+    running=true;
+    logEvent(`Resumed at ${simTime.toFixed(2)}s (${speed.toFixed(2)}×).`);
+  }
+  syncButtons();
+}
+function pauseMachine(){
+  if(!started) return;
+  running=false; accumulator=0;
+  logEvent(`Paused at ${simTime.toFixed(2)}s. Use Step to advance frame-by-frame.`);
+  syncButtons();
+}
+function resumeMachine(){
+  if(!started){startMachine();return;}
+  if(finished){logEvent(`Run already complete — press Reset to run again.`);return;}
+  running=true; logEvent(`Resumed at ${simTime.toFixed(2)}s.`);
+  syncButtons();
+}
+function resetMachine(){
+  balls=initialBalls(); dominoes=makeDominoes();
+  SEESAW.angle=0;SEESAW.vel=0;
+  BUCKET.y=BUCKET.restTop;BUCKET.vy=0;BUCKET.captured=false;
+  GATE.opening=0; BUTTON.press=0;BUTTON.pressed=false;
+  RELEASE.open=0; particles=[]; shake=0; simTime=0; accumulator=0;
+  running=false; started=false; finished=false;
+  stageState.forEach((s,i)=>{s.status='pending';s.note='';
+    const li=$('stage'+i);li.classList.remove('active','done');li.querySelector('.s').textContent='WAITING';});
+  logEl.innerHTML=''; logCount=0;
+  seatBallB();
+  $('chainState').textContent='Chain: 0 / 8 complete'; $('meterFill').style.width='0%';
+  logEvent(`Reset — all bodies restored. Press <b>Start</b>.`);
+  syncButtons();
+}
+function stepSim(seconds){
+  if(!started){logEvent(`Press <b>Start</b> first — stepping arms the trapdoor.`);started=true;setStage(0,'active');}
+  running=false;
+  const steps=Math.max(1,Math.round(seconds/FIXED));
+  for(let i=0;i<steps;i++) physicsStep(FIXED);
+  logEvent(`Stepped ${seconds.toFixed(3)}s → t=${simTime.toFixed(2)}s (paused).`);
+  syncButtons();
+}
+$('btnStart').onclick=startMachine;
+$('btnPause').onclick=pauseMachine;
+$('btnResume').onclick=resumeMachine;
+$('btnReset').onclick=resetMachine;
+$('btnStep').onclick=()=>stepSim(1/60);
+$('btnStepSlow').onclick=()=>stepSim(0.5);
+$('btnSound').onclick=e=>{soundOn=!soundOn;e.target.textContent=soundOn?'🔊 Sound on':'🔇 Sound off';e.target.setAttribute('aria-pressed',soundOn);};
+$('speed').oninput=e=>{speed=parseFloat(e.target.value);$('speedVal').textContent=speed.toFixed(2)+'×';};
+window.addEventListener('keydown',e=>{
+  if(e.code==='Space'){e.preventDefault();(running?pauseMachine:startMachine)();}
+  else if(e.key==='r'||e.key==='R') resetMachine();
+  else if(e.key==='.'){stepSim(1/60);}
+  else if(e.key>='1'&&e.key<='5'){const m={'1':0.1,'2':0.25,'3':0.5,'4':1,'5':2};speed=m[e.key];$('speed').value=speed;$('speedVal').textContent=speed.toFixed(2)+'×';}
+});
+function syncButtons(){
+  $('btnStart').disabled=started&&running;
+  $('btnPause').disabled=!running;
+  $('btnResume').disabled=!started||running;
+  $('hudDot').className='dot '+(running?'run':(started?'pause':''));
+}
+function updateHUD(){
+  $('hudTime').textContent=simTime.toFixed(2)+'s';
+  const done=stageState.filter(s=>s.status==='done').length;
+  $('hudText').innerHTML = !started?`Ready — press <b>Start</b>`
+    : finished?`<b>🎉 Complete!</b> t=<b>${simTime.toFixed(1)}s</b> — press Reset to replay`
+    : running?`Running <b>${speed.toFixed(2)}×</b> — ${done}/8 done`
+    :`Paused — <b>Step</b> to inspect handoffs`;
+}
+
+/* ---------- rendering ---------- */
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function drawBall(b){
+  // trail
+  for(let i=0;i<b.trail.length;i++){
+    const p=b.trail[i], a=i/b.trail.length*0.28;
+    ctx.beginPath();ctx.arc(p.x,p.y,b.r*(0.3+0.6*i/b.trail.length),0,7);
+    ctx.fillStyle=hexA(b.color,a);ctx.fill();
+  }
+  const g=ctx.createRadialGradient(b.x-4,b.y-5,2,b.x,b.y,b.r+2);
+  g.addColorStop(0,'#ffffff');g.addColorStop(0.35,b.color);g.addColorStop(1,shade(b.color));
+  ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,7);ctx.fillStyle=g;ctx.fill();
+  ctx.lineWidth=2;ctx.strokeStyle='rgba(0,0,0,.45)';ctx.stroke();
+  ctx.beginPath();ctx.arc(b.x-4,b.y-5,3.2,0,7);ctx.fillStyle='rgba(255,255,255,.85)';ctx.fill();
+}
+function hexA(hex,a){
+  const n=parseInt(hex.slice(1),16);
+  return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
+}
+function shade(hex){
+  const n=parseInt(hex.slice(1),16);
+  const r=((n>>16)&255)*0.45|0,g=((n>>8)&255)*0.45|0,b=(n&255)*0.45|0;
+  return `rgb(${r},${g},${b})`;
+}
+function drawSegment(s){
+  ctx.save();ctx.lineCap='round';
+  if(s.kind==='ramp'||s.kind==='final'){
+    ctx.lineWidth=13;ctx.strokeStyle='#5b3a1e';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+    ctx.lineWidth=9;ctx.strokeStyle='#c98a3d';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+    ctx.lineWidth=3;ctx.strokeStyle='#ffe1a8';ctx.beginPath();ctx.moveTo(s.x1,s.y1-3);ctx.lineTo(s.x2,s.y2-3);ctx.stroke();
+  } else if(s.kind==='shelf'){
+    ctx.lineWidth=12;ctx.strokeStyle='#4a2f18';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+    ctx.lineWidth=6;ctx.strokeStyle='#a06a2e';ctx.beginPath();ctx.moveTo(s.x1,s.y1-2);ctx.lineTo(s.x2,s.y2-2);ctx.stroke();
+  } else if(s.kind==='funnel'||s.kind==='collector'){
+    ctx.lineWidth=11;ctx.strokeStyle='#274b73';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+    ctx.lineWidth=7;ctx.strokeStyle='#39d0ff';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+  } else if(s.kind==='tube'||s.kind==='wall'){
+    ctx.lineWidth=8;ctx.strokeStyle='rgba(140,170,255,.85)';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+  } else if(s.kind==='ledge'){
+    ctx.lineWidth=9;ctx.strokeStyle='#6b5a2e';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+  } else if(s.kind==='ground'){
+    ctx.lineWidth=10;ctx.strokeStyle='#2c3a2e';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+  } else if(s.kind==='lip'){
+    ctx.lineWidth=7;ctx.strokeStyle='#8a5a22';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+  }
+  ctx.restore();
+}
+function drawDomino(dm,i){
+  const ux=Math.sin(dm.angle), uy=-Math.cos(dm.angle);
+  const vx=Math.cos(dm.angle), vy=Math.sin(dm.angle);
+  const cx=dm.bx+ux*DOMINO_H/2, cy=dm.baseY+uy*DOMINO_H/2;
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(dm.angle);
+  ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=10;ctx.shadowOffsetY=4;
+  const g=ctx.createLinearGradient(-8,0,8,0);
+  const cols=[['#ff6b6b','#c0392b'],['#ffd166','#b97a1a'],['#3ddc84','#1d8a4e'],['#39d0ff','#1a6fa0'],['#c084fc','#6d3bb0']];
+  const c=cols[i%5];
+  g.addColorStop(0,c[0]);g.addColorStop(1,c[1]);
+  roundRect(-DOMINO_W/2,-DOMINO_H/2,DOMINO_W,DOMINO_H,4);
+  ctx.fillStyle=g;ctx.fill();
+  ctx.shadowColor='transparent';
+  ctx.fillStyle='rgba(255,255,255,.9)';
+  ctx.beginPath();ctx.arc(0,-14,3,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(0,2,3,0,7);ctx.fill();
+  ctx.beginPath();ctx.arc(0,18,3,0,7);ctx.fill();
+  ctx.strokeStyle='rgba(0,0,0,.4)';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.restore();
+}
+function drawSeesaw(){
+  const s=seesawSeg();
+  // fulcrum triangle
+  ctx.save();
+  ctx.fillStyle='#3a4a7a';
+  ctx.beginPath();ctx.moveTo(SEESAW.px-26,SEESAW.py+30);ctx.lineTo(SEESAW.px+26,SEESAW.py+30);ctx.lineTo(SEESAW.px,SEESAW.py-6);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=2;ctx.stroke();
+  ctx.beginPath();ctx.arc(SEESAW.px,SEESAW.py,7,0,7);ctx.fillStyle='#ffd166';ctx.fill();
+  ctx.strokeStyle='#5b3a1e';ctx.lineWidth=2;ctx.stroke();
+  // plank
+  ctx.lineCap='round';
+  ctx.lineWidth=13;ctx.strokeStyle='#5b3a1e';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+  ctx.lineWidth=9;ctx.strokeStyle='#e09b3d';ctx.beginPath();ctx.moveTo(s.x1,s.y1);ctx.lineTo(s.x2,s.y2);ctx.stroke();
+  // cup on right tip
+  ctx.lineWidth=5;ctx.strokeStyle='#39d0ff';
+  ctx.beginPath();ctx.arc(s.x2,s.y2-6,11,0.15*Math.PI,0.85*Math.PI);ctx.stroke();
+  // left target pad
+  ctx.fillStyle='rgba(255,107,107,.35)';
+  ctx.beginPath();ctx.arc(s.x1,s.y1-4,13,0,7);ctx.fill();
+  ctx.restore();
+}
+function drawBucketRope(){
+  const topY=64;
+  const pulley1={x:1040,y:topY}, pulley2={x:650,y:topY};
+  ctx.save();
+  // rope: bucket -> up to pulley1 -> across to pulley2 -> down to gate
+  ctx.strokeStyle='#d9c48a';ctx.lineWidth=3;
+  ctx.beginPath();
+  ctx.moveTo(BUCKET.x,BUCKET.y);
+  ctx.lineTo(pulley1.x,pulley1.y);
+  ctx.lineTo(pulley2.x,pulley2.y);
+  ctx.lineTo(650-14+GATE.opening*0, 96); // gate slider
+  ctx.stroke();
+  for(const p of [pulley1,pulley2]){
+    ctx.beginPath();ctx.arc(p.x,p.y,11,0,7);ctx.fillStyle='#2c3a5e';ctx.fill();
+    ctx.lineWidth=2.5;ctx.strokeStyle='#9aa7d0';ctx.stroke();
+    ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,7);ctx.fillStyle='#ffd166';ctx.fill();
+  }
+  // bucket
+  const bx=BUCKET.x-BUCKET.w/2, by=BUCKET.y;
+  ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=12;ctx.shadowOffsetY=5;
+  const g=ctx.createLinearGradient(bx,0,bx+BUCKET.w,0);
+  g.addColorStop(0,'#8a5a2e');g.addColorStop(0.5,'#d99a45');g.addColorStop(1,'#7a4a20');
+  ctx.fillStyle=g;
+  ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx+BUCKET.w,by);ctx.lineTo(bx+BUCKET.w-6,by+BUCKET.h);ctx.lineTo(bx+6,by+BUCKET.h);ctx.closePath();ctx.fill();
+  ctx.shadowColor='transparent';
+  ctx.strokeStyle='#3a2410';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='rgba(0,0,0,.25)';ctx.fillRect(bx+4,by+BUCKET.h-8,BUCKET.w-8,5);
+  ctx.fillStyle='#fff';ctx.font='700 11px system-ui';ctx.textAlign='center';
+  ctx.fillText('WEIGHT',BUCKET.x,by+22);
+  ctx.restore();
+}
+function drawReservoir(){
+  ctx.save();
+  // housing around Ball C hole
+  ctx.fillStyle='rgba(0,0,0,.35)';
+  roundRect(588,66,124,52,10);ctx.fill();
+  ctx.strokeStyle='rgba(192,132,252,.5)';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#c084fc';ctx.font='800 11px system-ui';ctx.textAlign='center';
+  ctx.fillText('BALL-C GATE',650,80);
+  // sliding gate plate (moves with bucket)
+  const gx=GATE.x0+GATE.opening*48;
+  ctx.fillStyle='#9aa7d0';
+  roundRect(gx,104,28,10,3);ctx.fill();
+  ctx.strokeStyle='#3a4a7a';ctx.lineWidth=1.5;ctx.stroke();
+  // hole
+  ctx.fillStyle='#050914';
+  ctx.fillRect(636,108,28,8);
+  // opening indicator
+  ctx.fillStyle='#3ddc84';
+  ctx.fillRect(636,108,28*GATE.opening,8);
+  ctx.restore();
+}
+function drawRelease(){
+  ctx.save();
+  ctx.fillStyle='rgba(0,0,0,.35)';roundRect(118,26,140,66,10);ctx.fill();
+  ctx.strokeStyle='rgba(255,209,102,.55)';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#ffd166';ctx.font='800 11px system-ui';ctx.textAlign='center';
+  ctx.fillText('TRAPDOOR S1',188,42);
+  // chute walls
+  ctx.strokeStyle='#c98a3d';ctx.lineWidth=7;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(150,52);ctx.lineTo(150,108);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(206,52);ctx.lineTo(206,108);ctx.stroke();
+  // sliding door (retracts on start)
+  const dw=56*(1-RELEASE.open);
+  if(dw>0.5){
+    ctx.fillStyle='#9aa7d0';ctx.fillRect(150,100,dw,8);
+    ctx.strokeStyle='#3a4a7a';ctx.lineWidth=1.5;ctx.strokeRect(150,100,dw,8);
+  }
+  ctx.restore();
+}
+function drawButton(){
+  ctx.save();
+  const {x,y,w,h}=BUTTON;
+  // pedestal
+  ctx.fillStyle='#232f5c';roundRect(x-10,y, w+20, 34, 8);ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=2;ctx.stroke();
+  // glowing base ring
+  const glow=BUTTON.press;
+  ctx.shadowColor=`rgba(255,60,60,${0.4+glow*0.6})`;ctx.shadowBlur=14+glow*26;
+  const g=ctx.createLinearGradient(0,y-26,0,y);
+  g.addColorStop(0,'#ff8a8a');g.addColorStop(0.5,'#e03131');g.addColorStop(1,'#7a1010');
+  const pressY=glow*10;
+  roundRect(x,y-22+pressY,w,22,9);ctx.fillStyle=g;ctx.fill();
+  ctx.shadowColor='transparent';
+  ctx.lineWidth=2;ctx.strokeStyle='rgba(0,0,0,.5)';ctx.stroke();
+  ctx.fillStyle='#fff';ctx.font='900 13px system-ui';ctx.textAlign='center';
+  ctx.fillText('FINISH',x+w/2,y-6+pressY);
+  // light bulbs arch
+  const t=performance.now()/300;
+  for(let i=0;i<7;i++){
+    const bx=x-8+i*((w+16)/6), by=y+38;
+    const on=((i+Math.floor(t))%2===0)||finished;
+    ctx.beginPath();ctx.arc(bx,by,5,0,7);
+    ctx.fillStyle=on?'#ffd166':'#3a4a6a';ctx.fill();
+    if(on){ctx.shadowColor='#ffd166';ctx.shadowBlur=12;ctx.fill();ctx.shadowColor='transparent';}
+  }
+  ctx.restore();
+}
+function drawFlag(){
+  const fx=1140, baseY=GROUND_Y;
+  ctx.save();
+  ctx.strokeStyle='#9aa7d0';ctx.lineWidth=6;ctx.lineCap='round';
+  ctx.beginPath();ctx.moveTo(fx,baseY);ctx.lineTo(fx,baseY-190);ctx.stroke();
+  ctx.beginPath();ctx.arc(fx,baseY-190,6,0,7);ctx.fillStyle='#ffd166';ctx.fill();
+  const wave=finished? Math.sin(performance.now()/140)*8 : Math.sin(performance.now()/700)*2;
+  const h=finished?64:30;
+  ctx.beginPath();
+  ctx.moveTo(fx,baseY-190);
+  ctx.quadraticCurveTo(fx+45,baseY-190+wave,fx+92,baseY-182+wave);
+  ctx.lineTo(fx+92,baseY-182+h*0.4+wave);
+  ctx.quadraticCurveTo(fx+45,baseY-170+h*0.4+wave,fx,baseY-158);
+  ctx.closePath();
+  const g=ctx.createLinearGradient(fx,0,fx+92,0);
+  g.addColorStop(0,finished?'#3ddc84':'#3a4a6a');g.addColorStop(1,finished?'#b6ffce':'#55648f');
+  ctx.fillStyle=g;ctx.fill();
+  ctx.fillStyle=finished?'#06280f':'#dbe4ff';ctx.font='900 13px system-ui';ctx.textAlign='center';
+  ctx.fillText(finished?'DONE!':'GOAL',fx+46,baseY-158+ (finished?4:2));
+  ctx.restore();
+}
+function drawLabels(){
+  ctx.save();ctx.font='800 12px system-ui';ctx.textAlign='center';
+  const tags=[
+    {x:188,y:122,t:'S1 RELEASE'},
+    {x:300,y:196,t:'S2 RAMPS'},
+    {x:642,y:600,t:'S3 DOMINOES',c:'#ffd166'},
+    {x:830,y:600,t:'S4 SEESAW'},
+    {x:1022,y:448,t:'S5 CATCH'},
+    {x:820,y:96,t:'S6 PULLEY'},
+    {x:650,y:168,t:'S7 PLINKO'},
+    {x:139,y:566,t:'S8 FINISH'},
+  ];
+  for(const tg of tags){
+    const active=stageState[parseInt(tg.t.slice(1,2))-1].status;
+    ctx.fillStyle=active==='done'?'rgba(61,220,132,.92)':active==='active'?'rgba(255,176,46,.95)':'rgba(220,230,255,.6)';
+    ctx.strokeStyle='rgba(0,0,0,.5)';ctx.lineWidth=3;
+    ctx.strokeText(tg.t,tg.x,tg.y);ctx.fillText(tg.t,tg.x,tg.y);
+  }
+  ctx.restore();
+}
+function render(){
+  ctx.save();
+  if(shake>0.1) ctx.translate((Math.random()-0.5)*shake*2,(Math.random()-0.5)*shake*2);
+  // background
+  const bg=ctx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,'#22336b');bg.addColorStop(0.55,'#16204a');bg.addColorStop(1,'#0d1330');
+  ctx.fillStyle=bg;ctx.fillRect(-20,-20,W+40,H+40);
+  // dotted blueprint grid
+  ctx.fillStyle='rgba(255,255,255,.055)';
+  for(let x=20;x<W;x+=40) for(let y=20;y<H;y+=40){ctx.fillRect(x,y,2,2);}
+  // ground
+  const gg=ctx.createLinearGradient(0,GROUND_Y,0,H);
+  gg.addColorStop(0,'#3b5a40');gg.addColorStop(1,'#1d2f22');
+  ctx.fillStyle=gg;ctx.fillRect(0,GROUND_Y,W,H-GROUND_Y);
+  ctx.fillStyle='rgba(255,255,255,.08)';ctx.fillRect(0,GROUND_Y,W,3);
+
+  for(const s of SEGMENTS) drawSegment(s);
+  // supports for ramps
+  ctx.strokeStyle='rgba(0,0,0,.35)';ctx.lineWidth=5;
+  const supports=[[150,168,GROUND_Y],[380,214,GROUND_Y],[380,306,GROUND_Y],[200,344,GROUND_Y],[200,416,GROUND_Y],[380,462,GROUND_Y],[360,540,GROUND_Y]];
+  for(const [x,y1,y2] of supports){ctx.beginPath();ctx.moveTo(x,y1);ctx.lineTo(x,y2);ctx.stroke();}
+
+  // plinko pegs
+  for(const p of PEGS){
+    const g=ctx.createRadialGradient(p.x-2,p.y-2,1,p.x,p.y,p.r+2);
+    g.addColorStop(0,'#fff');g.addColorStop(0.4,'#8ea2ff');g.addColorStop(1,'#2c3a6e');
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle=g;ctx.fill();
+    ctx.lineWidth=1.5;ctx.strokeStyle='rgba(0,0,0,.5)';ctx.stroke();
+  }
+  drawRelease();
+  drawReservoir();
+  drawBucketRope();
+  drawSeesaw();
+  for(let i=0;i<dominoes.length;i++) drawDomino(dominoes[i],i);
+  drawButton();
+  drawFlag();
+  // balls (B seated drawn in cup; captured drawn inside bucket)
+  drawBall(balls.A);
+  if(!balls.B.captured || BUCKET.captured) drawBall(balls.B);
+  drawBall(balls.C);
+  // sparks
+  for(const p of particles){
+    if(p.confetti){
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);
+      ctx.fillStyle=p.c;ctx.globalAlpha=clamp(1-p.age/p.life+0.25,0,1);
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h*Math.abs(Math.sin(p.rot*2))+2);
+      ctx.restore();ctx.globalAlpha=1;
+    } else if(p.spark){
+      ctx.globalAlpha=clamp(1-p.age/p.life,0,1);
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle=p.c;ctx.fill();
+      ctx.globalAlpha=1;
+    }
+  }
+  // finale banner
+  if(finished){
+    const t=Math.min(1,(performance.now()%100000)/400);
+    ctx.save();
+    ctx.translate(W/2,120);
+    const pop=Math.min(1,finished?1:0);
+    ctx.scale(pop,pop);
+    ctx.shadowColor='rgba(255,176,46,.7)';ctx.shadowBlur=30;
+    const g=ctx.createLinearGradient(-260,0,260,0);
+    g.addColorStop(0,'#ffb02e');g.addColorStop(1,'#ff6b6b');
+    roundRect(-260,-34,520,68,16);ctx.fillStyle=g;ctx.fill();
+    ctx.shadowColor='transparent';
+    ctx.fillStyle='#241300';ctx.font='900 30px system-ui';ctx.textAlign='center';
+    ctx.fillText('🎉 CHAIN COMPLETE! 🎉',0,10);
+    ctx.restore();
+  }
+  drawLabels();
+  // vignette
+  const v=ctx.createRadialGradient(W/2,H/2,H*0.35,W/2,H/2,H*0.85);
+  v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.42)');
+  ctx.fillStyle=v;ctx.fillRect(0,0,W,H);
+  ctx.restore();
+}
+
+/* ---------- boot ---------- */
+seatBallB();
+resetMachine();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

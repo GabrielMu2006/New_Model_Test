@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2D Mechanical Linkage Designer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>Linkage Designer</h1>
+    <span class="sub">interactive 2D mechanisms · exact-length solver</span>
+  </div>
+  <div class="top-actions">
+    <button id="btnNew" title="Clear and start a new mechanism">New</button>
+    <button id="btnExFour" title="Load a Grashof four-bar linkage">Four-bar example</button>
+    <button id="btnExSlider" title="Load a crank-slider mechanism">Crank-slider example</button>
+    <button id="btnSaveFile" title="Download the mechanism as JSON">Save file</button>
+    <button id="btnLoadFile" title="Open a mechanism JSON file">Load file</button>
+    <input type="file" id="fileInput" accept=".json,application/json" hidden>
+  </div>
+</header>
+
+<div class="layout">
+  <main class="stage">
+    <div class="toolbar" role="toolbar" aria-label="Design tools">
+      <button data-tool="select" class="tool active" title="Select / drag joints and tracks (1)">Select</button>
+      <button data-tool="fixed" class="tool" title="Create a fixed pivot (2)">Fixed pivot</button>
+      <button data-tool="joint" class="tool" title="Create a rotating (free) joint (3)">Joint</button>
+      <button data-tool="slider" class="tool" title="Create a slider on a track (4)">Slider</button>
+      <button data-tool="track" class="tool" title="Draw a slider track: press-drag-release (5)">Track</button>
+      <button data-tool="link" class="tool" title="Create a rigid link: click two joints (6)">Link</button>
+      <button data-tool="delete" class="tool danger" title="Delete joints, links or tracks (7)">Delete</button>
+      <span class="toolbar-sep"></span>
+      <button id="btnPlay" class="primary" title="Play / pause (Space)">Play</button>
+      <button id="btnStep" title="Advance one frame while paused (N)">Step</button>
+      <button id="btnStep10" title="Advance ten frames">Step ×10</button>
+      <button id="btnReset" title="Restore the initial pose (R)">Reset</button>
+      <button id="btnSetInitial" title="Use the current pose as the reset pose">Set initial</button>
+    </div>
+    <div class="canvas-wrap">
+      <canvas id="view" width="900" height="600" aria-label="Linkage canvas"></canvas>
+      <div id="hint" class="hint"></div>
+    </div>
+    <div class="statusbar">
+      <span id="cursorPos">—</span>
+      <span id="mechStats">—</span>
+      <span id="solverStatus">—</span>
+      <span id="msg" class="msg"></span>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <section class="panel">
+      <h2>Motor / driving joint</h2>
+      <label class="row"><span>Drive link (crank)</span>
+        <select id="driverSelect"></select>
+      </label>
+      <div class="row two">
+        <label><span>Speed (rpm)</span>
+          <input id="rpmInput" type="number" min="1" max="240" step="1" value="30">
+        </label>
+        <label><span>Direction</span>
+          <select id="dirSelect">
+            <option value="1">Clockwise</option>
+            <option value="-1">Counter-clockwise</option>
+          </select>
+        </label>
+      </div>
+      <div class="row two">
+        <label><span>Playback</span>
+          <select id="speedSelect">
+            <option value="0.25">0.25×</option>
+            <option value="0.5">0.5×</option>
+            <option value="1" selected>1×</option>
+            <option value="2">2×</option>
+          </select>
+        </label>
+        <div><span class="lbl">Crank angle</span><div id="angleOut" class="val">—</div></div>
+      </div>
+      <div class="row two">
+        <div><span class="lbl">Sim time</span><div id="timeOut" class="val">0.00 s</div></div>
+        <div><span class="lbl">State</span><div id="runOut" class="val">paused</div></div>
+      </div>
+    </section>
+
+    <section class="panel" id="pendingPanel" hidden>
+      <h2>New rigid link</h2>
+      <div id="pendingInfo" class="small"></div>
+      <label class="row"><span>Exact length (units)</span>
+        <input id="pendingLength" type="number" min="1" step="0.1">
+      </label>
+      <div class="row btns">
+        <button id="btnPendingOk" class="primary">Create link</button>
+        <button id="btnPendingCancel">Cancel (Esc)</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Selection</h2>
+      <div id="editor" class="small">Nothing selected. Use the Select tool and click a joint, link or track.</div>
+    </section>
+
+    <section class="panel">
+      <h2>View</h2>
+      <div class="checks">
+        <label><input type="checkbox" id="chkLabels" checked> Names</label>
+        <label><input type="checkbox" id="chkCoords" checked> Joint coords</label>
+        <label><input type="checkbox" id="chkLengths" checked> Link lengths</label>
+        <label><input type="checkbox" id="chkGrid" checked> Grid</label>
+        <label><input type="checkbox" id="chkSnap" checked> Snap to grid</label>
+        <label><input type="checkbox" id="chkTrace" checked> Coupler trace</label>
+      </div>
+      <label class="row"><span>Trace joint</span><select id="traceSelect"></select></label>
+      <div class="row btns">
+        <button id="btnClearTrace">Clear trace</button>
+        <button id="btnFitView">Fit view</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Joints <span id="jointCount" class="count"></span></h2>
+      <table id="jointTable" class="data">
+        <thead><tr><th>Name</th><th>Type</th><th>X</th><th>Y</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Links <span id="linkCount" class="count"></span></h2>
+      <table id="linkTable" class="data">
+        <thead><tr><th>Link</th><th>Nominal</th><th>Actual</th><th>Error</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="errOut" class="small"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Save / reload</h2>
+      <label class="row"><span>Mechanism name</span>
+        <input id="mechName" type="text" value="untitled">
+      </label>
+      <div class="row two">
+        <label><span>Slot</span><select id="slotSelect"></select></label>
+        <div class="row btns tight">
+          <button id="btnSlotSave" title="Save to browser slot">Store</button>
+          <button id="btnSlotLoad" title="Load from browser slot">Recall</button>
+        </div>
+      </div>
+      <div class="row btns">
+        <button id="btnExportText">Export JSON ↓</button>
+        <button id="btnImportText">Import JSON ↑</button>
+      </div>
+      <textarea id="jsonBox" rows="5" spellcheck="false"
+        placeholder="Exported JSON appears here; paste JSON here to import."></textarea>
+    </section>
+
+    <section class="panel">
+      <h2>How to build</h2>
+      <ol class="help">
+        <li><b>Fixed pivot</b>: click empty canvas. Ground pins never move.</li>
+        <li><b>Joint</b>: click to drop a free rotating pin.</li>
+        <li><b>Track</b>: press-drag-release to draw a slider rail.</li>
+        <li><b>Slider</b>: click near a rail to snap onto it, else a horizontal rail is created.</li>
+        <li><b>Link</b>: click two joints, type the exact length, create. Lengths never stretch.</li>
+        <li><b>Motor</b>: pick a crank link (pivot → joint), set rpm, press Play.</li>
+        <li><b>Select</b>: drag joints to pose the mechanism; lengths are preserved while dragging.</li>
+      </ol>
+      <div class="small">Keys: 1–7 tools · Space play/pause · N step · R reset · Del remove · Esc cancel.</div>
+    </section>
+  </aside>
+</div>
+
+<script src="solver.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

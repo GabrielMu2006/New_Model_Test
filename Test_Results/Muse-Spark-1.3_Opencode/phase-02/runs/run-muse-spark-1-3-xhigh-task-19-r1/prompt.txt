@@ -1,0 +1,19 @@
+Build an interactive animated Solar System visualization.
+
+Include:
+- the Sun
+- all eight planets
+- planetary orbits
+- Earth's Moon
+- several major moons of Jupiter
+- relative orbital speeds
+- orbital trails
+- pause/resume
+- adjustable simulation speed
+- zoom and pan
+- clicking a planet to inspect it
+- switching between a Solar System view and a selected-planet view
+
+Moons must continue orbiting their parent planet correctly while the planet itself moves around the Sun.
+
+Changing simulation speed must not cause objects to jump or lose orbital state.

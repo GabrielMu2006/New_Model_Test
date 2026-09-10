@@ -1,0 +1,112 @@
+{
+  "generatedAt": "2026-09-10T04:31:06.160Z",
+  "note": "第二轮细化探针：canvas 级比对 + 应用读数 + 存取往返",
+  "runs": {
+    "task-17": {
+      "runId": "run-muse-spark-1-3-xhigh-task-17-r1",
+      "consoleErrors": [],
+      "observations": {
+        "rotatingElements": 29,
+        "clockwise": 14,
+        "counterClockwise": 15,
+        "fastest": [
+          {
+            "key": "rect",
+            "deltaDegrees": -179.321
+          },
+          {
+            "key": "g",
+            "deltaDegrees": -166.941
+          },
+          {
+            "key": "rect",
+            "deltaDegrees": -166.119
+          },
+          {
+            "key": "g",
+            "deltaDegrees": 164.226
+          },
+          {
+            "key": "rect",
+            "deltaDegrees": 163.881
+          },
+          {
+            "key": "rect",
+            "deltaDegrees": -136.119
+          }
+        ],
+        "slowest": [
+          {
+            "key": "g",
+            "deltaDegrees": -1.177
+          },
+          {
+            "key": "g",
+            "deltaDegrees": 2.115
+          },
+          {
+            "key": "g",
+            "deltaDegrees": 2.115
+          },
+          {
+            "key": "g",
+            "deltaDegrees": 2.207
+          }
+        ]
+      },
+      "probeFailure": null
+    },
+    "task-18": {
+      "runId": "run-muse-spark-1-3-xhigh-task-18-r1",
+      "consoleErrors": [],
+      "observations": {
+        "runningTime": 1.58,
+        "pausedA": 1.62,
+        "pausedB": 1.62,
+        "frozenWhilePaused": true,
+        "canvasFrozenWhilePaused": true,
+        "afterStep": 1.63,
+        "stepDelta": 0.01,
+        "afterStepSlow": 2.13,
+        "stepSlowDelta": 0.5,
+        "hudAtPause": "Paused — Step to inspect handoffs",
+        "afterReset": 0,
+        "stagesObserved": [
+          "Running 1.00× — 1/8 done",
+          "Running 1.00× — 2/8 done",
+          "Running 1.00× — 6/8 done",
+          "Running 1.00× — 7/8 done",
+          "🎉 Complete! t=11.2s — press Reset to replay"
+        ]
+      },
+      "probeFailure": null
+    },
+    "task-19": {
+      "runId": "run-muse-spark-1-3-xhigh-task-19-r1",
+      "consoleErrors": [],
+      "observations": {
+        "canvasMovingWhileRunning": true,
+        "canvasMovingWhilePaused": true,
+        "pausedClockFrozen": true,
+        "pausedDateA": 38.7,
+        "pausedDateB": 38.7,
+        "rateAtDefaultSpeedPerSecond": 20,
+        "rateAtMaxSpeedPerSecond": 300
+      },
+      "probeFailure": null
+    },
+    "task-20": {
+      "runId": "run-muse-spark-1-3-xhigh-task-20-r1",
+      "consoleErrors": [],
+      "observations": {
+        "fourBarPlayingMoving": true,
+        "pausedCanvasFrozen": true,
+        "stepChangedCanvas": false,
+        "crankSliderMoving": true,
+        "clearActuallyChangedView": true,
+        "recallRestoredStoredView": true
+      },
+      "probeFailure": null
+    }
+  }
+}
