@@ -1,5 +1,18 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 接入第二阶段 Task 16–20 到展示站
+
+- 需求：把已归档的 5 个 Phase 2 项目（Task 16–20）上传到展示站。按 `docs/adding-results.md` 走完整接入流程，不以「文件已上传」代替验收。
+- 归档首次入库（提交 `a9925d8`）：`Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/`，含 5 个 `runs/<run-id>/`、逐字 `prompt.txt`、`submission.json`、`evidence/`（收尾审查报告、隔离规则、会话日志 SHA-256）与阶段 README。接入前独立核对 **48 个成果文件与 5 个 `prompt.txt` 的 SHA-256**，与 `submission.json` 声明全部一致（不一致 0）。
+- 导入层：新增 `website/scripts/adapters/deepseek-phase2.mjs` 并在编排器注册；以 `submission.json` 为唯一元数据来源，导入时交叉校验 `prompt.txt` 的 SHA-256（不一致即失败，题目不可被替换）；成果、隔离与越界状态原样带入，不在导入层改写。新增 `website/data/phases/phase-02.json`。
+- 通用校验补强：阶段的 `taskVersions` 必须与目录中任务一一对应（新增不变量）；第一阶段 15 题 / 15 运行 / 30 评价的回归改为**按阶段收敛**（不再依赖 catalog 总量）；新增第二阶段单调回归（5 个已归档运行必须仍在，且必须记录 `isolation.level=workspace-only`、逐字 prompt 哈希与审查证据链接）。
+- 页面补强：运行详情新增收尾审查证据链接（绑定该批次归档提交 `a9925d8…`）与补充轮逐字输入；无评价时显式显示「本运行暂无独立评价」，不留空白；越界尝试显示为「存在越界尝试，未取得内容 · 不影响成绩」；首页计数与任务类别文案不再写死第一阶段。
+- 构建数据：2 模型 / 2 阶段 / 20 任务 / 35 运行 / 75 评价 / 3 批次 / 3 阶段评估，**132 个生成页**（由实体推导，原 110）与 30 个 HTML 成果；DeepSeek 模型页列出 20 条运行。
+- 门禁：`import:data`、`validate:data`、`check`（0 errors）、`npm test`（10/10）、`build`（132 页，静态链接检查通过）全部通过；`test:e2e` 在 Chromium + WebKit 通过，**35 个成果入口全部加载**。本机 Firefox 在 Playwright 下 `browser.newPage: Target crashed`（既有环境限制，非本次改动）；e2e 新增 `E2E_BROWSERS` 开关，便于本地只跑可用浏览器，默认仍是三浏览器全套。
+- 发布与公网核验：提交 `a88b331` 推送 `main`；回退标签 `website-rollback-20260910-78dcdf6` 指向上一已成功部署且公网验证通过的提交 `78dcdf6`。Actions run `34434388799` 构建与 Pages 部署成功；匿名 HTTPS 复核 `/`、`/en/`、`/zh/phases/phase-02/`、`/zh/tasks/task-16/`、`/zh/tasks/task-19/`、`/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/`、`/en/runs/run-deepseek-v4-1-flash-exp-0910-task-20-r1/` 与两个成果入口（`pelican-bicycle.svg`、`index.html`）均返回 HTTP 200；线上运行页实测显示「越界判定：存在越界尝试，未取得内容 · 不影响成绩」「补充轮输入（逐字）：「不要再读取chrome钥匙串了」」「本运行暂无独立评价」，首页显示 `2 MODELS · 2 PHASES`。
+- 必须随成绩一起标注的限制：隔离是**策略级约束 + 事后审查**，不是强制隔离、不表示「无污染」；题目 Task 16–45 已在公开仓库发布（`0540edf`）；第二阶段**尚无人工 / AI 评价，因此展示站不给分**；成果内测试结果均为作者自述，本次未在隔离环境复跑。
+- 未完成项：Task 21–45 尚未测试；第二阶段评价待产出；同一运行挂多份 AI 评价的展示仍按 `docs/known-issues.md` 3.1 处理。
+
 ## 2026-09-10 越界处置口径：只标注，不排除成绩
 
 - 组织者决定（2026-09-10）：**越界判定只影响标注，不影响成绩录入**。任何 run 都不因越界判定被排除、作废、重测或改写分数。
