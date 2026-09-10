@@ -136,6 +136,8 @@ for (const review of catalog.reviews) {
   if (!review.body?.zh || !review.body?.en) fail(`${review.id}: body must be non-empty in both locales`);
   if (review.type === 'ai' && (review.score == null || !review.scoreMethod)) fail(`${review.id}: AI review needs a score and a score method`);
   if (!review.source?.path) fail(`${review.id}: missing source path`);
+  // 评价文件可能与运行不在同一提交入库；必须自报所在提交，否则源码链接会指向 404。
+  if (!/^[0-9a-f]{40}$/.test(review.commit ?? '')) fail(`${review.id}: review.commit must be the full SHA the review file was archived in`);
 }
 
 for (const batch of catalog.batches) {
@@ -145,6 +147,7 @@ for (const batch of catalog.batches) {
     if (value !== null && (!Number.isFinite(value) || value < 0)) fail(`batch ${batch.id}: invalid metric ${key}=${value}`);
   }
   if (!batch.source?.path) fail(`batch ${batch.id}: missing source`);
+  if (!/^[0-9a-f]{40}$/.test(batch.commit ?? '')) fail(`batch ${batch.id}: batch.commit must be the full SHA the batch source was archived in`);
 }
 
 for (const assessment of catalog.assessments) {
@@ -152,6 +155,9 @@ for (const assessment of catalog.assessments) {
   if (!phaseIds.has(assessment.phaseId)) fail(`assessment ${assessment.id}: unknown phase ${assessment.phaseId}`);
   if (assessment.score !== null && (!Number.isFinite(assessment.score) || assessment.score < 0 || assessment.score > 100)) fail(`assessment ${assessment.id}: invalid score`);
   if (!assessment.source?.path) fail(`assessment ${assessment.id}: missing source`);
+  if (!/^[0-9a-f]{40}$/.test(assessment.commit ?? '')) fail(`assessment ${assessment.id}: assessment.commit must be the full SHA the report was archived in`);
+  // 免责声明必须双语：中文页此前显示英文段落。
+  if (!assessment.disclaimer?.zh || !assessment.disclaimer?.en) fail(`assessment ${assessment.id}: disclaimer must be bilingual`);
 }
 
 // ---- 首批档案回归基线（独立于上面的通用校验，防止接入新数据时被悄悄改动） ----

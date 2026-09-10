@@ -71,17 +71,25 @@ export function load({ read, siteRoot }) {
   }
 
   const humanDetails = new Map();
-  for (const match of humanText.matchAll(/^### T(\d+) ·[^\n]*\n\n> ([^\n]+)/gm)) humanDetails.set(`task-${match[1].padStart(2, '0')}`, match[2].trim());
 
-  // 只解析「一、评价总览」四列表；后文的「共性反馈」两列表不得覆盖结论。
+  // 「一、评价总览」四列表：以表中的 `task-NN` 为**权威**映射，T 编号只用于定位原文小节。
+  // 不假设 T<N> 就等于 task-<NN>：一旦总览表重排，结论会静默挂到错误的题上。
   const humanSummary = new Map();
+  const taskIdByTNumber = new Map();
   const overviewStart = humanText.indexOf('## 一、评价总览');
   const overviewEnd = overviewStart >= 0 ? humanText.indexOf('\n## ', overviewStart + 1) : -1;
   const overviewBlock = overviewStart >= 0 ? humanText.slice(overviewStart, overviewEnd > 0 ? overviewEnd : undefined) : humanText;
   for (const row of overviewBlock.split('\n').filter((line) => /^\| T\d+ \|/.test(line))) {
     const cells = row.split('|').slice(1, -1).map((cell) => cell.trim());
     if (cells.length < 4 || !cells[3]) continue;
-    humanSummary.set(`task-${cells[0].slice(1).padStart(2, '0')}`, cells[3]);
+    const taskRef = cells[1]?.match(/task-\d{2}/)?.[0];
+    if (!taskRef) throw new Error(`[deepseek-phase1] human review overview row ${cells[0]}: no task-NN in the task column`);
+    taskIdByTNumber.set(cells[0], taskRef);
+    humanSummary.set(taskRef, cells[3]);
+  }
+  const tNumberByTaskId = new Map([...taskIdByTNumber].map(([tNumber, taskId]) => [taskId, tNumber.slice(1)]));
+  for (const match of humanText.matchAll(/^### T(\d+) ·[^\n]*\n\n> ([^\n]+)/gm)) {
+    humanDetails.set(taskIdByTNumber.get(`T${match[1]}`) ?? `task-${match[1].padStart(2, '0')}`, match[2].trim());
   }
 
   const aiSections = new Map();
@@ -138,7 +146,7 @@ export function load({ read, siteRoot }) {
               : null,
         },
       },
-      source: { path: metricsPath, lines: '54-70' },
+      source: { path: metricsPath, lines: lineRange(metricsText, `| ${id} |`, `| ${id} |`) },
     });
 
     reviews.push({
@@ -146,7 +154,8 @@ export function load({ read, siteRoot }) {
       conclusion: { zh: humanSummary.get(id) ?? '', en: humanTranslations[index] },
       body: { zh: humanDetails.get(id) ?? '', en: humanTranslations[index] },
       translated: true, score: null,
-      source: { path: humanPath, lines: lineRange(humanText, `### T${index + 1} ·`, `### T${index + 1} ·`) },
+      commit: archiveCommit,
+      source: { path: humanPath, lines: lineRange(humanText, `### T${tNumberByTaskId.get(id) ?? index + 1} ·`, `### T${tNumberByTaskId.get(id) ?? index + 1} ·`) },
     });
 
     const ai = aiSections.get(id);
@@ -157,6 +166,7 @@ export function load({ read, siteRoot }) {
       body: { zh: ai.body, en: 'This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided.' },
       translated: false, score: ai.score,
       scoreMethod: 'Weighted rubric defined in the cited historical AI report; not an independent score produced by this website.',
+      commit: archiveCommit,
       source: { path: aiPath, lines: lineRange(aiText, `### Task ${number} ·`, `### Task ${number} ·`) },
     });
   }
@@ -179,6 +189,7 @@ export function load({ read, siteRoot }) {
         costCny: 9.3, costUsd: null,
       },
       source: { path: metricsPath, lines: '10-25' },
+      commit: archiveCommit,
     }],
     assessments: [{
       id: 'assessment-deepseek-v4-1-flash-exp-0910-phase-01',
@@ -186,7 +197,11 @@ export function load({ read, siteRoot }) {
       score: 93.6, coreSummary: '15/15',
       label: { zh: '历史 AI 报告结论（引用）', en: 'Quoted historical AI report conclusion' },
       source: { path: aiPath, lines: '7-16,209-211' },
-      disclaimer: 'Quoted from the historical AI assessment; not independently proven or recomputed by this website.',
+      commit: archiveCommit,
+      disclaimer: {
+        zh: '引自历史 AI 评估报告；本站未独立复算，也未据此给出排名。',
+        en: 'Quoted from the historical AI assessment; not independently proven or recomputed by this website.',
+      },
     }],
     sourcePathMappings: [
       { commit: archiveCommit, current: `${archiveRoot}/`, archived: 'DeepSeek-V4.1-Flash-Exp-0910_DSH/' },

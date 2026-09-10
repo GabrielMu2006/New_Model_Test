@@ -77,7 +77,8 @@ phase-NN/Reviews/
 | 隔离 | isolation.level、实际执行环境、只读输入清单、网络规则、共享上下文情况 |
 | 污染 | contamination.status 为 clean/suspected/contaminated/unknown，事件和证据来源；clean 只针对声明的本轮控制措施。**该状态只影响标注，不影响成绩录入**：只有 `contaminated`（确认作弊成功）需要在展示中标注「已确认获取外部答案」，`suspected` 只记入档案。另记 `contamination.telemetry`：`visible` / `partial` / `hidden`——`hidden` 表示该模型 / harness 不提供中间工具调用记录，按 `docs/audit-method.md` 4.0 **默认视为遵守规则**并在展示中标注 |
 | 测试证据 | command、cwd（不泄露私有宿主路径）、环境、日期、通过/失败/跳过、证据路径和限制；历史自述另列 |
-| 评价 | 独立 reviewId、runId、human/ai、作者、日期、双语结论/原文、评分及 scoreMethod、证据位置；译文显式标记 |
+| 评价 | 独立 reviewId、runId、human/ai、作者、日期、双语结论/原文、评分及 scoreMethod、证据位置；译文显式标记。**每个评价必须自报其归档提交 `commit`**：评价常晚于运行入库，沿用运行的提交会生成 404 源码链接 |
+| 来源提交 | Review / Batch / Assessment 一律带 `commit`（该文件被入库的那个 40 位 SHA），展示时逐来源绑定；`website/scripts/verify-source-links.mjs` 在构建后逐个校验 |
 
 公开说明不得包含凭据、私人浏览器状态或未经同意的完整私有会话。完整证据封存与公开脱敏副本都计算哈希，公开副本说明删改范围，不能把脱敏误称为原始全文。
 
@@ -95,6 +96,8 @@ phase-NN/Reviews/
 任务版本是复合键 (taskId, version)。现有网站只存每题一个版本，未来接入第二个版本时须先改查找、校验及路由：保留已有 /{locale}/tasks/{id}/，为历史版本提供稳定地址或版本选择；run.taskVersion 始终定位正确原题。不能直接在只按 id 去重的 catalog 中塞入重复 ID。
 
 当前全局 archiveCommit 与 sourcePathMappings 仅服务于第一阶段目录迁移。未来每批不同提交要使用逐来源/逐成果的 commit 与历史路径，不能把新目录链接拼接到第一阶段旧 SHA。固定版本文件链接必须可访问。
+
+**批次汇总额外规则（2026-09-10 修复后）**：批次指标是对逐题值的求和，**任一题缺该项时该批次项必须为 null**，不得用 `?? 0` 把未知当 0（实例：opencode 日志不记 API 调用数，Muse phase-02 的逐题 `apiCalls` 全为 null，此前批次显示「API 0」）。断言见 `website/tests/catalog.test.mjs`。
 
 ## 接收与验收判定
 

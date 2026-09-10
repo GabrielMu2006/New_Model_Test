@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: website } }
     steps:
+      # 完整历史：verify-source-links 需要按提交校验源码链接（浅克隆会让每个历史提交都查不到）。
       - uses: actions/checkout@v5
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v5
         with: { node-version: 24, cache: npm, cache-dependency-path: website/package-lock.json }
       - run: npm ci

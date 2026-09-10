@@ -197,6 +197,53 @@ test('Phase 2 runs are imported with verbatim prompts, audit evidence and unchan
   assert.equal(followups[0].verbatim, '不要再读取chrome钥匙串了');
 });
 
+test('every source link can be pinned to the commit the file was archived in', () => {
+  // 归档分批入库：评价 / 批次 / 阶段报告可能与运行不在同一提交。
+  // 自报提交 + 逐文件核对，避免生成「页面正常、点开 404」的源码链接。
+  for (const review of catalog.reviews) {
+    assert.match(review.commit, /^[0-9a-f]{40}$/, `${review.id}: review.commit`);
+  }
+  for (const batch of catalog.batches) {
+    assert.match(batch.commit, /^[0-9a-f]{40}$/, `${batch.id}: batch.commit`);
+  }
+  for (const assessment of catalog.assessments) {
+    assert.match(assessment.commit, /^[0-9a-f]{40}$/, `${assessment.id}: assessment.commit`);
+  }
+  // codex-v1 是本阶段之后才归档的：它必须绑定自己的提交，不能沿用阶段提交。
+  const codexReviews = catalog.reviews.filter((review) => review.id.includes('codex-v1'));
+  assert.equal(codexReviews.length, 15);
+  for (const review of codexReviews) {
+    assert.equal(review.commit, 'cf9382fc1b51a614c1d632e4f300af7cf03de88c', `${review.id}: must use the commit that added codex-v1`);
+    assert.notEqual(review.commit, catalog.runs.find((run) => run.id === review.runId).artifact.commit);
+  }
+  const museCodexAssessment = catalog.assessments.find((assessment) => assessment.id.endsWith('codex-v1'));
+  assert.equal(museCodexAssessment.commit, 'cf9382fc1b51a614c1d632e4f300af7cf03de88c');
+  // 阶段报告与批次源文件同样按自己所在的提交绑定（此前沿用阶段内第一条运行的提交 → 404）。
+  for (const batch of catalog.batches) {
+    const firstRunOfModel = catalog.runs.find((run) => run.modelId === batch.modelId);
+    if (batch.phaseId === 'phase-02') assert.notEqual(batch.commit, firstRunOfModel.artifact.commit, `${batch.id}: phase-02 batch must not reuse the phase-01 run commit`);
+  }
+});
+
+test('batch aggregates never turn a missing per-task value into zero', () => {
+  // opencode 日志不记 API 调用数 → Muse phase-02 每题 apiCalls 都是 null；
+  // 求和不做 null 判定就会把「未记录」写成 0。
+  const musePhase2 = catalog.batches.find((batch) => batch.id === 'batch-muse-spark-1-3-phase-02-partial');
+  assert.equal(musePhase2.metrics.apiCalls, null, 'unknown API counts must stay null, not 0');
+  const sumKeys = ['durationSeconds', 'apiCalls', 'toolCalls', 'failures', 'inputTokens', 'outputTokens', 'cacheReadTokens'];
+  for (const batch of catalog.batches) {
+    const runs = catalog.runs.filter((run) => run.modelId === batch.modelId && phaseOf(run) === batch.phaseId);
+    assert.ok(runs.length, `${batch.id}: batch must own at least one run`);
+    for (const key of sumKeys) {
+      if (runs.some((run) => run.metrics[key] == null)) {
+        assert.equal(batch.metrics[key], null, `${batch.id}: ${key} must stay null when a per-task value is missing`);
+      } else {
+        assert.equal(batch.metrics[key], runs.reduce((sum, run) => sum + run.metrics[key], 0), `${batch.id}: ${key} must sum every per-task value`);
+      }
+    }
+  }
+});
+
 test('fixture-only phase, model and repeat run expand without component changes', () => {
   const expanded = { phases: [...catalog.phases, ...fixture.phases], models: [...catalog.models, ...fixture.models], tasks: [...catalog.tasks, ...fixture.tasks], runs: [...catalog.runs, ...fixture.runs] };
   assert.equal(expanded.phases.length, catalog.phases.length + 1);

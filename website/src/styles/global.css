@@ -4,6 +4,16 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 .footer-copy{display:grid;gap:.12rem}footer{gap:2rem}.footer-links{display:flex;align-items:center;justify-content:flex-end;gap:1.15rem;flex-wrap:wrap}.footer-links a{color:#c9d8d4;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:.3em}.footer-links a:hover,.footer-links a:focus-visible{color:var(--acid);text-decoration-color:currentColor}.footer-links a:focus-visible{outline:2px solid var(--acid);outline-offset:4px}@media(max-width:560px){footer{gap:.6rem}.footer-links{justify-content:flex-start}}
 .run-list{display:grid;gap:.75rem}
+/* 对比控件里的下拉框带有很长的选项文本（模型名 + runId）。grid item 默认 min-width:auto，
+   会被选项的 min-content 宽度撑到 586px，导致对比页在任何宽度下横向溢出。 */
+.compare-controls label,.compare-controls select{min-width:0}
+.compare-controls select{width:100%}
+/* WebKit 还会为 <option> 生成比 select 自身更宽的内部盒（select 宽度正常，option 盒仍计入
+   页面 scrollWidth），因此要在控件行上裁剪；留一点内边距给键盘焦点环。 */
+.compare-controls{overflow:hidden;padding:.1rem .15rem .3rem}
+/* 详情页的长源码路径不可断行，会把两栏卡片撑出视口（390px 下溢出 81px）。 */
+.prose-card a,.source-card a{overflow-wrap:anywhere}
+.detail-columns>*{min-width:0}
 .batch-table{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr)}
 .filter-panel{grid-template-columns:2fr 1fr 1fr}
 @media(max-width:900px){.filter-panel{grid-template-columns:1fr 1fr}.batch-table{grid-template-columns:1fr}}

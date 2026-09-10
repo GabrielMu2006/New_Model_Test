@@ -9,6 +9,8 @@ const copy = locale === 'zh' ? {
 } : {
   brand: 'Model Evaluation Archive', home: 'Overview', phases: 'Phases', models: 'Models', tasks: 'Tasks', compare: 'Compare', method: 'Methodology', skip: 'Skip to content', language: '中文', source: 'GitHub repository'
 };
+// 首页的标题就是站点名，直接用 `title · brand` 会渲染成「模型评测档案 · 模型评测档案」。
+const documentTitle = title.trim().toLowerCase() === copy.brand.trim().toLowerCase() ? title : `${title} · ${copy.brand}`;
 ---
 <!doctype html>
 <html lang={locale}>
@@ -18,7 +20,7 @@ const copy = locale === 'zh' ? {
     <meta name="description" content={description} />
     <meta name="color-scheme" content="dark" />
     <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} />
-    <title>{title} · {copy.brand}</title>
+    <title>{documentTitle}</title>
   </head>
   <body>
     <a class="skip-link" href="#main">{copy.skip}</a>

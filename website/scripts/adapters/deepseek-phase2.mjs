@@ -189,18 +189,21 @@ export function load({ read, repoRoot }) {
         },
         translated: false, score,
         scoreMethod: reference.scoreMethod,
+        commit: archiveCommit,
         source: { path: reviewPath, lines: `1-${text.split('\n').length}` },
       });
     }
   }
 
   const model = JSON.parse(read(`website/data/models/${modelId}.json`));
-  const totals = runs.reduce((sum, run) => {
-    for (const key of ['durationSeconds', 'apiCalls', 'toolCalls', 'failures', 'inputTokens', 'outputTokens', 'cacheReadTokens']) {
-      sum[key] += run.metrics[key] ?? 0;
-    }
-    return sum;
-  }, { durationSeconds: 0, apiCalls: 0, toolCalls: 0, failures: 0, inputTokens: 0, outputTokens: 0, cacheReadTokens: 0 });
+  // 批次汇总只对「全部逐题值都存在」的指标求和：任一题缺失时该项记 null，不按 0 补齐。
+  const sumKeys = ['durationSeconds', 'apiCalls', 'toolCalls', 'failures', 'inputTokens', 'outputTokens', 'cacheReadTokens'];
+  const totals = {};
+  for (const key of sumKeys) {
+    totals[key] = runs.every((run) => run.metrics[key] != null)
+      ? runs.reduce((sum, run) => sum + run.metrics[key], 0)
+      : null;
+  }
 
   return {
     id,
@@ -229,7 +232,8 @@ export function load({ read, repoRoot }) {
         costCny: null, costUsd: null,
       },
       source: { path: `${archiveRoot}/README.md`, lines: '1-20' },
-      note: '本批次为部分汇总：由已归档的 5 个 run 的逐题指标求和，不代表整个 phase-02（Task 16–45）。',
+      commit: archiveCommit,
+      note: '本批次为部分汇总：由已归档的 5 个 run 的逐题指标求和，不代表整个 phase-02（Task 16–45）；任一题缺失的指标记 null，不按 0 补齐。',
     }],
     assessments: [],
   };

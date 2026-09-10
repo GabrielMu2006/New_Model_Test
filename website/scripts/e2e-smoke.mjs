@@ -16,7 +16,16 @@ const museRuns = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3');
 try {
   if (!(await fetch(`${base}/zh/`, { signal: AbortSignal.timeout(10000) })).ok) throw new Error('Preview failed to serve the build.');
   for (const name of selected) { const launcher = launchers[name];
-    const browser = await launcher.launch({ headless: true }); const page = await browser.newPage(); const errors = [];
+    // 浏览器起不来时要给出可执行的说明，而不是把 Playwright 的原始报错直接抛出去。
+    let browser; let page;
+    try {
+      browser = await launcher.launch({ headless: true });
+      page = await browser.newPage();
+    } catch (error) {
+      throw new Error(`${name} could not start in this environment (${error.message.split('\n')[0]}). `
+        + 'Firefox is known to crash here (see docs/verification.md); run E2E_BROWSERS=chromium,webkit locally and let CI cover the full set.');
+    }
+    const errors = [];
     browsers.push(browser); page.setDefaultTimeout(15000);
     page.on('console', (message) => message.type() === 'error' && errors.push(message.text())); page.on('pageerror', (error) => errors.push(error.message));
 
@@ -110,6 +119,57 @@ try {
     if (await page.locator('.preview-stage iframe').count() !== 1) throw new Error(`${name}: phase-02 lazy preview failed`);
 
     for (const width of [390, 768, 1440]) { await page.setViewportSize({ width, height: 900 }); await page.goto(`${base}/zh/`); if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)) throw new Error(`${name}: horizontal overflow at ${width}`); }
+
+    // 语言切换：实体深链直达 + 对比页保留查询参数
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(`${base}/zh/tasks/task-06/`);
+    await page.locator('[data-language-switch]').click();
+    if (!page.url().includes('/en/tasks/task-06/')) throw new Error(`${name}: language switch lost the entity path (${page.url()})`);
+    if (!(await page.locator('h1').textContent())?.includes('Scissors')) throw new Error(`${name}: switched page is not the English task page`);
+    await page.goto(`${base}/zh/compare/?task=task-16&left=run-deepseek-v4-1-flash-exp-0910-task-16-r1&right=run-muse-spark-1-3-xhigh-task-16-r1`);
+    const switchHref = await page.locator('[data-language-switch]').getAttribute('href');
+    if (!switchHref?.includes('task=task-16') || !switchHref.includes('right=run-muse-spark-1-3-xhigh-task-16-r1')) throw new Error(`${name}: language switch dropped the compare query (${switchHref})`);
+    await page.locator('[data-language-switch]').click();
+    if (await page.locator('[data-left-panel] img, [data-left-panel] iframe').count() !== 1) throw new Error(`${name}: compare selection not restored after switching language`);
+    if (await page.locator('[data-right-panel] img, [data-right-panel] iframe').count() !== 1) throw new Error(`${name}: right compare selection not restored after switching language`);
+    // 直接刷新必须恢复同一次对比
+    await page.reload();
+    if (await page.locator('[data-left-panel] img, [data-left-panel] iframe').count() !== 1) throw new Error(`${name}: compare left panel lost after refresh`);
+    if (await page.locator('[data-right-panel] img, [data-right-panel] iframe').count() !== 1) throw new Error(`${name}: compare right panel lost after refresh`);
+
+    // 筛选：按模型名搜索、按任务 ID 搜索、按类别筛选（此前模型名不可搜、下拉选项渲染成 [object Object]）
+    await page.goto(`${base}/zh/tasks/`);
+    const modelOptionLabels = await page.locator('select[data-model] option').evaluateAll((nodes) => nodes.map((node) => node.textContent ?? ''));
+    if (modelOptionLabels.some((label) => label.includes('[object'))) throw new Error(`${name}: model filter option rendered a non-string label`);
+    await page.getByPlaceholder('搜索任务标题、Prompt 或模型').fill('Muse');
+    const visibleModels = await page.locator('[data-task-card]:visible').evaluateAll((nodes) => [...new Set(nodes.map((node) => node.dataset.model))]);
+    if (visibleModels.join(',') !== 'muse-spark-1-3') throw new Error(`${name}: search by model name returned ${visibleModels.join(',') || 'nothing'}`);
+    await page.fill('[data-search]', 'task-16');
+    if (await page.locator('[data-task-card]:visible').count() === 0) throw new Error(`${name}: search by task id matched nothing`);
+    await page.fill('[data-search]', '');
+    await page.selectOption('[data-category]', 'svg-clock');
+    const clockCards = catalog.runs.filter((run) => catalog.tasks.find((task) => task.id === run.taskId)?.category === 'svg-clock').length;
+    if (await page.locator('[data-task-card]:visible').count() !== clockCards) throw new Error(`${name}: category filter failed`);
+
+    // 未知路径必须落到 404 页面（用独立页面，避免这条预期内的 404 污染控制台断言）
+    const notFoundPage = await browser.newPage();
+    notFoundPage.setDefaultTimeout(15000);
+    const notFound = await notFoundPage.goto(`${base}/zh/runs/run-does-not-exist/`);
+    if (notFound.status() !== 404) throw new Error(`${name}: unknown run path returned ${notFound.status()}`);
+    if (!(await notFoundPage.locator('h1').textContent())?.includes('未找到页面')) throw new Error(`${name}: 404 page content missing`);
+    if (await notFoundPage.locator('a[href$="/zh/"]').count() === 0) throw new Error(`${name}: 404 page has no way back`);
+    await notFoundPage.close();
+
+    // 横向溢出：不只首页——对比页与含长源码路径的任务页此前都会溢出
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const path of ['/zh/tasks/', '/zh/tasks/task-16/', '/en/tasks/task-16/', '/zh/compare/?task=task-16&left=run-deepseek-v4-1-flash-exp-0910-task-16-r1&right=run-muse-spark-1-3-xhigh-task-16-r1', '/zh/models/muse-spark-1-3/', '/en/methodology/']) {
+        await page.goto(base + path);
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+        if (overflow > 1) throw new Error(`${name}: horizontal overflow +${overflow}px at ${width} on ${path}`);
+      }
+    }
+
     if (errors.length) throw new Error(`${name}: console errors: ${errors.join('; ')}`); await browser.close();
   }
 

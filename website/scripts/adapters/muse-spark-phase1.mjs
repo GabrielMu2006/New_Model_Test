@@ -17,6 +17,14 @@ const metricsPath = `${archiveRoot}/Reviews/Muse-Spark-1.3-任务评测复盘.md
 const humanPath = `${archiveRoot}/Reviews/Personal_Review.md`;
 const aiRoot = `${archiveRoot}/Reviews/ai`;
 
+// 每个 AI 评委目录**各自的**归档提交：评价是分批入库的（codex-v1 晚于本阶段其余材料），
+// 复用整阶段的提交会生成指向「该文件尚不存在」的源码链接（GitHub 404）。
+// 新增评委目录时必须在此登记，否则导入直接失败，而不是静默产出坏链接。
+const evaluatorCommits = {
+  'maintenance-agent-v1': 'b8d0235e89ac803dc62948b8e3b20f81983922d2',
+  'codex-v1': 'cf9382fc1b51a614c1d632e4f300af7cf03de88c',
+};
+
 // 交付物清单：只包含模型产出，不含 prompt.txt / README / 评价等档案材料。
 const artifacts = {
   'task-01': { files: ['index.html', 'app.js', 'style.css'], entry: 'index.html', type: 'html' },
@@ -84,6 +92,9 @@ function loadAiEvaluations(repoRoot, aiRootRel) {
     const dirAbs = path.join(rootAbs, name);
     if (!fs.statSync(dirAbs).isDirectory()) continue;
     const readme = fs.readFileSync(path.join(dirAbs, 'README.md'), 'utf8');
+    if (!evaluatorCommits[name]) {
+      throw new Error(`[muse-spark-phase1] AI evaluator ${name} has no declared archive commit; add it to evaluatorCommits`);
+    }
     const meta = {};
     for (const line of readme.split('\n')) {
       const match = line.match(/^\|\s*([^|]+?)\s*\|\s*(.*?)\s*\|\s*$/);
@@ -110,6 +121,7 @@ function loadAiEvaluations(repoRoot, aiRootRel) {
     evaluations.push({
       id: name,
       dir: `${aiRootRel}/${name}`,
+      commit: evaluatorCommits[name],
       authorLabel: meta['评价者'] ?? name,
       date: meta['日期'] ?? null,
       scoreMethod: meta['评分口径'] ?? meta['方法'] ?? null,
@@ -140,19 +152,25 @@ export function load({ read, repoRoot, siteRoot }) {
     });
   }
 
-  // 人工评价：总览表（结论）+ 逐条小节（原文）。
+  // 人工评价：总览表（结论）+ 逐条小节（原文）。以总览表中的 `task-NN` 为权威映射，
+  // T 编号只用于定位原文小节；不假设 T<N> 等于 task-<NN>。
   const humanSummary = new Map();
   const humanBody = new Map();
+  const taskIdByTNumber = new Map();
   const overviewStart = humanText.indexOf('## 一、评价总览');
   const overviewEnd = overviewStart >= 0 ? humanText.indexOf('\n## ', overviewStart + 1) : -1;
   const overviewBlock = overviewStart >= 0 ? humanText.slice(overviewStart, overviewEnd > 0 ? overviewEnd : undefined) : humanText;
   for (const row of overviewBlock.split('\n').filter((line) => /^\| T\d+ \|/.test(line))) {
     const cells = tableCells(row);
     if (cells.length < 4 || !cells[3]) continue;
-    humanSummary.set(`task-${cells[0].slice(1).padStart(2, '0')}`, cells[3]);
+    const taskRef = cells[1]?.match(/task-\d{2}/)?.[0];
+    if (!taskRef) throw new Error(`[muse-spark-phase1] human review overview row ${cells[0]}: no task-NN in the task column`);
+    taskIdByTNumber.set(cells[0], taskRef);
+    humanSummary.set(taskRef, cells[3]);
   }
+  const tNumberByTaskId = new Map([...taskIdByTNumber].map(([tNumber, taskId]) => [taskId, tNumber.slice(1)]));
   for (const match of humanText.matchAll(/^### T(\d+) ·[^\n]*\n\n> ([^\n]+)/gm)) {
-    humanBody.set(`task-${match[1].padStart(2, '0')}`, match[2].trim());
+    humanBody.set(taskIdByTNumber.get(`T${match[1]}`) ?? `task-${match[1].padStart(2, '0')}`, match[2].trim());
   }
 
   // AI 评价：逐个评委目录加载（Reviews/ai/<评委>-vN/），每个目录一份元信息 + 每题一条。
@@ -221,7 +239,8 @@ export function load({ read, repoRoot, siteRoot }) {
       conclusion: { zh: human, en: humanVerdictEn[taskId] },
       body: { zh: humanBody.get(taskId) ?? '', en: humanEn[taskId] },
       translated: true, score: null,
-      source: { path: humanPath, lines: lineRange(humanText, `### T${Number(number)} ·`, `### T${Number(number)} ·`) },
+      commit: archiveCommit,
+      source: { path: humanPath, lines: lineRange(humanText, `### T${tNumberByTaskId.get(taskId) ?? Number(number)} ·`, `### T${tNumberByTaskId.get(taskId) ?? Number(number)} ·`) },
     });
 
     for (const evaluation of aiEvaluations) {
@@ -237,6 +256,7 @@ export function load({ read, repoRoot, siteRoot }) {
         },
         translated: false, score: entry.score,
         scoreMethod: evaluation.scoreMethod,
+        commit: evaluation.commit,
         source: { path: `${evaluation.dir}/${taskId}.md`, lines: '1' },
       });
     }
@@ -260,6 +280,7 @@ export function load({ read, repoRoot, siteRoot }) {
         costCny: 0, costUsd: 0,
       },
       source: { path: metricsPath, lines: '37-50' },
+      commit: archiveCommit,
     }],
     assessments: aiEvaluations.map((evaluation) => ({
       id: `assessment-muse-spark-1-3-phase-01-${evaluation.id}`,
@@ -268,7 +289,11 @@ export function load({ read, repoRoot, siteRoot }) {
       coreSummary: evaluation.summary,
       label: { zh: `AI 评价 ${evaluation.id}（非盲评）`, en: `AI review ${evaluation.id} (non-blind)` },
       source: { path: `${evaluation.dir}/phase-summary.md`, lines: '1' },
-      disclaimer: `${evaluation.authorLabel} — non-blind, own rubric; not comparable to other reviewers or to the Phase 1 DeepSeek AI report.`,
+      commit: evaluation.commit,
+      disclaimer: {
+        zh: `${evaluation.authorLabel}——非盲评、自定口径；不可与其他评委或第一阶段 DeepSeek AI 报告直接比较，也不合成排名。`,
+        en: `${evaluation.authorLabel} — non-blind, own rubric; not comparable to other reviewers or to the Phase 1 DeepSeek AI report.`,
+      },
     })),
     sourcePathMappings: [],
   };

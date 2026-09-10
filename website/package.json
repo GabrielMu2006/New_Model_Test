@@ -7,13 +7,15 @@
     "import:data": "node scripts/import-data.mjs",
     "copy:artifacts": "node scripts/copy-artifacts.mjs",
     "validate:data": "node scripts/validate-data.mjs",
+    "verify:sources": "node scripts/verify-source-links.mjs",
     "predev": "npm run import:data && npm run copy:artifacts",
     "dev": "astro dev",
     "check": "npm run import:data && astro check",
     "test": "npm run import:data && node --test tests/*.test.mjs",
     "test:e2e": "node scripts/e2e-smoke.mjs",
+    "capture:covers": "node scripts/capture-covers.mjs",
     "prebuild": "npm run import:data && npm run validate:data && npm run copy:artifacts",
-    "build": "astro build && node scripts/check-dist.mjs",
+    "build": "astro build && node scripts/check-dist.mjs && node scripts/verify-source-links.mjs",
     "preview": "astro preview"
   },
   "devDependencies": {

@@ -33,6 +33,13 @@ export const sourceUrl = (path: string, lines?: string | null, commit?: string) 
 export const taskById = (id?: string) => catalog.tasks.find((task) => task.id === id);
 export const runById = (id?: string) => catalog.runs.find((run) => run.id === id);
 export const modelById = (id?: string) => catalog.models.find((model) => model.id === id);
+/**
+ * 源码链接必须绑定「该文件所在的提交」。归档是分批入库的：同一阶段的评价、
+ * 证据或 README 可能晚于运行本身归档，直接用运行的提交会生成 404 链接。
+ * 实体自带 commit 时以它为准，否则回落到调用方给的提交（通常是运行/批次自己的）。
+ */
+export const entityCommit = (entity: { commit?: string | null } | null | undefined, fallback?: string | null) =>
+  entity?.commit ?? fallback ?? catalog.archiveCommit;
 export const reviewsFor = (runId: string) => catalog.reviews.filter((review) => review.runId === runId);
 export const runsForTask = (taskId: string, taskVersion?: number) => catalog.runs.filter(
   (run) => run.taskId === taskId && (taskVersion === undefined || run.taskVersion === taskVersion),

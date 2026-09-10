@@ -1,8 +1,14 @@
 // 归档 Markdown 的共享解析助手：被各批次适配器复用，避免解析逻辑漂移。
 
-/** 1-based 起始行 + 块长度 → "start-end" 行号区间，用于源码定位。 */
+/**
+ * 1-based 起始行 + 块长度 → "start-end" 行号区间，用于源码定位。
+ * 找不到 needle 时必须抛错：静默回落到文件末尾会生成一个「存在但指错位置」的源码链接，
+ * 这类错误既不会被链接检查发现，也不会有任何报错提示。
+ */
 export function lineRange(text, needle, block) {
-  const start = text.slice(0, text.indexOf(needle)).split('\n').length;
+  const index = text.indexOf(needle);
+  if (index < 0) throw new Error(`lineRange: needle not found in source: ${JSON.stringify(needle.slice(0, 60))}`);
+  const start = text.slice(0, index).split('\n').length;
   const count = block.split('\n').length;
   return `${start}-${start + count - 1}`;
 }

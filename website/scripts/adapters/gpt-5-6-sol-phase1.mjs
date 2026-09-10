@@ -160,17 +160,20 @@ export function load({ read, repoRoot }) {
       },
       translated: false, score,
       scoreMethod: '需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较',
+      commit: archiveCommit,
       source: { path: reviewPath, lines: `1-${text.split('\n').length}` },
     });
   }
 
   const model = JSON.parse(read(`website/data/models/${modelId}.json`));
-  const totals = runs.reduce((sum, run) => {
-    for (const key of ['durationSeconds', 'apiCalls', 'toolCalls', 'failures', 'inputTokens', 'outputTokens', 'cacheReadTokens']) {
-      sum[key] += run.metrics[key] ?? 0;
-    }
-    return sum;
-  }, { durationSeconds: 0, apiCalls: 0, toolCalls: 0, failures: 0, inputTokens: 0, outputTokens: 0, cacheReadTokens: 0 });
+  // 批次汇总只对「全部逐题值都存在」的指标求和：任一题缺失时该项记 null，不按 0 补齐。
+  const sumKeys = ['durationSeconds', 'apiCalls', 'toolCalls', 'failures', 'inputTokens', 'outputTokens', 'cacheReadTokens'];
+  const totals = {};
+  for (const key of sumKeys) {
+    totals[key] = runs.every((run) => run.metrics[key] != null)
+      ? runs.reduce((sum, run) => sum + run.metrics[key], 0)
+      : null;
+  }
 
   return {
     id,
@@ -196,7 +199,8 @@ export function load({ read, repoRoot }) {
         costCny: null, costUsd: null,
       },
       source: { path: `${archiveRoot}/README.md`, lines: '1-40' },
-      note: '由 15 个 run 的逐题指标求和；每题一个独立会话。',
+      commit: archiveCommit,
+      note: '由 15 个 run 的逐题指标求和；每题一个独立会话；任一题缺失的指标记 null，不按 0 补齐。',
     }],
     assessments: [],
   };
