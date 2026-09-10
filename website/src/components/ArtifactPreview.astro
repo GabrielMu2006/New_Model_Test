@@ -27,7 +27,7 @@ const labels = locale === 'zh' ? { load: '加载交互预览', reload: '重新�
   </div>
   {run.artifact.preview.note && <p class="preview-note"><strong>{labels.note}:</strong> {run.artifact.preview.note}</p>}
   <div class="preview-links">
-    <a href={sourceUrl(`${run.artifact.sourcePath}/${run.artifact.entry}`)} target="_blank" rel="noopener">{labels.source} ↗</a>
+    <a href={sourceUrl(`${run.artifact.sourcePath}/${run.artifact.entry}`, undefined, run.artifact.commit)} target="_blank" rel="noopener">{labels.source} ↗</a>
     <a href={href(locale, `runs/${run.id}/`)}>{run.id}</a>
   </div>
 </section>

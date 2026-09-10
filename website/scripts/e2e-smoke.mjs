@@ -64,6 +64,14 @@ try {
     await page.goto(`${base}/en/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/`);
     if (!(await page.locator('.detail-page').textContent())?.includes('deepseek-v4.1-flash-expires-on-0910')) throw new Error(`${name}: run page missing the harness-reported snapshot id`);
 
+    // 运行页里的 GitHub 源链接必须绑定该运行自己的归档提交（历史上曾回落到第一阶段提交而 404）
+    await page.goto(`${base}/zh/runs/run-muse-spark-1-3-xhigh-task-20-r1/`);
+    const archiveCommit = catalog.runs.find((run) => run.id === 'run-muse-spark-1-3-xhigh-task-20-r1').artifact.commit;
+    for (const href of await page.locator('.preview-links a, .source-card a').evaluateAll((nodes) => nodes.map((node) => node.getAttribute('href') ?? ''))) {
+      if (!href.includes('/blob/')) continue;
+      if (!href.includes(archiveCommit)) throw new Error(`${name}: source link pinned to a foreign commit: ${href.slice(0, 120)}`);
+    }
+
     // Muse 第二阶段：每题 1 份 AI 评价（本批尚无人工评价），且同题可与 DeepSeek 并排对比
     await page.goto(`${base}/zh/runs/run-muse-spark-1-3-xhigh-task-16-r1/`);
     if (await page.locator('.review-card').count() !== 1) throw new Error(`${name}: Muse phase-02 run page must show exactly one archived review`);
