@@ -13,7 +13,7 @@
 |---|---|---|---|
 | 1. 建脚手架 | 组织 agent（在 `test-workspace/` 打开） | 按题目数量建 `phase-NN/task-NN-<slug>/`，每题写 `prompt.txt`（逐字原题）与 `AGENTS.md`（两条限制：**不得读取当前目录以外的信息**、**不得查询任何仓库**） | 任务目录 |
 | 2. 逐题测试 | 组织者 | 每题在对应目录开一个**全新会话**，**把原题粘贴进去** | 该目录下的成果 |
-| 3. 收尾审查 + 归档 | 组织 agent | 审查工具调用、统计时间/token/工具调用次数，确认没有越界（读外部信息、查询仓库），写 `SUMMARY.md`，转入 `Test_Results/` | `SUMMARY.md` + 归档目录 |
+| 3. 收尾审查 + 归档 | 组织 agent | 审查工具调用、统计时间/token/工具调用次数，确认没有越界（读外部信息、查询仓库），写 `SUMMARY.md`，转入 `Test_Results/` （**不提交、不改网站**，交给维护者） | `SUMMARY.md` + 归档目录 |
 
 就这些。不需要开测前探针、不需要另建用户或容器、不需要额外审批。
 
@@ -99,13 +99,14 @@ test-workspace/
 
 ## 4. 收尾审查（唯一的质量检查）
 
-数据来源是 harness 会话日志（DSH 为 `~/.dsh/sessions/<workspace>/session-<id>/session.jsonl.zstd`）。方法见 [`docs/audit-method.md`](../docs/audit-method.md)。审查三件事：
+数据来源是 harness 会话日志（DSH 为 `~/.dsh/sessions/<workspace>/session-<id>/session.jsonl.zstd`）。方法见 [`docs/audit-method.md`](../docs/audit-method.md)。审查四件事：
 
 | 检查 | 判据 |
 |---|---|
 | **越界读取** | 工具调用里有没有访问当前任务目录以外的路径（`..`、绝对路径、其他模型目录、`~/.dsh` 等） |
 | **仓库查询** | 有没有 `git clone/fetch/pull/ls-remote/remote`、`gh`、代码托管平台域名、工作区外 `.git` 目录、通过 curl/包管理器拉仓库 |
 | **统计核对** | 每题的时间、token、工具调用次数与失败数是否与报告一致 |
+| **并行副本（本机多副本时必查）** | 本机可同时存在 `test-workspace/`、`test-workspace-2/`、`test-workspace-3/` 等**同题或同阶段**工作区；检查工具调用里有没有访问**本副本以外**的副本目录（同题成果、`_build/`、`.tmp/`、`screenshots/` 等）：命中即记越界 |
 
 结论措辞：**「未发现越界」**（列出检查覆盖范围与未覆盖渠道）；不得写「无污染」。
 
@@ -158,7 +159,11 @@ test-workspace/
 - ❌ 修改或美化被测模型的原始输出；
 - ❌ 发现污染后删除记录、只留成功运行；
 - ❌ 在没有日志证据的情况下写「无污染」；
+- ❌ 执行任何提交 / 推送 / 发布动作：`git add`/`commit`/`push`/`tag`、分支操作、重跑 Actions、改 DNS / Pages / CNAME 或 CI 工作流——**提交与发布由维护者统一处理**（`AGENTS.md` 第 9 节）；
+- ❌ 修改 `website/`（展示站、导入器、数据、页面组件、自动化测试），或手工编辑生成物 `website/data/catalog.json`；
 - ❌ 就隔离方案、探针、容器升级向用户征询意见。
+
+> 组织会话仍可按第 3 步把成果转入 `Test_Results/<模型>/phase-NN/task-NN-<slug>/`、写 `SUMMARY.md`、更新阶段 `README.md` 与 `docs/source-audit.md`、`docs/verification.md`；被禁止的只是**提交、推送、网站与发布**——改动留在工作区，由维护者统一提交与上线。
 
 ---
 
@@ -173,4 +178,5 @@ test-workspace/
 [ ] SUMMARY.md 已写：状态 / 统计 / 审查结论 / 限制
 [ ] 归档到 phase-NN/task-NN-<slug>/（重复运行才用 runs/<run-id>/），逐文件哈希核对
 [ ] docs/source-audit.md、docs/verification.md 已更新
+[ ] 未提交、未推送、未改网站：改动留在工作区，交由维护者统一提交与上线
 ```

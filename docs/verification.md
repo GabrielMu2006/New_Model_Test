@@ -1,5 +1,13 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 测试工作区规则：禁止提交与网站改动
+
+- 组织者要求：在测试工作区的规则文件里提醒**不要进行提交与网站修改**。
+- 落点：`test-workspace/AGENTS.md` 新增**第 9 节「不要提交、不要动网站」**并在头部加一行特别提醒；`test-workspace/README.md` 的**第 7 节禁止事项**新增两条（禁止提交/推送/发布/重跑 Actions/改 DNS·Pages·CNAME·CI；禁止修改 `website/` 与手工编辑 `website/data/catalog.json`），第 0 节步骤 3 补「**不提交、不改网站**，交给维护者」，第 8 节快速检查清单补一条「未提交、未推送、未改网站」。
+- 分工（避免与既有流程矛盾）：**被测会话**当前目录之外一律不可读写（第 1–2 节已覆盖，第 9.2 节再次点明）；**组织会话**仍可按 README 第 3 步归档到 `Test_Results/<模型>/phase-NN/task-NN-<slug>/`、写 `SUMMARY.md`、更新阶段 README 与 `docs/source-audit.md`、`docs/verification.md`，但提交、推送、网站接入与发布一律交给维护者。
+- 同步：`test-workspace-2/`、`test-workspace-3/`（均在 `.gitignore` 内）同步为同一文本；顺手把这两份手册里落后的 5 处**扁平布局**与**无遥测规则**文本补齐（第 4/5/8 节；`AGENTS.md` 第 1–9 节与 README 第 5、7、8 节三份已用 `cmp` 校验一致）。
+- 发布：`test-workspace/**` 不在 `website-deploy.yml` 的触发路径内，本次改动不触发网站部署；提交后未产生新的 Actions 运行。
+
 ## 2026-09-10 接入全部现有结果与评价（GPT-5.6 Sol 第一阶段 + DeepSeek phase-02 评价）
 
 - 需求：把现有全部结果及其评价上传展示站。
