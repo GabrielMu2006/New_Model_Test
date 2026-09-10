@@ -1,5 +1,18 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 模型身份合并：0910 实验版与正式版视为同一模型
+
+- 决定（组织者 2026-09-10）：即将退役的 0910 实验版 `DeepSeek-V4.1-Flash-Exp-0910` 与随后发布的正式版 `DeepSeek-V4.1-Flash` 视为**同一个模型**，成绩同表记录。
+- **稳定标识不动**：模型实体 id `deepseek-v4-1-flash-exp-0910`、全部 runId（`run-deepseek-v4-1-flash-exp-0910-task-NN-r1`）、模型页与运行页 URL、归档目录 `Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/`、以及历史档案正文（含 harness 报告的 model id）全部保持原样。
+- 显示名改双语：`DeepSeek-V4.1-Flash（0910 实验版 + 正式版）` / `DeepSeek-V4.1-Flash (0910 preview + GA release)`。`name` 由字符串改为 `{zh, en}`，路由、首页卡片、任务卡片、运行页眉、模型页、对比下拉与对比面板均按 locale 取值（`AppPage.astro`、`RunRow.astro`、`catalog.ts`）。
+- 新增**快照**维度：模型实体 `snapshots` 声明（0910 实验版=已退役，附 harness 报告值来源；正式版=id 待首次运行回填，不据品牌名推断）；`version` 置 `null` 并加 `versionNote`，不再用单一版本号把两个快照合并成一个未经验证的值。
+- 逐运行记录快照：`run.environment.reportedModelId`——phase-02 的 5 条带入 `submission.json` 的 `deepseek-v4.1-flash-expires-on-0910`；phase-01 的 15 条归档未记录 model id，记 `null`，页面显示「未记录」。运行详情新增「运行快照」一行。
+- 校验与测试：`validate-data.mjs` 新增模型名双语、快照声明（label/evidence 双语、status 枚举、id 去重）与「非空 `reportedModelId` 必须是该模型声明的快照」校验，并把「phase-02 必须记录快照」并入阶段回归；`catalog.test.mjs` 新增快照用例（11/11）；`e2e-smoke.mjs` 断言模型页列出两个快照与两个批次、运行页显示快照 id。
+- **顺带修复缺陷**：`batchForModel()` 用 `find()` 只取第一个批次，导致该模型已有 20 条运行、模型页却只显示 Phase 1 的 15 题统计（线上可复现）。现改为 `batchesForModel()` 全部列出，模型卡片时长按全部批次求和。
+- 门禁：`import:data`、`validate:data`、`check`（0 errors）、`npm test`（11/11）、`build`（132 页，静态链接检查通过）全部通过；`test:e2e` 在 Chromium + WebKit 通过，35 个成果入口全部加载。
+- 发布与公网核验：提交 `f3aef2c` 推送 `main`；回退标签 `website-rollback-20260910-e256f21` 指向上一已成功部署且公网验证通过的提交。Actions run `34435104348` 构建与 Pages 部署成功；匿名 HTTPS 复核 `/`、`/en/`、`/zh/models/`、`/zh/models/deepseek-v4-1-flash-exp-0910/`、`/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/`、`/en/phases/phase-02/` 均返回 HTTP 200；线上模型页实测显示双语显示名、两个快照（`deepseek-v4.1-flash-expires-on-0910` 与「正式版（尚未运行）」）与两个批次块，运行页显示「运行快照：deepseek-v4.1-flash-expires-on-0910」。
+- 后续约定：正式版运行采用 `run-deepseek-v4-1-flash-task-NN-rN`（runId slug 不必等于实体 id），归档仍在同一模型目录下；正式版首次运行后回填快照 id；**跨快照比较必须标明差异**。
+
 ## 2026-09-10 接入第二阶段 Task 16–20 到展示站
 
 - 需求：把已归档的 5 个 Phase 2 项目（Task 16–20）上传到展示站。按 `docs/adding-results.md` 走完整接入流程，不以「文件已上传」代替验收。
