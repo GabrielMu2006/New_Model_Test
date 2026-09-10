@@ -83,8 +83,8 @@
     }
   },
   "source": {
-    "commit": null,
-    "path": null
+    "commit": "a339d61c39304c9b329adc6677503eb0693426e0",
+    "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow/artifacts"
   },
   "runRelation": {
     "parentRunId": null,
