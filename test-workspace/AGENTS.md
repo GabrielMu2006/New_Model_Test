@@ -3,6 +3,7 @@
 > 本文件约束**当前会话**。工作目录 = 你被打开时所在的目录（形如 `…/task-16-animated-pelican-bicycle/`）。
 > 有效期：本次测试结束、组织者明确宣布「任务结束」之前，一直有效。
 > 维护/组织会话（工作目录为仓库根）不适用本文件，按 `test-workspace/README.md` 操作。
+> **特别提醒：本会话不提交、不推送、不修改网站**——提交与网站接入由组织者/维护者统一处理，详见第 9 节。
 
 ---
 
@@ -59,3 +60,23 @@
 3. 等待组织者处置，不得继续用已接触到的内容完成交付。
 
 隐瞒不报视为严重违规。
+
+## 9. 不要提交、不要动网站
+
+**本节对所有在本工作区打开的会话生效（被测会话与组织会话都一样）：提交、推送与网站由维护者统一处理。**
+
+### 9.1 一律禁止
+
+- **禁止一切版本控制写操作**：`git add` / `git commit` / `git push` / `git tag` / `git merge` / `git rebase` / `git reset` / `git checkout` / `git stash` / `git remote`（写操作）全部禁止；不得新建、切换或删除分支。只读的 `git status` / `git log` / `git diff` 也不在被测会话的允许范围内（见第 1–2 节）。
+- **禁止修改 `website/`**：Astro 展示站、导入器（`website/scripts/`）、数据（`website/data/`）、页面组件与自动化测试都不许动；更不得手工编辑 `website/data/catalog.json`（它是生成物，下次导入会覆盖）。
+- **禁止任何发布动作**：不改 DNS / Pages / CNAME，不触发或重跑 Actions，不改 CI 工作流。
+
+### 9.2 被测会话（在当前任务目录里做题）
+
+当前目录之外的一切仍不可读写——`docs/`、`PROMPT/`、`Test_Results/`、根 `README.md` / `AGENTS.md`、其他任务与其他副本都在此列（见第 1–2 节）。成果只留在当前目录。
+
+### 9.3 组织会话（审查、汇总、归档）
+
+按 `README.md` 的第 3 步做事：可以在 `phase-NN/SUMMARY.md` 记录统计与审查结论，可以把成果转入 `Test_Results/<模型>/phase-NN/task-NN-<slug>/`，可以更新阶段 `README.md` 与 `docs/source-audit.md`、`docs/verification.md`。**但提交、推送、网站接入与发布仍然禁止**——把改动留在工作区，由维护者统一提交与上线。
+
+> 若你认为某处「应该」被提交、被归档或被网站收录，正确做法是写进 SUMMARY/交接说明并交给维护者，而不是自己动手。
