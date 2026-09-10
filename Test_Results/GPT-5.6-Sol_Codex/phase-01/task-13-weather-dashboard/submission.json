@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-gpt-5-6-sol-task-13-r1",
+  "phaseId": "phase-01",
+  "taskId": "task-13",
+  "taskVersion": 1,
+  "model": {
+    "id": "gpt-5-6-sol",
+    "name": "GPT-5.6 Sol",
+    "version": "gpt-5.6-sol",
+    "provider": "OpenAI",
+    "note": "model and effort are recorded by Codex turn_context; the provider-side snapshot beyond this reported model id is not independently confirmed"
+  },
+  "prompt": {
+    "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+    "sha256": "e6bbd33a57230bcd1a43d9b81e5d6b3d968356e9c0d8d1529a1834c52b2e432e",
+    "version": 1,
+    "verbatimInputPath": "prompt.txt",
+    "localScaffoldPath": "test-workspace-2/phase-01/task-13-weather-dashboard/prompt.txt",
+    "followups": []
+  },
+  "environment": {
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "reportedModelId": "gpt-5.6-sol",
+    "surface": "cli",
+    "os": "macOS 26.6.2 (arm64)",
+    "runtime": "Node 24.19.0",
+    "sessionId": "01a08999-a048-7893-87a5-7a2aa04fa76a",
+    "sharedContext": false,
+    "continuationTurns": 0,
+    "sampling": {
+      "effort": "medium"
+    },
+    "startedAt": "2026-09-10T04:35:41.789Z",
+    "endedAt": "2026-09-10T04:42:11.735Z",
+    "timezone": "Asia/Shanghai"
+  },
+  "budget": {
+    "wallClockSeconds": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "toolCalls": null,
+    "retries": 0,
+    "followupTurns": 0,
+    "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+  },
+  "metrics": {
+    "durationSeconds": 389,
+    "durationBasis": "event_msg.task_complete.duration_ms",
+    "apiCalls": 6,
+    "toolCalls": 5,
+    "failures": 0,
+    "inputTokens": 179199,
+    "outputTokens": 11179,
+    "cacheReadTokens": 144384,
+    "totalTokens": 190378,
+    "note": "Codex final cumulative token_count; inputTokens includes cached input tokens, which are also reported separately as cacheReadTokens"
+  },
+  "cost": {
+    "amount": null,
+    "currency": null,
+    "scope": "task",
+    "source": null
+  },
+  "artifacts": {
+    "type": "html",
+    "entry": "index.html",
+    "files": [
+      "app.js",
+      "index.html",
+      "styles.css"
+    ],
+    "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard/artifacts",
+    "fileSha256": {
+      "app.js": "cfe6e6d777e5b778a798d6c4da6e020215f8d0520bcc0bd0106bfab60531f54e",
+      "index.html": "2ec61a5936e681a2cc597e069448366f20d0033d8a7268970c18ed5d65571007",
+      "styles.css": "8a4ca7b17aca98f0b8443ee2d1c44df7cadf5b39026a71d4b434a53fb7b49f9a"
+    },
+    "cover": null,
+    "preview": {
+      "lazy": true,
+      "sandbox": "allow-scripts allow-downloads allow-forms",
+      "note": "HTML output; internal relative files are listed explicitly"
+    }
+  },
+  "source": {
+    "commit": null,
+    "path": null
+  },
+  "runRelation": {
+    "parentRunId": null,
+    "reason": null
+  },
+  "status": "completed",
+  "isolation": {
+    "level": "workspace-only",
+    "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-13-weather-dashboard/",
+    "readOnlyInputs": [
+      "prompt.txt"
+    ],
+    "mounts": [],
+    "network": "off (rule-level; not enforced at the network layer)",
+    "repositoryReachability": null,
+    "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+    "repositoryBlocking": null,
+    "sharedContext": false
+  },
+  "contamination": {
+    "status": "unknown",
+    "events": [],
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/audit-2026-09-10.md"
+    ],
+    "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log.",
+    "scoringEffect": "none (recorded in audit archive only)",
+    "confirmedExternalAnswers": false
+  },
+  "testEvidence": {
+    "command": "node evidence/audit-codex-sessions.mjs <Codex sessions root> <phase workspace> <audit output>",
+    "cwd": "test-workspace-2/ (independent maintenance session)",
+    "environment": "macOS 26.6.2 arm64 / Node 24.19.0",
+    "date": "2026-09-10",
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/session-log.sha256.txt"
+    ],
+    "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment during archival; author-run checks remain part of the original session record only."
+  },
+  "reviews": []
+}

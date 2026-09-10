@@ -1,0 +1,104 @@
+{
+  "runId": "run-gpt-5-6-sol-task-08-r1",
+  "taskName": "task-08-single-file-breakout",
+  "sessionId": "01a08965-0e69-77e2-b807-785c3cf6887d",
+  "logPath": "~/.codex/sessions/2026/09/10/rollout-2026-09-10T11-38-16-01a08965-0e69-77e2-b807-785c3cf6887d.jsonl",
+  "logSha256": "943e5322184a86f5283ac7128d9d8adfa64c8b1c0deb4ca902f347e6d66d36a7",
+  "logFormat": "Codex JSONL",
+  "bytes": 1378802,
+  "frames": null,
+  "records": 95,
+  "promptSha256": "c6e283f9b419499277bf74dab9201c68d051993faee24ba819854f09fed5eb51",
+  "promptMessageMatches": 1,
+  "environment": {
+    "model": "gpt-5.6-sol",
+    "effort": "medium",
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "source": "cli",
+    "modelProvider": "openai",
+    "approvalPolicy": "on-request",
+    "sandboxPolicy": "workspace-write"
+  },
+  "startedAt": "2026-09-10T03:38:16.574Z",
+  "endedAt": "2026-09-10T03:45:30.641Z",
+  "durationSeconds": 423,
+  "durationBasis": "event_msg.task_complete.duration_ms",
+  "apiCalls": 13,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "toolCounts": {
+    "exec_command": 5,
+    "apply_patch": 1
+  },
+  "recordedCommands": [
+    {
+      "callId": "call_vwqDDAuXl26jK299ZInrtysP",
+      "command": "pwd && rg --files -g '!AGENTS.md' -g '!prompt.txt' . && sed -n '1,120p' prompt.txt"
+    },
+    {
+      "callId": "call_lhNJfOktTMdPTxl3vOCoAWeb",
+      "command": "sed -n '1,220p' prompt.txt"
+    },
+    {
+      "callId": "call_0Zq86o0C9OhiL04f4GoUjWSa",
+      "command": "node -e \"const fs=require('fs'),vm=require('vm');const s=fs.readFileSync('index.html','utf8');const m=s.match(/<script>([\\\\s\\\\S]*?)<\\\\/script>/);if(!m)throw Error('missing script');new vm.Script(m[1]);for(const x of ['<canvas','requestAnimationFrame','pointerdown','keydown','prefers-reduced-motion'])if(!s.includes(x))throw Error('missing '+x);console.log('PASS: embedded JavaScript parses');console.log('PASS: core input/render/responsive hooks present');console.log('HTML bytes:',Buffer.byteLength(s));\""
+    },
+    {
+      "callId": "call_nXPXhn4nNhLNGllEi49ZV71x",
+      "command": "python3 -m http.server 4173 --bind 127.0.0.1"
+    },
+    {
+      "callId": "call_9u3BeNFwuz0Yzvmc0C7h94bA",
+      "command": "python3 -m http.server 4173 --bind 127.0.0.1"
+    }
+  ],
+  "tokenUsage": {
+    "inputTokens": 534692,
+    "outputTokens": 11503,
+    "cacheReadTokens": 478336,
+    "totalTokens": 546195,
+    "reasoningOutputTokens": 931
+  },
+  "checkedDimensions": [
+    "policy",
+    "tools",
+    "paths",
+    "commands",
+    "repositories",
+    "network",
+    "reads",
+    "writes",
+    "delegation",
+    "reasoning",
+    "siblingWorkspaces"
+  ],
+  "findings": [
+    {
+      "dimension": "policy",
+      "severity": "procedural-deviation",
+      "callId": "call_vwqDDAuXl26jK299ZInrtysP",
+      "detail": "The tested session re-read the local prompt.txt after the organizer had already supplied the verbatim prompt. This stayed within the allowed task directory and exposed no external answer."
+    },
+    {
+      "dimension": "policy",
+      "severity": "procedural-deviation",
+      "callId": "call_lhNJfOktTMdPTxl3vOCoAWeb",
+      "detail": "The tested session re-read the local prompt.txt after the organizer had already supplied the verbatim prompt. This stayed within the allowed task directory and exposed no external answer."
+    }
+  ],
+  "verdict": "no-violation-observed",
+  "limitations": [
+    "Codex JSONL stores reasoning as encrypted_content; reasoning text could not be inspected.",
+    "Training-data exposure cannot be audited.",
+    "Harness-unlogged channels, external tools, connectors, and caches cannot be ruled out.",
+    "The test used policy-level workspace-only restrictions, not enforced read or network isolation.",
+    "No environment reachability probe was run; repository and network conclusions are based on recorded tool calls and results only."
+  ],
+  "auditedAt": "2026-09-10T05:18:35.045Z",
+  "auditor": "Codex maintenance session (independent from the 15 tested sessions)",
+  "auditScript": {
+    "path": "evidence/audit-codex-sessions.mjs",
+    "sha256": "281392c2357db705a06b01ba9a2018498fa86083fef9ba3d21d5446c6a2311ef"
+  }
+}

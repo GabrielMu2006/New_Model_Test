@@ -1,0 +1,70 @@
+{
+  "runId": "run-gpt-5-6-sol-task-05-r1",
+  "taskName": "task-05-side-view-bicycle-rider",
+  "sessionId": "01a0895a-3409-7a82-8839-182ebfbe6c85",
+  "logPath": "~/.codex/sessions/2026/09/10/rollout-2026-09-10T11-26-25-01a0895a-3409-7a82-8839-182ebfbe6c85.jsonl",
+  "logSha256": "f77c4e01dc8fd287ad41767177a9dde09a8a7c565cf964082b7e06d922ba154b",
+  "logFormat": "Codex JSONL",
+  "bytes": 168142,
+  "frames": null,
+  "records": 38,
+  "promptSha256": "736e71c9d430159b0db9a912f79cad8ed9d827a054debf15b1408b3b10ebf941",
+  "promptMessageMatches": 1,
+  "environment": {
+    "model": "gpt-5.6-sol",
+    "effort": "medium",
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "source": "cli",
+    "modelProvider": "openai",
+    "approvalPolicy": "on-request",
+    "sandboxPolicy": "workspace-write"
+  },
+  "startedAt": "2026-09-10T03:26:25.332Z",
+  "endedAt": "2026-09-10T03:28:44.403Z",
+  "durationSeconds": 139,
+  "durationBasis": "event_msg.task_complete.duration_ms",
+  "apiCalls": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "toolCounts": {
+    "exec_command": 2,
+    "apply_patch": 1
+  },
+  "recordedCommands": [],
+  "tokenUsage": {
+    "inputTokens": 109593,
+    "outputTokens": 3656,
+    "cacheReadTokens": 61568,
+    "totalTokens": 113249,
+    "reasoningOutputTokens": 478
+  },
+  "checkedDimensions": [
+    "policy",
+    "tools",
+    "paths",
+    "commands",
+    "repositories",
+    "network",
+    "reads",
+    "writes",
+    "delegation",
+    "reasoning",
+    "siblingWorkspaces"
+  ],
+  "findings": [],
+  "verdict": "no-violation-observed",
+  "limitations": [
+    "Codex JSONL stores reasoning as encrypted_content; reasoning text could not be inspected.",
+    "Training-data exposure cannot be audited.",
+    "Harness-unlogged channels, external tools, connectors, and caches cannot be ruled out.",
+    "The test used policy-level workspace-only restrictions, not enforced read or network isolation.",
+    "No environment reachability probe was run; repository and network conclusions are based on recorded tool calls and results only."
+  ],
+  "auditedAt": "2026-09-10T05:18:35.039Z",
+  "auditor": "Codex maintenance session (independent from the 15 tested sessions)",
+  "auditScript": {
+    "path": "evidence/audit-codex-sessions.mjs",
+    "sha256": "281392c2357db705a06b01ba9a2018498fa86083fef9ba3d21d5446c6a2311ef"
+  }
+}

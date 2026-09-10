@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#d9e7e7" />
+    <meta name="description" content="A polished, responsive weather dashboard." />
+    <title>Atmos — Weather, at a glance</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="sky-orb orb-one" aria-hidden="true"></div>
+    <div class="sky-orb orb-two" aria-hidden="true"></div>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Atmos home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><path d="M8.5 21.5h14.3a5.2 5.2 0 0 0 .7-10.35A8 8 0 0 0 8.2 9.6 6 6 0 0 0 8.5 21.5Z"/><path d="M11.5 26h10"/></svg>
+          </span>
+          <span>atmos</span>
+        </a>
+
+        <div class="header-actions">
+          <div class="search-wrap">
+            <label class="search" for="city-search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+              <input id="city-search" autocomplete="off" placeholder="Search city" aria-label="Search city" aria-expanded="false" aria-controls="search-results" />
+              <kbd>⌘ K</kbd>
+            </label>
+            <div class="search-results" id="search-results" role="listbox" hidden></div>
+          </div>
+          <button class="unit-toggle" id="unit-toggle" type="button" aria-label="Switch to Fahrenheit"><span class="active">°C</span><span>°F</span></button>
+          <button class="avatar" type="button" aria-label="Open profile menu">AM</button>
+        </div>
+      </header>
+
+      <section class="location-row" aria-labelledby="location-title">
+        <div>
+          <p class="eyebrow"><span class="live-dot"></span> Live conditions</p>
+          <h1 id="location-title">Amsterdam</h1>
+          <p class="local-time" id="local-time">Tuesday, 8:42 AM</p>
+        </div>
+        <button class="location-button" id="location-button" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <span>Use my location</span>
+        </button>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="current-card">
+          <div class="current-main">
+            <div class="weather-art" aria-hidden="true">
+              <div class="sun-disc"></div>
+              <div class="cloud cloud-back"></div>
+              <div class="cloud cloud-front"></div>
+            </div>
+            <div class="current-reading">
+              <p class="condition" id="condition">Partly cloudy</p>
+              <p class="temperature"><span id="current-temp">18</span><sup id="temp-unit">°</sup></p>
+              <p class="feels" id="feels-like">Feels like 17°</p>
+            </div>
+          </div>
+          <div class="weather-summary">
+            <p id="summary">Clouds giving way to a bright and mild afternoon.</p>
+            <div class="sun-times">
+              <span><i class="sunrise-icon">↗</i> Sunrise <b id="sunrise">6:24 AM</b></span>
+              <span><i class="sunset-icon">↘</i> Sunset <b id="sunset">8:51 PM</b></span>
+            </div>
+          </div>
+        </article>
+
+        <div class="metric-grid" aria-label="Weather details">
+          <article class="metric-card accent-wind">
+            <div class="metric-icon"><svg viewBox="0 0 24 24"><path d="M3 8h11c3 0 3-4 0-4-1.4 0-2.2.7-2.5 1.5M3 12h16c3 0 3 4 0 4-1.3 0-2.1-.7-2.4-1.5M3 16h8"/></svg></div>
+            <p>Wind</p><strong id="wind">14 <small>km/h</small></strong><span id="wind-dir">West · W</span>
+          </article>
+          <article class="metric-card accent-humidity">
+            <div class="metric-icon"><svg viewBox="0 0 24 24"><path d="M12 2S5 10 5 15a7 7 0 0 0 14 0c0-5-7-13-7-13Z"/><path d="M9 16a3 3 0 0 0 3 2"/></svg></div>
+            <p>Humidity</p><strong id="humidity">68<small>%</small></strong><span id="dew-point">Dew point 12°</span>
+          </article>
+          <article class="metric-card accent-uv">
+            <div class="metric-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg></div>
+            <p>UV index</p><strong id="uv">3 <small>Low</small></strong><span>Protection after 45 min</span>
+          </article>
+          <article class="metric-card accent-rain">
+            <div class="metric-icon"><svg viewBox="0 0 24 24"><path d="M7 15a4 4 0 0 1 .4-8A6 6 0 0 1 19 9a3 3 0 0 1-1 5.8"/><path d="m9 17-1 3M14 17l-1 3M19 17l-1 3"/></svg></div>
+            <p>Precipitation</p><strong id="rain">18<small>%</small></strong><span>0.2 mm expected</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="forecast-section" aria-labelledby="forecast-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Looking ahead</p>
+            <h2 id="forecast-title">Weather forecast</h2>
+          </div>
+          <div class="forecast-tabs" role="tablist" aria-label="Forecast period">
+            <button class="tab active" type="button" role="tab" aria-selected="true" data-view="hourly">Hourly</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-view="daily">7 days</button>
+          </div>
+        </div>
+        <div class="forecast-list" id="forecast-list"></div>
+      </section>
+
+      <footer><span>Atmos weather station</span><span>Updated just now · Local demo data</span></footer>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

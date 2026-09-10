@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-gpt-5-6-sol-task-15-r1",
+  "phaseId": "phase-01",
+  "taskId": "task-15",
+  "taskVersion": 1,
+  "model": {
+    "id": "gpt-5-6-sol",
+    "name": "GPT-5.6 Sol",
+    "version": "gpt-5.6-sol",
+    "provider": "OpenAI",
+    "note": "model and effort are recorded by Codex turn_context; the provider-side snapshot beyond this reported model id is not independently confirmed"
+  },
+  "prompt": {
+    "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+    "sha256": "26537263f1b65e75a2db33832d772a8d14b06d7416983db0495e1d4e53eec7b7",
+    "version": 1,
+    "verbatimInputPath": "prompt.txt",
+    "localScaffoldPath": "test-workspace-2/phase-01/task-15-book-tracking-app/prompt.txt",
+    "followups": []
+  },
+  "environment": {
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "reportedModelId": "gpt-5.6-sol",
+    "surface": "cli",
+    "os": "macOS 26.6.2 (arm64)",
+    "runtime": "Node 24.19.0",
+    "sessionId": "01a089a9-42b8-78d0-b6f0-6e8bf22d266a",
+    "sharedContext": false,
+    "continuationTurns": 0,
+    "sampling": {
+      "effort": "medium"
+    },
+    "startedAt": "2026-09-10T04:52:46.412Z",
+    "endedAt": "2026-09-10T04:59:39.987Z",
+    "timezone": "Asia/Shanghai"
+  },
+  "budget": {
+    "wallClockSeconds": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "toolCalls": null,
+    "retries": 0,
+    "followupTurns": 0,
+    "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+  },
+  "metrics": {
+    "durationSeconds": 412,
+    "durationBasis": "event_msg.task_complete.duration_ms",
+    "apiCalls": 8,
+    "toolCalls": 6,
+    "failures": 0,
+    "inputTokens": 261891,
+    "outputTokens": 11773,
+    "cacheReadTokens": 228480,
+    "totalTokens": 273664,
+    "note": "Codex final cumulative token_count; inputTokens includes cached input tokens, which are also reported separately as cacheReadTokens"
+  },
+  "cost": {
+    "amount": null,
+    "currency": null,
+    "scope": "task",
+    "source": null
+  },
+  "artifacts": {
+    "type": "html",
+    "entry": "index.html",
+    "files": [
+      "app.js",
+      "index.html",
+      "styles.css"
+    ],
+    "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker/artifacts",
+    "fileSha256": {
+      "app.js": "3525ebba4d4573037cd6c6a2dda2e3b01db27220b8fa3e698117e84ba80be381",
+      "index.html": "1aa16bd13923b6a27bb1916b9f4fd8d92979f31e36c65cc2516e7d13a50f7936",
+      "styles.css": "9a1802fde88d838742c394b89600d2925e1d1950e0dff43fe6759d2216a020b7"
+    },
+    "cover": null,
+    "preview": {
+      "lazy": true,
+      "sandbox": "allow-scripts allow-downloads allow-forms",
+      "note": "HTML output; internal relative files are listed explicitly"
+    }
+  },
+  "source": {
+    "commit": null,
+    "path": null
+  },
+  "runRelation": {
+    "parentRunId": null,
+    "reason": null
+  },
+  "status": "completed",
+  "isolation": {
+    "level": "workspace-only",
+    "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-15-book-tracking-app/",
+    "readOnlyInputs": [
+      "prompt.txt"
+    ],
+    "mounts": [],
+    "network": "off (rule-level; not enforced at the network layer)",
+    "repositoryReachability": null,
+    "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+    "repositoryBlocking": null,
+    "sharedContext": false
+  },
+  "contamination": {
+    "status": "unknown",
+    "events": [],
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/audit-2026-09-10.md"
+    ],
+    "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log.",
+    "scoringEffect": "none (recorded in audit archive only)",
+    "confirmedExternalAnswers": false
+  },
+  "testEvidence": {
+    "command": "node evidence/audit-codex-sessions.mjs <Codex sessions root> <phase workspace> <audit output>",
+    "cwd": "test-workspace-2/ (independent maintenance session)",
+    "environment": "macOS 26.6.2 arm64 / Node 24.19.0",
+    "date": "2026-09-10",
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/session-log.sha256.txt"
+    ],
+    "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment during archival; author-run checks remain part of the original session record only."
+  },
+  "reviews": []
+}

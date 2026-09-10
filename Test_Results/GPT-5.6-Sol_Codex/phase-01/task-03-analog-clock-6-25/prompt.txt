@@ -1,0 +1,2 @@
+Create an SVG of an analog clock showing exactly 6:25.
+Include hour markers and three hands.

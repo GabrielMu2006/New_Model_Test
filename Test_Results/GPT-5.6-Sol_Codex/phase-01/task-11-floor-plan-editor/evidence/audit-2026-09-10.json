@@ -1,0 +1,88 @@
+{
+  "runId": "run-gpt-5-6-sol-task-11-r1",
+  "taskName": "task-11-floor-plan-editor",
+  "sessionId": "01a0898a-77a5-7843-8915-716b4b69bf33",
+  "logPath": "~/.codex/sessions/2026/09/10/rollout-2026-09-10T12-19-08-01a0898a-77a5-7843-8915-716b4b69bf33.jsonl",
+  "logSha256": "0640d68998113cb8f156d3d4b1aca1f9d8a477b068ff7956f3923c38a0f93d7c",
+  "logFormat": "Codex JSONL",
+  "bytes": 2325736,
+  "frames": null,
+  "records": 149,
+  "promptSha256": "b4c65fbc69eb4f56ede8383de44a27781857f43cd257e9da6e0735372741f604",
+  "promptMessageMatches": 1,
+  "environment": {
+    "model": "gpt-5.6-sol",
+    "effort": "medium",
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "source": "cli",
+    "modelProvider": "openai",
+    "approvalPolicy": "on-request",
+    "sandboxPolicy": "workspace-write"
+  },
+  "startedAt": "2026-09-10T04:19:08.346Z",
+  "endedAt": "2026-09-10T04:28:13.854Z",
+  "durationSeconds": 544,
+  "durationBasis": "event_msg.task_complete.duration_ms",
+  "apiCalls": 22,
+  "toolCalls": 7,
+  "failedToolCalls": 0,
+  "toolCounts": {
+    "exec_command": 4,
+    "apply_patch": 2,
+    "write_stdin": 1
+  },
+  "recordedCommands": [
+    {
+      "callId": "call_yvEVO4PgRANbIPP7Zq9r0nDI",
+      "command": "pwd && rg --files -g '!prompt.txt' -g '!AGENTS.md' -g '!node_modules' | sed -n '1,120p'"
+    },
+    {
+      "callId": "call_YLFemQTPVSEQqWxegIF17joJ",
+      "command": "node --check app.js && wc -l index.html styles.css app.js README.md && rg -n \"https?://|\\.\\./|src=|href=\" index.html styles.css app.js README.md"
+    },
+    {
+      "callId": "call_RcbocZPmimDjnVwV9by2XG4N",
+      "command": "python3 -m http.server 4173"
+    },
+    {
+      "callId": "call_C4RHQQJpOgAmAvxsERY3GDhL",
+      "command": "node --check app.js && rg -n \"TODO|FIXME|https?://\" . -g '!prompt.txt' -g '!AGENTS.md' -g '!README.md'"
+    }
+  ],
+  "tokenUsage": {
+    "inputTokens": 1016747,
+    "outputTokens": 14938,
+    "cacheReadTokens": 966016,
+    "totalTokens": 1031685,
+    "reasoningOutputTokens": 1483
+  },
+  "checkedDimensions": [
+    "policy",
+    "tools",
+    "paths",
+    "commands",
+    "repositories",
+    "network",
+    "reads",
+    "writes",
+    "delegation",
+    "reasoning",
+    "siblingWorkspaces"
+  ],
+  "findings": [],
+  "verdict": "no-violation-observed",
+  "limitations": [
+    "Codex JSONL stores reasoning as encrypted_content; reasoning text could not be inspected.",
+    "Training-data exposure cannot be audited.",
+    "Harness-unlogged channels, external tools, connectors, and caches cannot be ruled out.",
+    "The test used policy-level workspace-only restrictions, not enforced read or network isolation.",
+    "No environment reachability probe was run; repository and network conclusions are based on recorded tool calls and results only."
+  ],
+  "auditedAt": "2026-09-10T05:18:35.051Z",
+  "auditor": "Codex maintenance session (independent from the 15 tested sessions)",
+  "auditScript": {
+    "path": "evidence/audit-codex-sessions.mjs",
+    "sha256": "281392c2357db705a06b01ba9a2018498fa86083fef9ba3d21d5446c6a2311ef"
+  }
+}

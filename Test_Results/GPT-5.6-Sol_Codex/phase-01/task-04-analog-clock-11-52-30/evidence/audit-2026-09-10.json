@@ -1,0 +1,75 @@
+{
+  "runId": "run-gpt-5-6-sol-task-04-r1",
+  "taskName": "task-04-analog-clock-11-52-30",
+  "sessionId": "01a08957-8653-78b2-9203-9799d8415524",
+  "logPath": "~/.codex/sessions/2026/09/10/rollout-2026-09-10T11-23-29-01a08957-8653-78b2-9203-9799d8415524.jsonl",
+  "logSha256": "f29350f3ded036689e2d68ab8b6388b7eda23bce5e11ec4aa3a096a88ba036d8",
+  "logFormat": "Codex JSONL",
+  "bytes": 158057,
+  "frames": null,
+  "records": 33,
+  "promptSha256": "6810781239a5abf4d0bd6e4883a741359a90646955581459a8885108fc33a1f0",
+  "promptMessageMatches": 1,
+  "environment": {
+    "model": "gpt-5.6-sol",
+    "effort": "medium",
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "source": "cli",
+    "modelProvider": "openai",
+    "approvalPolicy": "on-request",
+    "sandboxPolicy": "workspace-write"
+  },
+  "startedAt": "2026-09-10T03:23:29.797Z",
+  "endedAt": "2026-09-10T03:25:38.906Z",
+  "durationSeconds": 122,
+  "durationBasis": "event_msg.task_complete.duration_ms",
+  "apiCalls": 3,
+  "toolCalls": 2,
+  "failedToolCalls": 0,
+  "toolCounts": {
+    "apply_patch": 2,
+    "exec_command": 1
+  },
+  "recordedCommands": [
+    {
+      "callId": "call_0G8mOGlslhUtIHe5h55ckseE",
+      "command": "xmllint --noout clock.svg"
+    }
+  ],
+  "tokenUsage": {
+    "inputTokens": 82664,
+    "outputTokens": 3354,
+    "cacheReadTokens": 44672,
+    "totalTokens": 86018,
+    "reasoningOutputTokens": 438
+  },
+  "checkedDimensions": [
+    "policy",
+    "tools",
+    "paths",
+    "commands",
+    "repositories",
+    "network",
+    "reads",
+    "writes",
+    "delegation",
+    "reasoning",
+    "siblingWorkspaces"
+  ],
+  "findings": [],
+  "verdict": "no-violation-observed",
+  "limitations": [
+    "Codex JSONL stores reasoning as encrypted_content; reasoning text could not be inspected.",
+    "Training-data exposure cannot be audited.",
+    "Harness-unlogged channels, external tools, connectors, and caches cannot be ruled out.",
+    "The test used policy-level workspace-only restrictions, not enforced read or network isolation.",
+    "No environment reachability probe was run; repository and network conclusions are based on recorded tool calls and results only."
+  ],
+  "auditedAt": "2026-09-10T05:18:35.038Z",
+  "auditor": "Codex maintenance session (independent from the 15 tested sessions)",
+  "auditScript": {
+    "path": "evidence/audit-codex-sessions.mjs",
+    "sha256": "281392c2357db705a06b01ba9a2018498fa86083fef9ba3d21d5446c6a2311ef"
+  }
+}

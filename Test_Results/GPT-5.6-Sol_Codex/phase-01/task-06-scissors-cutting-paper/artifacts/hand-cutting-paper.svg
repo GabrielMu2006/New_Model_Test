@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">A hand using scissors to cut a sheet of paper</title>
+  <desc id="desc">A warm illustrated hand grips teal scissors as the silver blades follow a dotted cutting line across a curled white sheet of paper.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8e9d7"/>
+      <stop offset="1" stop-color="#e7c7a7"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#edf1f2"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#86949c"/>
+      <stop offset="0.45" stop-color="#f4f7f8"/>
+      <stop offset="1" stop-color="#9ba9af"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0.15" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#f6bd91"/>
+      <stop offset="1" stop-color="#d9835e"/>
+    </linearGradient>
+    <linearGradient id="skinLight" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd0aa"/>
+      <stop offset="1" stop-color="#e89670"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#70462f" flood-opacity="0.24"/>
+    </filter>
+    <filter id="smallShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="2" dy="8" stdDeviation="8" flood-color="#263238" flood-opacity="0.28"/>
+    </filter>
+    <clipPath id="paperClip">
+      <path d="M175 145 Q176 119 203 116 L969 80 Q995 79 997 107 L1030 690 Q1032 718 1004 721 L231 775 Q204 777 201 749 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- warm tabletop -->
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <path d="M0 155 C230 106 406 190 622 139 C846 86 1013 91 1200 128" fill="none" stroke="#c99b75" stroke-width="3" opacity=".18"/>
+  <path d="M0 793 C216 740 400 822 610 777 C837 728 1020 742 1200 696" fill="none" stroke="#fff" stroke-width="4" opacity=".17"/>
+
+  <!-- paper and its soft shadow -->
+  <path d="M175 145 Q176 119 203 116 L969 80 Q995 79 997 107 L1030 690 Q1032 718 1004 721 L231 775 Q204 777 201 749 Z"
+        fill="url(#paper)" filter="url(#shadow)"/>
+
+  <g clip-path="url(#paperClip)">
+    <!-- faint ruled marks make the object read as paper -->
+    <path d="M278 226 L881 188 M282 278 L887 240 M286 330 L893 292" stroke="#dce6e8" stroke-width="7" stroke-linecap="round"/>
+    <path d="M235 189 L255 662" stroke="#ef9b98" stroke-width="5" opacity=".55"/>
+
+    <!-- the cut opens behind the blades -->
+    <path d="M160 505 C277 484 386 462 515 440 C566 431 608 426 661 423"
+          fill="none" stroke="#66757d" stroke-width="15" opacity=".17"/>
+    <path d="M158 492 C274 477 393 452 516 430 C575 419 622 416 681 412"
+          fill="none" stroke="#ffffff" stroke-width="18"/>
+    <path d="M156 491 C276 476 393 451 516 429 C575 418 624 415 681 411"
+          fill="none" stroke="#aebbc0" stroke-width="3"/>
+
+    <!-- dotted cutting guide ahead of the scissors -->
+    <path d="M671 409 C759 395 843 382 947 370" fill="none" stroke="#ef6461" stroke-width="7" stroke-linecap="round" stroke-dasharray="3 22"/>
+    <path d="M931 353 L956 369 L936 391" fill="none" stroke="#ef6461" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- lifted lower-left cut flap -->
+  <path d="M176 493 C281 479 394 454 517 431 C563 423 603 419 641 417 C564 469 483 529 414 591 C337 661 278 727 232 774 Q205 776 202 749 Z"
+        fill="#f7fafb" stroke="#c7d0d3" stroke-width="3" filter="url(#smallShadow)"/>
+  <path d="M177 494 C293 478 399 453 518 432 C566 423 603 419 641 417"
+        fill="none" stroke="#aab7bc" stroke-width="3"/>
+
+  <!-- scissors: blades point toward the cutting line -->
+  <g filter="url(#smallShadow)">
+    <path d="M704 425 L433 390 Q407 387 389 399 L690 458 Z"
+          fill="url(#steel)" stroke="#627078" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M699 449 L445 493 Q416 498 396 486 L690 416 Z"
+          fill="url(#steel)" stroke="#627078" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M433 390 L389 399 L423 413" fill="#e9eff1" opacity=".85"/>
+    <path d="M445 493 L396 486 L431 474" fill="#e9eff1" opacity=".85"/>
+
+    <!-- handles -->
+    <path d="M702 430 C752 441 795 465 823 501 C856 543 846 593 808 613 C771 633 724 610 713 572 C704 540 718 508 747 490 L681 453 Z"
+          fill="#147f83" stroke="#0c5c61" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M686 421 C735 389 790 374 833 386 C878 398 898 438 879 473 C858 512 805 518 772 493 C751 477 742 453 748 431 L680 451 Z"
+          fill="#16979a" stroke="#0c5c61" stroke-width="9" stroke-linejoin="round"/>
+    <ellipse cx="810" cy="442" rx="49" ry="36" transform="rotate(13 810 442)" fill="#f5ae84" stroke="#0c5c61" stroke-width="7"/>
+    <ellipse cx="782" cy="554" rx="43" ry="50" transform="rotate(-20 782 554)" fill="#f1aa80" stroke="#0c5c61" stroke-width="7"/>
+    <circle cx="692" cy="438" r="18" fill="#516168" stroke="#eef3f4" stroke-width="6"/>
+    <circle cx="692" cy="438" r="6" fill="#26383e"/>
+  </g>
+
+  <!-- hand and forearm wrapping around the scissor handles -->
+  <g filter="url(#smallShadow)">
+    <path d="M1081 900 L751 900 C748 846 768 800 807 763 C831 740 850 716 856 683
+             C863 650 847 625 827 600 C810 579 814 553 833 539 C851 526 872 533 889 550
+             L921 582 L884 499 C873 473 885 447 907 438 C932 428 953 442 965 469
+             L1007 565 L984 470 C977 442 994 419 1018 414 C1044 410 1060 429 1066 456
+             L1088 553 L1080 480 C1077 453 1094 433 1118 432 C1143 431 1159 451 1161 478
+             L1173 651 C1179 733 1143 792 1100 833 Z"
+          fill="url(#skin)" stroke="#bd674d" stroke-width="7" stroke-linejoin="round"/>
+
+    <!-- thumb crossing the lower handle -->
+    <path d="M911 622 C873 598 830 574 791 553 C760 536 727 546 715 570
+             C702 597 719 624 749 636 L875 689 C910 702 939 685 945 657 C948 642 936 629 911 622 Z"
+          fill="url(#skinLight)" stroke="#bd674d" stroke-width="7"/>
+
+    <!-- finger definition -->
+    <path d="M921 582 C938 601 947 620 951 646" fill="none" stroke="#c87457" stroke-width="6" stroke-linecap="round"/>
+    <path d="M1007 565 C1017 590 1023 615 1025 641" fill="none" stroke="#c87457" stroke-width="6" stroke-linecap="round"/>
+    <path d="M1088 553 C1093 579 1095 605 1094 629" fill="none" stroke="#c87457" stroke-width="6" stroke-linecap="round"/>
+    <path d="M748 585 C770 588 792 599 810 611" fill="none" stroke="#ffd8b9" stroke-width="7" stroke-linecap="round" opacity=".65"/>
+    <path d="M896 461 C910 454 925 459 934 476" fill="none" stroke="#ffd8b9" stroke-width="7" stroke-linecap="round" opacity=".65"/>
+    <path d="M1003 439 C1017 432 1032 440 1037 457" fill="none" stroke="#ffd8b9" stroke-width="7" stroke-linecap="round" opacity=".65"/>
+    <path d="M1102 455 C1118 449 1131 459 1132 477" fill="none" stroke="#ffd8b9" stroke-width="7" stroke-linecap="round" opacity=".65"/>
+  </g>
+
+  <!-- cuff -->
+  <path d="M732 900 L753 833 C838 856 956 846 1100 806 L1146 900 Z" fill="#31415c"/>
+  <path d="M769 844 C874 864 986 844 1099 814" fill="none" stroke="#526782" stroke-width="10" opacity=".8"/>
+</svg>

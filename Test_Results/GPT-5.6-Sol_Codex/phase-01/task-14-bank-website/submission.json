@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-gpt-5-6-sol-task-14-r1",
+  "phaseId": "phase-01",
+  "taskId": "task-14",
+  "taskVersion": 1,
+  "model": {
+    "id": "gpt-5-6-sol",
+    "name": "GPT-5.6 Sol",
+    "version": "gpt-5.6-sol",
+    "provider": "OpenAI",
+    "note": "model and effort are recorded by Codex turn_context; the provider-side snapshot beyond this reported model id is not independently confirmed"
+  },
+  "prompt": {
+    "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+    "sha256": "58eef25acfaf82e9b1093693ed9fcf90266d757f178a040b1f705213ac804ba5",
+    "version": 1,
+    "verbatimInputPath": "prompt.txt",
+    "localScaffoldPath": "test-workspace-2/phase-01/task-14-bank-website/prompt.txt",
+    "followups": []
+  },
+  "environment": {
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "reportedModelId": "gpt-5.6-sol",
+    "surface": "cli",
+    "os": "macOS 26.6.2 (arm64)",
+    "runtime": "Node 24.19.0",
+    "sessionId": "01a089a0-2f44-7491-82d7-3e3cd62f7d6c",
+    "sharedContext": false,
+    "continuationTurns": 0,
+    "sampling": {
+      "effort": "medium"
+    },
+    "startedAt": "2026-09-10T04:42:51.611Z",
+    "endedAt": "2026-09-10T04:52:23.833Z",
+    "timezone": "Asia/Shanghai"
+  },
+  "budget": {
+    "wallClockSeconds": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "toolCalls": null,
+    "retries": 0,
+    "followupTurns": 0,
+    "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+  },
+  "metrics": {
+    "durationSeconds": 571,
+    "durationBasis": "event_msg.task_complete.duration_ms",
+    "apiCalls": 6,
+    "toolCalls": 5,
+    "failures": 0,
+    "inputTokens": 199293,
+    "outputTokens": 17003,
+    "cacheReadTokens": 165248,
+    "totalTokens": 216296,
+    "note": "Codex final cumulative token_count; inputTokens includes cached input tokens, which are also reported separately as cacheReadTokens"
+  },
+  "cost": {
+    "amount": null,
+    "currency": null,
+    "scope": "task",
+    "source": null
+  },
+  "artifacts": {
+    "type": "html",
+    "entry": "index.html",
+    "files": [
+      "README.md",
+      "index.html",
+      "script.js",
+      "styles.css"
+    ],
+    "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website/artifacts",
+    "fileSha256": {
+      "README.md": "88953f08642fb112132b01b9002e2e42f27a4cbeefb6b18c28b70355b5be7ac9",
+      "index.html": "52b53d346d3faee2ce5da31dac63b3cda006010e661609013c64532675a656c7",
+      "script.js": "45e7998a2c14bc59a94759b0983562143cf4de184fdb730c6129d8914de652b2",
+      "styles.css": "d0c83872ffb81de79f07fa01c6921fc1dae4666b1308267452d4deb0960fd558"
+    },
+    "cover": null,
+    "preview": {
+      "lazy": true,
+      "sandbox": "allow-scripts allow-downloads allow-forms",
+      "note": "HTML output; internal relative files are listed explicitly"
+    }
+  },
+  "source": {
+    "commit": null,
+    "path": null
+  },
+  "runRelation": {
+    "parentRunId": null,
+    "reason": null
+  },
+  "status": "completed",
+  "isolation": {
+    "level": "workspace-only",
+    "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-14-bank-website/",
+    "readOnlyInputs": [
+      "prompt.txt"
+    ],
+    "mounts": [],
+    "network": "off (rule-level; not enforced at the network layer)",
+    "repositoryReachability": null,
+    "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+    "repositoryBlocking": null,
+    "sharedContext": false
+  },
+  "contamination": {
+    "status": "unknown",
+    "events": [],
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/audit-2026-09-10.md"
+    ],
+    "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log.",
+    "scoringEffect": "none (recorded in audit archive only)",
+    "confirmedExternalAnswers": false
+  },
+  "testEvidence": {
+    "command": "node evidence/audit-codex-sessions.mjs <Codex sessions root> <phase workspace> <audit output>",
+    "cwd": "test-workspace-2/ (independent maintenance session)",
+    "environment": "macOS 26.6.2 arm64 / Node 24.19.0",
+    "date": "2026-09-10",
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/session-log.sha256.txt"
+    ],
+    "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment during archival; author-run checks remain part of the original session record only."
+  },
+  "reviews": []
+}

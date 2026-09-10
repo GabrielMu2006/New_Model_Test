@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-gpt-5-6-sol-task-12-r1",
+  "phaseId": "phase-01",
+  "taskId": "task-12",
+  "taskVersion": 1,
+  "model": {
+    "id": "gpt-5-6-sol",
+    "name": "GPT-5.6 Sol",
+    "version": "gpt-5.6-sol",
+    "provider": "OpenAI",
+    "note": "model and effort are recorded by Codex turn_context; the provider-side snapshot beyond this reported model id is not independently confirmed"
+  },
+  "prompt": {
+    "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+    "sha256": "6067f883282710324a29490bb869adfc974340a626c751b2fc2999a0a9e77fe6",
+    "version": 1,
+    "verbatimInputPath": "prompt.txt",
+    "localScaffoldPath": "test-workspace-2/phase-01/task-12-calculator-app/prompt.txt",
+    "followups": []
+  },
+  "environment": {
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "reportedModelId": "gpt-5.6-sol",
+    "surface": "cli",
+    "os": "macOS 26.6.2 (arm64)",
+    "runtime": "Node 24.19.0",
+    "sessionId": "01a08993-4db5-7e23-9739-bda89abe7691",
+    "sharedContext": false,
+    "continuationTurns": 0,
+    "sampling": {
+      "effort": "medium"
+    },
+    "startedAt": "2026-09-10T04:28:47.433Z",
+    "endedAt": "2026-09-10T04:35:24.100Z",
+    "timezone": "Asia/Shanghai"
+  },
+  "budget": {
+    "wallClockSeconds": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "toolCalls": null,
+    "retries": 0,
+    "followupTurns": 0,
+    "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+  },
+  "metrics": {
+    "durationSeconds": 364,
+    "durationBasis": "event_msg.task_complete.duration_ms",
+    "apiCalls": 16,
+    "toolCalls": 8,
+    "failures": 0,
+    "inputTokens": 599359,
+    "outputTokens": 9925,
+    "cacheReadTokens": 547456,
+    "totalTokens": 609284,
+    "note": "Codex final cumulative token_count; inputTokens includes cached input tokens, which are also reported separately as cacheReadTokens"
+  },
+  "cost": {
+    "amount": null,
+    "currency": null,
+    "scope": "task",
+    "source": null
+  },
+  "artifacts": {
+    "type": "html",
+    "entry": "index.html",
+    "files": [
+      "app.js",
+      "calculator.mjs",
+      "calculator.test.mjs",
+      "index.html",
+      "package.json",
+      "server.mjs",
+      "styles.css"
+    ],
+    "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator/artifacts",
+    "fileSha256": {
+      "app.js": "d4575603710683c5bd9a9132fd9b908fa992dca9ace038387621d922283c84b2",
+      "calculator.mjs": "8618f39175a301706dc187f78b7de52bac80505babccde5a93b0bd15c5a3aee0",
+      "calculator.test.mjs": "c47b20020e23eb1d3351094c27e5fd48ccc4f7b3bcf141ee79d7082af5faa293",
+      "index.html": "33cf8a66776c9857f815a4d9f82b87666cccd3fadba088511a2afef4d85b90cf",
+      "package.json": "866299561289b3de806b3551f9881c465b5f21dac80e35ae6f947537bd6891ad",
+      "server.mjs": "f0056b7ace94c6f2e00e062a13f827d3c290361ea8aa779cab3b9682a3e2f900",
+      "styles.css": "1dc2fc9cc32309a5a4d9285a61124f284c92f32a083ea35166a15a648bc00fe6"
+    },
+    "cover": null,
+    "preview": {
+      "lazy": true,
+      "sandbox": "allow-scripts allow-downloads allow-forms",
+      "note": "HTML output; internal relative files are listed explicitly"
+    }
+  },
+  "source": {
+    "commit": null,
+    "path": null
+  },
+  "runRelation": {
+    "parentRunId": null,
+    "reason": null
+  },
+  "status": "completed",
+  "isolation": {
+    "level": "workspace-only",
+    "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-12-calculator-app/",
+    "readOnlyInputs": [
+      "prompt.txt"
+    ],
+    "mounts": [],
+    "network": "off (rule-level; not enforced at the network layer)",
+    "repositoryReachability": null,
+    "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+    "repositoryBlocking": null,
+    "sharedContext": false
+  },
+  "contamination": {
+    "status": "unknown",
+    "events": [],
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/audit-2026-09-10.md"
+    ],
+    "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log.",
+    "scoringEffect": "none (recorded in audit archive only)",
+    "confirmedExternalAnswers": false
+  },
+  "testEvidence": {
+    "command": "node evidence/audit-codex-sessions.mjs <Codex sessions root> <phase workspace> <audit output>",
+    "cwd": "test-workspace-2/ (independent maintenance session)",
+    "environment": "macOS 26.6.2 arm64 / Node 24.19.0",
+    "date": "2026-09-10",
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/session-log.sha256.txt"
+    ],
+    "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment during archival; author-run checks remain part of the original session record only."
+  },
+  "reviews": []
+}

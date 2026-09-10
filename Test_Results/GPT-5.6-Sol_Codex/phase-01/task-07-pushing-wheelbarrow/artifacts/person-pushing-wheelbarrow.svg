@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Person pushing a wheelbarrow</title>
+  <desc id="desc">A gardener behind a loaded wheelbarrow leans forward with both hands on its handles, clearly pushing it toward the right.</desc>
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dff4f1"/>
+      <stop offset="1" stop-color="#fbf3df"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#789a63"/>
+      <stop offset="1" stop-color="#9db779"/>
+    </linearGradient>
+    <linearGradient id="barrow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9753d"/>
+      <stop offset="1" stop-color="#b83d2b"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+  </defs>
+
+  <!-- quiet outdoor setting -->
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="1010" cy="132" r="66" fill="#f5c75c" opacity=".85"/>
+  <path d="M0 480 Q180 395 355 475 T720 465 T1200 445 V800 H0Z" fill="#adc797" opacity=".62"/>
+  <path d="M0 560 Q230 505 455 550 T835 532 T1200 520 V800 H0Z" fill="url(#ground)"/>
+  <path d="M0 691 Q250 654 520 687 T930 671 T1200 684 V800 H0Z" fill="#d6c38e"/>
+  <ellipse cx="710" cy="685" rx="386" ry="38" fill="#4d513e" opacity=".18" filter="url(#shadow)"/>
+
+  <!-- small motion marks reinforce forward movement -->
+  <g fill="none" stroke="#477768" stroke-width="10" stroke-linecap="round" opacity=".55">
+    <path d="M128 382h102"/>
+    <path d="M92 421h82"/>
+    <path d="M153 460h61"/>
+  </g>
+
+  <!-- person positioned behind the handles, leaning into the push -->
+  <g stroke="#243f3b" stroke-linejoin="round" stroke-linecap="round">
+    <!-- rear leg -->
+    <path d="M384 535 L319 663 L238 684" fill="none" stroke-width="42"/>
+    <path d="M238 684 l-49 4" fill="none" stroke="#273331" stroke-width="45"/>
+    <!-- forward leg -->
+    <path d="M405 534 L451 650 L527 676" fill="none" stroke-width="44"/>
+    <path d="M527 676 l48 2" fill="none" stroke="#273331" stroke-width="46"/>
+
+    <!-- torso -->
+    <path d="M330 316 Q399 317 455 386 L426 551 Q361 573 304 532 L306 396Z" fill="#2f7d73" stroke-width="10"/>
+    <path d="M326 409 Q368 431 438 425" fill="none" stroke="#8fc1a5" stroke-width="12" opacity=".65"/>
+
+    <!-- head and neck -->
+    <path d="M345 338 l26 34 40-27-19-44Z" fill="#b96f47" stroke-width="8"/>
+    <circle cx="351" cy="265" r="69" fill="#d89160" stroke-width="10"/>
+    <path d="M291 263 Q300 183 381 190 Q416 203 423 237 Q374 216 307 244Z" fill="#553d32" stroke-width="7"/>
+    <path d="M409 240 q28 14 9 45" fill="#d89160" stroke-width="8"/>
+    <circle cx="382" cy="264" r="5" fill="#243f3b" stroke="none"/>
+    <path d="M386 290 q17 10 29-3" fill="none" stroke-width="6"/>
+
+    <!-- back arm reaching to far handle -->
+    <path d="M348 373 Q434 405 528 487" fill="none" stroke="#d89160" stroke-width="31"/>
+    <path d="M522 484 q27 7 38 29" fill="none" stroke="#d89160" stroke-width="28"/>
+
+    <!-- near arm: both hands are behind the barrow -->
+    <path d="M411 382 Q474 426 569 506" fill="none" stroke="#e0a071" stroke-width="34"/>
+    <path d="M561 501 q27 8 40 29" fill="none" stroke="#e0a071" stroke-width="30"/>
+  </g>
+
+  <!-- wheelbarrow frame and handles -->
+  <g stroke="#493b2d" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M533 493 L886 585" fill="none" stroke-width="18"/>
+    <path d="M565 525 L875 608" fill="none" stroke-width="18"/>
+    <path d="M535 493 l-42-11 M567 525 l-40-10" fill="none" stroke-width="22"/>
+
+    <!-- support legs -->
+    <path d="M704 570 L669 670 M759 584 L741 671" fill="none" stroke-width="16"/>
+  </g>
+
+  <!-- loaded tray -->
+  <path d="M605 390 L956 410 L869 585 Q738 590 658 548Z" fill="url(#barrow)" stroke="#702f28" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M599 389 Q779 359 962 409" fill="none" stroke="#812f25" stroke-width="18" stroke-linecap="round"/>
+  <g fill="#6d4930" stroke="#3f3628" stroke-width="7">
+    <ellipse cx="708" cy="380" rx="74" ry="42"/>
+    <ellipse cx="801" cy="375" rx="82" ry="48"/>
+    <ellipse cx="892" cy="392" rx="68" ry="39"/>
+  </g>
+  <g fill="#78a85f" stroke="#345e46" stroke-width="7" stroke-linecap="round">
+    <path d="M742 358 q-6-49 31-79 q8 46-22 78Z"/>
+    <path d="M789 354 q16-53 63-66 q-9 46-51 72Z"/>
+    <path d="M839 364 q34-45 80-36 q-28 40-70 44Z"/>
+  </g>
+
+  <!-- front wheel -->
+  <circle cx="898" cy="607" r="91" fill="#263634" stroke="#172421" stroke-width="14"/>
+  <circle cx="898" cy="607" r="57" fill="#647a6e" stroke="#d6c38e" stroke-width="8"/>
+  <g stroke="#d6c38e" stroke-width="7">
+    <path d="M898 550v114 M841 607h114 M858 567l80 80 M938 567l-80 80"/>
+  </g>
+  <circle cx="898" cy="607" r="15" fill="#e9753d" stroke="#702f28" stroke-width="7"/>
+
+  <!-- foreground grass -->
+  <g fill="none" stroke="#4f784d" stroke-width="7" stroke-linecap="round">
+    <path d="M87 695 q4-41-17-65 M89 696q20-46 48-60 M1071 697q-5-46-36-72 M1075 697q18-53 53-73"/>
+  </g>
+</svg>

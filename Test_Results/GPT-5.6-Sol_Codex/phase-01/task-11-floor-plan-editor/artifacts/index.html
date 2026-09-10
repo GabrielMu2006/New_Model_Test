@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f2ec" />
+  <title>Forma — Floor plan editor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Forma home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+      <span>Forma</span>
+    </a>
+
+    <div class="project-title">
+      <button class="icon-btn sidebar-toggle" id="sidebarToggle" aria-label="Toggle project details">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div>
+        <strong>Lake House</strong>
+        <span id="saveStatus">All changes saved</span>
+      </div>
+    </div>
+
+    <nav class="top-actions" aria-label="Project actions">
+      <button class="icon-btn" id="undoBtn" aria-label="Undo" title="Undo (⌘Z)">
+        <svg viewBox="0 0 24 24"><path d="M9 7 4 12l5 5M5 12h8a6 6 0 0 1 6 6"/></svg>
+      </button>
+      <button class="icon-btn" id="redoBtn" aria-label="Redo" title="Redo (⇧⌘Z)">
+        <svg viewBox="0 0 24 24"><path d="m15 7 5 5-5 5M19 12h-8a6 6 0 0 0-6 6"/></svg>
+      </button>
+      <span class="divider"></span>
+      <button class="btn btn-ghost" id="clearBtn">New plan</button>
+      <button class="btn btn-primary" id="exportBtn">
+        <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 19h14"/></svg>
+        Export
+      </button>
+    </nav>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar" id="sidebar">
+      <section>
+        <p class="eyebrow">Project</p>
+        <h1>Lake House</h1>
+        <div class="meta-row"><span>Ground floor</span><span id="areaValue">48.0 m²</span></div>
+      </section>
+
+      <section class="tool-section">
+        <p class="eyebrow">Build</p>
+        <div class="tool-grid" role="toolbar" aria-label="Drawing tools">
+          <button class="tool active" data-tool="select" aria-pressed="true">
+            <span class="tool-icon"><svg viewBox="0 0 24 24"><path d="m6 3 11 9-6 1-3 6z"/></svg></span>
+            <span><strong>Select</strong><small>V</small></span>
+          </button>
+          <button class="tool" data-tool="wall" aria-pressed="false">
+            <span class="tool-icon"><svg viewBox="0 0 24 24"><path d="M4 17 17 4l3 3L7 20z"/><path d="m7 14 3 3M11 10l3 3M15 6l3 3"/></svg></span>
+            <span><strong>Wall</strong><small>W</small></span>
+          </button>
+          <button class="tool" data-tool="door" aria-pressed="false">
+            <span class="tool-icon"><svg viewBox="0 0 24 24"><path d="M5 20V4h12v16M8 20V7h6v13M12 13h.01"/></svg></span>
+            <span><strong>Door</strong><small>D</small></span>
+          </button>
+          <button class="tool" data-tool="window" aria-pressed="false">
+            <span class="tool-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4zM12 6v12M4 12h16"/></svg></span>
+            <span><strong>Window</strong><small>N</small></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="properties" id="properties">
+        <div class="section-heading">
+          <p class="eyebrow">Selection</p>
+          <button class="tiny-btn" id="deleteBtn" disabled>Delete</button>
+        </div>
+        <div class="empty-selection" id="emptySelection">
+          <span><svg viewBox="0 0 24 24"><path d="m6 3 11 9-6 1-3 6z"/></svg></span>
+          <p>Select an element to edit its measurements.</p>
+        </div>
+        <div class="property-form hidden" id="propertyForm">
+          <label><span id="propertyLabel">Length</span><div><input id="lengthInput" type="number" min="0.5" step="0.1"><b>m</b></div></label>
+          <label id="thicknessField"><span>Thickness</span><div><input id="thicknessInput" type="number" min="0.1" max="0.5" step="0.01"><b>m</b></div></label>
+          <label><span>Label</span><div><input id="labelInput" type="text" maxlength="24"></div></label>
+        </div>
+      </section>
+
+      <section class="tips">
+        <span>Tip</span>
+        <p>Hold <kbd>Shift</kbd> while drawing for a free angle.</p>
+      </section>
+    </aside>
+
+    <section class="canvas-shell" aria-label="Floor plan canvas">
+      <div class="canvas-toolbar">
+        <div class="mode-hint" id="modeHint"><span></span>Select and move elements</div>
+        <div class="zoom-control">
+          <button id="zoomOut" aria-label="Zoom out">−</button>
+          <output id="zoomValue">100%</output>
+          <button id="zoomIn" aria-label="Zoom in">+</button>
+          <button id="fitBtn" aria-label="Fit plan" title="Fit plan">
+            <svg viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="canvas-viewport" id="viewport">
+        <svg id="plan" viewBox="0 0 1000 700" role="img" aria-label="Editable floor plan">
+          <defs>
+            <pattern id="minorGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#deddd7" stroke-width="1" />
+            </pattern>
+            <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+              <rect width="100" height="100" fill="url(#minorGrid)" />
+              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#cfcec7" stroke-width="1" />
+            </pattern>
+            <filter id="selectionGlow" x="-40%" y="-40%" width="180%" height="180%">
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#d36c36" flood-opacity=".35" />
+            </filter>
+          </defs>
+          <rect width="1000" height="700" fill="url(#grid)" />
+          <g id="roomFills"></g>
+          <g id="walls"></g>
+          <g id="openings"></g>
+          <g id="dimensions"></g>
+          <g id="labels"></g>
+          <g id="draft"></g>
+        </svg>
+        <div class="crosshair-label hidden" id="crosshairLabel"></div>
+      </div>
+
+      <div class="statusbar">
+        <span><i class="status-dot"></i> Snap to grid <kbd>10 cm</kbd></span>
+        <span id="elementCount">7 walls · 4 openings</span>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

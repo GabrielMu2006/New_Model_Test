@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4efe5" />
+    <title>Marginalia — Your reading life</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Marginalia home">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>Marginalia</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <button class="nav-link active" type="button">My library</button>
+        <button class="nav-link" type="button" id="navGoals">Reading goal</button>
+      </nav>
+      <button class="button button-primary top-add" type="button" data-open-form>
+        <span aria-hidden="true">＋</span> Add book
+      </button>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="welcomeTitle">
+        <div>
+          <p class="eyebrow" id="todayLabel">YOUR READING LIFE</p>
+          <h1 id="welcomeTitle">Good afternoon, reader.</h1>
+          <p class="hero-copy">Keep the stories you love close, and the ones still waiting even closer.</p>
+        </div>
+        <div class="quote" aria-label="Reading quote">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <p>A reader lives a thousand lives before he dies.</p>
+          <small>George R. R. Martin</small>
+        </div>
+      </section>
+
+      <section class="dashboard" aria-label="Reading overview">
+        <div class="stat">
+          <span class="stat-icon coral" aria-hidden="true">◫</span>
+          <div><strong id="statTotal">0</strong><span>Books collected</span></div>
+        </div>
+        <div class="stat">
+          <span class="stat-icon gold" aria-hidden="true">↗</span>
+          <div><strong id="statReading">0</strong><span>Currently reading</span></div>
+        </div>
+        <div class="stat">
+          <span class="stat-icon green" aria-hidden="true">✓</span>
+          <div><strong id="statFinished">0</strong><span>Finished this year</span></div>
+        </div>
+        <div class="goal-card" id="goalCard">
+          <div class="goal-copy"><span>2026 reading goal</span><strong><span id="goalCurrent">0</span> <em>/ <span id="goalTarget">24</span> books</em></strong></div>
+          <div class="goal-ring" id="goalRing"><span id="goalPercent">0%</span></div>
+        </div>
+      </section>
+
+      <section class="library" aria-labelledby="libraryTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">THE COLLECTION</p>
+            <h2 id="libraryTitle">My library</h2>
+          </div>
+          <label class="search">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Search title or author" autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="filter-row">
+          <div class="filters" role="group" aria-label="Filter books by shelf">
+            <button class="filter active" type="button" data-filter="all">All <span id="countAll">0</span></button>
+            <button class="filter" type="button" data-filter="reading">Reading <span id="countReading">0</span></button>
+            <button class="filter" type="button" data-filter="want">Want to read <span id="countWant">0</span></button>
+            <button class="filter" type="button" data-filter="finished">Finished <span id="countFinished">0</span></button>
+          </div>
+          <label class="sort-label">Sort
+            <select id="sortSelect">
+              <option value="recent">Recently added</option>
+              <option value="title">Title A–Z</option>
+              <option value="author">Author A–Z</option>
+              <option value="rating">Highest rated</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="book-grid" id="bookGrid" aria-live="polite"></div>
+        <div class="empty-state" id="emptyState" hidden>
+          <span aria-hidden="true">◌</span>
+          <h3>No books found</h3>
+          <p>Try another search, or add a new story to your shelves.</p>
+          <button class="button button-primary" type="button" data-open-form>Add a book</button>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>Marginalia</span><p>Made for slow mornings and one more chapter.</p></footer>
+
+    <dialog id="bookDialog" aria-labelledby="dialogTitle">
+      <form id="bookForm" method="dialog">
+        <div class="dialog-head">
+          <div><p class="eyebrow">YOUR SHELF</p><h2 id="dialogTitle">Add a new book</h2></div>
+          <button class="icon-button" type="button" data-close aria-label="Close dialog">×</button>
+        </div>
+        <input type="hidden" id="bookId" />
+        <div class="form-grid">
+          <label class="field full"><span>Book title</span><input id="titleInput" required maxlength="100" placeholder="e.g. The Left Hand of Darkness" /></label>
+          <label class="field full"><span>Author</span><input id="authorInput" required maxlength="80" placeholder="e.g. Ursula K. Le Guin" /></label>
+          <label class="field"><span>Shelf</span><select id="statusInput"><option value="reading">Currently reading</option><option value="want">Want to read</option><option value="finished">Finished</option></select></label>
+          <label class="field"><span>Genre</span><input id="genreInput" maxlength="30" placeholder="Fiction" /></label>
+          <label class="field"><span>Pages</span><input id="pagesInput" type="number" min="1" max="99999" value="300" required /></label>
+          <label class="field"><span>Current page</span><input id="currentInput" type="number" min="0" max="99999" value="0" required /></label>
+          <label class="field full"><span>Rating</span><select id="ratingInput"><option value="0">Not rated</option><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select></label>
+          <label class="field full"><span>Notes</span><textarea id="notesInput" rows="3" maxlength="280" placeholder="A thought, a favorite line, a reason to read…"></textarea></label>
+        </div>
+        <div class="dialog-actions">
+          <button class="button button-quiet danger" id="deleteButton" type="button" hidden>Delete</button>
+          <span class="action-spacer"></span>
+          <button class="button button-quiet" type="button" data-close>Cancel</button>
+          <button class="button button-primary" type="submit">Save book</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="goalDialog" class="small-dialog" aria-labelledby="goalDialogTitle">
+      <form id="goalForm" method="dialog">
+        <div class="dialog-head"><div><p class="eyebrow">MAKE IT YOURS</p><h2 id="goalDialogTitle">Reading goal</h2></div><button class="icon-button" type="button" data-close-goal aria-label="Close dialog">×</button></div>
+        <label class="field"><span>Books to finish in 2026</span><input id="goalInput" type="number" min="1" max="365" required /></label>
+        <div class="dialog-actions"><span class="action-spacer"></span><button class="button button-quiet" type="button" data-close-goal>Cancel</button><button class="button button-primary" type="submit">Set goal</button></div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

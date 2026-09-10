@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-gpt-5-6-sol-task-07-r1",
+  "phaseId": "phase-01",
+  "taskId": "task-07",
+  "taskVersion": 1,
+  "model": {
+    "id": "gpt-5-6-sol",
+    "name": "GPT-5.6 Sol",
+    "version": "gpt-5.6-sol",
+    "provider": "OpenAI",
+    "note": "model and effort are recorded by Codex turn_context; the provider-side snapshot beyond this reported model id is not independently confirmed"
+  },
+  "prompt": {
+    "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+    "sha256": "c94e36e8fc420f782485dd9733acf3097d07022391a77f3be0849b7992b0b7aa",
+    "version": 1,
+    "verbatimInputPath": "prompt.txt",
+    "localScaffoldPath": "test-workspace-2/phase-01/task-07-person-pushing-wheelbarrow/prompt.txt",
+    "followups": []
+  },
+  "environment": {
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "reportedModelId": "gpt-5.6-sol",
+    "surface": "cli",
+    "os": "macOS 26.6.2 (arm64)",
+    "runtime": "Node 24.19.0",
+    "sessionId": "01a08961-ba7c-7f03-aea6-d8ba9474aae2",
+    "sharedContext": false,
+    "continuationTurns": 0,
+    "sampling": {
+      "effort": "medium"
+    },
+    "startedAt": "2026-09-10T03:34:38.481Z",
+    "endedAt": "2026-09-10T03:37:55.623Z",
+    "timezone": "Asia/Shanghai"
+  },
+  "budget": {
+    "wallClockSeconds": null,
+    "inputTokens": null,
+    "outputTokens": null,
+    "toolCalls": null,
+    "retries": 0,
+    "followupTurns": 0,
+    "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+  },
+  "metrics": {
+    "durationSeconds": 189,
+    "durationBasis": "event_msg.task_complete.duration_ms",
+    "apiCalls": 12,
+    "toolCalls": 11,
+    "failures": 1,
+    "inputTokens": 359182,
+    "outputTokens": 4227,
+    "cacheReadTokens": 332544,
+    "totalTokens": 363409,
+    "note": "Codex final cumulative token_count; inputTokens includes cached input tokens, which are also reported separately as cacheReadTokens"
+  },
+  "cost": {
+    "amount": null,
+    "currency": null,
+    "scope": "task",
+    "source": null
+  },
+  "artifacts": {
+    "type": "svg",
+    "entry": "person-pushing-wheelbarrow.svg",
+    "files": [
+      "person-pushing-wheelbarrow.svg",
+      "person-pushing-wheelbarrow.svg.png"
+    ],
+    "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow/artifacts",
+    "fileSha256": {
+      "person-pushing-wheelbarrow.svg": "cb03ac554b6144d6290e79eb1df5f43e1e2509a6d6bd7e7c8b35644a2962aad3",
+      "person-pushing-wheelbarrow.svg.png": "00211d38fc2fc267686aa091e3c544cfccb16d94d020a33f8d08e75b3acc433a"
+    },
+    "cover": null,
+    "preview": {
+      "lazy": true,
+      "sandbox": "allow-scripts allow-downloads allow-forms",
+      "note": "SVG output; any accompanying PNG is preserved as original run output"
+    }
+  },
+  "source": {
+    "commit": null,
+    "path": null
+  },
+  "runRelation": {
+    "parentRunId": null,
+    "reason": null
+  },
+  "status": "completed",
+  "isolation": {
+    "level": "workspace-only",
+    "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-07-person-pushing-wheelbarrow/",
+    "readOnlyInputs": [
+      "prompt.txt"
+    ],
+    "mounts": [],
+    "network": "off (rule-level; not enforced at the network layer)",
+    "repositoryReachability": null,
+    "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+    "repositoryBlocking": null,
+    "sharedContext": false
+  },
+  "contamination": {
+    "status": "unknown",
+    "events": [
+      {
+        "type": "local-prompt-reread",
+        "status": "observed",
+        "callId": "call_gA1FXVLflCl5VZe2g44UlsAC",
+        "detail": "The tested session re-read the local prompt.txt after the organizer had already supplied the verbatim prompt. This stayed within the allowed task directory and exposed no external answer.",
+        "externalContentObtained": false
+      }
+    ],
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/audit-2026-09-10.md"
+    ],
+    "note": "Post-run audit found no external answer access. The session re-read its own local prompt after the verbatim prompt had already been supplied; this is retained as a procedural deviation and does not affect score entry or trigger an external cheating label.",
+    "scoringEffect": "none (recorded in audit archive only)",
+    "confirmedExternalAnswers": false
+  },
+  "testEvidence": {
+    "command": "node evidence/audit-codex-sessions.mjs <Codex sessions root> <phase workspace> <audit output>",
+    "cwd": "test-workspace-2/ (independent maintenance session)",
+    "environment": "macOS 26.6.2 arm64 / Node 24.19.0",
+    "date": "2026-09-10",
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/session-log.sha256.txt"
+    ],
+    "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment during archival; author-run checks remain part of the original session record only."
+  },
+  "reviews": []
+}

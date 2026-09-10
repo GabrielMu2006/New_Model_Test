@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Aevum No. 01 — a mechanical watch shaped by time, made to outlast it." />
+    <title>Aevum — Time, Made Tangible</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header" id="top">
+      <a class="wordmark" href="#top" aria-label="Aevum home">ÆVUM</a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#craft">The watch</a>
+        <a href="#movement">Craft</a>
+        <a href="#story">Our story</a>
+      </nav>
+      <a class="header-cta" href="#reserve">Reserve yours</a>
+      <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+      <div class="mobile-menu" aria-hidden="true">
+        <a href="#craft">The watch</a>
+        <a href="#movement">Craft</a>
+        <a href="#story">Our story</a>
+        <a href="#reserve">Reserve yours</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">The inaugural timepiece · No. 01</p>
+          <h1>Time,<br /><em>made tangible.</em></h1>
+          <p class="hero-intro">A study in permanence. Hand-finished in Switzerland, the Aevum No. 01 distills a century of watchmaking into one enduring form.</p>
+          <div class="hero-actions">
+            <a class="button button-dark" href="#reserve">Discover No. 01 <span>↗</span></a>
+            <button class="text-button sound-toggle" type="button"><span class="sound-icon">◌</span> Atmosphere</button>
+          </div>
+        </div>
+        <div class="hero-object" aria-label="Aevum No. 01 luxury wristwatch illustration">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <svg class="watch-hero" viewBox="0 0 480 780" role="img" aria-labelledby="watch-title watch-desc">
+            <title id="watch-title">Aevum No. 01 watch</title>
+            <desc id="watch-desc">A polished gold rectangular watch with an ivory dial and brown leather strap.</desc>
+            <defs>
+              <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#8f6b2e"/><stop offset=".23" stop-color="#f0dca2"/><stop offset=".48" stop-color="#b18945"/><stop offset=".74" stop-color="#f7e8b7"/><stop offset="1" stop-color="#785523"/>
+              </linearGradient>
+              <linearGradient id="leather" x1="0" x2="1">
+                <stop stop-color="#24130d"/><stop offset=".45" stop-color="#673c2b"/><stop offset=".62" stop-color="#7b4b35"/><stop offset="1" stop-color="#21110c"/>
+              </linearGradient>
+              <radialGradient id="dial"><stop stop-color="#fffdf3"/><stop offset=".78" stop-color="#eee6d2"/><stop offset="1" stop-color="#cfc1a2"/></radialGradient>
+              <filter id="shadow"><feDropShadow dx="0" dy="24" stdDeviation="22" flood-opacity=".32"/></filter>
+            </defs>
+            <g filter="url(#shadow)">
+              <path class="strap" d="M175 258 190 30Q240 5 290 30l15 228Z" fill="url(#leather)"/>
+              <path class="strap-detail" d="M197 247 208 49Q240 34 272 49l11 198"/>
+              <path class="strap" d="m174 521 18 232q48 27 96 0l18-232Z" fill="url(#leather)"/>
+              <path class="strap-detail" d="m197 533 12 201q31 15 62 0l12-201"/>
+              <rect x="156" y="224" width="168" height="332" rx="54" fill="url(#gold)"/>
+              <rect x="165" y="233" width="150" height="314" rx="47" fill="#5c421d" opacity=".65"/>
+              <rect class="case-inner" x="172" y="240" width="136" height="300" rx="42" fill="url(#dial)"/>
+              <path d="M324 370h17q8 0 8 8v28q0 8-8 8h-17Z" fill="url(#gold)"/>
+              <circle cx="240" cy="390" r="5.5" fill="#95723d"/>
+              <g class="indices" fill="#604c2c">
+                <rect x="237.5" y="270" width="5" height="18" rx="2"/><rect x="237.5" y="492" width="5" height="18" rx="2"/>
+                <rect x="286" y="387.5" width="13" height="5" rx="2"/><rect x="181" y="387.5" width="13" height="5" rx="2"/>
+                <circle cx="273" cy="307" r="3"/><circle cx="207" cy="307" r="3"/><circle cx="273" cy="473" r="3"/><circle cx="207" cy="473" r="3"/>
+              </g>
+              <g class="hands" stroke="#34271c" stroke-linecap="round">
+                <path d="M240 390 217 329" stroke-width="5"/><path d="M240 390 281 414" stroke-width="4"/>
+                <path class="second-hand" d="M240 405V303" stroke="#9e2f20" stroke-width="1.4"/>
+              </g>
+              <circle cx="240" cy="390" r="5" fill="url(#gold)"/>
+              <text x="240" y="345" text-anchor="middle" class="dial-logo">ÆVUM</text>
+              <text x="240" y="450" text-anchor="middle" class="dial-small">GENÈVE</text>
+            </g>
+          </svg>
+          <div class="edition-note"><span>01</span><small>of 150<br />pieces</small></div>
+        </div>
+        <div class="scroll-note"><span></span> Scroll to discover</div>
+      </section>
+
+      <section class="manifesto section-pad reveal" id="story">
+        <p class="section-index">01 — Philosophy</p>
+        <div>
+          <p class="large-quote">“We do not measure time.<br />We give it <em>form.</em>”</p>
+          <p class="manifesto-copy">Aevum is an independent maison founded on a simple conviction: objects of true worth should grow more personal with every passing year.</p>
+        </div>
+      </section>
+
+      <section class="craft" id="craft">
+        <div class="craft-visual reveal">
+          <div class="macro-dial">
+            <span class="roman r12">XII</span><span class="roman r3">III</span><span class="roman r6">VI</span><span class="roman r9">IX</span>
+            <div class="macro-brand">ÆVUM<small>GENÈVE</small></div>
+            <div class="macro-hand hand-a"></div><div class="macro-hand hand-b"></div><i></i>
+          </div>
+          <p>Dial, warm ivory<br />Grand feu enamel</p>
+        </div>
+        <div class="craft-copy reveal">
+          <p class="section-index">02 — The face</p>
+          <h2>Purity in<br />every <em>detail.</em></h2>
+          <p>Each dial passes through the enameller’s kiln up to twelve times. Minute variations in tone and texture make every example subtly, unmistakably unique.</p>
+          <div class="detail-list">
+            <div><span>01</span><p><strong>Grand feu enamel</strong><small>Fired by hand at 800°C</small></p></div>
+            <div><span>02</span><p><strong>Applied gold indices</strong><small>Polished on every visible face</small></p></div>
+            <div><span>03</span><p><strong>Leaf-shaped hands</strong><small>Heat-blued or solid rose gold</small></p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="movement section-pad" id="movement">
+        <div class="movement-heading reveal">
+          <p class="section-index light">03 — Within</p>
+          <h2>A quiet<br /><em>heartbeat.</em></h2>
+        </div>
+        <div class="movement-art reveal" aria-hidden="true">
+          <div class="gear gear-lg"><i></i></div><div class="gear gear-sm"><i></i></div><div class="bridge"></div>
+          <div class="jewel jewel-a"></div><div class="jewel jewel-b"></div>
+        </div>
+        <div class="movement-info reveal">
+          <p>Calibre AV-01 is a manually wound movement developed exclusively for Aevum. Its architecture is visible through the sapphire caseback — not decorated for display, but finished because craft should remain beautiful even where few will see it.</p>
+          <div class="stats">
+            <div><strong>72<small>hrs</small></strong><span>Power reserve</span></div>
+            <div><strong>3.4<small>mm</small></strong><span>Movement height</span></div>
+            <div><strong>21</strong><span>Jewels</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="configurator section-pad" id="reserve">
+        <div class="config-copy reveal">
+          <p class="section-index">04 — Your Aevum</p>
+          <h2>One form.<br /><em>Made yours.</em></h2>
+          <div class="selector-group">
+            <p>Case material <span id="material-name">18k Rose Gold</span></p>
+            <div class="swatches" role="group" aria-label="Choose case material">
+              <button class="swatch active rose" data-material="18k Rose Gold" aria-label="18k Rose Gold"></button>
+              <button class="swatch white" data-material="Platinum" aria-label="Platinum"></button>
+              <button class="swatch yellow" data-material="18k Yellow Gold" aria-label="18k Yellow Gold"></button>
+            </div>
+          </div>
+          <div class="price-line"><span>From</span><strong>CHF 28,500</strong></div>
+          <a class="button button-dark inquiry-button" href="mailto:concierge@aevum.example?subject=Aevum%20No.%2001%20Private%20Viewing">Request a private viewing <span>↗</span></a>
+          <p class="microcopy">Limited to 150 individually numbered pieces.</p>
+        </div>
+        <div class="config-watch reveal">
+          <div class="mini-strap top"></div>
+          <div class="mini-case"><div><b>ÆVUM</b><span></span><i></i><small>GENÈVE</small></div></div>
+          <div class="mini-strap bottom"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="footer-logo" href="#top">ÆVUM</a>
+      <p>Objects for a longer now.</p>
+      <div class="footer-links"><a href="#craft">The No. 01</a><a href="#story">Maison</a><a href="mailto:concierge@aevum.example">Concierge</a></div>
+      <div class="footer-bottom"><span>© 2026 Aevum Genève</span><span>Swiss made · Imagined for eternity</span></div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

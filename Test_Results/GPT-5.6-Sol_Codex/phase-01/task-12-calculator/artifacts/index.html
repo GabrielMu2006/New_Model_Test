@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#10100f" />
+    <title>Orbit — Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="brand">
+        <span class="brand-mark" aria-hidden="true">O</span>
+        <span>ORBIT / 01</span>
+        <span class="status"><i></i> ONLINE</span>
+      </header>
+
+      <section class="workspace" aria-label="Calculator application">
+        <aside class="intro">
+          <p class="eyebrow">A SMALL UTILITY</p>
+          <h1>Make numbers<br /><em>feel simple.</em></h1>
+          <p class="description">A focused calculator for everyday arithmetic. Keyboard-ready, precise, and pleasantly quiet.</p>
+          <div class="shortcuts" aria-label="Keyboard shortcuts">
+            <div><kbd>↵</kbd><span>Calculate</span></div>
+            <div><kbd>esc</kbd><span>Clear</span></div>
+            <div><kbd>⌫</kbd><span>Undo</span></div>
+          </div>
+        </aside>
+
+        <div class="calculator">
+          <div class="display" aria-live="polite" aria-atomic="true">
+            <div id="expression" class="expression">Ready</div>
+            <div id="result" class="result">0</div>
+          </div>
+
+          <div class="keys" aria-label="Calculator keypad">
+            <button class="key utility" data-action="clear">AC</button>
+            <button class="key utility" data-action="sign" aria-label="Toggle positive or negative">+/−</button>
+            <button class="key utility" data-action="percent">%</button>
+            <button class="key operator" data-value="÷" aria-label="Divide">÷</button>
+
+            <button class="key" data-value="7">7</button><button class="key" data-value="8">8</button><button class="key" data-value="9">9</button>
+            <button class="key operator" data-value="×" aria-label="Multiply">×</button>
+
+            <button class="key" data-value="4">4</button><button class="key" data-value="5">5</button><button class="key" data-value="6">6</button>
+            <button class="key operator" data-value="-" aria-label="Subtract">−</button>
+
+            <button class="key" data-value="1">1</button><button class="key" data-value="2">2</button><button class="key" data-value="3">3</button>
+            <button class="key operator" data-value="+" aria-label="Add">+</button>
+
+            <button class="key zero" data-value="0">0</button><button class="key" data-value=".">.</button>
+            <button class="key equals" data-action="equals" aria-label="Equals">=</button>
+          </div>
+        </div>
+
+        <aside class="history" aria-label="Calculation history">
+          <div class="history-heading">
+            <h2>RECENT</h2>
+            <button id="clear-history" type="button">CLEAR</button>
+          </div>
+          <div id="history-list"></div>
+        </aside>
+      </section>
+
+      <footer><span>LOCAL / PRIVATE</span><span>PRECISION TO 10 DECIMALS</span></footer>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

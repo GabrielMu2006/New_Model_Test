@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Morrow is a modern bank built for clarity, confidence, and steady growth." />
+    <meta name="theme-color" content="#0a2540" />
+    <title>Morrow — Bank with a clearer view</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="Morrow home">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 30V10h5l8 12 8-12h5v20h-6V20l-7 10-7-10v10H7Z" /></svg>
+        <span>Morrow</span>
+      </a>
+
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-button>
+        <span></span><span></span><span></span><span class="sr-only">Open menu</span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation" data-nav>
+        <a href="#personal">Personal</a>
+        <a href="#business">Business</a>
+        <a href="#wealth">Wealth</a>
+        <a href="#why-morrow">Why Morrow</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="text-button" type="button" data-toast="Secure sign in is ready for demo.">Sign in</button>
+        <a class="button button-dark button-small" href="#open-account">Open an account</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span></span> Banking, thoughtfully rebuilt</p>
+          <h1>Your money,<br /><em>in clearer focus.</em></h1>
+          <p class="hero-intro">Save, spend, and plan with a bank that keeps the fine print small and your ambitions big.</p>
+          <div class="hero-actions">
+            <a class="button button-coral" href="#open-account">Get started</a>
+            <a class="play-link" href="#why-morrow"><span aria-hidden="true">▶</span> See how Morrow works</a>
+          </div>
+          <div class="trust-line">
+            <div class="avatars" aria-hidden="true"><span>A</span><span>J</span><span>M</span></div>
+            <p><strong>4.9 out of 5</strong><br />from 18,000+ customers</p>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" aria-label="Morrow account overview preview">
+          <div class="sun-disc"></div>
+          <div class="account-card">
+            <div class="account-card-top">
+              <span>Available balance</span>
+              <button type="button" aria-label="More account options">•••</button>
+            </div>
+            <p class="balance">$24,680<span>.25</span></p>
+            <p class="balance-change">↗ $2,840 this month</p>
+            <div class="quick-actions">
+              <button type="button" data-toast="Transfer flow opened."><b>↑</b><span>Send</span></button>
+              <button type="button" data-toast="Deposit flow opened."><b>↓</b><span>Deposit</span></button>
+              <button type="button" data-toast="Card controls opened."><b>◇</b><span>Cards</span></button>
+              <button type="button" data-toast="Insights opened."><b>⌁</b><span>Insights</span></button>
+            </div>
+            <div class="activity-head"><strong>Recent activity</strong><button type="button">View all</button></div>
+            <div class="activity-row">
+              <span class="merchant-icon coffee">C</span>
+              <span><strong>Corner Coffee</strong><small>Today, 8:42 AM</small></span>
+              <strong>−$6.80</strong>
+            </div>
+            <div class="activity-row">
+              <span class="merchant-icon income">↙</span>
+              <span><strong>Acme Studio</strong><small>Direct deposit</small></span>
+              <strong class="positive">+$3,200.00</strong>
+            </div>
+          </div>
+          <div class="goal-card">
+            <span>Home fund</span>
+            <strong>$18,400</strong>
+            <div><i style="width: 68%"></i></div>
+            <small>68% of $27,000</small>
+          </div>
+          <p class="visual-note">Built to move<br />at your pace.</p>
+        </div>
+      </section>
+
+      <section class="proof-strip" aria-label="Morrow highlights">
+        <p>Member FDIC</p>
+        <p><strong>5.00%</strong><span>APY on savings¹</span></p>
+        <p><strong>$0</strong><span>Monthly fees</span></p>
+        <p><strong>24/7</strong><span>Human support</span></p>
+      </section>
+
+      <section class="products section" id="personal">
+        <div class="section-heading reveal">
+          <p class="eyebrow"><span></span> Everyday money</p>
+          <h2>One thoughtful home<br />for your finances.</h2>
+          <p>Simple tools that work together, so you spend less time managing money and more time using it well.</p>
+        </div>
+
+        <div class="product-tabs reveal" role="tablist" aria-label="Banking products">
+          <button role="tab" aria-selected="true" aria-controls="panel-spend" id="tab-spend" data-tab="spend">Spend</button>
+          <button role="tab" aria-selected="false" aria-controls="panel-save" id="tab-save" data-tab="save">Save</button>
+          <button role="tab" aria-selected="false" aria-controls="panel-borrow" id="tab-borrow" data-tab="borrow">Borrow</button>
+        </div>
+
+        <div class="product-panel" id="panel-spend" role="tabpanel" aria-labelledby="tab-spend" data-panel="spend">
+          <div class="product-copy reveal">
+            <span class="number">01</span>
+            <h3>Checking that stays out of your way.</h3>
+            <p>Get paid up to two days early, move money instantly, and pay with a beautifully simple card.</p>
+            <ul class="check-list"><li>No monthly maintenance fees</li><li>55,000+ fee-free ATMs</li><li>Real-time transaction alerts</li></ul>
+            <a href="#open-account" class="arrow-link">Explore Morrow Checking <span>↗</span></a>
+          </div>
+          <div class="card-stage reveal">
+            <div class="debit-card">
+              <div><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 30V10h5l8 12 8-12h5v20h-6V20l-7 10-7-10v10H7Z" /></svg><span>morrow</span></div>
+              <p>DEBIT</p><strong>•••• 2848</strong><small>RENE MORGAN</small>
+            </div>
+            <span class="contactless">)))</span>
+            <p>Tap. Pay. Done.</p>
+          </div>
+        </div>
+
+        <div class="product-panel" id="panel-save" role="tabpanel" aria-labelledby="tab-save" data-panel="save" hidden>
+          <div class="product-copy">
+            <span class="number">02</span>
+            <h3>Your savings should grow while you sleep.</h3>
+            <p>Set automatic rules, organize your goals, and earn a competitive rate on every dollar.</p>
+            <ul class="check-list"><li>5.00% annual percentage yield¹</li><li>No balance minimums</li><li>Unlimited savings goals</li></ul>
+            <a href="#calculator" class="arrow-link">Calculate your growth <span>↗</span></a>
+          </div>
+          <div class="mini-chart" aria-label="Illustrative savings growth chart">
+            <p>Your savings</p><strong>$14,281</strong><small>+$1,781 interest earned</small>
+            <svg viewBox="0 0 500 190" role="img"><path d="M8 175C66 167 86 135 133 143s67-28 113-20 71-42 116-35 84-50 130-70" fill="none" stroke="currentColor" stroke-width="4"/><path d="M8 175C66 167 86 135 133 143s67-28 113-20 71-42 116-35 84-50 130-70V190H8Z" fill="currentColor" opacity=".08"/></svg>
+          </div>
+        </div>
+
+        <div class="product-panel" id="panel-borrow" role="tabpanel" aria-labelledby="tab-borrow" data-panel="borrow" hidden>
+          <div class="product-copy">
+            <span class="number">03</span>
+            <h3>Credit that rewards good habits.</h3>
+            <p>Build credit with clear terms, flexible payments, and rewards that match the way you live.</p>
+            <ul class="check-list"><li>No annual fee</li><li>Up to 3× points</li><li>Smart payment reminders</li></ul>
+            <a href="#open-account" class="arrow-link">Meet the Morrow card <span>↗</span></a>
+          </div>
+          <div class="credit-score">
+            <span>Credit score</span><strong>782</strong><div class="score-ring"><i></i></div><p>Excellent</p><small>Up 12 points this month</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="security section" id="why-morrow">
+        <div class="security-visual reveal">
+          <div class="shield-mark"><span>✓</span></div>
+          <div class="security-status"><i></i><span><strong>All clear</strong><small>Your accounts are protected</small></span></div>
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        </div>
+        <div class="security-copy reveal">
+          <p class="eyebrow light"><span></span> Serious security</p>
+          <h2>Protection that never clocks out.</h2>
+          <p>From biometric sign-in to real-time fraud monitoring, security is woven into every part of Morrow.</p>
+          <div class="security-grid">
+            <div><span>01</span><strong>Instant card lock</strong><p>Freeze and unfreeze your card in a single tap.</p></div>
+            <div><span>02</span><strong>FDIC insured</strong><p>Eligible deposits are insured up to the legal limit.</p></div>
+            <div><span>03</span><strong>Human alerts</strong><p>Smart monitoring backed by a real fraud team.</p></div>
+            <div><span>04</span><strong>Your data, yours</strong><p>Clear privacy controls. No selling personal data.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="calculator section" id="calculator">
+        <div class="calculator-copy reveal">
+          <p class="eyebrow"><span></span> See what’s possible</p>
+          <h2>Small moves add up.</h2>
+          <p>See how steady monthly deposits could grow with Morrow’s current savings rate.</p>
+          <div class="calc-control">
+            <label for="deposit">Starting deposit <output id="deposit-output">$5,000</output></label>
+            <input id="deposit" type="range" min="500" max="25000" step="500" value="5000" />
+          </div>
+          <div class="calc-control">
+            <label for="monthly">Monthly contribution <output id="monthly-output">$300</output></label>
+            <input id="monthly" type="range" min="0" max="2000" step="50" value="300" />
+          </div>
+        </div>
+        <div class="calculator-result reveal" aria-live="polite">
+          <span>After 5 years, you could have</span>
+          <strong id="future-value">$27,050</strong>
+          <p><i></i><span><b id="interest-earned">$4,050</b> earned in interest</span></p>
+          <small>Illustrative estimate based on a 5.00% APY, compounded monthly. Rates may change.</small>
+        </div>
+      </section>
+
+      <section class="story section" id="business">
+        <div class="story-quote reveal">
+          <span class="quote-mark">“</span>
+          <blockquote>Morrow gives me the confidence to focus on my work, not my banking.</blockquote>
+          <p><strong>Priya Shah</strong><br />Founder, Field Notes Studio</p>
+        </div>
+        <div class="story-visual reveal" role="img" aria-label="Abstract portrait of a Morrow business customer"><span></span><i></i><b></b></div>
+      </section>
+
+      <section class="faq section" id="wealth">
+        <div class="section-heading compact reveal"><p class="eyebrow"><span></span> Good questions</p><h2>Straight answers.</h2></div>
+        <div class="faq-list reveal">
+          <details><summary>Is Morrow a real bank?<span>+</span></summary><p>Morrow is a fictional banking concept created for this demo. In a real deployment, charter, partner-bank, and FDIC disclosures would appear here.</p></details>
+          <details><summary>Are there monthly account fees?<span>+</span></summary><p>The products shown in this concept have no monthly maintenance fees or minimum balance requirements.</p></details>
+          <details><summary>How quickly can I open an account?<span>+</span></summary><p>A typical digital application takes a few minutes. You would need a government-issued ID and basic personal information.</p></details>
+          <details><summary>How is my money protected?<span>+</span></summary><p>Real-time alerts, multi-factor authentication, encryption, and FDIC deposit insurance would work together to protect eligible accounts.</p></details>
+        </div>
+      </section>
+
+      <section class="final-cta" id="open-account">
+        <p class="eyebrow light"><span></span> Your next chapter</p>
+        <h2>Money feels better<br />when it makes sense.</h2>
+        <p>Open an account in minutes. No branch visit. No monthly fees.</p>
+        <button class="button button-coral" type="button" data-toast="Application started — welcome to Morrow.">Open your account</button>
+        <span class="cta-orbit one"></span><span class="cta-orbit two"></span>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-brand"><a class="brand brand-light" href="#top"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 30V10h5l8 12 8-12h5v20h-6V20l-7 10-7-10v10H7Z" /></svg><span>Morrow</span></a><p>A clearer kind of bank.</p></div>
+      <div class="footer-links"><div><strong>Products</strong><a href="#personal">Checking</a><a href="#personal">Savings</a><a href="#personal">Credit card</a></div><div><strong>Company</strong><a href="#why-morrow">About</a><a href="#business">Business</a><a href="#wealth">Learn</a></div><div><strong>Support</strong><a href="#wealth">Help center</a><a href="#why-morrow">Security</a><a href="mailto:hello@example.com">Contact</a></div></div>
+      <div class="footer-bottom"><p>© 2026 Morrow Financial, Inc. Concept website.</p><div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Accessibility</a></div><p>¹ Annual Percentage Yield is illustrative and may change.</p></div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite" data-toast-box></div>
+  </body>
+</html>

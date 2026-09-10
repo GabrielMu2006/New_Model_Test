@@ -1,0 +1,87 @@
+{
+  "runId": "run-gpt-5-6-sol-task-10-r1",
+  "taskName": "task-10-pixel-art-editor",
+  "sessionId": "01a08984-3a94-7410-943d-5f1939fbafe3",
+  "logPath": "~/.codex/sessions/2026/09/10/rollout-2026-09-10T12-12-19-01a08984-3a94-7410-943d-5f1939fbafe3.jsonl",
+  "logSha256": "e0208f074acf8172345fc79085f17cd510d99e23922c2bd396ccf8a10b5e20ec",
+  "logFormat": "Codex JSONL",
+  "bytes": 210343,
+  "frames": null,
+  "records": 60,
+  "promptSha256": "b2c5639f49d534c5675cac5d3bc8e7d3db2d838b9de1bb4ed51d82c4c304bfaf",
+  "promptMessageMatches": 1,
+  "environment": {
+    "model": "gpt-5.6-sol",
+    "effort": "medium",
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "source": "cli",
+    "modelProvider": "openai",
+    "approvalPolicy": "on-request",
+    "sandboxPolicy": "workspace-write"
+  },
+  "startedAt": "2026-09-10T04:12:19.499Z",
+  "endedAt": "2026-09-10T04:18:34.105Z",
+  "durationSeconds": 374,
+  "durationBasis": "event_msg.task_complete.duration_ms",
+  "apiCalls": 7,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "toolCounts": {
+    "exec_command": 4,
+    "apply_patch": 2
+  },
+  "recordedCommands": [
+    {
+      "callId": "call_ozHlReQ5wQdTEXgIdtrCF5Aq",
+      "command": "pwd && rg --files -g '!AGENTS.md' -g '!prompt.txt' . || true"
+    },
+    {
+      "callId": "call_H2a8Ohr5mX9yG5UIjOSz7QFn",
+      "command": "node --check app.js"
+    },
+    {
+      "callId": "call_7sVBRIrmWp35G5kpRfQIJeam",
+      "command": "rg -n \"styles.css|app.js|editorCanvas|previewCanvas|exportButton\" index.html app.js && wc -l index.html styles.css app.js README.md"
+    },
+    {
+      "callId": "call_vWGqCtn5RrDzg5XQkqpk9YxI",
+      "command": "node --check app.js && node -e 'const fs=require(\"fs\"); const js=fs.readFileSync(\"app.js\",\"utf8\"); const html=fs.readFileSync(\"index.html\",\"utf8\"); const ids=[...js.matchAll(/(?:byId|getElementById)\\([\"'\\''`]([^\"'\\''`]+)[\"'\\''`]\\)/g)].map(m=>m[1]); const missing=[...new Set(ids)].filter(id=>!new RegExp(`id=[\"'\\'']${id}[\"'\\'']`).test(html)); if(missing.length){console.error(\"Missing DOM ids:\", missing);process.exit(1)} console.log(`Syntax OK; ${new Set(ids).size} referenced DOM IDs found.`)'"
+    }
+  ],
+  "tokenUsage": {
+    "inputTokens": 209751,
+    "outputTokens": 10807,
+    "cacheReadTokens": 157952,
+    "totalTokens": 220558,
+    "reasoningOutputTokens": 1400
+  },
+  "checkedDimensions": [
+    "policy",
+    "tools",
+    "paths",
+    "commands",
+    "repositories",
+    "network",
+    "reads",
+    "writes",
+    "delegation",
+    "reasoning",
+    "siblingWorkspaces"
+  ],
+  "findings": [],
+  "verdict": "no-violation-observed",
+  "limitations": [
+    "Codex JSONL stores reasoning as encrypted_content; reasoning text could not be inspected.",
+    "Training-data exposure cannot be audited.",
+    "Harness-unlogged channels, external tools, connectors, and caches cannot be ruled out.",
+    "The test used policy-level workspace-only restrictions, not enforced read or network isolation.",
+    "No environment reachability probe was run; repository and network conclusions are based on recorded tool calls and results only."
+  ],
+  "auditedAt": "2026-09-10T05:18:35.047Z",
+  "auditor": "Codex maintenance session (independent from the 15 tested sessions)",
+  "auditScript": {
+    "path": "evidence/audit-codex-sessions.mjs",
+    "sha256": "281392c2357db705a06b01ba9a2018498fa86083fef9ba3d21d5446c6a2311ef"
+  }
+}

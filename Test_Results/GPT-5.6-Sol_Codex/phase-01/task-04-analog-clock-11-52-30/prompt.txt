@@ -1,0 +1,1 @@
+Create an SVG analog clock showing 11:52:30.

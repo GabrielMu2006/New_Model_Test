@@ -1,0 +1,79 @@
+{
+  "runId": "run-gpt-5-6-sol-task-06-r1",
+  "taskName": "task-06-hand-cutting-paper",
+  "sessionId": "01a0895d-31f9-74f0-8492-1de525a39f50",
+  "logPath": "~/.codex/sessions/2026/09/10/rollout-2026-09-10T11-29-41-01a0895d-31f9-74f0-8492-1de525a39f50.jsonl",
+  "logSha256": "52e3017f2ad80ca993cdabdbccfa750d17c2d05d46b94cfd6852ed577cd710b7",
+  "logFormat": "Codex JSONL",
+  "bytes": 167353,
+  "frames": null,
+  "records": 38,
+  "promptSha256": "ea28c2b4a04b6d033ab2068b79dfb64aa7d95fc0785c7f78a6a28950af9bee25",
+  "promptMessageMatches": 1,
+  "environment": {
+    "model": "gpt-5.6-sol",
+    "effort": "medium",
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "source": "cli",
+    "modelProvider": "openai",
+    "approvalPolicy": "on-request",
+    "sandboxPolicy": "workspace-write"
+  },
+  "startedAt": "2026-09-10T03:29:41.406Z",
+  "endedAt": "2026-09-10T03:32:05.213Z",
+  "durationSeconds": 142,
+  "durationBasis": "event_msg.task_complete.duration_ms",
+  "apiCalls": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "toolCounts": {
+    "exec_command": 2,
+    "apply_patch": 1
+  },
+  "recordedCommands": [
+    {
+      "callId": "call_R0ZTfzVPesZ5wRrkLhXGuR5L",
+      "command": "rg --files -g '!prompt.txt' -g '!AGENTS.md'"
+    },
+    {
+      "callId": "call_fB1gzCLsl7FERflRPmr1TxF0",
+      "command": "xmllint --noout hand-cutting-paper.svg && wc -c hand-cutting-paper.svg"
+    }
+  ],
+  "tokenUsage": {
+    "inputTokens": 110965,
+    "outputTokens": 3879,
+    "cacheReadTokens": 88064,
+    "totalTokens": 114844,
+    "reasoningOutputTokens": 448
+  },
+  "checkedDimensions": [
+    "policy",
+    "tools",
+    "paths",
+    "commands",
+    "repositories",
+    "network",
+    "reads",
+    "writes",
+    "delegation",
+    "reasoning",
+    "siblingWorkspaces"
+  ],
+  "findings": [],
+  "verdict": "no-violation-observed",
+  "limitations": [
+    "Codex JSONL stores reasoning as encrypted_content; reasoning text could not be inspected.",
+    "Training-data exposure cannot be audited.",
+    "Harness-unlogged channels, external tools, connectors, and caches cannot be ruled out.",
+    "The test used policy-level workspace-only restrictions, not enforced read or network isolation.",
+    "No environment reachability probe was run; repository and network conclusions are based on recorded tool calls and results only."
+  ],
+  "auditedAt": "2026-09-10T05:18:35.040Z",
+  "auditor": "Codex maintenance session (independent from the 15 tested sessions)",
+  "auditScript": {
+    "path": "evidence/audit-codex-sessions.mjs",
+    "sha256": "281392c2357db705a06b01ba9a2018498fa86083fef9ba3d21d5446c6a2311ef"
+  }
+}

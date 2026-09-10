@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Turnip & Thyme</title>
+<style>
+  :root{--ink:#25352c;--cream:#fff5d6;--brown:#5b3728;--gold:#f4c84a;--green:#4f8b43}
+  *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#172a23;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif}
+  body{display:grid;place-items:center;background:radial-gradient(circle at 50% 20%,#355c44,#172a23 75%)}
+  #wrap{position:relative;width:min(100vw,1180px);height:min(100vh,760px);overflow:hidden;background:#8cc267;box-shadow:0 24px 80px #0b1715;border:1px solid #4f6c50}
+  canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;touch-action:none}
+  #top{position:absolute;left:14px;right:14px;top:14px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;gap:10px}
+  .card{background:#fff5d6e8;border:3px solid #5b3728;border-radius:12px;box-shadow:0 5px 0 #3c261d,0 8px 18px #24432155;padding:8px 12px;backdrop-filter:blur(4px)}
+  #brand{font-weight:1000;letter-spacing:.08em;color:#3a5c33;text-shadow:0 2px #fff;font-size:clamp(15px,2.3vw,25px)}
+  #brand small{display:block;font-size:9px;letter-spacing:.24em;color:#916035;margin-top:2px}
+  #stats{display:flex;gap:13px;align-items:center;font-weight:900;font-size:14px;white-space:nowrap}.stat{display:flex;align-items:center;gap:5px}.ico{font-size:18px}
+  #quest{position:absolute;right:14px;top:77px;width:min(235px,41vw);pointer-events:none;font-size:12px;line-height:1.35}.quest-title{font-size:10px;color:#88603d;text-transform:uppercase;font-weight:1000;letter-spacing:.15em}.quest-main{font-weight:900;margin-top:3px}.bar{height:7px;border:1px solid #5b3728;background:#d9cda8;border-radius:5px;overflow:hidden;margin-top:5px}.bar i{display:block;height:100%;background:#78a940;width:0;transition:.3s}
+  #toolbar{position:absolute;left:50%;bottom:15px;transform:translateX(-50%);display:flex;gap:7px;padding:8px;background:#493127e8;border:3px solid #251a16;border-radius:15px;box-shadow:0 5px 0 #130e0c,0 10px 22px #17271c77}
+  .slot{position:relative;width:64px;height:58px;border:0;border-radius:9px;background:#f7e6b2;border:3px solid #a77949;color:#3b2a20;cursor:pointer;font:800 10px inherit;padding-top:31px;box-shadow:inset 0 -5px #dcc28c;transition:.12s}
+  .slot:hover{transform:translateY(-2px)}.slot.active{outline:4px solid #f5d349;transform:translateY(-5px);background:#fff7d7}.slot .art{position:absolute;top:3px;left:0;right:0;font-size:25px;line-height:28px}.slot .key{position:absolute;top:-7px;left:-6px;width:18px;height:18px;border-radius:50%;background:#593d2f;color:white;font-size:10px;display:grid;place-items:center}.slot .count{position:absolute;right:3px;top:2px;background:#466e3b;color:white;border-radius:8px;padding:1px 5px;font-size:9px}
+  #toast{position:absolute;left:50%;top:102px;transform:translate(-50%,-12px);opacity:0;background:#2a443bea;color:#fff8da;border:2px solid #f2d895;border-radius:10px;padding:8px 14px;font-weight:900;font-size:13px;pointer-events:none;transition:.25s;white-space:nowrap}#toast.show{opacity:1;transform:translate(-50%,0)}
+  #prompt{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);background:#fff5dcee;border:2px solid #604331;border-radius:9px;padding:6px 10px;font-size:12px;font-weight:900;pointer-events:none;opacity:0;transition:.2s}#prompt.show{opacity:1}
+  #modal{position:absolute;inset:0;display:none;place-items:center;background:#17251aaa;backdrop-filter:blur(3px);padding:18px}#modal.open{display:grid}.panel{width:min(570px,100%);max-height:86vh;overflow:auto;background:#fff2c9;border:5px solid #5c3e2e;border-radius:18px;box-shadow:0 10px 0 #2f211a,0 22px 60px #0008;padding:20px}.panel h2{margin:0;color:#47733d;font-size:27px}.panel p{margin:5px 0 15px;color:#6e5641}.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.buy{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:9px;text-align:left;padding:10px;border:2px solid #a5774b;background:#fff9dd;border-radius:10px;color:#34281f;cursor:pointer;font:inherit}.buy:hover{background:white;transform:translateY(-1px)}.buy .emoji{font-size:29px}.buy strong{display:block}.buy small{color:#7b6651}.price{font-weight:1000;color:#8b5d17}.panel footer{display:flex;justify-content:space-between;align-items:center;margin-top:17px;font-size:12px}.close{border:0;background:#547c45;color:white;border-radius:8px;padding:9px 16px;font-weight:900;cursor:pointer}
+  #start{position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:linear-gradient(#b7dd7d,#7eb659 50%,#5b9c4f);padding:20px}.startbox{text-align:center;width:min(560px,100%);background:#fff3cbe8;border:5px solid #5d3b29;border-radius:22px;padding:22px;box-shadow:0 9px 0 #34251c,0 20px 70px #24462eaa}.logo{font-size:clamp(36px,8vw,64px);line-height:.9;color:#46733d;font-weight:1000;letter-spacing:-.05em;text-shadow:0 4px #f8d569}.logo span{color:#a96935}.startbox p{font-weight:700;color:#6a503c}.startbox .help{font-size:13px;background:#f7dfaa;border-radius:10px;padding:10px;margin:14px 0}.play{border:3px solid #365a32;background:#6e9e4d;color:white;border-radius:12px;padding:11px 34px;font:1000 17px inherit;box-shadow:0 5px #365a32;cursor:pointer}.play:active{transform:translateY(4px);box-shadow:0 1px #365a32}
+  #mobile{display:none;position:absolute;left:12px;bottom:95px;width:118px;height:118px}.dpad{position:absolute;border:0;width:39px;height:39px;background:#fff3d2c9;color:#543c2c;border:2px solid #76523a;font-size:18px;border-radius:9px}.up{left:39px}.down{left:39px;top:78px}.left{top:39px}.right{left:78px;top:39px}#act{position:absolute;right:14px;bottom:104px;width:60px;height:60px;border-radius:50%;border:3px solid #5c392d;background:#efca55;color:#533625;font-weight:1000;display:none;box-shadow:0 4px #5c392d}
+  @media(max-width:680px),(pointer:coarse){#wrap{width:100vw;height:100vh;border:0}#brand small{display:none}#stats{gap:7px;font-size:11px}.card{padding:6px 8px;border-width:2px}#quest{top:65px}.slot{width:49px;height:52px}.slot:nth-child(n+6){display:none}#toolbar{gap:4px;padding:6px;bottom:12px}#mobile,#act{display:block}.shop-grid{grid-template-columns:1fr}.panel{padding:15px}}
+</style>
+</head>
+<body>
+<main id="wrap" aria-label="Turnip and Thyme farming game">
+  <canvas id="game"></canvas>
+  <div id="top"><div id="brand" class="card">TURNIP <span>&amp;</span> THYME<small>A POCKET FARM</small></div><div id="stats" class="card"><span class="stat"><b class="ico">☀️</b><span id="day">Day 1</span></span><span class="stat">🕒 <span id="clock">7:00</span></span><span class="stat">🪙 <span id="coins">25</span></span></div></div>
+  <div id="quest" class="card"><div class="quest-title">Today's request</div><div id="questText" class="quest-main">Harvest 3 turnips</div><div class="bar"><i id="questBar"></i></div></div>
+  <div id="toast"></div><div id="prompt"></div>
+  <div id="toolbar" aria-label="Tool belt"></div>
+  <div id="mobile"><button class="dpad up" data-dir="up">▲</button><button class="dpad left" data-dir="left">◀</button><button class="dpad right" data-dir="right">▶</button><button class="dpad down" data-dir="down">▼</button></div><button id="act">USE</button>
+  <div id="modal"><section class="panel"><h2>Marigold Market</h2><p>Seeds today, supper tomorrow. Harvests are sold automatically.</p><div id="shop" class="shop-grid"></div><footer><span id="shopCoins"></span><button class="close">Back to farm</button></footer></section></div>
+  <section id="start"><div class="startbox"><div class="logo">TURNIP <span>&amp;</span><br>THYME</div><p>Bring an old garden back to life, one tiny sprout at a time.</p><div class="help"><b>Move</b> WASD / arrows &nbsp; • &nbsp; <b>Use tool</b> Space / E &nbsp; • &nbsp; <b>Select</b> 1–7<br>Stand by the pond to refill. Visit the striped market stall to buy seeds.</div><button class="play">Begin the day</button></div></section>
+</main>
+<script>
+(() => {
+'use strict';
+const C=document.querySelector('#game'),ctx=C.getContext('2d'),wrap=document.querySelector('#wrap');
+const TILE=48, COLS=20, ROWS=13;
+let scale=1, ox=0, oy=0, last=0, acc=0, toastTimer=0, started=false, modal=false;
+const tools=[
+ {id:'hoe',name:'Hoe',icon:'⛏️'}, {id:'water',name:'Water',icon:'💧'},
+ {id:'turnip',name:'Turnip',icon:'🌱'}, {id:'carrot',name:'Carrot',icon:'🥕'},
+ {id:'corn',name:'Corn',icon:'🌽'}, {id:'basket',name:'Harvest',icon:'🧺'}, {id:'rest',name:'Next day',icon:'🌙'}
+];
+const cropInfo={turnip:{days:1,value:9,color:'#eee9cf',leaf:'#4f953e'},carrot:{days:2,value:15,color:'#ed8b2d',leaf:'#4c923e'},corn:{days:3,value:28,color:'#f1c63f',leaf:'#4d8f38'}};
+const base={day:1,time:7*60,coins:25,water:8,maxWater:8,selected:0,seeds:{turnip:5,carrot:2,corn:0},plots:{},harvested:{turnip:0,carrot:0,corn:0},quest:{crop:'turnip',need:3,start:0,claimed:false},px:7.5,py:9.5,face:'up',weather:'sun'};
+let S=load();
+const keys={};
+function load(){try{const x=JSON.parse(localStorage.getItem('turnipThyme'));return {...base,...x,seeds:{...base.seeds,...x.seeds},harvested:{...base.harvested,...x.harvested},quest:{...base.quest,...x.quest}}}catch(e){return structuredClone(base)}}
+function save(){localStorage.setItem('turnipThyme',JSON.stringify(S))}
+function resize(){let d=Math.min(devicePixelRatio||1,2),w=wrap.clientWidth,h=wrap.clientHeight;C.width=w*d;C.height=h*d;scale=Math.min(w/(COLS*TILE),h/(ROWS*TILE));ox=(w-COLS*TILE*scale)/2;oy=(h-ROWS*TILE*scale)/2;ctx.setTransform(d,0,0,d,0,0)}
+addEventListener('resize',resize);resize();
+const blocked=(x,y)=> x<.35||y<.35||x>19.65||y>12.65||(x>15.1&&y>1.2&&y<4.8)||(x>1&&x<5.8&&y>1&&y<3.9)||(x>16.1&&y>8.4);
+function update(dt){if(!started||modal)return;let dx=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),dy=(keys.ArrowDown||keys.s?1:0)-(keys.ArrowUp||keys.w?1:0);if(dx||dy){let l=Math.hypot(dx,dy),sp=3.2*dt,nx=S.px+dx/l*sp,ny=S.py+dy/l*sp;if(!blocked(nx,S.py))S.px=nx;if(!blocked(S.px,ny))S.py=ny;S.face=Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up')}S.time+=dt*2.5;if(S.time>=22*60)nextDay();updateUI()}
+function plotKey(x,y){return x+','+y}function isField(x,y){return x>=6&&x<=14&&y>=5&&y<=11}
+function target(){let x=S.px,y=S.py;if(S.face==='up')y-=.85;if(S.face==='down')y+=.85;if(S.face==='left')x-=.85;if(S.face==='right')x+=.85;return [Math.floor(x),Math.floor(y)]}
+function useTool(){if(!started||modal)return;let [x,y]=target(),tool=tools[S.selected].id,k=plotKey(x,y),p=S.plots[k];
+ if(tool==='rest'){nextDay();return}
+ if(!isField(x,y)){nearby();return}
+ if(tool==='hoe'){if(!p){S.plots[k]={tilled:true,watered:false,crop:null,age:0};tone(150);pop('Fresh soil!')}else if(!p.crop){delete S.plots[k];tone(100);pop('Soil cleared')}else pop('Something is growing here')}
+ else if(tool==='water'){if(S.water<=0){pop('Watering can is empty — visit the pond');return}if(p&&p.tilled&&!p.watered){p.watered=true;S.water--;tone(330);pop('Watered')}else pop(p?.watered?'Already watered':'Till the soil first')}
+ else if(cropInfo[tool]){if(!p||!p.tilled){pop('Till the soil first');return}if(p.crop){pop('This plot is occupied');return}if((S.seeds[tool]||0)<1){pop('No seeds — visit Marigold Market');return}p.crop=tool;p.age=0;S.seeds[tool]--;tone(440);pop(tool[0].toUpperCase()+tool.slice(1)+' planted')}
+ else if(tool==='basket'){if(p?.crop&&p.age>=cropInfo[p.crop].days){let c=p.crop,val=cropInfo[c].value;S.coins+=val;S.harvested[c]++;S.plots[k]={tilled:true,watered:false,crop:null,age:0};tone(660);setTimeout(()=>tone(880),80);pop('Harvest sold  +'+val+' coins')}else pop(p?.crop?'Not ready yet':'Nothing to harvest')}
+ save();updateUI()}
+function nearby(){if(S.px<6&&S.py<5){S.water=S.maxWater;tone(350);pop('Watering can refilled')}else if(S.px>14.5&&S.py<6){openShop()}else pop('Move closer to a field plot')}
+function nextDay(){let watered=0;Object.values(S.plots).forEach(p=>{if(p.crop&&p.watered){p.age++;watered++}p.watered=false});S.day++;S.time=7*60;S.water=S.maxWater;S.weather=Math.random()<.28?'rain':'sun';if(S.weather==='rain')Object.values(S.plots).forEach(p=>p.watered=true);S.px=7.5;S.py=9.5;S.face='up';tone(520);pop('Day '+S.day+(S.weather==='rain'?' — gentle rain waters every plot!':' begins — '+watered+' crops grew'));save()}
+function updateQuest(){let q=S.quest,n=S.harvested[q.crop]-q.start;if(n>=q.need&&!q.claimed){q.claimed=true;S.coins+=25;tone(900);pop('Request complete!  +25 coins');save();setTimeout(()=>{let crops=['turnip','carrot','corn'],crop=crops[(S.day+q.need)%3];S.quest={crop,need:crop==='corn'?2:3,start:S.harvested[crop],claimed:false};updateUI()},1800)}let cur=Math.min(q.need,S.harvested[q.crop]-q.start);document.querySelector('#questText').textContent=(q.claimed?'Complete! ':`Harvest ${q.need} ${q.crop}${q.need>1?'s':''}`)+`  ${cur}/${q.need}`;document.querySelector('#questBar').style.width=(cur/q.need*100)+'%'}
+function updateUI(){document.querySelector('#day').textContent='Day '+S.day+(S.weather==='rain'?' 🌧️':'');let h=Math.floor(S.time/60),m=Math.floor(S.time%60/10)*10;document.querySelector('#clock').textContent=h+':'+String(m).padStart(2,'0');document.querySelector('#coins').textContent=S.coins;updateQuest();renderToolbar();let near=S.px<6&&S.py<5?'Use any tool to refill water':S.px>14.5&&S.py<6?'Use any tool to visit market':'';let el=document.querySelector('#prompt');el.textContent=near;el.classList.toggle('show',!!near)}
+function renderToolbar(){let bar=document.querySelector('#toolbar');bar.innerHTML=tools.map((t,i)=>`<button class="slot ${i===S.selected?'active':''}" data-i="${i}" aria-label="${t.name}"><span class="key">${i+1}</span><span class="art">${t.icon}</span>${t.name}${t.id==='water'?`<span class="count">${S.water}/${S.maxWater}</span>`:cropInfo[t.id]?`<span class="count">${S.seeds[t.id]||0}</span>`:''}</button>`).join('')}
+function pop(msg){let t=document.querySelector('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1800)}
+function openShop(){modal=true;document.querySelector('#modal').classList.add('open');let offers=[['turnip','Turnip seeds',3],['carrot','Carrot seeds',5],['corn','Corn seeds',8],['upgrade','Bigger can',35]];document.querySelector('#shop').innerHTML=offers.map(([id,n,p])=>`<button class="buy" data-buy="${id}" data-price="${p}"><span class="emoji">${id==='upgrade'?'🪣':id==='turnip'?'🌱':id==='carrot'?'🥕':'🌽'}</span><span><strong>${n}</strong><small>${id==='upgrade'?'+4 water capacity':'Pack of 3'}</small></span><span class="price">🪙 ${p}</span></button>`).join('');document.querySelector('#shopCoins').textContent='Your purse: '+S.coins+' coins'}
+function closeShop(){modal=false;document.querySelector('#modal').classList.remove('open');save()}
+function buy(id,price){if(S.coins<price){pop('Not enough coins');return}if(id==='upgrade'){if(S.maxWater>=20){pop('Your can is already the best!');return}S.maxWater+=4;S.water=S.maxWater}else S.seeds[id]=(S.seeds[id]||0)+3;S.coins-=price;tone(700);document.querySelector('#shopCoins').textContent='Your purse: '+S.coins+' coins';updateUI();save()}
+function tone(freq){try{let A=window._audio||(window._audio=new AudioContext()),o=A.createOscillator(),g=A.createGain();o.type='square';o.frequency.value=freq;g.gain.setValueAtTime(.025,A.currentTime);g.gain.exponentialRampToValueAtTime(.001,A.currentTime+.09);o.connect(g).connect(A.destination);o.start();o.stop(A.currentTime+.1)}catch(e){}}
+function pxRect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(ox+x*TILE*scale),Math.round(oy+y*TILE*scale),Math.ceil(w*TILE*scale),Math.ceil(h*TILE*scale))}
+function tile(x,y,c){pxRect(x,y,1,1,c)}
+function draw(){ctx.clearRect(0,0,C.clientWidth,C.clientHeight);ctx.save();ctx.translate(ox,oy);ctx.scale(scale,scale);ctx.translate(-ox/scale,-oy/scale);ctx.restore();
+ // grass checker and paths
+ for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++){tile(x,y,(x+y)%2?'#80b85b':'#85bd60');if((x*13+y*7)%17===0){pxRect(x+.18,y+.2,.08,.18,'#609b4d');pxRect(x+.28,y+.26,.07,.12,'#6aa451')}}
+ for(let x=0;x<COLS;x++){tile(x,4,(x%2?'#d7be78':'#d2b672'));}for(let y=4;y<ROWS;y++){tile(15,y,(y%2?'#d7be78':'#d2b672'))}
+ // pond
+ for(let y=1;y<4;y++)for(let x=1;x<6;x++){let edge=x===1||x===5||y===1||y===3;tile(x,y,edge?'#75a85b':'#4da6b3');if(!edge&&((x+y)%2))pxRect(x+.15,y+.35,.45,.08,'#79cad0')}pxRect(2.2,2.15,.38,.18,'#6f9e47');pxRect(4.25,2.7,.34,.14,'#6f9e47');
+ // house
+ pxRect(1.4,8.1,3.5,3.5,'#af7047');pxRect(1.1,8,4.1,.65,'#633b32');pxRect(1.5,7.4,3.3,.7,'#8d4e3c');pxRect(2.65,9.6,1,2,'#553a2c');pxRect(1.75,9,.65,.65,'#85cbd0');pxRect(3.9,9,.65,.65,'#85cbd0');pxRect(1.4,11.55,3.5,.12,'#523528');
+ // market
+ pxRect(16,1.45,3.2,2.7,'#ead49c');for(let i=0;i<6;i++)pxRect(15.8+i*.58,1.15,.58,.55,i%2?'#fff1cc':'#c9534e');pxRect(16.15,3.35,2.9,.35,'#724834');pxRect(16.15,3.7,.18,1,'#5a3829');pxRect(18.85,3.7,.18,1,'#5a3829');pxRect(16.5,2.1,.7,.65,'#9bc9c0');pxRect(18,2.1,.7,.65,'#9bc9c0');
+ // field base and plots
+ for(let y=5;y<=11;y++)for(let x=6;x<=14;x++){let p=S.plots[plotKey(x,y)];if((x+y)%2===0)pxRect(x+.45,y+.45,.1,.1,'#77ac55');if(p){tile(x,y,p.watered?'#70482f':'#8a5837');pxRect(x+.08,y+.15,.84,.07,p.watered?'#4e3328':'#6d422e');pxRect(x+.08,y+.48,.84,.07,p.watered?'#4e3328':'#6d422e');pxRect(x+.08,y+.8,.84,.07,p.watered?'#4e3328':'#6d422e');if(p.crop)drawCrop(x,y,p)}}
+ // fences
+ ctx.fillStyle='#ad7949';for(let x=6;x<=14;x++){if(x===10)continue;pxRect(x+.1,4.7,.8,.12,'#b9834e');pxRect(x+.2,4.55,.13,.55,'#795137')}for(let y=5;y<=11;y++){pxRect(5.75,y+.1,.12,.8,'#b9834e');pxRect(5.6,y+.2,.55,.13,'#795137')}
+ drawTrees();drawPlayer();
+ if(S.weather==='rain'){ctx.fillStyle='#b5dbef55';ctx.fillRect(0,0,C.clientWidth,C.clientHeight);let tt=performance.now()/60;for(let i=0;i<55;i++){let x=(i*173+tt*3)%C.clientWidth,y=(i*83+tt*6)%C.clientHeight;ctx.fillStyle='#d5efffaa';ctx.fillRect(x,y,2,9)}}requestAnimationFrame(draw)}
+function drawCrop(x,y,p){let info=cropInfo[p.crop],stage=Math.min(3,Math.floor((p.age/info.days)*3));let cx=x+.5;if(stage===0){pxRect(cx-.05,y+.55,.1,.22,'#4c8c3e');pxRect(cx-.2,y+.48,.17,.1,'#68a54b')}else if(stage===1){pxRect(cx-.06,y+.3,.12,.5,'#487d35');pxRect(cx-.32,y+.32,.27,.17,info.leaf);pxRect(cx+.04,y+.42,.3,.17,info.leaf)}else if(stage===2){pxRect(cx-.08,y+.16,.16,.65,'#477c35');pxRect(cx-.35,y+.22,.3,.2,info.leaf);pxRect(cx+.03,y+.32,.34,.2,info.leaf)}else{if(p.crop==='corn'){pxRect(cx-.08,y+.06,.16,.76,'#3e7932');pxRect(cx-.32,y+.26,.28,.15,'#559642');pxRect(cx+.05,y+.38,.28,.15,'#559642');pxRect(cx-.01,y+.22,.18,.35,info.color)}else{pxRect(cx-.08,y+.18,.16,.5,'#477c35');pxRect(cx-.34,y+.18,.3,.22,info.leaf);pxRect(cx+.04,y+.22,.32,.21,info.leaf);pxRect(cx-.18,y+.58,.36,.27,info.color)}}}
+function drawTrees(){[[17,9],[18.4,9.5],[17.6,11],[.6,5.4],[3.2,5.2]].forEach(([x,y],i)=>{pxRect(x+.42,y+.55,.18,.55,'#6a432c');pxRect(x+.05,y+.05,.9,.72,i%2?'#397b42':'#438848');pxRect(x+.2,y-.15,.65,.65,'#4b9550');pxRect(x+.23,y+.05,.13,.11,'#8ebc51')})}
+function drawPlayer(){let x=S.px,y=S.py,bob=Math.sin(performance.now()/130)*.03;pxRect(x-.24,y+.22+bob,.48,.12,'#24452c66');pxRect(x-.18,y-.12+bob,.36,.48,'#4f7ba0');pxRect(x-.21,y-.38+bob,.42,.36,'#efbd83');pxRect(x-.25,y-.47+bob,.5,.18,'#d9a746');pxRect(x-.18,y-.53+bob,.36,.1,'#75472d');let ex=S.face==='left'?-0.13:S.face==='right'?.13:0;pxRect(x+ex-.03,y-.26+bob,.06,.06,'#3e3028')}
+document.addEventListener('keydown',e=>{let k=e.key.toLowerCase();keys[k]=true;if([' ','e'].includes(k)){e.preventDefault();useTool()}if(k>='1'&&k<='7'){S.selected=+k-1;updateUI()}if(k==='escape'&&modal)closeShop()});document.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+document.querySelector('#toolbar').addEventListener('click',e=>{let b=e.target.closest('.slot');if(b){S.selected=+b.dataset.i;updateUI()}});document.querySelector('.play').onclick=()=>{started=true;document.querySelector('#start').style.display='none';tone(440);pop('Welcome home! Till a plot to begin.')};document.querySelector('.close').onclick=closeShop;document.querySelector('#shop').onclick=e=>{let b=e.target.closest('.buy');if(b)buy(b.dataset.buy,+b.dataset.price)};document.querySelector('#act').onclick=useTool;
+document.querySelectorAll('.dpad').forEach(b=>{let d=b.dataset.dir,map={up:'ArrowUp',down:'ArrowDown',left:'ArrowLeft',right:'ArrowRight'};for(let ev of ['pointerdown','pointerenter'])b.addEventListener(ev,e=>{if(e.buttons!==0||ev==='pointerdown')keys[map[d]]=true});for(let ev of ['pointerup','pointerleave','pointercancel'])b.addEventListener(ev,()=>keys[map[d]]=false)});
+C.addEventListener('pointerdown',e=>{if(!started||modal)return;let r=C.getBoundingClientRect(),wx=(e.clientX-r.left-ox)/(TILE*scale),wy=(e.clientY-r.top-oy)/(TILE*scale);let dx=wx-S.px,dy=wy-S.py;if(Math.hypot(dx,dy)<1.8){S.face=Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up');useTool()}});
+function loop(t){let dt=Math.min((t-last)/1000,.05);last=t;update(dt);requestAnimationFrame(loop)}updateUI();requestAnimationFrame(loop);requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>

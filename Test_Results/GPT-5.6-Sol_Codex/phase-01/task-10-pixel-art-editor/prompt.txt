@@ -1,0 +1,9 @@
+Build a small pixel-art editor.
+It should support:
+drawing,
+erasing,
+color selection,
+brush size,
+undo/redo,
+zoom,
+and exporting the result as PNG.

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Side view of a person riding a bicycle</title>
+  <desc id="desc">A cyclist travels to the right. Both hands hold the curved handlebars. The rider's left leg reaches the lower pedal and the right leg reaches the upper pedal.</desc>
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eaf7ff"/>
+      <stop offset="1" stop-color="#f8fbf4"/>
+    </linearGradient>
+    <linearGradient id="framePaint" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff725e"/>
+      <stop offset="1" stop-color="#d83f55"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <style>
+      .wheel { fill: none; stroke: #202b38; stroke-width: 16; }
+      .rim { fill: none; stroke: #d5e0e8; stroke-width: 5; }
+      .spoke { stroke: #9aaab5; stroke-width: 2.5; }
+      .frame { fill: none; stroke: url(#framePaint); stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; }
+      .metal { fill: none; stroke: #293847; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+      .limb-back { fill: none; stroke: #d99872; stroke-width: 31; stroke-linecap: round; stroke-linejoin: round; }
+      .limb-front { fill: none; stroke: #efb18b; stroke-width: 34; stroke-linecap: round; stroke-linejoin: round; }
+      .joint { fill: #efb18b; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="url(#sky)"/>
+  <circle cx="1020" cy="125" r="58" fill="#ffd870" opacity=".7"/>
+  <path d="M0 598 C180 570 310 608 480 585 S800 565 1200 594 V760 H0Z" fill="#e1eddb"/>
+  <path d="M0 651 H1200" stroke="#bdd0bb" stroke-width="4"/>
+  <ellipse cx="605" cy="660" rx="460" ry="24" fill="#425466" opacity=".15" filter="url(#softShadow)"/>
+
+  <!-- wheels and restrained spoke pattern -->
+  <g>
+    <circle class="wheel" cx="280" cy="530" r="176"/>
+    <circle class="rim" cx="280" cy="530" r="162"/>
+    <circle class="wheel" cx="910" cy="530" r="176"/>
+    <circle class="rim" cx="910" cy="530" r="162"/>
+    <g>
+      <path class="spoke" d="M280 368V692M118 530H442M165 415L395 645M165 645L395 415M218 378L342 682M128 468L432 592M128 592L432 468M218 682L342 378"/>
+      <path class="spoke" d="M910 368V692M748 530H1072M795 415L1025 645M795 645L1025 415M848 378L972 682M758 468L1062 592M758 592L1062 468M848 682L972 378"/>
+    </g>
+    <circle cx="280" cy="530" r="13" fill="#334455"/>
+    <circle cx="910" cy="530" r="13" fill="#334455"/>
+  </g>
+
+  <!-- bicycle frame -->
+  <g>
+    <path class="frame" d="M280 530L490 510L625 530L520 350L490 510L725 385L625 530L910 530"/>
+    <path class="metal" d="M520 350L501 315"/>
+    <path d="M455 307 Q505 294 548 309" fill="none" stroke="#202b38" stroke-width="18" stroke-linecap="round"/>
+    <path class="metal" d="M725 385L910 530M725 385L754 302L827 294"/>
+    <path d="M814 270 Q851 273 845 298 Q841 319 810 315" fill="none" stroke="#293847" stroke-width="11" stroke-linecap="round"/>
+    <path d="M818 272L850 264" stroke="#293847" stroke-width="12" stroke-linecap="round"/>
+    <path d="M625 530L495 510" stroke="#5d6872" stroke-width="5"/>
+    <circle cx="625" cy="530" r="36" fill="#f5f8f9" stroke="#293847" stroke-width="9"/>
+    <circle cx="625" cy="530" r="10" fill="#293847"/>
+    <!-- vertical crank: right pedal above, left pedal below -->
+    <path d="M625 530V448M625 530V612" stroke="#293847" stroke-width="9" stroke-linecap="round"/>
+    <path d="M625 448h52M573 612h52" stroke="#293847" stroke-width="11" stroke-linecap="round"/>
+  </g>
+
+  <!-- far/right leg, clearly planted on the upper pedal -->
+  <g aria-label="right leg and right foot on upper pedal">
+    <path class="limb-back" d="M539 343 Q616 355 675 397 Q679 420 653 449"/>
+    <circle cx="675" cy="398" r="16" fill="#d99872"/>
+    <path d="M649 438 Q668 440 686 452 L679 467 L638 462 Q625 454 632 444Z" fill="#43556a"/>
+    <path d="M643 461H683" stroke="#f2f5f7" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <!-- torso -->
+  <g>
+    <path d="M475 188 Q533 160 586 194 Q628 240 668 326 L555 368 Q503 326 465 252Z" fill="#1f7a8c"/>
+    <path d="M484 202 Q529 176 574 199" fill="none" stroke="#68b7bd" stroke-width="8" stroke-linecap="round" opacity=".8"/>
+    <path d="M555 368 Q535 372 515 357 L526 332 L570 341Z" fill="#243746"/>
+    <path d="M527 183L540 158L577 171L571 205Z" fill="#efb18b"/>
+  </g>
+
+  <!-- far/right arm to the rear visible grip -->
+  <g aria-label="right arm and hand holding the handlebar">
+    <path class="limb-back" d="M542 211 Q620 225 682 271 L810 289"/>
+    <circle cx="682" cy="271" r="15" fill="#d99872"/>
+    <path d="M802 279 Q823 273 832 287 Q834 301 816 306 Q799 306 796 293Z" fill="#d99872"/>
+  </g>
+
+  <!-- head, face, and helmet -->
+  <g>
+    <path d="M520 116 Q572 99 609 130 Q630 153 612 190 Q596 218 558 203 Q529 191 519 161Z" fill="#efb18b"/>
+    <path d="M513 143 Q513 95 568 86 Q624 86 642 132 Q602 119 532 137Z" fill="#ff725e"/>
+    <path d="M513 143 Q575 121 645 137" fill="none" stroke="#d83f55" stroke-width="10" stroke-linecap="round"/>
+    <path d="M599 151l31 5" stroke="#293847" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="598" cy="151" r="4" fill="#293847"/>
+    <path d="M614 174q-12 10-25 2" fill="none" stroke="#9a4f48" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- near/left leg, crossing naturally to the lower pedal -->
+  <g aria-label="left leg and left foot on lower pedal">
+    <path class="limb-front" d="M530 348 Q485 421 520 479 Q566 541 591 608"/>
+    <circle class="joint" cx="520" cy="479" r="18"/>
+    <path d="M577 596 Q598 593 620 609 L621 626 L571 625 Q554 620 560 608Z" fill="#304f7a"/>
+    <path d="M570 624H622" stroke="#f2f5f7" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- near/left arm to the forward grip -->
+  <g aria-label="left arm and hand holding the handlebar">
+    <path class="limb-front" d="M508 213 Q577 250 653 296 L825 278"/>
+    <circle class="joint" cx="653" cy="296" r="17"/>
+    <path d="M815 268 Q836 262 846 277 Q846 293 829 299 Q811 298 807 284Z" fill="#efb18b"/>
+  </g>
+
+  <!-- foreground hubs and pedal contact accents -->
+  <circle cx="625" cy="530" r="8" fill="#e54e58"/>
+  <circle cx="625" cy="448" r="7" fill="#ffcf58"/>
+  <circle cx="625" cy="612" r="7" fill="#ffcf58"/>
+</svg>

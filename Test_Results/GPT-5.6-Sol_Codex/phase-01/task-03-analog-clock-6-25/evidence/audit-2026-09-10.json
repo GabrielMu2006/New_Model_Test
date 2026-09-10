@@ -1,0 +1,80 @@
+{
+  "runId": "run-gpt-5-6-sol-task-03-r1",
+  "taskName": "task-03-analog-clock-6-25",
+  "sessionId": "01a08954-da1a-73f2-94dc-899159695232",
+  "logPath": "~/.codex/sessions/2026/09/10/rollout-2026-09-10T11-20-34-01a08954-da1a-73f2-94dc-899159695232.jsonl",
+  "logSha256": "a182aa074f541e0a913009ab41a90e2db29ef0e1ad7c5373912039af50ec2138",
+  "logFormat": "Codex JSONL",
+  "bytes": 929158,
+  "frames": null,
+  "records": 57,
+  "promptSha256": "b7b7f981e6b8d72e8cc7679ecc00e32268c296dc91dfaa25fa9ca2051183335f",
+  "promptMessageMatches": 1,
+  "environment": {
+    "model": "gpt-5.6-sol",
+    "effort": "medium",
+    "harness": "Codex",
+    "harnessVersion": "0.147.0",
+    "source": "cli",
+    "modelProvider": "openai",
+    "approvalPolicy": "on-request",
+    "sandboxPolicy": "workspace-write"
+  },
+  "startedAt": "2026-09-10T03:20:34.606Z",
+  "endedAt": "2026-09-10T03:23:04.977Z",
+  "durationSeconds": 135,
+  "durationBasis": "event_msg.task_complete.duration_ms",
+  "apiCalls": 8,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "toolCounts": {
+    "exec_command": 3,
+    "apply_patch": 1,
+    "view_image": 2
+  },
+  "recordedCommands": [
+    {
+      "callId": "call_bXpoyhXk5RgWsQecnv2dNgWM",
+      "command": "xmllint --noout analog-clock.svg && wc -c analog-clock.svg"
+    },
+    {
+      "callId": "call_6YwyLrxe3D4YEfHYeMayVltv",
+      "command": "qlmanage -t -s 1024 -o . analog-clock.svg"
+    }
+  ],
+  "tokenUsage": {
+    "inputTokens": 195403,
+    "outputTokens": 3206,
+    "cacheReadTokens": 189824,
+    "totalTokens": 198609,
+    "reasoningOutputTokens": 416
+  },
+  "checkedDimensions": [
+    "policy",
+    "tools",
+    "paths",
+    "commands",
+    "repositories",
+    "network",
+    "reads",
+    "writes",
+    "delegation",
+    "reasoning",
+    "siblingWorkspaces"
+  ],
+  "findings": [],
+  "verdict": "no-violation-observed",
+  "limitations": [
+    "Codex JSONL stores reasoning as encrypted_content; reasoning text could not be inspected.",
+    "Training-data exposure cannot be audited.",
+    "Harness-unlogged channels, external tools, connectors, and caches cannot be ruled out.",
+    "The test used policy-level workspace-only restrictions, not enforced read or network isolation.",
+    "No environment reachability probe was run; repository and network conclusions are based on recorded tool calls and results only."
+  ],
+  "auditedAt": "2026-09-10T05:18:35.037Z",
+  "auditor": "Codex maintenance session (independent from the 15 tested sessions)",
+  "auditScript": {
+    "path": "evidence/audit-codex-sessions.mjs",
+    "sha256": "281392c2357db705a06b01ba9a2018498fa86083fef9ba3d21d5446c6a2311ef"
+  }
+}

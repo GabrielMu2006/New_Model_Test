@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#17151f" />
+    <title>Bitty — Pixel Art Editor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Bitty home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span>BITTY</span>
+        </a>
+        <div class="history-actions" aria-label="History controls">
+          <button class="icon-button" id="undoButton" type="button" title="Undo (Ctrl/⌘ Z)" aria-label="Undo" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7 4 12l5 5M5 12h8a6 6 0 0 1 6 6"/></svg>
+          </button>
+          <button class="icon-button" id="redoButton" type="button" title="Redo (Ctrl/⌘ Shift Z)" aria-label="Redo" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 7 5 5-5 5m4-5h-8a6 6 0 0 0-6 6"/></svg>
+          </button>
+        </div>
+        <button class="export-button" id="exportButton" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 20h14"/></svg>
+          Export PNG
+        </button>
+      </header>
+
+      <main class="workspace">
+        <aside class="panel tools-panel" aria-label="Drawing tools">
+          <div class="panel-heading">
+            <span>TOOLS</span><span class="key-hint">KEY</span>
+          </div>
+          <div class="tool-list" role="toolbar" aria-label="Tool selection">
+            <button class="tool active" type="button" data-tool="draw" aria-pressed="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5.5 4 4M4 20l4.5-1 10-10a2.8 2.8 0 0 0-4-4l-10 10L4 20Z"/></svg>
+              <span>Pencil</span><kbd>P</kbd>
+            </button>
+            <button class="tool" type="button" data-tool="erase" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 17-3-3 9-9a2.8 2.8 0 0 1 4 0l2 2a2.8 2.8 0 0 1 0 4l-8 8H7l-3-3m3 1h6"/></svg>
+              <span>Eraser</span><kbd>E</kbd>
+            </button>
+          </div>
+
+          <div class="section-label">BRUSH SIZE</div>
+          <div class="brush-sizes" role="radiogroup" aria-label="Brush size">
+            <button class="brush-size active" type="button" data-size="1" role="radio" aria-checked="true" aria-label="1 pixel brush"><span class="dot dot-1"></span><small>1</small></button>
+            <button class="brush-size" type="button" data-size="2" role="radio" aria-checked="false" aria-label="2 pixel brush"><span class="dot dot-2"></span><small>2</small></button>
+            <button class="brush-size" type="button" data-size="3" role="radio" aria-checked="false" aria-label="3 pixel brush"><span class="dot dot-3"></span><small>3</small></button>
+          </div>
+
+          <div class="section-label">COLOR</div>
+          <div class="color-field">
+            <button id="colorPreview" class="color-preview" type="button" aria-label="Choose custom color"></button>
+            <div><span>ACTIVE</span><strong id="colorValue">#FF5C7A</strong></div>
+            <input id="colorInput" type="color" value="#ff5c7a" aria-label="Choose drawing color" />
+          </div>
+          <div class="palette" id="palette" aria-label="Color palette"></div>
+        </aside>
+
+        <section class="canvas-area" aria-label="Pixel canvas">
+          <div class="canvas-meta">
+            <span><b>32 × 32</b> PIXELS</span>
+            <span id="cursorPosition">X — &nbsp; Y —</span>
+          </div>
+          <div class="canvas-stage" id="canvasStage">
+            <canvas id="editorCanvas" width="512" height="512" aria-label="32 by 32 pixel art drawing canvas"></canvas>
+          </div>
+          <div class="zoom-controls">
+            <button class="zoom-button" id="zoomOut" type="button" aria-label="Zoom out">−</button>
+            <input id="zoomSlider" type="range" min="8" max="24" step="2" value="16" aria-label="Canvas zoom" />
+            <button class="zoom-button" id="zoomIn" type="button" aria-label="Zoom in">+</button>
+            <output id="zoomValue" for="zoomSlider">1600%</output>
+          </div>
+        </section>
+
+        <aside class="panel preview-panel" aria-label="Artwork preview">
+          <div class="panel-heading"><span>PREVIEW</span><span>1:1</span></div>
+          <div class="preview-box"><canvas id="previewCanvas" width="32" height="32" aria-label="Artwork preview"></canvas></div>
+          <div class="tip"><span>✦</span><p><b>PRO TIP</b><br />Right-click the canvas to quickly erase.</p></div>
+          <button class="clear-button" id="clearButton" type="button">Clear canvas</button>
+        </aside>
+      </main>
+
+      <footer>
+        <span>32 × 32 CANVAS</span>
+        <span class="status"><i></i><span id="statusText">Ready to draw</span></span>
+        <span>BITTY / 1.0</span>
+      </footer>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite">PNG exported!</div>
+    <script src="app.js"></script>
+  </body>
+</html>
