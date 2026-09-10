@@ -1,5 +1,20 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 组织者对 7 项待定口径的裁定与实现（含 E2E 接入 CI）
+
+- 组织者裁定（同日落实，`known-issues.md` 第 6 节逐条记录）：
+  1. **`suspected` 不作外显标注**：运行页不再渲染「越界判定」行（状态只留在归档数据与审计报告），`contaminated` 仍标注；`docs/audit-method.md` 第 5 节的矛盾措辞删去并写明裁定；实现为 `contamination.ts` 的 `isWithheld` / `contaminationDisplay === 'withheld'`（`suspected` 优先于「遥测不可见」，避免与档案状态矛盾）。
+  2. **模型索引页显示该模型 AI 阶段评估的简单均分**（并标注份数），模型页保留各评委逐份评分、口径与双语免责声明；均分只作概览、不得排序或做跨模型排名。`AGENTS.md` 与 `docs/result-interface.md` 的「不得合成排行榜」条款已同步为该例外。当前显示：DeepSeek `93.6/100（1）`、Muse `86.5/100（2）`、GPT `暂无阶段评估`。
+  3. **首页信号卡改为真实覆盖率**：分子为已归档且有运行的任务数、分母为各阶段 `plannedTasks` 之和（`15 + 30 = 45`），当前 **20 / 45**；阶段列表与阶段页同样显示「已归档 / 计划」（phase-01 `15 / 15`、phase-02 `5 / 30`），`plannedTasksNote` 双语写明计划题数来源并由 `validate-data.mjs` 强制校验。
+  4. **时长 ≥ 1 小时改用 `H:MM:SS`**（`2:18:02`、`5:24:18`），不足 1 小时仍为 `M:SS`；归档自带的 `durationLabel`（「4分51秒」）逐字保留；格式化函数移到可单测的 `src/lib/format.ts`，`tests/format.test.mjs` 覆盖 0/51/291/3540/3600/8282/11176/19458 秒与缺失值。
+  5. **预览说明优先中文**：本站撰写的提示改为双语对象；归档 `submission.json` 的英文说明（GPT 批）在中文页配中文说明、英文页保留归档原文。当前 33 条双语 + 5 条归档中文，中文页无纯英文说明。
+  6. **r2 结案**（组织者确认不再有重复运行）；**封面口径**写入 `docs/adding-results.md`（归档必须自带截图，或本地 `npm run capture:covers` 后提交，否则构建的静态链接检查会失败）。
+  7. **E2E 接入 CI**：`website-check.yml` 与 `website-deploy.yml` 在 build 后 `npx playwright install --with-deps chromium firefox webkit` 并运行 `npm run test:e2e`（发布由浏览器流程把关）；带 `source_ref` 的回退路径跳过 e2e，避免紧急回退被测试挡住。E2E 新增断言：覆盖率、AI 均分、`H:MM:SS`、中文预览说明、运行页无「越界判定」行、阶段页覆盖率，并把阶段页纳入溢出面。
+- **门禁在发布前的两次真实拦截**：① 首跑 `34457975259` 在 **Firefox** 上失败于我新加的断言——点击语言切换后立即读面板数量，没有等导航提交与数据岛脚本执行；**部署被跳过，线上未受影响**，随后改为 `waitForURL` + 面板 `waitFor`（提交 `a636a0f`）。② 发布前本机扫描发现新增的阶段页 `plannedTasksNote` 内嵌长路径导致 390px 溢出 +88px，补 `.page-heading small{overflow-wrap:anywhere}` 并把阶段页加入 e2e 溢出面。
+- 门禁实测（本机，Node 24.19.0）：`import:data`（确定性，重跑与现有 `catalog.json` 一致）、`validate:data`（新增 `plannedTasks`/`plannedTasksNote`/双语 preview note 校验）、`check`（0 errors / 0 warnings / 1 hint）、`npm test`（**25/25**，新增 `format.test.mjs` 3 例与 `suspected` 不外显用例）、`build`（174 页 + 43 个 HTML 成果；静态链接检查通过；源码链接 **796/796** 存在于其固定提交）；全站溢出扫描 60 个「页面 × 宽度」× Chromium/WebKit **0 溢出**。
+- 发布记录：提交 `6a72ba4`（裁定实现）与 `a636a0f`（E2E 断言竞态修复）推送 `main`；发布前创建不可变回退标签 `website-rollback-20260910-3a09830`（指向上一已成功部署且公网验证通过的提交 `3a09830`，Actions run `34455509095`）。Actions run `34458276965` 构建与 Pages 部署成功，**CI 内 e2e 在 chromium、firefox、webkit 三套浏览器全部通过**（首次留下 Firefox 的 CI 记录，「本机 Firefox 崩、待 CI 复跑」的旧缺口就此关闭）。
+- 公网核验（2026-09-10，匿名 HTTPS）：`zh/index`、`zh/models/index`、`zh/phases/phase-02`、`zh/runs/…task-17-r1`、`zh/runs/run-gpt-5-6-sol-task-01-r1` 与本次构建产物**逐字节一致**；首页信号卡显示 `20 / 45`；模型索引显示 `AI 均分 93.6/100（1）`、`AI 均分 86.5/100（2）`、`暂无阶段评估`；`task-17` 运行页「越界判定」出现 **0** 次（归档数据仍记录 `suspected`，由单测与 e2e 断言守住）；首页批次时长显示 `2:18:02` / `3:06:16` / `1:16:46`，不足 1 小时的仍为 `25:45` / `45:02`。Chromium + WebKit 直连线上复核：Muse 模型页显示均分说明与两份逐评委评分、中文页预览说明为中文、对比页仍正确渲染且缺失值显示「未记录」、阶段页 390px 无溢出。
+
 ## 2026-09-10 全站缺陷排查与一轮修复（无争议项）
 
 - 触发：用户要求「详细检查项目网页，找出 bug，先只汇报」。只读排查结论（全部在线上复现，线上与本地构建逐字节一致）：
