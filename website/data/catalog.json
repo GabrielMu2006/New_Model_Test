@@ -53,8 +53,8 @@
         "en": "Phase 2 · advanced creation tasks (Tasks 16–45)"
       },
       "description": {
-        "zh": "浏览器内的动画、模拟、工程与创作类工具；本档案当前只含已测试并归档的 Task 16–20（5 题），其余题目尚未测试。",
-        "en": "In-browser animation, simulation, engineering and authoring tools. This archive currently covers only the tested and archived Tasks 16–20; the remaining tasks have not been run."
+        "zh": "浏览器内的动画、模拟、工程与创作类工具；本档案当前只含已测试并归档的 Task 16–20（5 题 × 2 个模型 = 10 条运行），其余题目尚未测试。",
+        "en": "In-browser animation, simulation, engineering and authoring tools. This archive currently covers only the tested and archived Tasks 16–20 (5 tasks × 2 models = 10 runs); the remaining tasks have not been run."
       },
       "taskVersions": [
         "task-16@1",
@@ -120,7 +120,21 @@
       "notes": {
         "zh": "本次运行为 contributor-free 档（providerID=opencode，思考档位 xhigh），经 opencode 1.18.29 调用；harness 与模型身份在运行记录中分列。",
         "en": "This run used the contributor-free tier (providerID=opencode, reasoning variant xhigh) through opencode 1.18.29; harness and model identity are recorded separately from the model entity."
-      }
+      },
+      "snapshots": [
+        {
+          "id": "muse-spark-1.3-contributor-free",
+          "label": {
+            "zh": "contributor-free 档（xhigh）",
+            "en": "contributor-free tier (xhigh)"
+          },
+          "status": "current",
+          "evidence": {
+            "zh": "harness 报告值，记录在 phase-02 各运行的 submission.json（opencode 1.18.30，桌面端）；phase-01 扁平布局归档未记录 model id。",
+            "en": "Harness-reported value, recorded in each Phase 2 submission.json (opencode 1.18.30, desktop); the phase-01 flat-layout archive does not record a model id."
+          }
+        }
+      ]
     }
   ],
   "tasks": [
@@ -3103,6 +3117,381 @@
         "sessionLogSha256": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-20-r1/evidence/session-log.sha256.txt"
       },
       "followups": []
+    },
+    {
+      "id": "run-muse-spark-1-3-xhigh-task-16-r1",
+      "modelId": "muse-spark-1-3",
+      "taskId": "task-16",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-16-r1/prompt.txt",
+        "sha256": "13e4465c50efbe8b3caef2291d35722c5a39a029fc9c2c2d89620f6c63f92308",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "opencode",
+        "harnessVersion": "1.18.30",
+        "surface": "desktop",
+        "os": "Darwin arm64",
+        "runtime": "node/python3",
+        "sessionId": "ses_f76be5006ffeBq0iut6Oefv975",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "startedAt": "2026-09-10T02:59:38Z",
+        "endedAt": "2026-09-10T03:05:31Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "muse-spark-1.3-contributor-free"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "clean",
+        "scoringEffect": "none",
+        "confirmedExternalAnswers": false,
+        "note": "收尾审查未发现越界；审计只覆盖声明的渠道，不代表「无污染」。详见运行目录的 evidence/review.json。"
+      },
+      "metrics": {
+        "durationSeconds": 353,
+        "apiCalls": null,
+        "toolCalls": 20,
+        "failures": 0,
+        "inputTokens": 58825,
+        "outputTokens": 14635,
+        "cacheReadTokens": 689349,
+        "totalTokens": 96140
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "pelican-bicycle.svg",
+        "files": [
+          "pelican-bicycle.svg"
+        ],
+        "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-16-r1/artifacts",
+        "commit": "66aa028b58f17505426a6f4217b0dbf787a72218",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": null
+        }
+      },
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-16-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-16-r1/evidence/review.json",
+        "isolationRules": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-16-r1/evidence/isolation-rules.md",
+        "phaseSummary": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/Reviews/ai/maintenance-agent-v2/phase-summary.md",
+        "evaluation": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/evidence/evaluation-2026-09-10/checks.json"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-muse-spark-1-3-xhigh-task-17-r1",
+      "modelId": "muse-spark-1-3",
+      "taskId": "task-17",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-17-r1/prompt.txt",
+        "sha256": "bfae57d571daa0901d16971f08cab7bf8dc2f5746492bde5cee71841a7f83b27",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "opencode",
+        "harnessVersion": "1.18.30",
+        "surface": "desktop",
+        "os": "Darwin arm64",
+        "runtime": "node/python3",
+        "sessionId": "ses_f76adeb68ffeio10WoK3kf7J2K",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "startedAt": "2026-09-10T03:17:32Z",
+        "endedAt": "2026-09-10T03:24:21Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "muse-spark-1.3-contributor-free"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "clean",
+        "scoringEffect": "none",
+        "confirmedExternalAnswers": false,
+        "note": "收尾审查未发现越界；审计只覆盖声明的渠道，不代表「无污染」。详见运行目录的 evidence/review.json。"
+      },
+      "metrics": {
+        "durationSeconds": 409,
+        "apiCalls": null,
+        "toolCalls": 32,
+        "failures": 1,
+        "inputTokens": 60632,
+        "outputTokens": 25243,
+        "cacheReadTokens": 1577007,
+        "totalTokens": 111804
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "watch-movement.svg"
+        ],
+        "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-17-r1/artifacts",
+        "commit": "66aa028b58f17505426a6f4217b0dbf787a72218",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": null
+        }
+      },
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-17-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-17-r1/evidence/review.json",
+        "isolationRules": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-17-r1/evidence/isolation-rules.md",
+        "phaseSummary": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/Reviews/ai/maintenance-agent-v2/phase-summary.md",
+        "evaluation": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/evidence/evaluation-2026-09-10/checks.json"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-muse-spark-1-3-xhigh-task-18-r1",
+      "modelId": "muse-spark-1-3",
+      "taskId": "task-18",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-18-r1/prompt.txt",
+        "sha256": "dbcbcefdf8b81ff6f1782a8dcb917a4b941e4f8828b4dbede77fe8456e6da95a",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "opencode",
+        "harnessVersion": "1.18.30",
+        "surface": "desktop",
+        "os": "Darwin arm64",
+        "runtime": "node/python3",
+        "sessionId": "ses_f76a64878ffeZLpNtXlmm6KdkY",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "startedAt": "2026-09-10T03:25:53Z",
+        "endedAt": "2026-09-10T03:49:46Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "muse-spark-1.3-contributor-free"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "clean",
+        "scoringEffect": "none",
+        "confirmedExternalAnswers": false,
+        "note": "收尾审查未发现越界；审计只覆盖声明的渠道，不代表「无污染」。详见运行目录的 evidence/review.json。"
+      },
+      "metrics": {
+        "durationSeconds": 1433,
+        "apiCalls": null,
+        "toolCalls": 145,
+        "failures": 3,
+        "inputTokens": 205062,
+        "outputTokens": 55857,
+        "cacheReadTokens": 15994866,
+        "totalTokens": 329229
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html"
+        ],
+        "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-18-r1/artifacts",
+        "commit": "66aa028b58f17505426a6f4217b0dbf787a72218",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": null
+        }
+      },
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-18-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-18-r1/evidence/review.json",
+        "isolationRules": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-18-r1/evidence/isolation-rules.md",
+        "phaseSummary": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/Reviews/ai/maintenance-agent-v2/phase-summary.md",
+        "evaluation": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/evidence/evaluation-2026-09-10/checks.json"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-muse-spark-1-3-xhigh-task-19-r1",
+      "modelId": "muse-spark-1-3",
+      "taskId": "task-19",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-19-r1/prompt.txt",
+        "sha256": "029fba735d92a80073d554d52a9d8015a3221a27a5fa8a740c14a58104385736",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "opencode",
+        "harnessVersion": "1.18.30",
+        "surface": "desktop",
+        "os": "Darwin arm64",
+        "runtime": "node/python3",
+        "sessionId": "ses_f767c7299ffe72rk67hyc2DvuG",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "startedAt": "2026-09-10T04:11:35Z",
+        "endedAt": "2026-09-10T04:13:49Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "muse-spark-1.3-contributor-free"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "clean",
+        "scoringEffect": "none",
+        "confirmedExternalAnswers": false,
+        "note": "收尾审查未发现越界；审计只覆盖声明的渠道，不代表「无污染」。详见运行目录的 evidence/review.json。"
+      },
+      "metrics": {
+        "durationSeconds": 134,
+        "apiCalls": null,
+        "toolCalls": 7,
+        "failures": 0,
+        "inputTokens": 33489,
+        "outputTokens": 14831,
+        "cacheReadTokens": 169224,
+        "totalTokens": 53076
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html"
+        ],
+        "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-19-r1/artifacts",
+        "commit": "66aa028b58f17505426a6f4217b0dbf787a72218",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": null
+        }
+      },
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-19-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-19-r1/evidence/review.json",
+        "isolationRules": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-19-r1/evidence/isolation-rules.md",
+        "phaseSummary": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/Reviews/ai/maintenance-agent-v2/phase-summary.md",
+        "evaluation": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/evidence/evaluation-2026-09-10/checks.json"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-muse-spark-1-3-xhigh-task-20-r1",
+      "modelId": "muse-spark-1-3",
+      "taskId": "task-20",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-20-r1/prompt.txt",
+        "sha256": "b8567a4ced624f073fb4129d4649e1b2b2b5ce41ceb0b6cc067d822baa0bd1fc",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "opencode",
+        "harnessVersion": "1.18.30",
+        "surface": "desktop",
+        "os": "Darwin arm64",
+        "runtime": "node/python3",
+        "sessionId": "ses_f7678f4f4ffefbyYk12kgOK5hH",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "startedAt": "2026-09-10T04:15:23Z",
+        "endedAt": "2026-09-10T04:21:36Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "muse-spark-1.3-contributor-free"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "clean",
+        "scoringEffect": "none",
+        "confirmedExternalAnswers": false,
+        "note": "收尾审查未发现越界；审计只覆盖声明的渠道，不代表「无污染」。详见运行目录的 evidence/review.json。"
+      },
+      "metrics": {
+        "durationSeconds": 373,
+        "apiCalls": null,
+        "toolCalls": 34,
+        "failures": 0,
+        "inputTokens": 93550,
+        "outputTokens": 36213,
+        "cacheReadTokens": 1713681,
+        "totalTokens": 146767
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "app.js",
+          "solver.js",
+          "style.css",
+          "run_tests.js"
+        ],
+        "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-20-r1/artifacts",
+        "commit": "66aa028b58f17505426a6f4217b0dbf787a72218",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": null
+        }
+      },
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-20-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-20-r1/evidence/review.json",
+        "isolationRules": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-20-r1/evidence/isolation-rules.md",
+        "phaseSummary": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/Reviews/ai/maintenance-agent-v2/phase-summary.md",
+        "evaluation": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/evidence/evaluation-2026-09-10/checks.json"
+      },
+      "followups": []
     }
   ],
   "reviews": [
@@ -4725,6 +5114,116 @@
         "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-01/Reviews/ai/maintenance-agent-v1/task-15.md",
         "lines": "1"
       }
+    },
+    {
+      "id": "review-ai-run-muse-spark-1-3-xhigh-task-16-r1-maintenance-agent-v2",
+      "runId": "run-muse-spark-1-3-xhigh-task-16-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v2（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "单文件零依赖的动画 SVG 成立，暂停/继续实测能整体冻结与恢复；最关键的「脚始终踩在踏板」只有模型自述与单帧视觉支持。",
+        "en": "A self-contained animated SVG that really freezes and resumes; the key feet-on-pedals requirement rests on self-report plus one visual frame."
+      },
+      "body": {
+        "zh": "- **需求对照**：动画 SVG ✅；单文件、零外部依赖 ✅（全文件唯一的 `http://` 是 SVG 命名空间声明）；车轮/曲柄/脚踏转动 ✅；背景滚动 ✅；暂停与继续控件 ✅。\n- **实测（Chromium 无头，组织者自建服务）**：42 个 SMIL 动画元素；未暂停时画面持续变化；点击 `#pauseBtn` 后间隔 800 ms 的两次截图**逐像素相同**、状态文本变为 `paused`；点击 `#playBtn` 后恢复变化 ✅。控制台无错误。\n- **结构**：`viewBox=\"0 0 800 450\"`、`<title>`、`<desc>`、`role=\"img\"`、`aria-label` 齐全；按钮与状态文本内建在 SVG 内。\n- **未独立验证**：① 脚踝与踏板的逐帧偏差（模型自述用两段 IK 烘焙、弦误差 <0.1 px，属自述）；② 「无倒滑/无滑动」；③ 动画平滑度。\n- **已知限制（模型自述，原样记录）**：以 `<img>` 嵌入时内联脚本不执行、暂停按钮无效；需以文档方式打开 SVG。\n- **扣分**：脚部约束未独立验证（−6）；无倒滑要求未测量（−4）；暂停控件依赖打开方式（−3）；视觉维度由视觉桥接模型描述而非评价者直读图像（−2）。\n\n- **方法**：静态结构分析 + 组织者自建静态服务下的 Chromium 无头渲染与交互探针（`evidence/evaluation-2026-09-10/`），**未运行成果自带脚本**；视觉维度由视觉桥接模型描述，评价者本人不具备图像输入能力。\n- **评分不可跨模型比较**：与第一阶段 DeepSeek 的历史分数口径、harness 与预算均不同。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 85,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-16-r1/reviews/ai-maintenance-agent-v2.md",
+        "lines": "1-26"
+      }
+    },
+    {
+      "id": "review-ai-run-muse-spark-1-3-xhigh-task-17-r1-maintenance-agent-v2",
+      "runId": "run-muse-spark-1-3-xhigh-task-17-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v2（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "齿轮反向啮合与转速差异经独立测量成立，暂停/调速不破坏相位；摆轮摆幅与齿面接触只有间接证据。",
+        "en": "Opposite gear rotation and clearly different speeds are independently measured; balance-wheel amplitude and tooth contact remain indirect."
+      },
+      "body": {
+        "zh": "- **需求对照**：指针/齿轮/擒纵/摆轮/发条均存在且有文字标注 ✅（BARREL · MAINSPRING、ESCAPE、PALLET、BALANCE、THIRD、FOURTH、SQUELETTE、18000 VPH）；暂停/继续与速度滑块 ✅。\n- **实测·啮合方向（独立测量）**：1.5 s 内共 **29 个**带 `rotate()` 的元素发生转动，其中 **14 个顺时针、15 个逆时针** → 存在反向转动对，符合啮合齿轮的反向关系 ✅。\n- **实测·转速差异（独立测量）**：角速度跨度极大：最快 −179.3°/1.5 s，最慢约 2.1°/1.5 s → 不存在「所有元素同一速度」的错误 ✅。小幅净位移元素（约 ±2°/1.5 s）与摆轮往复运动一致（**未测摆幅**）。\n- **实测·控制**：暂停后画面冻结、恢复后继续；速度滑块由 1 调到 2.5 后画面仍连续变化；控制台无错误 ✅。\n- **未独立验证**：① 齿面是否真正互相啮合（只有视觉桥接描述为分层示意图，可见约 7 个齿轮体）；② 摆轮摆动幅度与擒纵节拍相位；③ 冲量瞬间的齿面滑动（模型自述被时间平均平滑掉）。\n- **扣分**：摆轮/擒纵相位未逐帧测量（−5）；齿面接触仅间接证据（−4）；轮系为时间平均的平滑运动（模型自述）（−3）。\n\n- **方法**：静态结构分析 + 组织者自建静态服务下的 Chromium 无头渲染与交互探针（`evidence/evaluation-2026-09-10/`），**未运行成果自带脚本**；视觉维度由视觉桥接模型描述，评价者本人不具备图像输入能力。\n- **评分不可跨模型比较**：与第一阶段 DeepSeek 的历史分数口径、harness 与预算均不同。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 88,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-17-r1/reviews/ai-maintenance-agent-v2.md",
+        "lines": "1-26"
+      }
+    },
+    {
+      "id": "review-ai-run-muse-spark-1-3-xhigh-task-18-r1-maintenance-agent-v2",
+      "runId": "run-muse-spark-1-3-xhigh-task-18-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v2（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "8 阶段链条、暂停冻结、步进精度与重置都经实测成立；重复性与跨视口/帧率鲁棒性样本不足。",
+        "en": "The 8-stage chain, pause freezing, exact stepping and reset are measured; repeatability and viewport/frame-rate robustness are lightly sampled."
+      },
+      "body": {
+        "zh": "- **需求对照**：画布上标注 S1 RELEASE → S8 FINISH 共 **8 个阶段**，文字明确「Nothing advances on a timer — every stage is triggered by contact / position / momentum」；含 Start/Pause/Resume/Reset/Step 1 frame/Step 0.5 s/速度滑块/声音 ✅。\n- **实测·暂停（独立测量）**：点击 `#btnPause` 后应用自报时间 `#hudTime` 由 1.62 s 保持 1.62 s 不变，**canvas 元素截图逐像素不变** ✅（HUD 文案变为 `Paused — Step to inspect handoffs`）。\n- **实测·步进精度（独立测量）**：Step 1 frame → 时间 +0.01 s（60 fps 一帧）；Step 0.5 s → 恰好 **+0.500 s** ✅。\n- **实测·阶段推进与重置**：一次连续运行观测到 `1/8 → 2/8 → 6/8 → 7/8 → 🎉 Complete! t=11.2s`；Reset 后时间回到 **0.00 s**、HUD 回到 `Ready — press Start` ✅。\n- **未独立验证**：① 只完整跑通 1 次、重置 1 次，重复性与「无残留状态/无永久死锁」样本不足；② 跨视口与跨帧率鲁棒性（仅 1280×800 单帧率）；③ 8 个阶段之间的接触触发关系未逐帧核验（依据画布标注与 HUD 状态）。\n- **扣分**：重复性样本不足（−4）；跨视口/帧率未测（−5）；因果衔接未逐帧核验（−3）。\n\n- **方法**：静态结构分析 + 组织者自建静态服务下的 Chromium 无头渲染与交互探针（`evidence/evaluation-2026-09-10/`），**未运行成果自带脚本**；视觉维度由视觉桥接模型描述，评价者本人不具备图像输入能力。\n- **评分不可跨模型比较**：与第一阶段 DeepSeek 的历史分数口径、harness 与预算均不同。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 88,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-18-r1/reviews/ai-maintenance-agent-v2.md",
+        "lines": "1-26"
+      }
+    },
+    {
+      "id": "review-ai-run-muse-spark-1-3-xhigh-task-19-r1-maintenance-agent-v2",
+      "runId": "run-muse-spark-1-3-xhigh-task-19-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v2（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "八大行星、月球与伽利略卫星、调速连续性、暂停冻结时钟全部成立；暂停时画布仍有小幅重绘。",
+        "en": "Eight planets, the Moon and Galilean moons, continuous speed changes and a frozen clock hold; a small residual canvas repaint remains when paused."
+      },
+      "body": {
+        "zh": "- **需求对照**：太阳 + 8 颗行星 + 地球月球 + Io/Europa/Ganymede/Callisto ✅；相对轨道速度、层级卫星、拖尾、缩放/平移、视图切换、天体选择面板齐全 ✅。\n- **实测·暂停（独立测量）**：暂停后模拟时间读数冻结（Day 38.7 → 38.7）✅；画布变化像素比例由运行时的 1.41% 降到 0.32%（暂停 2.5 s 后仍为 0.31%）→ **模拟时间停止**，残余变化为背景星野重绘，画布未完全静止。\n- **实测·调速连续性（独立测量）**：默认 20.0 days/sec 与最大 300 days/sec 两档下日期都连续推进（约 20 / 约 300 天每秒）；界面明示「Changing speed never resets positions」✅。\n- **实测·运行**：未暂停时画布持续变化；控制台无错误 ✅。\n- **未独立验证**：① 点击画布/列表选择天体与 Focus planet 的实际效果（探测时始终为 `Nothing selected`）；② 月球与伽利略卫星「绕运动中的母星公转」的长期轨道正确性；③ 8 行星+拖尾的性能（仅单机单视口）。\n- **扣分**：暂停时画布仍有残余重绘（−3）；天体选择与聚焦视图未逐项验证（−4）；性能未测（−3）；仅 2D 俯视、无轨道倾角/偏心率（模型自述）（−2）。\n\n- **方法**：静态结构分析 + 组织者自建静态服务下的 Chromium 无头渲染与交互探针（`evidence/evaluation-2026-09-10/`），**未运行成果自带脚本**；视觉维度由视觉桥接模型描述，评价者本人不具备图像输入能力。\n- **评分不可跨模型比较**：与第一阶段 DeepSeek 的历史分数口径、harness 与预算均不同。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 88,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-19-r1/reviews/ai-maintenance-agent-v2.md",
+        "lines": "1-26"
+      }
+    },
+    {
+      "id": "review-ai-run-muse-spark-1-3-xhigh-task-20-r1-maintenance-agent-v2",
+      "runId": "run-muse-spark-1-3-xhigh-task-20-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v2（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "连杆长度在运动全程经独立复算保持恒定（极差 ≤0.17 px），暂停/单步/存取往返均成立。",
+        "en": "Rigid link lengths stay constant under independent recomputation (range ≤0.17 px); pause, stepping and save/recall round-trips all hold."
+      },
+      "body": {
+        "zh": "- **需求对照**：四杆与曲柄滑块示例、关节/连杆/滑块/轨道编辑工具、电机设置、关节表、存取、JSON 导入导出、轨迹、视图选项齐全 ✅。\n- **实测·连杆长度（**独立复算**）**：以应用自身的关节坐标读数采样 22 次（四杆一次运行 + 曲柄滑块一次运行），复算关节间距离：Rocker P1-B 180.0（极差 **0.096 px**）、Coupler A-B 260.0（**0.140**）、ArmA A-C 141.2（**0.125**）、ArmB B-C 141.2（**0.167**）→ 刚性连杆长度在运动全程恒定 ✅。应用自报 `max link error ≤ 2.8e-14`、`max slider off-track 0.0e+0`，与复算一致。\n- **实测·暂停与单步（独立测量）**：暂停后画布变化像素比例为 **0**、单步后几何改变且随后保持稳定 ✅。\n- **实测·存取往返（独立测量）**：Store → New（画布确实改变）→ Recall：画布与存档前**逐像素相同** ✅。另有 Save file / Load file、Export JSON ↓ / Import JSON ↑。\n- **实测·两种机构**：四杆与曲柄滑块在 Play 下均在运动；页脚实时显示关节数/连杆数/最大误差 ✅。\n- **未独立验证**：① 「单步结果与连续模拟在等状态一致」只验证了单步会产生改变且随后稳定，未逐点比对；② 退化轨道/长度导入的自动修复与告警（模型自述）；③ 拖动关节时临时释放电机 pin 的近似（模型自述，应用内已注明）。\n- **扣分**：等状态一致性未逐点比对（−3）；退化输入修复未测（−3）；拖动时释放电机 pin 属近似（−2）。\n\n- **方法**：静态结构分析 + 组织者自建静态服务下的 Chromium 无头渲染与交互探针（`evidence/evaluation-2026-09-10/`），**未运行成果自带脚本**；视觉维度由视觉桥接模型描述，评价者本人不具备图像输入能力。\n- **评分不可跨模型比较**：与第一阶段 DeepSeek 的历史分数口径、harness 与预算均不同。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 92,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/run-muse-spark-1-3-xhigh-task-20-r1/reviews/ai-maintenance-agent-v2.md",
+        "lines": "1-27"
+      }
     }
   ],
   "batches": [
@@ -4807,6 +5306,34 @@
       "source": {
         "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md",
         "lines": "1-20"
+      },
+      "note": "本批次为部分汇总：由已归档的 5 个 run 的逐题指标求和，不代表整个 phase-02（Task 16–45）。"
+    },
+    {
+      "id": "batch-muse-spark-1-3-phase-02-partial",
+      "modelId": "muse-spark-1-3",
+      "phaseId": "phase-02",
+      "label": {
+        "zh": "Muse Spark 1.3 · Phase 2（Task 16–20，部分）",
+        "en": "Muse Spark 1.3 · Phase 2 (Task 16–20, partial)"
+      },
+      "metrics": {
+        "totalTasks": 5,
+        "sessions": 5,
+        "durationSeconds": 2702,
+        "apiCalls": 0,
+        "toolCalls": 238,
+        "failures": 4,
+        "inputTokens": 451558,
+        "outputTokens": 146779,
+        "cacheReadTokens": 20144127,
+        "totalTokens": null,
+        "costCny": null,
+        "costUsd": null
+      },
+      "source": {
+        "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/README.md",
+        "lines": "1-24"
       },
       "note": "本批次为部分汇总：由已归档的 5 个 run 的逐题指标求和，不代表整个 phase-02（Task 16–45）。"
     }

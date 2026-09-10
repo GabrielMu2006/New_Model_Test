@@ -3,8 +3,8 @@
   "number": 2,
   "name": { "zh": "第二阶段 · 高级纯创造任务（Task 16–45）", "en": "Phase 2 · advanced creation tasks (Tasks 16–45)" },
   "description": {
-    "zh": "浏览器内的动画、模拟、工程与创作类工具；本档案当前只含已测试并归档的 Task 16–20（5 题），其余题目尚未测试。",
-    "en": "In-browser animation, simulation, engineering and authoring tools. This archive currently covers only the tested and archived Tasks 16–20; the remaining tasks have not been run."
+    "zh": "浏览器内的动画、模拟、工程与创作类工具；本档案当前只含已测试并归档的 Task 16–20（5 题 × 2 个模型 = 10 条运行），其余题目尚未测试。",
+    "en": "In-browser animation, simulation, engineering and authoring tools. This archive currently covers only the tested and archived Tasks 16–20 (5 tasks × 2 models = 10 runs); the remaining tasks have not been run."
   },
   "taskVersions": ["task-16@1", "task-17@1", "task-18@1", "task-19@1", "task-20@1"]
 }

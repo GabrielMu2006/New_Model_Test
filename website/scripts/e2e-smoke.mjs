@@ -64,6 +64,14 @@ try {
     await page.goto(`${base}/en/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/`);
     if (!(await page.locator('.detail-page').textContent())?.includes('deepseek-v4.1-flash-expires-on-0910')) throw new Error(`${name}: run page missing the harness-reported snapshot id`);
 
+    // Muse 第二阶段：每题 1 份 AI 评价（本批尚无人工评价），且同题可与 DeepSeek 并排对比
+    await page.goto(`${base}/zh/runs/run-muse-spark-1-3-xhigh-task-16-r1/`);
+    if (await page.locator('.review-card').count() !== 1) throw new Error(`${name}: Muse phase-02 run page must show exactly one archived review`);
+    if (!(await page.locator('.review-card').textContent())?.includes('85/100')) throw new Error(`${name}: Muse phase-02 review score missing`);
+    await page.goto(`${base}/zh/compare/?task=task-16&left=run-deepseek-v4-1-flash-exp-0910-task-16-r1&right=run-muse-spark-1-3-xhigh-task-16-r1`);
+    if (await page.locator('[data-left-panel] img').count() !== 1) throw new Error(`${name}: cross-model compare left panel failed`);
+    if (await page.locator('[data-right-panel] img').count() !== 1) throw new Error(`${name}: cross-model compare right panel failed`);
+
     // 第二阶段（Task 16–20）：阶段页、越界标注、审查证据、补充轮逐字输入与「暂无评价」说明
     await page.goto(`${base}/zh/phases/phase-02/`);
     if (await page.locator('.run-tile').count() !== 5) throw new Error(`${name}: phase-02 page did not list the 5 archived tasks`);

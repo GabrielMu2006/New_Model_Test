@@ -23,7 +23,7 @@
 - 几何、计算、数据状态与错误处理；
 - 响应式设计、可访问性、视觉完成度和自动化测试。
 
-公开展示站 [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) 目前收录 2 个模型 / 2 个阶段 / 20 个任务 / 35 条运行 / 75 条评价（第一阶段每题 1 人工 + 2 AI 评委；第二阶段尚未产出评价）/ 3 份阶段评估，共 132 个静态页面与 35 项成果预览，支持中英文切换、任务搜索与分类筛选、同题运行对比、成果预览与深链。
+公开展示站 [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) 目前收录 2 个模型 / 2 个阶段 / 20 个任务 / 40 条运行 / 80 条评价（第一阶段每题 1 人工 + 2 AI 评委；第二阶段 Muse 每题 1 份 AI 评价、DeepSeek 尚未产出评价）/ 3 份阶段评估，共 142 个静态页面与 40 项成果预览，支持中英文切换、任务搜索与分类筛选、同题运行对比、成果预览与深链。
 
 仓库将保留后续阶段扩展能力。未来可在 Test_Results/ 下增加模型文件夹，并在模型目录中增加阶段文件夹，并继续沿用“任务 → 原始 prompt → 成果 → 测试 → 评估”的归档方式。
 
@@ -34,6 +34,7 @@
 | Phase 1 | DeepSeek-V4.1-Flash（0910 实验版） | DSH | 15 | 15/15 | 93.6/100（历史 AI 报告引用） | 已完成 |
 | Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 交付（2 题交付方式待改） | 84.9/100（维护 agent 非盲评 v1） | 已完成 |
 | Phase 2 | DeepSeek-V4.1-Flash（0910 实验版） | DSH | 5 / 30（部分） | 5/5 交付 | —（尚无独立评价） | 部分完成（Task 16–20） |
+| Phase 2 | Muse Spark 1.3（xhigh） | opencode 1.18.30 | 5 / 30（部分） | 5/5 交付 | 88.2/100（维护 agent v2 非盲评 AI 评价） | 部分完成（Task 16–20） |
 
 > 两行的评分来自不同评委与不同口径，**不可直接比较**；Harness、预算与隔离等级也不同。
 
@@ -63,7 +64,7 @@
 
 ### 后续阶段（Phase 2）
 
-Phase 2 的 30 条高级纯创造题（Task 16–45）已写入 [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)，强调从空目录起步的复杂系统创作。**Task 16–20（5 题）已由 `DeepSeek-V4.1-Flash` 的 0910 实验版完成、审查并接入展示站**（快照见上）（归档见 [phase-02 运行清单](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)）；Task 21–45 尚未测试。第二阶段目前**没有人工或 AI 评价**，因此上表只列交付情况、不给分数。
+Phase 2 的 30 条高级纯创造题（Task 16–45）已写入 [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)，强调从空目录起步的复杂系统创作。**Task 16–20（5 题）已由两个模型完成并接入展示站**：`DeepSeek-V4.1-Flash` 的 0910 实验版（DSH）与 **Muse Spark 1.3 xhigh（opencode 1.18.30）**。Muse 的 5 题产出 1 份/题的 **AI 评价**（维护 agent v2，非盲评，平均 **88.2/100**）；DeepSeek 的 5 题**尚无独立评价**，站点显示「本运行暂无独立评价」；两批**都没有人工评价**，跨模型比较须注明 harness、预算与隔离差异（归档见 [phase-02 运行清单](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)）；Task 21–45 尚未测试。第二阶段目前**没有人工或 AI 评价**，因此上表只列交付情况、不给分数。
 
 Phase 2 的隔离等级为 `workspace-only`（`AGENTS.md` 两条绝对规则 + 收尾日志审查）：这是**策略级约束**，不是强制隔离，也不表示「无污染」。Task 16–45 的题目已在公开仓库发布（提交 `0540edf`，见 [已知问题](docs/known-issues.md)），成绩须同时标注该暴露。越界判定只影响标注、不影响成绩录入（2026-09-10 组织者决定）：`task-17`、`task-20` 记录了「越界尝试，未取得内容」，只留在审计档案与运行页说明里，不作排除。测试流程与接入步骤见[测试隔离与防答案污染](docs/testing-protocol.md)与[接入操作步骤](docs/adding-results.md)。
 
@@ -194,7 +195,7 @@ The archive covers **Phase 1**: two models — `DeepSeek-V4.1-Flash` (0910 previ
 - geometry, arithmetic, data state, and error handling;
 - responsive design, accessibility, visual finish, and automated testing.
 
-The public showcase [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) currently covers 2 models / 2 phases / 20 tasks / 35 runs / 75 reviews (Phase 1: 1 human + 2 AI reviews per run; Phase 2: no review produced yet) across 132 static pages and 35 artifact previews, with bilingual pages, task search and filters, same-task run comparison, artifact previews and deep links.
+The public showcase [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) currently covers 2 models / 2 phases / 20 tasks / 40 runs / 80 reviews (Phase 1: 1 human + 2 AI reviews per run; Phase 2: one AI review per Muse run, none yet for DeepSeek) across 142 static pages and 40 artifact previews, with bilingual pages, task search and filters, same-task run comparison, artifact previews and deep links.
 
 The repository is designed to grow. Future results can be added under Test_Results/<model-folder>/phase-NN/ while retaining the same “task → original prompt → artifact → test → evaluation” archive pattern.
 
@@ -205,6 +206,7 @@ The repository is designed to grow. Future results can be added under Test_Resul
 | Phase 1 | DeepSeek-V4.1-Flash (0910 preview) | DSH | 15 | 15/15 | 93.6/100 (quoted historical AI report) | Complete |
 | Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 delivered (2 flagged as delivery-method issues) | 84.9/100 (maintenance-agent non-blind v1) | Complete |
 | Phase 2 | DeepSeek-V4.1-Flash (0910 preview) | DSH | 5 / 30 (partial) | 5/5 delivered | — (no independent review yet) | Partial (Tasks 16–20) |
+| Phase 2 | Muse Spark 1.3 (xhigh) | opencode 1.18.30 | 5 / 30 (partial) | 5/5 delivered | 88.2/100 (maintenance-agent v2, non-blind AI review) | Partial (Tasks 16–20) |
 
 > The two rows come from different reviewers and rubrics and must not be compared directly; harness, budget and isolation level also differ.
 
@@ -234,7 +236,7 @@ The repository is designed to grow. Future results can be added under Test_Resul
 
 ### Later phase (Phase 2)
 
-Phase 2 adds 30 advanced creation prompts (Task 16–45) in [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md), focused on complex systems built from an empty directory. **Tasks 16–20 were completed, audited and published by the 0910 preview snapshot of `DeepSeek-V4.1-Flash`** (see snapshots above) (see the [phase-02 run index](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)); Tasks 21–45 have not been run. This phase has **no human or AI review yet**, so the table above records delivery only, with no score.
+Phase 2 adds 30 advanced creation prompts (Task 16–45) in [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md), focused on complex systems built from an empty directory. **Tasks 16–20 were completed and published by both models**: the 0910 preview snapshot of `DeepSeek-V4.1-Flash` (DSH) and **Muse Spark 1.3 xhigh (opencode 1.18.30)**. The five Muse runs carry one **AI review** each (maintenance-agent v2, non-blind, average **88.2/100**); the five DeepSeek runs have **no independent review yet**, shown on the site as “No independent review has been produced for this run yet”; neither batch has a human review, and cross-model comparison must note harness, budget and isolation differences (see the [phase-02 run index](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)); Tasks 21–45 have not been run. This phase has **no human or AI review yet**, so the table above records delivery only, with no score.
 
 Phase 2 isolation is `workspace-only` (two absolute `AGENTS.md` rules plus a post-hoc log audit): a **policy-level constraint**, not enforced isolation, and not a claim of “no contamination”. The Task 16–45 prompts are also published in this public repository (commit `0540edf`, see [known issues](docs/known-issues.md)), which the scores must be labelled with. A boundary finding affects annotation only, never score entry (organizer decision, 2026-09-10): `task-17` and `task-20` record “boundary attempt, no external content obtained”, kept in the audit archive and on the run page, with no exclusion. See the [test isolation and anti-contamination protocol](docs/testing-protocol.md) and the [integration workflow](docs/adding-results.md).
 

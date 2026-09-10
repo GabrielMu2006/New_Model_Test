@@ -149,10 +149,23 @@ const deepseekRuns = catalog.runs.filter((run) => run.modelId === 'deepseek-v4-1
 const deepseekReviews = catalog.reviews.filter((review) => deepseekRuns.some((run) => run.id === review.runId));
 if (deepseekRuns.length !== 15) fail(`Phase 1 regression: expected 15 phase-01 DeepSeek runs, found ${deepseekRuns.length}`);
 if (deepseekReviews.length !== 30) fail(`Phase 1 regression: expected 30 phase-01 DeepSeek reviews, found ${deepseekReviews.length}`);
-const museRuns = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3');
-if (museRuns.length !== 15) fail(`Muse regression: expected 15 Muse runs, found ${museRuns.length}`);
+const museRuns = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3' && phaseOfRun(run) === 'phase-01');
+if (museRuns.length !== 15) fail(`Muse regression: expected 15 phase-01 Muse runs, found ${museRuns.length}`);
 const museReviews = catalog.reviews.filter((review) => museRuns.some((run) => run.id === review.runId));
-if (museReviews.length !== 45) fail(`Muse regression: expected 45 Muse reviews (1 human + 2 AI per run), found ${museReviews.length}`);
+if (museReviews.length !== 45) fail(`Muse regression: expected 45 phase-01 Muse reviews (1 human + 2 AI per run), found ${museReviews.length}`);
+// Muse 第二阶段：每运行恰好 1 份 AI 评价（maintenance-agent-v2），本批尚未产出人工评价
+const musePhase2Runs = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3' && phaseOfRun(run) === 'phase-02');
+if (musePhase2Runs.length === 0) fail('Muse phase-2 regression: no archived Muse phase-02 runs');
+for (const run of musePhase2Runs) {
+  const reviews = catalog.reviews.filter((review) => review.runId === run.id);
+  if (reviews.length !== 1) fail(`${run.id}: expected exactly one archived review, found ${reviews.length}`);
+  const [review] = reviews;
+  if (review.type !== 'ai') fail(`${run.id}: the archived review must be an AI review (no human review yet)`);
+  if (review.score == null || !review.scoreMethod) fail(`${run.id}: AI review needs a score and a score method`);
+  if (!review.conclusion?.zh || !review.conclusion?.en) fail(`${run.id}: review conclusion must be bilingual`);
+  if (run.isolation?.level !== 'workspace-only') fail(`${run.id}: Muse phase-02 runs must record isolation.level=workspace-only`);
+}
+
 // ---- 第二阶段（Task 16–20）：已归档运行必须仍在；新增题目只增不改 ----
 const phase2Tasks = catalog.tasks.filter((task) => task.phaseId === 'phase-02');
 if (phase2Tasks.length === 0) fail('Phase 2 regression: no phase-02 tasks in catalog');

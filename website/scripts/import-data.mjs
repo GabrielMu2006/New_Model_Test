@@ -12,13 +12,14 @@ import { fileURLToPath } from 'node:url';
 import * as deepseekPhase1 from './adapters/deepseek-phase1.mjs';
 import * as museSparkPhase1 from './adapters/muse-spark-phase1.mjs';
 import * as deepseekPhase2 from './adapters/deepseek-phase2.mjs';
+import * as museSparkPhase2 from './adapters/muse-spark-phase2.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(here, '..');
 const repoRoot = path.resolve(siteRoot, '..');
 const read = (relative) => fs.readFileSync(path.join(repoRoot, relative), 'utf8');
 
-const adapters = [deepseekPhase1, museSparkPhase1, deepseekPhase2];
+const adapters = [deepseekPhase1, museSparkPhase1, deepseekPhase2, museSparkPhase2];
 const ctx = { read, repoRoot, siteRoot };
 
 const loaded = adapters.map((adapter) => {

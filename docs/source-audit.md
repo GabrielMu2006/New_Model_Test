@@ -38,6 +38,34 @@
 
 模型身份：实体 `deepseek-v4-1-flash-exp-0910` 在展示站显示为 `DeepSeek-V4.1-Flash（0910 实验版 + 正式版）`（2026-09-10 组织者决定，两个发布版本视为同一模型）。本批次 5 条运行的 `environment.reportedModelId` 均为 `deepseek-v4.1-flash-expires-on-0910`；phase-01 的 15 条运行归档未记录 model id，记 `null`。实体 id 与全部运行 URL 未改动。
 
+## Phase 2 Muse Spark 批次（Task 16–20，2026-09-10 归档）
+
+来源：`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md` 的 Task 16–20（`taskVersion = 1`）与 `Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/<run-id>/`。模型 `muse-spark-1.3-contributor-free`（显示名 Muse Spark 1.3 xhigh），harness opencode `1.18.30` desktop，预算重试 0、补充轮 0。
+
+| 任务 | 会话（opencode） | runId | 成果 | 类型 | 越界判定 |
+|---|---|---|---|---|---|
+| 16 | `ses_f76be500` | `run-muse-spark-1-3-xhigh-task-16-r1` | `pelican-bicycle.svg` | SVG | 未发现越界 |
+| 17 | `ses_f76adeb6` | `run-muse-spark-1-3-xhigh-task-17-r1` | `index.html` + `watch-movement.svg` | HTML | 未发现越界 |
+| 18 | `ses_f76a6487` | `run-muse-spark-1-3-xhigh-task-18-r1` | `index.html` | HTML | 未发现越界 |
+| 19 | `ses_f767c729` | `run-muse-spark-1-3-xhigh-task-19-r1` | `index.html` | HTML | 未发现越界 |
+| 20 | `ses_f7678f4f` | `run-muse-spark-1-3-xhigh-task-20-r1` | 连杆设计器 5 文件 | HTML | 未发现越界 |
+
+口径：`prompt.txt` 为**逐字存档**（首轮输入与归档逐字一致，已程序化比对；SHA-256 见 `PLAN.md` 与各 `submission.json`）；工作区 `test-workspace-3/phase-02/SUMMARY-tasks-16-20.md` 记录统计、审查结论与各题最后回答的明确 limit；task-20 套件经组织者独立复跑 20/20。程序性备注（`ls /Applications` 环境探测、`/tmp` 自写校验脚本）记入各 `evidence/review.json`，无外部内容流入，按三档处置口径不作外显标注、不影响成绩。独立评价尚未产出，不计综合分；Task 21–45 待测。
+
+## Muse Spark 1.3 · Phase 2（Task 16–20，2026-09-10 接入）
+
+来源：同题 `PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`（`taskVersion = 1`）与 `Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/<run-id>/`；成果与评价链接固定到本批次归档提交 `66aa028b58f17505426a6f4217b0dbf787a72218`。
+
+| 任务 | runId | 成果 | 隔离/越界 | AI 评价 |
+|---|---|---|---|---|
+| 16 | `run-muse-spark-1-3-xhigh-task-16-r1` | `pelican-bicycle.svg` | `workspace-only` / 未发现越界 | maintenance-agent-v2 v2 · **85** |
+| 17 | `run-muse-spark-1-3-xhigh-task-17-r1` | `index.html` + `watch-movement.svg` | 同上 | **88** |
+| 18 | `run-muse-spark-1-3-xhigh-task-18-r1` | `index.html` | 同上 | **88** |
+| 19 | `run-muse-spark-1-3-xhigh-task-19-r1` | `index.html` | 同上 | **88** |
+| 20 | `run-muse-spark-1-3-xhigh-task-20-r1` | `index.html` + 4 个源文件 | 同上 | **92** |
+
+评价来源：`runs/<run-id>/reviews/ai-maintenance-agent-v2.md` 与 `Reviews/ai/maintenance-agent-v2/`；取证脚本与读数在 `evidence/evaluation-2026-09-10/`。**非盲评 AI 评价，无人工评价**；与 DeepSeek 同题分数不可比较（harness、预算、深度不同）。
+
 ## 保留的分歧与边界
 
 - Task 06：人工评价认为手和剪刀“很奇怪”，历史 AI 报告给 92/100 并认为关系明确。

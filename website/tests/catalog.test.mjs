@@ -19,6 +19,30 @@ test('production data keeps the Phase 1 regression baseline', () => {
   assert.deepEqual(catalog.reviews.filter((review) => review.runId.includes('deepseek') && review.runId.includes('task-06')).map((review) => review.type).sort(), ['ai', 'human']);
 });
 
+test('Muse phase-02 runs carry exactly one independent AI review and no fabricated human review', () => {
+  const musePhase2 = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3' && phaseOf(run) === 'phase-02');
+  assert.ok(musePhase2.length >= 5, 'Muse Task 16-20 must be imported');
+  const scores = [];
+  for (const run of musePhase2) {
+    const reviews = catalog.reviews.filter((review) => review.runId === run.id);
+    assert.equal(reviews.length, 1, `${run.id}: exactly one archived review`);
+    assert.equal(reviews[0].type, 'ai');
+    assert.equal(reviews[0].authorLabel, '维护 agent v2（AI，非盲评）');
+    assert.ok(reviews[0].score > 0 && reviews[0].score <= 100);
+    assert.ok(reviews[0].scoreMethod, `${run.id}: score method must be recorded`);
+    assert.ok(reviews[0].conclusion.zh && reviews[0].conclusion.en);
+    assert.match(reviews[0].source.path, /^Test_Results\/Muse-Spark-1\.3_Opencode\/phase-02\/runs\/.*\/reviews\//);
+    assert.equal(run.environment.reportedModelId, 'muse-spark-1.3-contributor-free');
+    scores.push(reviews[0].score);
+  }
+  assert.equal(scores.reduce((sum, value) => sum + value, 0) / scores.length, 88.2, 'phase average stays 88.2');
+  // 同题对比的基础：DeepSeek 与 Muse 在 task-16 上都有 phase-02 运行
+  for (const taskId of ['task-16', 'task-17', 'task-18', 'task-19', 'task-20']) {
+    const models = new Set(catalog.runs.filter((run) => run.taskId === taskId).map((run) => run.modelId));
+    assert.deepEqual([...models].sort(), ['deepseek-v4-1-flash-exp-0910', 'muse-spark-1-3'], `${taskId}: both models must be comparable`);
+  }
+});
+
 test('model identity is bilingual and snapshots stay traceable per run', () => {
   for (const model of catalog.models) {
     assert.ok(model.name.zh && model.name.en, `${model.id}: model name must be bilingual`);
@@ -33,15 +57,16 @@ test('model identity is bilingual and snapshots stay traceable per run', () => {
     if (reported === null) continue;
     assert.ok((model.snapshots ?? []).some((snapshot) => snapshot.id === reported), `${run.id}: undeclared snapshot ${reported}`);
   }
-  const phase2Runs = catalog.runs.filter((run) => phaseOf(run) === 'phase-02');
-  for (const run of phase2Runs) assert.equal(run.environment.reportedModelId, 'deepseek-v4.1-flash-expires-on-0910');
+  for (const run of runsOf('deepseek-v4-1-flash-exp-0910', 'phase-02')) {
+    assert.equal(run.environment.reportedModelId, 'deepseek-v4.1-flash-expires-on-0910');
+  }
   for (const run of runsOf('deepseek-v4-1-flash-exp-0910', 'phase-01')) assert.equal(run.environment.reportedModelId, null);
   // 同模型多批次必须全部保留（曾只取第一个批次，导致模型页统计停留在 Phase 1）
   assert.equal(catalog.batches.filter((batch) => batch.modelId === 'deepseek-v4-1-flash-exp-0910').length, 2);
 });
 
 test('Muse Spark Phase 1 is imported with prompts, isolation and every archived AI review', () => {
-  const muse = runsOf('muse-spark-1-3');
+  const muse = runsOf('muse-spark-1-3', 'phase-01');
   assert.equal(muse.length, 15);
   assert.equal(reviewsOf(muse).length, 45, '1 human + 2 AI reviews per run');
   for (const run of muse) {
@@ -105,8 +130,8 @@ test('Phase 2 runs are imported with verbatim prompts, audit evidence and unchan
     assert.equal(run.isolation.level, 'workspace-only');
     assert.match(run.prompt.sha256, /^[0-9a-f]{64}$/, `${run.id}: prompt hash`);
     assert.ok(run.artifact.files.includes(run.artifact.entry), `${run.id}: entry not published`);
-    assert.ok(run.evidence?.audit?.endsWith('.md'), `${run.id}: boundary audit must be linked`);
-    assert.ok(['unknown', 'suspected', 'contaminated'].includes(run.contamination.status));
+    assert.match(run.evidence?.audit ?? '', /\.(md|json)$/, `${run.id}: boundary audit evidence must be linked`);
+    assert.ok(['clean', 'unknown', 'suspected', 'contaminated'].includes(run.contamination.status));
     assert.ok(catalog.tasks.some((task) => task.id === run.taskId && task.phaseId === 'phase-02'));
   }
   // 边界尝试只记入档案，不排除运行、不改分
