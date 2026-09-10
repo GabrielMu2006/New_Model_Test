@@ -1,5 +1,16 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 无工具遥测的模型：默认视为遵守规则
+
+- 决定（组织者 2026-09-10）：有的模型 / harness **不展示中间工具调用**（例如只回最终答案的 API）。这类运行，收尾审查的路径、命令、仓库查询、网络、读写越界、委派等维度**无从检查**，因此**默认视为遵守规则**，照常计入成绩。
+- 边界（写死在文档里）：这是**默认规则、不是审查结论**——不得写成「未发现越界」「已审计」「clean」，只能写「工具调用不可见 · 默认视为遵守规则」；报告必须同时列出**未覆盖维度**与**本次仍做过的检查**（题目 SHA-256 是否一致、成果是否内嵌外部资源或外链、最终回答是否暴露外部来源）。
+- 落点：`docs/audit-method.md` 新增 **4.0 遥测可见性**判定表（`visible` / `partial` / `hidden` / 「本应存在却缺失」四种，后者仍判证据不完整）与第 5 节新增「默认视为遵守规则」档；§1 输入物区分「本应存在却缺失」与「本来就没有遥测」；§6 JSON 增加 `telemetry` 与 `uncheckedDimensions`；§8 已知局限同步。根 `AGENTS.md`、`docs/testing-protocol.md` 第 8 节统计口径、`docs/result-interface.md` 污染字段、`test-workspace/README.md` 第 4 节、`docs/known-issues.md` 4.4 同步。
+- 展示与校验：新增 `website/src/lib/contamination.ts`（纯函数 `telemetryOf` / `isAssumedCompliant` / `contaminationDisplay`，无 Astro 依赖，便于单测）；运行页在 `telemetry: hidden` 且未被确认作弊时显示「工具调用不可见 · 默认视为遵守规则」+ 说明，中文与英文各一套文案；`validate-data.mjs` 校验 `telemetry` 枚举，并要求 `hidden` 的运行在 `contamination.note` 中写明该规则。已确认作弊（`contaminated`）即使遥测不可见**仍然标注**。
+- 测试：新增 `website/tests/contamination.test.mjs` 3 个用例（未声明按 visible、hidden 默认遵守且不写成审查结论、contaminated 不被默认豁免）。`npm test` **15/15** 通过。
+- 现有数据不受影响：当前 40 条运行全部有完整会话日志（`telemetry` 缺省 = `visible`），线上抽查仍显示「未发现越界（已声明范围内通过检查）」（Muse phase-02）与「存在越界尝试，未取得内容 · 不影响成绩」（DeepSeek task-17）。
+- 门禁与发布：`import:data`、`validate:data`、`check`（0 errors）、`npm test`（15/15）、`build`（142 页，静态链接检查通过）全部通过；`test:e2e` 在 Chromium + WebKit 通过，40 个成果入口全部加载。提交 `…` 推送 `main`；回退标签 `website-rollback-20260910-f352a55`；Actions run `34444220484` 构建与 Pages 部署成功，匿名 HTTPS 复核首页与中英文运行页均返回 HTTP 200。
+- 未覆盖：本次没有任何 `telemetry: hidden` 的真实运行，因此该展示分支只有单元测试覆盖，未在真实数据上验证；首个此类模型接入时须按 4.0 记录未覆盖维度。
+
 ## 2026-09-10 归档布局改为扁平 task-NN-<slug>/，并明确评价目录接口
 
 - 组织者决定：`Test_Results/<模型>/phase-NN/` 下不再套 `runs/<run-id>/`，改用与第一阶段一致的扁平 `task-NN-<slug>/`（两个模型同题同名 slug）；`runId` 保留在 `submission.json` 内，**不再作目录名**。同一题的重复运行（r2 及以后）才放 `runs/<新run-id>/`，用 `runRelation.parentRunId` 关联首次运行。
