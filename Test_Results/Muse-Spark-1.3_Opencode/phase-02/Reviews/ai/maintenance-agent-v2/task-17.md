@@ -1,4 +1,4 @@
-# task-17 · AI 评价（maintenance-agent-v2）
+# task-17 机械腕表机芯动画 · AI 评价（maintenance-agent-v2）
 
 | 项 | 值 |
 | --- | --- |
@@ -8,7 +8,7 @@
 | 本题得分 | **88/100** |
 | 结论（中） | 齿轮反向啮合与转速差异经独立测量成立，暂停/调速不破坏相位；摆轮摆幅与齿面接触只有间接证据。 |
 | Conclusion (EN) | Opposite rotation of meshing gears and clearly different gear speeds are independently measured, and pause/speed changes do not corrupt phase; balance-wheel amplitude and tooth contact rest on indirect evidence only. |
-| 阶段总评 | [../../../Reviews/ai/maintenance-agent-v2/phase-summary.md](../../../Reviews/ai/maintenance-agent-v2/phase-summary.md) |
+| 阶段总评 | [phase-summary.md](phase-summary.md) |
 | 取证 | [../../../evidence/evaluation-2026-09-10/checks.json](../../../evidence/evaluation-2026-09-10/checks.json)（脚本 `evaluate*.mjs` 同目录） |
 | 评分口径 | 需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10 |
 

@@ -1,6 +1,6 @@
 # phase-02 · Muse Spark 1.3 xhigh（opencode）
 
-> 模型目录：`Test_Results/Muse-Spark-1.3_Opencode/phase-02/`（新阶段按 `runs/<run-id>/` 组织）。
+> 模型目录：`Test_Results/Muse-Spark-1.3_Opencode/phase-02/`（扁平 `task-NN-<slug>/` 布局，与第一阶段一致；两个模型同题同名 slug）。
 > 状态：部分归档 —— 5/30（Task 16–20），Task 21–45 待测。**AI 评价已产出（1 份/题，maintenance-agent-v2，平均 88.2/100）；人工评价尚未产出，因此本阶段不给综合结论分。**
 
 ## 运行
@@ -13,7 +13,7 @@
 | task-19 | `run-muse-spark-1-3-xhigh-task-19-r1` | `index.html` | completed | 88/100 |
 | task-20 | `run-muse-spark-1-3-xhigh-task-20-r1` | `index.html` + `app.js` + `solver.js` + `style.css` + `run_tests.js` | completed | 92/100 |
 
-每个 `runs/<run-id>/` 含：`prompt.txt`（逐字）、`artifacts/`、`evidence/isolation-rules.md` + `evidence/review.json`（含统计与审查结论）、`submission.json`、`reviews/`（独立评价）。
+每个 `task-NN-<slug>/` 含：`prompt.txt`（逐字）、`artifacts/`、`evidence/isolation-rules.md` + `evidence/review.json`（含统计与审查结论）、`submission.json`、`README.md`。`runId` 记录在 `submission.json` 内，不作目录名；同一题的重复运行才放 `runs/<新run-id>/`。
 
 ## 评价
 
@@ -21,7 +21,7 @@
 | --- | --- |
 | AI 评价 | **1 份/题**，`maintenance-agent-v2`（维护 agent，DeepSeek Harness），**非盲评**，日期 2026-09-10 |
 | 阶段总评 | [`Reviews/ai/maintenance-agent-v2/phase-summary.md`](Reviews/ai/maintenance-agent-v2/phase-summary.md)（含方法与边界、证据清单、逐题分析） |
-| 逐题评价 | 各 `runs/<run-id>/reviews/ai-maintenance-agent-v2.md` |
+| 逐题评价 | `Reviews/ai/maintenance-agent-v2/task-16.md` … `task-20.md`（**评价放阶段级 `Reviews/`，不放任务目录**） |
 | 取证 | [`evidence/evaluation-2026-09-10/`](evidence/evaluation-2026-09-10/)（4 个可复现脚本、4 份 checks JSON、17 张截图） |
 | 平均分 | **88.2/100**（自定口径，**不可与第一阶段 84.9 或 DeepSeek 93.6 直接比较**：题目集、harness、预算均不同） |
 | 人工评价 | **尚未产出**（本目录下暂无人工评价文件） |

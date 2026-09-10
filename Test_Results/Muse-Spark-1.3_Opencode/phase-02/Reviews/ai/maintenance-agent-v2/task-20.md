@@ -1,4 +1,4 @@
-# task-20 · AI 评价（maintenance-agent-v2）
+# task-20 二维机械连杆设计器 · AI 评价（maintenance-agent-v2）
 
 | 项 | 值 |
 | --- | --- |
@@ -8,7 +8,7 @@
 | 本题得分 | **92/100** |
 | 结论（中） | 连杆长度在运动全程经独立复算保持恒定（极差 ≤0.17 px），暂停/单步/存取往返均成立；单步与连续模拟的等状态一致性未逐点比对。 |
 | Conclusion (EN) | Rigid link lengths stay constant across the whole motion cycle under independent recomputation (range ≤ 0.17 px), and pause, stepping and save/recall round-trips all hold; step-versus-continuous equivalence was not compared point by point. |
-| 阶段总评 | [../../../Reviews/ai/maintenance-agent-v2/phase-summary.md](../../../Reviews/ai/maintenance-agent-v2/phase-summary.md) |
+| 阶段总评 | [phase-summary.md](phase-summary.md) |
 | 取证 | [../../../evidence/evaluation-2026-09-10/checks.json](../../../evidence/evaluation-2026-09-10/checks.json)（脚本 `evaluate*.mjs` 同目录） |
 | 评分口径 | 需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10 |
 

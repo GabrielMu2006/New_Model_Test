@@ -12,21 +12,22 @@ Test_Results/
   <model-folder>/
     phase-NN/
       README.md
-      Reviews/                         # 阶段/批次总结，分作者和来源
-      runs/
-        <run-id>/
-          submission.json              # 交接元数据，目前不被自动扫描
-          prompt.txt                   # 实际逐字输入
-          followups.json               # 按顺序记录补充指令；没有则 []
-          artifacts/                   # 封存模型输出，保持相对目录结构
-          evidence/                    # 可公开测试证据/脱敏日志
-          reviews/                     # 针对该运行的独立评价
-          README.md                    # 入口、运行方法、限制和摘要
+      Reviews/                         # 阶段级评价（人工 + 各 AI 评委），见下方「评价目录约定」
+      task-NN-<slug>/                  # 每个任务一个目录（首次运行 r1）；两个模型同题同名
+        submission.json                # 交接元数据：runId、指标、成果清单、隔离/越界、评价索引
+        prompt.txt                     # 实际逐字输入
+        followups.json                 # 按顺序记录补充指令；没有则 []
+        artifacts/                     # 封存模型输出，保持相对目录结构
+        evidence/                      # 可公开测试证据/脱敏日志/审查记录
+        README.md                      # 入口、运行方法、限制和摘要
+      runs/<新run-id>/                 # 仅用于同一题的**重复运行**（r2 及以后）
 ```
 
-第一阶段兼容例外：`Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/` 内保留原来的 15 个 `task-*` 目录、README 和 Reviews，不为套用新模板而重写历史资料。其 r1 对应关系以现有导入器为准；重复运行放入该阶段的 `runs/<新run-id>/`。同一个 run 只对应一题的一次执行，多题同会话通过 sessionId/共享上下文标记关联。
+**扁平布局是默认**（2026-09-10 组织者决定，与第一阶段一致）：`runId` 记录在 `submission.json` 里，**不**用作目录名；`task-NN-<slug>` 的 slug 取自题目名，两个模型同题时同名，便于并排对照。只有同一题的第二次及以后运行才放进 `runs/<新run-id>/`，`submission.json` 用 `runRelation.parentRunId` 关联首次运行。
 
-Muse-Spark 例外（组织者 2026-09-09 决定）：`Test_Results/Muse-Spark-1.3_Opencode/phase-01/` 同样沿用扁平 `task-*/` 布局，便于与第一阶段同题对照；其逐字 `prompt.txt` 为**事后补录**并已在阶段 README 中标注，AI 评价按 `Reviews/ai/<评价者标识>-vN/` 目录接口组织（同一运行可挂多份评价，互不覆盖）。**后续新阶段仍按上方 `runs/<run-id>/` 契约执行**，不再扩大扁平布局的适用范围。
+同一阶段内，每个 run 只对应一题的一次执行；多题同会话通过 sessionId / 共享上下文标记关联。历史上曾把 r1 放进 `runs/<run-id>/`（2026-09-10 已改回扁平），历史提交里的旧路径保持不变，不需要也无法重写。
+
+Muse-Spark 的 `prompt.txt` 为**事后补录**并在阶段 README 中标注；其余阶段的 `prompt.txt` 为逐字存档（导入时与归档声明的 SHA-256 校验）。
 
 新 model-folder 使用稳定文件名，显示名称、供应商、实际模型版本和 harness 在元数据中分列。同一模型不同阶段并列，不能把阶段放到模型目录之上。
 
@@ -36,6 +37,25 @@ Muse-Spark 例外（组织者 2026-09-09 决定）：`Test_Results/Muse-Spark-1.
 - 模型实体用 `snapshots` 声明该模型有哪些快照：`{ id, label: {zh, en}, status: current|retired|unknown, evidence: {zh, en} }`；`id` 尚未知时写 `null` 并注明「待第一次运行后回填」。
 - **跨快照比较必须标明**：同模型的不同快照不是同一配置。展示层要在运行详情显示快照 id，在模型页列出全部快照与全部批次。
 - runId 的模型 slug 只需**全局唯一且稳定**，不要求等于模型实体 id：后续正式版运行采用 `run-deepseek-v4-1-flash-task-NN-rN`，既有的 `run-deepseek-v4-1-flash-exp-0910-task-NN-rN` 保持不变。
+
+## 评价目录约定（2026-09-10 组织者决定）
+
+评价**一律放阶段层**，不放进任务目录：
+
+```text
+phase-NN/Reviews/
+├── Personal_Review.md                 # 人工评价（一名评审一份；多名时用 Reviews/<评审>.md）
+└── ai/
+    ├── maintenance-agent-v2/          # AI 评价：一个评委一个目录，版本号递增
+    │   ├── README.md                  # 必备：评价元信息 + 总览表 + 文件索引
+    │   ├── phase-summary.md           # 必备：阶段总评（方法、边界、逐题要点、限制）
+    │   └── task-16.md … task-20.md    # 推荐：逐题评价
+    └── codex-v1/
+```
+
+逐题评价文件的元信息表必须包含 `本题得分`、`结论（中）`、`Conclusion (EN)`（导入器按这几行解析），并写明评价者与是否盲评、日期、证据与局限。
+
+**后续添加评价**：新建 `Reviews/ai/<新评委>-v1/`，或对同一评委递增版本号（`-v2`）；**不得覆盖、改写或删除既有评价**。同一运行可以挂多份人工与 AI 评价，各自独立记录；不同评委、不同口径的分数**不得合成排行榜**，展示时并列呈现。
 
 ## 必须交接的信息
 

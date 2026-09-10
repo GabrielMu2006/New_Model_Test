@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "runId": "run-deepseek-v4-1-flash-exp-0910-task-16-r1",
+  "runId": "run-deepseek-v4-1-flash-exp-0910-task-18-r1",
   "phaseId": "phase-02",
-  "taskId": "task-16",
+  "taskId": "task-18",
   "taskVersion": 1,
   "model": {
     "id": "deepseek-v4.1-flash-expires-on-0910",
@@ -13,10 +13,10 @@
   },
   "prompt": {
     "path": "PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md",
-    "sha256": "13e4465c50efbe8b3caef2291d35722c5a39a029fc9c2c2d89620f6c63f92308",
+    "sha256": "dbcbcefdf8b81ff6f1782a8dcb917a4b941e4f8828b4dbede77fe8456e6da95a",
     "version": 1,
     "verbatimInputPath": "prompt.txt",
-    "localScaffoldPath": "test-workspace/phase-02/task-16-animated-pelican-bicycle/prompt.txt",
+    "localScaffoldPath": "test-workspace/phase-02/task-18-rube-goldberg-machine/prompt.txt",
     "followups": []
   },
   "environment": {
@@ -25,12 +25,12 @@
     "surface": "desktop",
     "os": "macOS 26.6.2 (arm64)",
     "runtime": "Node 24.19.0",
-    "sessionId": "session-3e6b3dce-f3b4-409c-beab-79d726832733",
+    "sessionId": "session-f220eec5-8ac1-461f-bbd7-0ddb43d452ae",
     "sharedContext": false,
     "continuationTurns": 0,
     "sampling": null,
-    "startedAt": "2026-09-09T15:48:51.368Z",
-    "endedAt": "2026-09-09T16:18:20.293Z",
+    "startedAt": "2026-09-09T15:49:53.116Z",
+    "endedAt": "2026-09-09T16:49:06.100Z",
     "timezone": "Asia/Shanghai"
   },
   "budget": {
@@ -43,14 +43,14 @@
     "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
   },
   "metrics": {
-    "durationSeconds": 1769,
+    "durationSeconds": 3553,
     "durationBasis": "session log turn/start -> turn/end",
-    "apiCalls": 136,
-    "toolCalls": 137,
+    "apiCalls": 398,
+    "toolCalls": 401,
     "failures": 0,
-    "inputTokens": 69351,
-    "outputTokens": 154143,
-    "cacheReadTokens": 18479744,
+    "inputTokens": 197968,
+    "outputTokens": 616694,
+    "cacheReadTokens": 144166528,
     "totalTokens": null,
     "note": "token 按每条 assistant 消息 usage 求和；cacheRead 为每步缓存前缀累计，非计费口径"
   },
@@ -61,22 +61,34 @@
     "source": null
   },
   "artifacts": {
-    "type": "svg",
-    "entry": "pelican-bicycle.svg",
+    "type": "html",
+    "entry": "index.html",
     "files": [
-      "pelican-bicycle.svg",
+      "index.html",
+      "styles.css",
+      "js/app.js",
+      "js/audio.js",
+      "js/machine.js",
+      "js/physics.js",
+      "js/render.js",
       "README.md"
     ],
-    "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/artifacts",
+    "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/task-18-rube-goldberg-machine/artifacts",
     "fileSha256": {
-      "pelican-bicycle.svg": "d52fa800da6fe963a4413d67ce68153c7c676e7c6477774012eb9ead5ae19c6a",
-      "README.md": "6994f71b387421ed503a31b8f800a8c4c1b7e0452c386bf015d71a42d60afa62"
+      "index.html": "c301d31fda92a98fac4f89cf601ae49584498ded953378f1098e8ee8c4061f43",
+      "styles.css": "f6af05ace41bc44ab3e42ec43d9278c8fdcf708c2096d871bd2b9e5f5cd7f1c2",
+      "js/app.js": "47a3be7f62696e0538f9ccd1ecf280af3775f78914a88dd7cbd56db91de56859",
+      "js/audio.js": "7281a22592ed1dee39875dc423c27140a528a7f57db07feb3e547ffbdfe68229",
+      "js/machine.js": "5c5bd47cf87647462568d1e4ec1b96455e2a751105c5765251a6bcc86f7eab36",
+      "js/physics.js": "b554dc58ba07b0976c0723dc732bccc26d87476c456dda1bc1eafb063093180d",
+      "js/render.js": "e6d46d0080e0f60e9202f8820c3b165ca0e7940c0f2fafe26d2cc4f8dea913ca",
+      "README.md": "04f98d34843c173c59f1e03942adc730377103f8825a50cad25ab3ea2eefaedc"
     },
     "cover": null,
     "preview": {
       "lazy": true,
       "sandbox": "allow-scripts allow-downloads allow-forms",
-      "note": "单文件动画 SVG，无外部依赖"
+      "note": "多文件页面，需保留 js/ 与 styles.css 的相对结构"
     }
   },
   "source": {

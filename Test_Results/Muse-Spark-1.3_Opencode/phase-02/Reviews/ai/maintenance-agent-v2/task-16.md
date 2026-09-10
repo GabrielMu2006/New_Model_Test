@@ -1,4 +1,4 @@
-# task-16 · AI 评价（maintenance-agent-v2）
+# task-16 鹈鹕骑车动画 SVG · AI 评价（maintenance-agent-v2）
 
 | 项 | 值 |
 | --- | --- |
@@ -8,7 +8,7 @@
 | 本题得分 | **85/100** |
 | 结论（中） | 单文件零依赖的动画 SVG 成立，暂停/继续实测能整体冻结与恢复；但最关键的「脚始终踩在踏板」只有模型自述与单帧视觉支持，未独立逐帧测量。 |
 | Conclusion (EN) | A self-contained animated SVG that really freezes and resumes; however the key requirement (feet staying on the pedals) rests on the model's self-report plus one visual frame, not on independent frame-by-frame measurement. |
-| 阶段总评 | [../../../Reviews/ai/maintenance-agent-v2/phase-summary.md](../../../Reviews/ai/maintenance-agent-v2/phase-summary.md) |
+| 阶段总评 | [phase-summary.md](phase-summary.md) |
 | 取证 | [../../../evidence/evaluation-2026-09-10/checks.json](../../../evidence/evaluation-2026-09-10/checks.json)（脚本 `evaluate*.mjs` 同目录） |
 | 评分口径 | 需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10 |
 

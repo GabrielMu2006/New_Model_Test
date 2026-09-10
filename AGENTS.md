@@ -23,6 +23,14 @@ website/                                # Astro 展示站、导入器、模板�
 .github/workflows/                      # 检查与 GitHub Pages 自动发布
 ```
 
+**归档布局与评价接口（2026-09-10 决定；字段级权威定义见 `docs/result-interface.md`）**：
+
+- 每个任务一个目录：`Test_Results/<model-folder>/phase-NN/task-NN-<slug>/`，内含逐字 `prompt.txt`、`artifacts/`、`evidence/`、`submission.json`、可选 `followups.json` 与入口 `README.md`。`runId` 记录在 `submission.json` 内，**不用作目录名**。
+- 两个模型跑同一题时使用**同名 slug**（取自题目名），同名目录便于并排对照。
+- 同一题的**重复运行**（r2 及以后）放该阶段的 `runs/<新run-id>/`，并用 `runRelation.parentRunId` 关联首次运行；不得覆盖首次运行的目录。
+- **评价一律放阶段级 `Reviews/`，不放进任务目录**：人工评价为 `Reviews/Personal_Review.md`；AI 评价为 `Reviews/ai/<评委标识>-v<N>/`，必备 `README.md`（元信息 + 总览 + 索引）与 `phase-summary.md`（阶段总评），推荐逐题 `task-NN.md`。
+- **后续添加评价**：新建 `Reviews/ai/<新评委>-v1/`，或对同一评委递增版本号（`-v2`）；**不得覆盖、改写或删除既有评价**。同一运行可挂多份人工与 AI 评价，各自独立记录；不同评委、不同口径的分数**不得合成排行榜**，展示时并列呈现。
+
 现有第一阶段位于 `Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/`。保留其模型目录名作为历史兼容名称；新模型身份与 harness 应分别记录，不能把 DSH 误认为模型本体。既有 task/run ID 和公开 URL 保持稳定。
 
 - 原始 Prompt、模型输出、截图、Reviews 与运行证据作为档案保留。修复展示站不得顺便修复原答案或润色历史评价。

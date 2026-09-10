@@ -82,7 +82,7 @@ test-workspace/
 
 - 在对应任务目录打开一个**全新会话**（每题一个，不共享上下文）；
 - **由组织者把该题的 `prompt.txt` 内容原样粘贴进对话**作为本轮输入——不要让被测会话自己去读 `prompt.txt`，避免同一题目被重复输入；
-- `prompt.txt` 只作为**逐字存档与哈希依据**留在目录里（归档时进入 `runs/<run-id>/prompt.txt`）；
+- `prompt.txt` 只作为**逐字存档与哈希依据**留在目录里（归档时进入 `phase-NN/task-NN-<slug>/prompt.txt`）；
 - 一次只测一题。
 
 ### 步骤 3 · 收尾审查 + 汇总归档
@@ -126,14 +126,14 @@ test-workspace/
 
 | 工作区 | 归档位置 |
 |---|---|
-| `task-NN-<slug>/prompt.txt` | `runs/<run-id>/prompt.txt` |
-| 模型成果 | `runs/<run-id>/artifacts/`（保持相对结构） |
-| 会话日志哈希、审查结论 | `runs/<run-id>/evidence/` |
-| `AGENTS.md`（脚手架） | `runs/<run-id>/evidence/isolation-rules.md` |
+| `task-NN-<slug>/prompt.txt` | `phase-NN/task-NN-<slug>/prompt.txt` |
+| 模型成果 | `phase-NN/task-NN-<slug>/artifacts/`（保持相对结构） |
+| 会话日志哈希、审查结论 | `phase-NN/task-NN-<slug>/evidence/` |
+| `AGENTS.md`（脚手架） | `phase-NN/task-NN-<slug>/evidence/isolation-rules.md` |
 | `PLAN.md`、`SUMMARY.md` | `phase-NN/README.md` 或 `Reviews/` |
-| 人工 / AI 评价 | `runs/<run-id>/reviews/` 或 `phase-NN/Reviews/` |
+| 人工 / AI 评价 | `phase-NN/Reviews/Personal_Review.md`（人工）与 `phase-NN/Reviews/ai/<评委>-vN/`（AI，含 `README.md`/`phase-summary.md`/`task-NN.md`） |
 
-> 新阶段按 `runs/<run-id>/` 组织；第一阶段与 Muse Spark 的扁平 `task-*` 布局是历史兼容例外。
+> **归档用扁平 `task-NN-<slug>/` 布局**（与第一阶段一致，两个模型同题同名 slug）；`runId` 记录在 `submission.json` 里，不作目录名。同一题的**重复运行**（r2 及以后）才放该阶段的 `runs/<新run-id>/`。评价一律放阶段级 `Reviews/`，接口见 `docs/result-interface.md` 的「评价目录约定」。
 > 移动后逐文件核对 SHA-256。
 
 ---
@@ -169,6 +169,6 @@ test-workspace/
 [ ] 测试会话逐题独立，未共享上下文
 [ ] 收尾审查已覆盖：越界读取 + 仓库查询 + 统计核对
 [ ] SUMMARY.md 已写：状态 / 统计 / 审查结论 / 限制
-[ ] 归档到 runs/<run-id>/，逐文件哈希核对
+[ ] 归档到 phase-NN/task-NN-<slug>/（重复运行才用 runs/<run-id>/），逐文件哈希核对
 [ ] docs/source-audit.md、docs/verification.md 已更新
 ```

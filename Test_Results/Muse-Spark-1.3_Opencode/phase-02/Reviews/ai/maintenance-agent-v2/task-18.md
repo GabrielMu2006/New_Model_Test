@@ -1,4 +1,4 @@
-# task-18 · AI 评价（maintenance-agent-v2）
+# task-18 鲁布·戈德堡连锁机关 · AI 评价（maintenance-agent-v2）
 
 | 项 | 值 |
 | --- | --- |
@@ -8,7 +8,7 @@
 | 本题得分 | **88/100** |
 | 结论（中） | 8 阶段链条、暂停冻结、步进精度与重置都经实测成立；重复性与跨视口/帧率鲁棒性样本不足。 |
 | Conclusion (EN) | The 8-stage chain, pause freezing, exact stepping and reset are all measured; repeatability and viewport/frame-rate robustness are only lightly sampled. |
-| 阶段总评 | [../../../Reviews/ai/maintenance-agent-v2/phase-summary.md](../../../Reviews/ai/maintenance-agent-v2/phase-summary.md) |
+| 阶段总评 | [phase-summary.md](phase-summary.md) |
 | 取证 | [../../../evidence/evaluation-2026-09-10/checks.json](../../../evidence/evaluation-2026-09-10/checks.json)（脚本 `evaluate*.mjs` 同目录） |
 | 评分口径 | 需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10 |
 

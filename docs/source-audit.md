@@ -23,7 +23,7 @@
 
 ## Phase 2（Task 16–20，2026-09-10 接入）
 
-来源：`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md` 的 Task 16–20（`taskVersion = 1`）与 `Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/<run-id>/`。
+来源：`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md` 的 Task 16–20（`taskVersion = 1`）与 `Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/task-NN-<slug>/`（扁平布局）。
 成果与运行页源码链接固定到本批次的归档提交 `a9925d853af078d931e96ee769aa119e2f0bd997`（不再是第一阶段基线提交）；历史路径映射只对第一阶段提交生效，不会套用到新目录。
 
 | 任务 | 会话 | 成果 | 类型 | 越界判定 |
@@ -54,7 +54,7 @@
 
 ## Muse Spark 1.3 · Phase 2（Task 16–20，2026-09-10 接入）
 
-来源：同题 `PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`（`taskVersion = 1`）与 `Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/<run-id>/`；成果与评价链接固定到本批次归档提交 `66aa028b58f17505426a6f4217b0dbf787a72218`。
+来源：同题 `PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`（`taskVersion = 1`）与 `Test_Results/Muse-Spark-1.3_Opencode/phase-02/task-NN-<slug>/`（扁平布局）；成果与评价链接固定到本批次归档提交 `66aa028b58f17505426a6f4217b0dbf787a72218`。
 
 | 任务 | runId | 成果 | 隔离/越界 | AI 评价 |
 |---|---|---|---|---|
@@ -64,7 +64,7 @@
 | 19 | `run-muse-spark-1-3-xhigh-task-19-r1` | `index.html` | 同上 | **88** |
 | 20 | `run-muse-spark-1-3-xhigh-task-20-r1` | `index.html` + 4 个源文件 | 同上 | **92** |
 
-评价来源：`runs/<run-id>/reviews/ai-maintenance-agent-v2.md` 与 `Reviews/ai/maintenance-agent-v2/`；取证脚本与读数在 `evidence/evaluation-2026-09-10/`。**非盲评 AI 评价，无人工评价**；与 DeepSeek 同题分数不可比较（harness、预算、深度不同）。
+评价来源：`Reviews/ai/maintenance-agent-v2/task-NN.md` 与同目录 `README.md`/`phase-summary.md`；取证脚本与读数在 `evidence/evaluation-2026-09-10/`。**非盲评 AI 评价，无人工评价**；与 DeepSeek 同题分数不可比较（harness、预算、深度不同）。
 
 ## 保留的分歧与边界
 

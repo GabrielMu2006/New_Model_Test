@@ -55,7 +55,7 @@
 
 | taskId | 轮次 | 追加内容（逐字） | 归档位置 |
 | --- | ---: | --- | --- |
-| | 2 | | `runs/<run-id>/followups.json` |
+| | 2 | | `phase-NN/task-NN-<slug>/followups.json`（重复运行放 `runs/<run-id>/`） |
 
 ## 6. 评分与评价规则（运行前固定）
 

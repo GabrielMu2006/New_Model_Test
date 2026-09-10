@@ -97,6 +97,11 @@ for (const run of catalog.runs) {
     if (!source.startsWith(path.resolve(repoRoot, run.artifact.sourcePath) + path.sep)) fail(`${run.id}: path escaped archive`);
     if (!fs.existsSync(source)) fail(`${run.id}: missing file ${file}`);
   }
+  // 归档目录（扁平 task-NN-<slug>/；重复运行为 runs/<run-id>/）必须真实存在
+  if (run.directory) {
+    if (!/^Test_Results\/[\w.-]+\/phase-\d{2}\/(task-\d+-[a-z0-9-]+|runs\/[\w.-]+)$/.test(run.directory)) fail(`${run.id}: unexpected archive directory ${run.directory}`);
+    if (!fs.existsSync(path.resolve(repoRoot, run.directory))) fail(`${run.id}: missing archive directory ${run.directory}`);
+  }
   if (run.prompt) {
     if (!/^[0-9a-f]{64}$/.test(run.prompt.sha256 ?? '')) fail(`${run.id}: prompt.sha256 must be a 64-char hex digest`);
     if (!fs.existsSync(path.resolve(repoRoot, run.prompt.path))) fail(`${run.id}: missing prompt file ${run.prompt.path}`);

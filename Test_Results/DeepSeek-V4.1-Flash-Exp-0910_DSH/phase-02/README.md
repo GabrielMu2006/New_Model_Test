@@ -18,7 +18,7 @@
 ## 2. 输入与题目版本
 
 - 题目文档：`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`，本批次取 Task 16–20，统一 `taskVersion = 1`（即该文档 `### 原始 Prompt / Original Prompt` 代码块的逐字内容）。
-- 每题逐字输入：`runs/<run-id>/prompt.txt`，SHA-256 记录在同目录 `submission.json`。题目由组织者粘贴进对话，`prompt.txt` 为逐字存档。
+- 每题逐字输入：`task-NN-<slug>/prompt.txt`，SHA-256 记录在同目录 `submission.json`。题目由组织者粘贴进对话，`prompt.txt` 为逐字存档。
 - 题目 Task 16–45 已在公开仓库发布（提交 `0540edf`，见 `docs/known-issues.md` 4.0）：本阶段成绩须同时标注该暴露。
 
 ## 3. 环境与预算（开测前固定）
@@ -35,7 +35,7 @@
 
 - 隔离等级 **`workspace-only`**：`AGENTS.md` 两条绝对规则（不得读取当前目录以外的内容、不得查询任何仓库）+ 收尾工具调用与统计审查。这是**策略级约束 + 事后审查**，能防手滑、能被审计，但挡不住有意读取；**不得**表述为「强制隔离」或「无污染」。
 - 越界处置按组织者 2026-09-10 决定：**判定只影响标注，不影响成绩录入**——任何 run 都不被排除、作废、重测或改写分数。越界尝试与嫌疑只记入审计档案（各题 `evidence/audit-2026-09-10.*`），不作外显标注；只有确认作弊成功（实际读到他人答案/成果，或从仓库、网络取到题目相关内容）才标注「已确认获取外部答案」。**本批次 5 个 run 均未被确认获取外部答案。**
-- 逐题审查结论、覆盖维度（含同题并行副本）与未覆盖渠道见 `runs/<run-id>/evidence/audit-2026-09-10.md`；原始会话日志未随公开档案入库，其路径、大小与 SHA-256 记录在 `evidence/session-log.sha256.txt`。
+- 逐题审查结论、覆盖维度（含同题并行副本）与未覆盖渠道见各 `task-NN-<slug>/evidence/audit-2026-09-10.md`；原始会话日志未随公开档案入库，其路径、大小与 SHA-256 记录在同目录 `evidence/session-log.sha256.txt`。
 
 ## 5. 补充轮
 
@@ -45,10 +45,10 @@
 ## 6. 尚未完成的项
 
 - Task 21–45（25 题）尚未测试；
-- 独立评价（人工 / AI）尚未产出，`runs/<run-id>/reviews/` 为空；展示站对应运行页因此没有评价卡片；
+- 独立评价（人工 / AI）尚未产出，因此阶段级 `Reviews/` 目录尚不存在（**评价放阶段级 `Reviews/`，不放任务目录**）；展示站对应运行页因此没有评价卡片；
 - 成果内的测试结果均为**作者自述**（各 `artifacts/README.md`），本次未在隔离环境复跑；
 - 隔离是策略级约束，未做环境级强制；训练数据是否包含本题答案无法用日志判定。
 
 ## 7. 逐题详情
 
-入口、逐字输入、指标、审查结论与限制见各 `runs/<run-id>/README.md`；交付物运行方式与逐条需求对照见各 `runs/<run-id>/artifacts/README.md`。
+入口、逐字输入、指标、审查结论与限制见各 `task-NN-<slug>/README.md`；交付物运行方式与逐条需求对照见各 `task-NN-<slug>/artifacts/README.md`。

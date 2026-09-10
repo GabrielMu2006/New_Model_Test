@@ -31,7 +31,8 @@ test('Muse phase-02 runs carry exactly one independent AI review and no fabricat
     assert.ok(reviews[0].score > 0 && reviews[0].score <= 100);
     assert.ok(reviews[0].scoreMethod, `${run.id}: score method must be recorded`);
     assert.ok(reviews[0].conclusion.zh && reviews[0].conclusion.en);
-    assert.match(reviews[0].source.path, /^Test_Results\/Muse-Spark-1\.3_Opencode\/phase-02\/runs\/.*\/reviews\//);
+    // 评价放阶段级 Reviews/（不是任务目录内），逐题文件命名 task-NN.md
+    assert.match(reviews[0].source.path, /^Test_Results\/Muse-Spark-1\.3_Opencode\/phase-02\/Reviews\/ai\/maintenance-agent-v2\/task-\d\d\.md$/);
     assert.equal(run.environment.reportedModelId, 'muse-spark-1.3-contributor-free');
     scores.push(reviews[0].score);
   }
@@ -125,6 +126,10 @@ test('Phase 2 runs are imported with verbatim prompts, audit evidence and unchan
   const phase2Runs = catalog.runs.filter((run) => phaseOf(run) === 'phase-02');
   assert.ok(phase2Runs.length >= 5, 'Task 16-20 must be imported');
   for (const run of phase2Runs) {
+    // 扁平布局：目录名是 task-NN-<slug>，runId 只在 submission.json 里
+    assert.match(run.directory, /\/phase-02\/task-\d\d-[a-z0-9-]+$/, `${run.id}: flat task directory expected`);
+    assert.ok(!run.directory.includes(run.id), `${run.id}: the runId must not be the directory name`);
+    assert.equal(fs.existsSync(new URL(`../../${run.directory}`, import.meta.url)), true, `${run.id}: archive directory missing`);
     assert.equal(run.taskVersion, 1);
     assert.equal(run.status, 'completed');
     assert.equal(run.isolation.level, 'workspace-only');

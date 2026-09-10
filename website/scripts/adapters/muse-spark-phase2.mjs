@@ -1,4 +1,4 @@
-// 批次适配器：Muse Spark 1.3 / Phase 2（`runs/<run-id>/` 布局，本批次为 Task 16–20）。
+// 批次适配器：Muse Spark 1.3 / Phase 2（扁平 `task-NN-<slug>/` 布局，本批次为 Task 16–20）。
 //
 // 来源：PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md（题目与理论成果，与 DeepSeek 同题）
 //      + Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/<run-id>/（逐题交接元数据、成果与评价）。
@@ -24,12 +24,13 @@ const promptPath = 'PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md';
 // 成果发布所在提交：本批次（含评价与取证）归档入库的提交。
 const archiveCommit = '66aa028b58f17505426a6f4217b0dbf787a72218';
 
+// 扁平 `task-NN-<slug>/` 布局（与 phase-01 一致，两个模型同题同名）；重复运行才进 `runs/<run-id>/`。
 const taskPlan = [
-  { dir: 'run-muse-spark-1-3-xhigh-task-16-r1', taskId: 'task-16', category: 'svg-illustration' },
-  { dir: 'run-muse-spark-1-3-xhigh-task-17-r1', taskId: 'task-17', category: 'svg-illustration' },
-  { dir: 'run-muse-spark-1-3-xhigh-task-18-r1', taskId: 'task-18', category: 'simulation' },
-  { dir: 'run-muse-spark-1-3-xhigh-task-19-r1', taskId: 'task-19', category: 'simulation' },
-  { dir: 'run-muse-spark-1-3-xhigh-task-20-r1', taskId: 'task-20', category: 'engineering-tool' },
+  { dir: 'task-16-animated-pelican-bicycle', taskId: 'task-16', category: 'svg-illustration' },
+  { dir: 'task-17-mechanical-watch-movement', taskId: 'task-17', category: 'svg-illustration' },
+  { dir: 'task-18-rube-goldberg-machine', taskId: 'task-18', category: 'simulation' },
+  { dir: 'task-19-interactive-solar-system', taskId: 'task-19', category: 'simulation' },
+  { dir: 'task-20-2d-mechanical-linkage-designer', taskId: 'task-20', category: 'engineering-tool' },
 ];
 
 const modelId = 'muse-spark-1-3';
@@ -82,9 +83,8 @@ export function load({ read, repoRoot }) {
     if (!section) throw new Error(`[${id}] prompt document has no section for ${plan.taskId}`);
     const number = plan.taskId.slice(5);
 
-    const runRoot = `${archiveRoot}/runs/${plan.dir}`;
+    const runRoot = `${archiveRoot}/${plan.dir}`;
     const submission = readJson(repoRoot, `${runRoot}/submission.json`);
-    if (submission.runId !== plan.dir) throw new Error(`[${id}] ${plan.dir}: runId mismatch (${submission.runId})`);
     if (submission.taskId !== plan.taskId) throw new Error(`[${id}] ${plan.dir}: taskId mismatch (${submission.taskId})`);
     if (submission.phaseId !== 'phase-02') throw new Error(`[${id}] ${plan.dir}: unexpected phaseId ${submission.phaseId}`);
 
@@ -153,6 +153,7 @@ export function load({ read, repoRoot }) {
         preview: artifact.preview,
       },
       source: { path: `${runRoot}/README.md`, lines: null },
+      directory: `${archiveRoot}/${plan.dir}`,
       evidence: {
         // Muse 本批的逐题审查记录为 `review.json`（含统计与审查结论），审计报告在组织者工作区。
         audit: `${runRoot}/evidence/review.json`,
@@ -164,7 +165,8 @@ export function load({ read, repoRoot }) {
     });
 
     for (const reference of submission.reviews ?? []) {
-      const reviewPath = `${runRoot}/${reference.path}`;
+      // 评价路径为**阶段相对**路径（`Reviews/ai/<评委>-vN/task-NN.md`），不在运行目录内。
+      const reviewPath = `${archiveRoot}/${reference.path}`;
       const text = read(reviewPath);
       const score = reference.score ?? parseScore(metaRow(text, '本题得分'));
       const conclusionZh = reference.conclusion?.zh ?? metaRow(text, '结论（中）');

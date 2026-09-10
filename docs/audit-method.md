@@ -180,7 +180,7 @@ arguments: {"code": "try { const a = await tools.bash({ command: 'pwd' }) ..."}
 
 ## 6. 输出与归档
 
-审计产出两份文件，放 `Test_Results/<模型>/phase-NN/runs/<run-id>/evidence/`：
+审计产出两份文件，放 `Test_Results/<模型>/phase-NN/task-NN-<slug>/evidence/`（重复运行则在其 `runs/<run-id>/evidence/`）：
 
 1. `audit-<YYYYMMDD>.md`：人类可读报告；
 2. `audit-<YYYYMMDD>.json`：机器可读结论。

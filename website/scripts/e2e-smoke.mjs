@@ -80,7 +80,7 @@ try {
     for (const expected of ['策略级（workspace-only）', '存在越界尝试，未取得内容 · 不影响成绩', '不要再读取chrome钥匙串了', '本运行暂无独立评价']) {
       if (!phase2Text?.includes(expected)) throw new Error(`${name}: phase-02 run page missing "${expected}"`);
     }
-    const auditHref = await page.locator('a[href*="task-17-r1/evidence/audit"]').first().getAttribute('href');
+    const auditHref = await page.locator('a[href*="task-17-mechanical-watch-movement/evidence/audit"]').first().getAttribute('href');
     if (!auditHref?.includes('/blob/a9925d8')) throw new Error(`${name}: audit evidence link is not bound to the archive commit`);
     // SVG 成果作为预览发布，且入口可用
     await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/`);

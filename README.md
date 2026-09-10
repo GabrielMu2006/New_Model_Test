@@ -87,13 +87,18 @@ New_Model_Test/
 │   │   │   └── task-01-.../ ... task-15-.../
 │   │   └── phase-02/                  # Task 16–20（部分：共 30 题）
 │   │       ├── README.md
-│   │       └── runs/<run-id>/
+│   │       ├── Reviews/               # 评价待产出
+│   │       └── task-16-.../ ... task-20-.../
 │   └── Muse-Spark-1.3_Opencode/
-│       └── phase-01/
+│       ├── phase-01/
+│       │   ├── README.md
+│       │   ├── Reviews/
+│       │   ├── evidence/
+│       │   └── task-01-.../ ... task-15-.../
+│       └── phase-02/                  # 同题 Task 16–20（部分）
 │           ├── README.md
-│           ├── Reviews/
-│           ├── evidence/
-│           └── task-01-.../ ... task-15-.../
+│           ├── Reviews/ai/maintenance-agent-v2/
+│           └── task-16-.../ ... task-20-.../
 ├── test-workspace/            # 后续阶段测试脚手架（隔离规则、启动方案、模板）
 ├── website/                   # Astro 展示站、导入器与自动化测试
 ├── docs/                      # 数据模型、测试流程、部署与验证记录
@@ -259,13 +264,18 @@ New_Model_Test/
 │   │   │   └── task-01-.../ ... task-15-.../
 │   │   └── phase-02/                  # Tasks 16-20 (partial: 5 of 30)
 │   │       ├── README.md
-│   │       └── runs/<run-id>/
+│   │       ├── Reviews/               # reviews pending
+│   │       └── task-16-.../ ... task-20-.../
 │   └── Muse-Spark-1.3_Opencode/
-│       └── phase-01/
+│       ├── phase-01/
+│       │   ├── README.md
+│       │   ├── Reviews/
+│       │   ├── evidence/
+│       │   └── task-01-.../ ... task-15-.../
+│       └── phase-02/                  # same Tasks 16-20 (partial)
 │           ├── README.md
-│           ├── Reviews/
-│           ├── evidence/
-│           └── task-01-.../ ... task-15-.../
+│           ├── Reviews/ai/maintenance-agent-v2/
+│           └── task-16-.../ ... task-20-.../
 ├── test-workspace/            # Test scaffolding for later phases (isolation rules, runbook, templates)
 ├── website/                   # Astro showcase site, importer and automated tests
 ├── docs/                      # Data model, test protocol, deployment and verification records

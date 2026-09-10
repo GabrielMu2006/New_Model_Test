@@ -1,4 +1,4 @@
-// 批次适配器：DeepSeek-V4.1-Flash-Exp-0910 / Phase 2（`runs/<run-id>/` 布局，本批次为 Task 16–20）。
+// 批次适配器：DeepSeek-V4.1-Flash-Exp-0910 / Phase 2（扁平 `task-NN-<slug>/` 布局，本批次为 Task 16–20）。
 //
 // 来源：PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md（题目与理论成果）
 //      + Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/<run-id>/（逐题交接元数据与证据）。
@@ -24,13 +24,13 @@ const promptPath = 'PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md';
 // 成果发布所在提交：本批次归档入库的提交（历史目录迁移与逐批提交相互独立）。
 const archiveCommit = 'a9925d853af078d931e96ee769aa119e2f0bd997';
 
-// 目录名 → (taskId, 类别, 预览说明)。类别沿用展示站既有词表，新增项已在页面文案表登记。
+// 目录名 → (taskId, 类别)。扁平 `task-NN-<slug>/` 布局（与 phase-01 一致）；同一题重复运行才进 `runs/<run-id>/`。
 const taskPlan = [
-  { dir: 'run-deepseek-v4-1-flash-exp-0910-task-16-r1', taskId: 'task-16', category: 'svg-illustration' },
-  { dir: 'run-deepseek-v4-1-flash-exp-0910-task-17-r1', taskId: 'task-17', category: 'svg-illustration' },
-  { dir: 'run-deepseek-v4-1-flash-exp-0910-task-18-r1', taskId: 'task-18', category: 'simulation' },
-  { dir: 'run-deepseek-v4-1-flash-exp-0910-task-19-r1', taskId: 'task-19', category: 'simulation' },
-  { dir: 'run-deepseek-v4-1-flash-exp-0910-task-20-r1', taskId: 'task-20', category: 'engineering-tool' },
+  { dir: 'task-16-animated-pelican-bicycle', taskId: 'task-16', category: 'svg-illustration' },
+  { dir: 'task-17-mechanical-watch-movement', taskId: 'task-17', category: 'svg-illustration' },
+  { dir: 'task-18-rube-goldberg-machine', taskId: 'task-18', category: 'simulation' },
+  { dir: 'task-19-interactive-solar-system', taskId: 'task-19', category: 'simulation' },
+  { dir: 'task-20-2d-mechanical-linkage-designer', taskId: 'task-20', category: 'engineering-tool' },
 ];
 
 const modelId = 'deepseek-v4-1-flash-exp-0910';
@@ -70,10 +70,10 @@ export function load({ read, repoRoot }) {
     const expectedOutcome = bilingualParagraph(subsection(section.section, '### 理论成果 / Expected Outcome', '### 检验内容 / Verification'));
     const verification = bilingualList(subsection(section.section, '### 检验内容 / Verification'));
 
-    const runRoot = `${archiveRoot}/runs/${plan.dir}`;
+    const runRoot = `${archiveRoot}/${plan.dir}`;
     const submission = readJson(repoRoot, `${runRoot}/submission.json`);
-    if (submission.runId !== plan.dir) throw new Error(`[${id}] ${plan.dir}: runId mismatch (${submission.runId})`);
     if (submission.taskId !== plan.taskId) throw new Error(`[${id}] ${plan.dir}: taskId mismatch (${submission.taskId})`);
+    if (!/\.html$/.test(submission.artifacts.entry) && !/\.svg$/.test(submission.artifacts.entry)) throw new Error(`[${id}] ${plan.dir}: unexpected artifact entry`);
     if (submission.phaseId !== 'phase-02') throw new Error(`[${id}] ${plan.dir}: unexpected phaseId ${submission.phaseId}`);
 
     // 题目完整性：逐字输入文件必须与归档声明的哈希一致。
@@ -143,6 +143,7 @@ export function load({ read, repoRoot }) {
         fileSha256: artifact.fileSha256,
       },
       source: { path: `${runRoot}/README.md`, lines: null },
+      directory: `${archiveRoot}/${plan.dir}`,
       evidence: {
         audit: `${runRoot}/evidence/audit-2026-09-10.md`,
         auditJson: `${runRoot}/evidence/audit-2026-09-10.json`,

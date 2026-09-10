@@ -1,4 +1,4 @@
-# task-19 · AI 评价（maintenance-agent-v2）
+# task-19 交互式太阳系模拟 · AI 评价（maintenance-agent-v2）
 
 | 项 | 值 |
 | --- | --- |
@@ -8,7 +8,7 @@
 | 本题得分 | **88/100** |
 | 结论（中） | 八大行星、月球与伽利略卫星、调速连续性、暂停冻结时钟全部成立；暂停时画布仍有小幅重绘，选择天体未逐项验证。 |
 | Conclusion (EN) | Eight planets, the Moon and the Galilean moons, continuous speed changes and a frozen clock while paused all hold; the canvas keeps a small residual repaint when paused, and body selection was not verified item by item. |
-| 阶段总评 | [../../../Reviews/ai/maintenance-agent-v2/phase-summary.md](../../../Reviews/ai/maintenance-agent-v2/phase-summary.md) |
+| 阶段总评 | [phase-summary.md](phase-summary.md) |
 | 取证 | [../../../evidence/evaluation-2026-09-10/checks.json](../../../evidence/evaluation-2026-09-10/checks.json)（脚本 `evaluate*.mjs` 同目录） |
 | 评分口径 | 需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10 |
 

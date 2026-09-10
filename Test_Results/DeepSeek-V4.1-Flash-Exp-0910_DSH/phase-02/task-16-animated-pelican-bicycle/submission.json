@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "runId": "run-deepseek-v4-1-flash-exp-0910-task-17-r1",
+  "runId": "run-deepseek-v4-1-flash-exp-0910-task-16-r1",
   "phaseId": "phase-02",
-  "taskId": "task-17",
+  "taskId": "task-16",
   "taskVersion": 1,
   "model": {
     "id": "deepseek-v4.1-flash-expires-on-0910",
@@ -13,20 +13,11 @@
   },
   "prompt": {
     "path": "PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md",
-    "sha256": "bfae57d571daa0901d16971f08cab7bf8dc2f5746492bde5cee71841a7f83b27",
+    "sha256": "13e4465c50efbe8b3caef2291d35722c5a39a029fc9c2c2d89620f6c63f92308",
     "version": 1,
     "verbatimInputPath": "prompt.txt",
-    "localScaffoldPath": "test-workspace/phase-02/task-17-mechanical-watch-movement/prompt.txt",
-    "followups": [
-      {
-        "turn": 2,
-        "at": "2026-09-09T16:27:55+08:00",
-        "actor": "organizer (human)",
-        "verbatim": "不要再读取chrome钥匙串了",
-        "reason": "运行中观察到 Chrome 启动触碰钥匙串/默认 profile 活动，机主中途介入要求停止",
-        "effect": "模型随后为浏览器启动加上 --use-mock-keychain --password-store=basic --disable-sync，并把浏览器步骤改为 opt-in；该轮输入未提供任何题目提示或答案"
-      }
-    ]
+    "localScaffoldPath": "test-workspace/phase-02/task-16-animated-pelican-bicycle/prompt.txt",
+    "followups": []
   },
   "environment": {
     "harness": "DSH",
@@ -34,12 +25,12 @@
     "surface": "desktop",
     "os": "macOS 26.6.2 (arm64)",
     "runtime": "Node 24.19.0",
-    "sessionId": "session-f4bf2a9f-9ea2-4642-b2e7-59de1ab1013b",
+    "sessionId": "session-3e6b3dce-f3b4-409c-beab-79d726832733",
     "sharedContext": false,
-    "continuationTurns": 1,
+    "continuationTurns": 0,
     "sampling": null,
-    "startedAt": "2026-09-09T15:49:25.507Z",
-    "endedAt": "2026-09-09T16:29:22.236Z",
+    "startedAt": "2026-09-09T15:48:51.368Z",
+    "endedAt": "2026-09-09T16:18:20.293Z",
     "timezone": "Asia/Shanghai"
   },
   "budget": {
@@ -48,18 +39,18 @@
     "outputTokens": null,
     "toolCalls": null,
     "retries": 0,
-    "followupTurns": 1,
+    "followupTurns": 0,
     "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
   },
   "metrics": {
-    "durationSeconds": 2397,
+    "durationSeconds": 1769,
     "durationBasis": "session log turn/start -> turn/end",
-    "apiCalls": 117,
-    "toolCalls": 117,
+    "apiCalls": 136,
+    "toolCalls": 137,
     "failures": 0,
-    "inputTokens": 51361,
-    "outputTokens": 237863,
-    "cacheReadTokens": 24286080,
+    "inputTokens": 69351,
+    "outputTokens": 154143,
+    "cacheReadTokens": 18479744,
     "totalTokens": null,
     "note": "token 按每条 assistant 消息 usage 求和；cacheRead 为每步缓存前缀累计，非计费口径"
   },
@@ -71,35 +62,21 @@
   },
   "artifacts": {
     "type": "svg",
-    "entry": "mechanical-watch-movement.svg",
+    "entry": "pelican-bicycle.svg",
     "files": [
-      "mechanical-watch-movement.svg",
-      "build.mjs",
-      "verify.mjs",
-      "check.sh",
-      "src/model.js",
-      "src/runtime.js",
-      "tools/browser.mjs",
-      "tools/pixels.mjs",
+      "pelican-bicycle.svg",
       "README.md"
     ],
-    "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/artifacts",
+    "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/task-16-animated-pelican-bicycle/artifacts",
     "fileSha256": {
-      "mechanical-watch-movement.svg": "2de65946a80c791fd39b43bded057b1e43bf36c78a67166b9cc01e4b10c98a1b",
-      "build.mjs": "08c4729087e2c516169e39cdeba0a7657540e5cb19acad9908152356d364e297",
-      "verify.mjs": "51c618253839d452ca6310f7d44b25ececc1ba5e60abe9f30214063c90ce0496",
-      "check.sh": "2f290c75244a224e393611af778df955bace5c6c3945f4911d7801934869cc7a",
-      "src/model.js": "cd5effc528ae380337c9a7bed1ad96d88ba778cec351cb859253eafc7fd4a0cf",
-      "src/runtime.js": "1f8256575a5a4207ccdbc22d7df78e70cb8d7f573f7ea9c6696ca647a8b4b30c",
-      "tools/browser.mjs": "dea8982232cf93be39cc9702a8283499ffbe13e8a53d53cd0deaa113c8a569e1",
-      "tools/pixels.mjs": "5c7fed34933efbaf7ac7d90ab94ed8bfd2e51e2b651d9f0999d06fdcc6ba37c1",
-      "README.md": "f5c99e6087343b6308d7e00f88836cd7ea3f8165cf3846efd5c1afdace653d49"
+      "pelican-bicycle.svg": "d52fa800da6fe963a4413d67ce68153c7c676e7c6477774012eb9ead5ae19c6a",
+      "README.md": "6994f71b387421ed503a31b8f800a8c4c1b7e0452c386bf015d71a42d60afa62"
     },
     "cover": null,
     "preview": {
       "lazy": true,
       "sandbox": "allow-scripts allow-downloads allow-forms",
-      "note": "生成的单文件动画 SVG；build.mjs 可重新生成"
+      "note": "单文件动画 SVG，无外部依赖"
     }
   },
   "source": {
@@ -125,19 +102,8 @@
     "sharedContext": false
   },
   "contamination": {
-    "status": "suspected",
-    "events": [
-      {
-        "dimension": "4.1-session-and-policy",
-        "severity": "deviation",
-        "evidence": "real user turns = 2 (PLAN declares single-turn / followups 0); followup: [\"不要再读取chrome钥匙串了\"]"
-      },
-      {
-        "dimension": "4.8-writes",
-        "severity": "suspect",
-        "evidence": "sandbox denied access outside the task dir: [\"/Users/gabrielmu/Library/Application\"] (denied, no content obtained)"
-      }
-    ],
+    "status": "unknown",
+    "events": [],
     "evidencePaths": [
       "evidence/audit-2026-09-10.json",
       "evidence/audit-2026-09-10.md"
