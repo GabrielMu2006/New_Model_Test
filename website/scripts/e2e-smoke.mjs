@@ -23,7 +23,8 @@ try {
     // 任务列表：搜索命中两个模型的同题运行，模型筛选收敛到一条
     await page.goto(`${base}/zh/tasks/`);
     await page.getByPlaceholder('搜索任务标题、Prompt 或模型').fill('calculator');
-    if (await page.locator('[data-task-card]:visible').count() !== 2) throw new Error(`${name}: search did not return both models`);
+    const expectedCards = new Set(catalog.runs.filter((run) => run.taskId === 'task-12').map((run) => run.modelId)).size;
+    if (await page.locator('[data-task-card]:visible').count() !== expectedCards) throw new Error(`${name}: search did not return every model's run for task-12`);
     await page.locator('select[data-model]').selectOption('muse-spark-1-3');
     if (await page.locator('[data-task-card]:visible').count() !== 1) throw new Error(`${name}: model filter failed`);
 
@@ -51,6 +52,13 @@ try {
     if (await aiCard.locator('code').count() < 1) throw new Error(`${name}: AI review inline code not rendered`);
     const aiHtml = await aiCard.innerHTML();
     if (aiHtml.includes('<title>') || aiHtml.includes('<desc>')) throw new Error(`${name}: raw HTML not escaped in review body`);
+
+    // GPT-5.6 Sol：与第一阶段同题、单份 AI 评价；三模型同题可并排对比
+    await page.goto(`${base}/zh/runs/run-gpt-5-6-sol-task-01-r1/`);
+    const gptText = await page.locator('.detail-page').textContent();
+    if (!gptText?.includes('90/100')) throw new Error(`${name}: GPT run page missing its review score`);
+    if (!gptText?.includes('gpt-5.6-sol')) throw new Error(`${name}: GPT run page missing the harness-reported snapshot id`);
+    if (await page.locator('.review-card').count() !== 1) throw new Error(`${name}: GPT run page must show exactly one review`);
 
     // 模型身份：一个模型两个快照 + 两个批次都在模型页列出（不能只显示第一个批次）
     await page.goto(`${base}/zh/models/deepseek-v4-1-flash-exp-0910/`);
@@ -85,9 +93,12 @@ try {
     if (await page.locator('.run-tile').count() !== 5) throw new Error(`${name}: phase-02 page did not list the 5 archived tasks`);
     await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/`);
     const phase2Text = await page.locator('.detail-page').textContent();
-    for (const expected of ['策略级（workspace-only）', '存在越界尝试，未取得内容 · 不影响成绩', '不要再读取chrome钥匙串了', '本运行暂无独立评价']) {
+    for (const expected of ['策略级（workspace-only）', '存在越界尝试，未取得内容 · 不影响成绩', '不要再读取chrome钥匙串了']) {
       if (!phase2Text?.includes(expected)) throw new Error(`${name}: phase-02 run page missing "${expected}"`);
     }
+    // 该运行现在挂着 Muse Spark 1.3 拆出的逐题评价
+    if (!phase2Text?.includes('94/100')) throw new Error(`${name}: phase-02 run page missing the muse-spark-v1 score`);
+    if (await page.locator('.review-card').count() !== 1) throw new Error(`${name}: phase-02 run page must show exactly one review`);
     const auditHref = await page.locator('a[href*="task-17-mechanical-watch-movement/evidence/audit"]').first().getAttribute('href');
     if (!auditHref?.includes('/blob/6c089e5')) throw new Error(`${name}: audit evidence link is not bound to the archive commit`);
     // SVG 成果作为预览发布，且入口可用

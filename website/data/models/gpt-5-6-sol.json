@@ -1,0 +1,25 @@
+{
+  "id": "gpt-5-6-sol",
+  "name": { "zh": "GPT-5.6 Sol", "en": "GPT-5.6 Sol" },
+  "provider": "OpenAI",
+  "version": null,
+  "versionNote": {
+    "zh": "版本以逐运行的快照记录为准（`environment.reportedModelId`）；不填单一版本号，避免把未独立确认的值写成既定事实。",
+    "en": "Version is recorded per run as a snapshot (`environment.reportedModelId`); no single version number is claimed."
+  },
+  "snapshots": [
+    {
+      "id": "gpt-5.6-sol",
+      "label": { "zh": "medium effort（Codex CLI 0.147.0）", "en": "medium effort (Codex CLI 0.147.0)" },
+      "status": "current",
+      "evidence": {
+        "zh": "harness（Codex `turn_context`）报告的 model id，记录在 phase-01 各运行的 submission.json；供应商侧快照未经独立确认。",
+        "en": "Model id reported by the harness (Codex `turn_context`) and recorded in each phase-01 submission.json; the provider-side snapshot is not independently confirmed."
+      }
+    }
+  ],
+  "notes": {
+    "zh": "Phase 1 的 15 个任务由 Codex CLI 0.147.0 以 medium effort 执行；每题一个独立会话。运行有完整的工具调用记录，收尾审查为正常逐维度审查（非「无遥测默认遵守」）。",
+    "en": "The 15 phase-1 tasks were run by Codex CLI 0.147.0 at medium effort, one independent session per task. Tool-call telemetry is complete, so the runs went through the normal dimension-by-dimension audit (not the no-telemetry default)."
+  }
+}

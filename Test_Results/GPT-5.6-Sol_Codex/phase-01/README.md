@@ -12,7 +12,7 @@ GPT-5.6 Sol（medium）在 Phase 1 Task 01–15 的原始成果、逐字 Prompt�
 | Token | total 4316152；input 4187022（含 cache read 3650560）+ output 129130 |
 | 隔离 | `workspace-only`，策略级约束 + 事后审查 |
 | 审计 | 15/15 未发现越界；Task 07/08 存在本地 prompt 重读流程偏差 |
-| 评价 | 暂无独立人工或 AI 评价 |
+| 评价 | AI 评价 1 份/题：`Reviews/ai/maintenance-agent-v3/`（维护 agent v3，非盲评，平均 **82.9/100**）；人工评价暂无 |
 
 ## 任务一览
 

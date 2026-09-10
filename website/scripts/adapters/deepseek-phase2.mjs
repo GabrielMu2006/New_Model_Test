@@ -16,6 +16,22 @@ import {
   lineRange, subsection, stripFence, bilingualParagraph, bilingualList,
 } from '../lib/markdown.mjs';
 
+/** `| 本题得分 | **92/100** |` 之类的单元格 → 数值。 */
+function parseScore(value) {
+  const match = String(value ?? '').match(/(\d+(?:\.\d+)?)\s*\/\s*100/) ?? String(value ?? '').match(/(\d+(?:\.\d+)?)/);
+  return match ? Number(match[1]) : null;
+}
+
+function metaRow(text, label) {
+  const match = text.match(new RegExp(`^\\|\\s*${label}\\s*\\|\\s*(.*?)\\s*\\|\\s*$`, 'm'));
+  return match ? match[1].replaceAll('**', '').trim() : null;
+}
+
+function reviewBody(text) {
+  const cut = text.indexOf('\n---\n');
+  return (cut >= 0 ? text.slice(cut + 5) : text).trim();
+}
+
 export const id = 'deepseek-v4-1-flash-exp-0910-phase2';
 
 const archiveRoot = 'Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02';
@@ -60,6 +76,7 @@ export function load({ read, repoRoot }) {
 
   const tasks = [];
   const runs = [];
+  const reviews = [];
   for (const plan of taskPlan) {
     const section = sections.get(plan.taskId);
     if (!section) throw new Error(`[${id}] prompt document has no section for ${plan.taskId}`);
@@ -152,6 +169,29 @@ export function load({ read, repoRoot }) {
       },
       followups: submission.prompt.followups ?? [],
     });
+
+    for (const reference of submission.reviews ?? []) {
+      // 评价路径为**阶段相对**路径（`Reviews/ai/<评委>-vN/task-NN.md`），不在任务目录内。
+      const reviewPath = `${archiveRoot}/${reference.path}`;
+      const text = read(reviewPath);
+      const score = reference.score ?? parseScore(metaRow(text, '本题得分'));
+      const conclusionZh = reference.conclusion?.zh ?? metaRow(text, '结论（中）');
+      const conclusionEn = reference.conclusion?.en ?? metaRow(text, 'Conclusion \\(EN\\)');
+      if (!conclusionZh || !conclusionEn) throw new Error(`[${id}] ${plan.dir}: review ${reviewPath} missing bilingual conclusion`);
+      if (score == null) throw new Error(`[${id}] ${plan.dir}: review ${reviewPath} missing score`);
+      reviews.push({
+        id: reference.id, runId: submission.runId, type: reference.type ?? 'ai',
+        authorLabel: reference.authorLabel, date: reference.date,
+        conclusion: { zh: conclusionZh, en: conclusionEn },
+        body: {
+          zh: reviewBody(text),
+          en: 'This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided.',
+        },
+        translated: false, score,
+        scoreMethod: reference.scoreMethod,
+        source: { path: reviewPath, lines: `1-${text.split('\n').length}` },
+      });
+    }
   }
 
   const model = JSON.parse(read(`website/data/models/${modelId}.json`));
@@ -167,7 +207,7 @@ export function load({ read, repoRoot }) {
     model,
     tasks,
     runs,
-    reviews: [],
+    reviews,
     batches: [{
       id: 'batch-deepseek-v4-1-flash-exp-0910-phase-02-partial',
       modelId: model.id, phaseId: 'phase-02',

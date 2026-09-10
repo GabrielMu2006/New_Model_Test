@@ -135,6 +135,37 @@
           }
         }
       ]
+    },
+    {
+      "id": "gpt-5-6-sol",
+      "name": {
+        "zh": "GPT-5.6 Sol",
+        "en": "GPT-5.6 Sol"
+      },
+      "provider": "OpenAI",
+      "version": null,
+      "versionNote": {
+        "zh": "版本以逐运行的快照记录为准（`environment.reportedModelId`）；不填单一版本号，避免把未独立确认的值写成既定事实。",
+        "en": "Version is recorded per run as a snapshot (`environment.reportedModelId`); no single version number is claimed."
+      },
+      "snapshots": [
+        {
+          "id": "gpt-5.6-sol",
+          "label": {
+            "zh": "medium effort（Codex CLI 0.147.0）",
+            "en": "medium effort (Codex CLI 0.147.0)"
+          },
+          "status": "current",
+          "evidence": {
+            "zh": "harness（Codex `turn_context`）报告的 model id，记录在 phase-01 各运行的 submission.json；供应商侧快照未经独立确认。",
+            "en": "Model id reported by the harness (Codex `turn_context`) and recorded in each phase-01 submission.json; the provider-side snapshot is not independently confirmed."
+          }
+        }
+      ],
+      "notes": {
+        "zh": "Phase 1 的 15 个任务由 Codex CLI 0.147.0 以 medium effort 执行；每题一个独立会话。运行有完整的工具调用记录，收尾审查为正常逐维度审查（非「无遥测默认遵守」）。",
+        "en": "The 15 phase-1 tasks were run by Codex CLI 0.147.0 at medium effort, one independent session per task. Tool-call telemetry is complete, so the runs went through the normal dimension-by-dimension audit (not the no-telemetry default)."
+      }
     }
   ],
   "tasks": [
@@ -3502,6 +3533,1199 @@
         "evaluation": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/evidence/evaluation-2026-09-10/checks.json"
       },
       "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-01-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-01",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-01-aevum-luxury-watch-landing-page/prompt.txt",
+        "sha256": "20aaba85e5b252f2912a417840b546411adb43d66f4a70a5b3a117692db44ae9",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a0893c-994f-7ec0-8cda-8e7c3d9545ef",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T02:54:05.178Z",
+        "endedAt": "2026-09-10T03:00:44.086Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 366,
+        "apiCalls": 4,
+        "toolCalls": 3,
+        "failures": 0,
+        "inputTokens": 123652,
+        "outputTokens": 10835,
+        "cacheReadTokens": 94336,
+        "totalTokens": 134487
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "script.js",
+          "styles.css"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-01-aevum-luxury-watch-landing-page/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "HTML output; internal relative files are listed explicitly"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-01-aevum-luxury-watch-landing-page/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-01-aevum-luxury-watch-landing-page",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-01-aevum-luxury-watch-landing-page/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-01-aevum-luxury-watch-landing-page/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-01-aevum-luxury-watch-landing-page/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-01-aevum-luxury-watch-landing-page/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-01.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-02-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-02",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-02-pelican-on-bicycle/prompt.txt",
+        "sha256": "a38b878c5626238ac711ad0f38929304c5356fc962e2b893bf7c93eaf4b93187",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a08952-9164-7d82-b242-c9759ef8da2e",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T03:18:04.942Z",
+        "endedAt": "2026-09-10T03:20:17.029Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 126,
+        "apiCalls": 3,
+        "toolCalls": 2,
+        "failures": 0,
+        "inputTokens": 83972,
+        "outputTokens": 3638,
+        "cacheReadTokens": 54400,
+        "totalTokens": 87610
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "pelican-riding-bicycle.svg",
+        "files": [
+          "pelican-riding-bicycle.svg"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-02-pelican-on-bicycle/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "SVG output; any accompanying PNG is preserved as original run output"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-02-pelican-on-bicycle/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-02-pelican-on-bicycle",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-02-pelican-on-bicycle/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-02-pelican-on-bicycle/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-02-pelican-on-bicycle/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-02-pelican-on-bicycle/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-02.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-03-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-03",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-03-analog-clock-6-25/prompt.txt",
+        "sha256": "b7b7f981e6b8d72e8cc7679ecc00e32268c296dc91dfaa25fa9ca2051183335f",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a08954-da1a-73f2-94dc-899159695232",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T03:20:34.606Z",
+        "endedAt": "2026-09-10T03:23:04.977Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 135,
+        "apiCalls": 8,
+        "toolCalls": 6,
+        "failures": 0,
+        "inputTokens": 195403,
+        "outputTokens": 3206,
+        "cacheReadTokens": 189824,
+        "totalTokens": 198609
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "analog-clock.svg",
+        "files": [
+          "analog-clock.svg",
+          "analog-clock.svg.png"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-03-analog-clock-6-25/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "SVG output; any accompanying PNG is preserved as original run output"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-03-analog-clock-6-25/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-03-analog-clock-6-25",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-03-analog-clock-6-25/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-03-analog-clock-6-25/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-03-analog-clock-6-25/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-03-analog-clock-6-25/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-03.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-04-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-04",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-04-analog-clock-11-52-30/prompt.txt",
+        "sha256": "6810781239a5abf4d0bd6e4883a741359a90646955581459a8885108fc33a1f0",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a08957-8653-78b2-9203-9799d8415524",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T03:23:29.797Z",
+        "endedAt": "2026-09-10T03:25:38.906Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 122,
+        "apiCalls": 3,
+        "toolCalls": 2,
+        "failures": 0,
+        "inputTokens": 82664,
+        "outputTokens": 3354,
+        "cacheReadTokens": 44672,
+        "totalTokens": 86018
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "clock.svg",
+        "files": [
+          "clock.svg"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-04-analog-clock-11-52-30/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "SVG output; any accompanying PNG is preserved as original run output"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-04-analog-clock-11-52-30/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-04-analog-clock-11-52-30",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-04-analog-clock-11-52-30/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-04-analog-clock-11-52-30/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-04-analog-clock-11-52-30/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-04-analog-clock-11-52-30/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-04.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-05-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-05",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-05-bicycle-rider/prompt.txt",
+        "sha256": "736e71c9d430159b0db9a912f79cad8ed9d827a054debf15b1408b3b10ebf941",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a0895a-3409-7a82-8839-182ebfbe6c85",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T03:26:25.332Z",
+        "endedAt": "2026-09-10T03:28:44.403Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 139,
+        "apiCalls": 4,
+        "toolCalls": 3,
+        "failures": 0,
+        "inputTokens": 109593,
+        "outputTokens": 3656,
+        "cacheReadTokens": 61568,
+        "totalTokens": 113249
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "bicycle-rider.svg",
+        "files": [
+          "bicycle-rider.svg"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-05-bicycle-rider/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "SVG output; any accompanying PNG is preserved as original run output"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-05-bicycle-rider/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-05-bicycle-rider",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-05-bicycle-rider/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-05-bicycle-rider/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-05-bicycle-rider/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-05-bicycle-rider/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-05.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-06-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-06",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-06-scissors-cutting-paper/prompt.txt",
+        "sha256": "ea28c2b4a04b6d033ab2068b79dfb64aa7d95fc0785c7f78a6a28950af9bee25",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a0895d-31f9-74f0-8492-1de525a39f50",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T03:29:41.406Z",
+        "endedAt": "2026-09-10T03:32:05.213Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 142,
+        "apiCalls": 4,
+        "toolCalls": 3,
+        "failures": 0,
+        "inputTokens": 110965,
+        "outputTokens": 3879,
+        "cacheReadTokens": 88064,
+        "totalTokens": 114844
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "hand-cutting-paper.svg",
+        "files": [
+          "hand-cutting-paper.svg"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-06-scissors-cutting-paper/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "SVG output; any accompanying PNG is preserved as original run output"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-06-scissors-cutting-paper/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-06-scissors-cutting-paper",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-06-scissors-cutting-paper/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-06-scissors-cutting-paper/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-06-scissors-cutting-paper/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-06-scissors-cutting-paper/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-06.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-07-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-07",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow/prompt.txt",
+        "sha256": "c94e36e8fc420f782485dd9733acf3097d07022391a77f3be0849b7992b0b7aa",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a08961-ba7c-7f03-aea6-d8ba9474aae2",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T03:34:38.481Z",
+        "endedAt": "2026-09-10T03:37:55.623Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no external answer access. The session re-read its own local prompt after the verbatim prompt had already been supplied; this is retained as a procedural deviation and does not affect score entry or trigger an external cheating label."
+      },
+      "metrics": {
+        "durationSeconds": 189,
+        "apiCalls": 12,
+        "toolCalls": 11,
+        "failures": 1,
+        "inputTokens": 359182,
+        "outputTokens": 4227,
+        "cacheReadTokens": 332544,
+        "totalTokens": 363409
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "person-pushing-wheelbarrow.svg",
+        "files": [
+          "person-pushing-wheelbarrow.svg",
+          "person-pushing-wheelbarrow.svg.png"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "SVG output; any accompanying PNG is preserved as original run output"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-07-pushing-wheelbarrow/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-07.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-08-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-08",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-08-breakout-game/prompt.txt",
+        "sha256": "c6e283f9b419499277bf74dab9201c68d051993faee24ba819854f09fed5eb51",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a08965-0e69-77e2-b807-785c3cf6887d",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T03:38:16.574Z",
+        "endedAt": "2026-09-10T03:45:30.641Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no external answer access. The session re-read its own local prompt after the verbatim prompt had already been supplied; this is retained as a procedural deviation and does not affect score entry or trigger an external cheating label."
+      },
+      "metrics": {
+        "durationSeconds": 423,
+        "apiCalls": 13,
+        "toolCalls": 6,
+        "failures": 0,
+        "inputTokens": 534692,
+        "outputTokens": 11503,
+        "cacheReadTokens": 478336,
+        "totalTokens": 546195
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-08-breakout-game/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "HTML output; internal relative files are listed explicitly"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-08-breakout-game/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-08-breakout-game",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-08-breakout-game/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-08-breakout-game/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-08-breakout-game/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-08-breakout-game/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-08.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-09-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-09",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-09-topdown-farming-game/prompt.txt",
+        "sha256": "cae6723ab80e29eec25b5b2bcebc7a69f2fa02019bc2fa58be7adf18ddb6b207",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a0896b-f36b-74f3-a721-5bb0ab0a24a4",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T03:45:48.422Z",
+        "endedAt": "2026-09-10T03:51:00.812Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 310,
+        "apiCalls": 4,
+        "toolCalls": 3,
+        "failures": 0,
+        "inputTokens": 120659,
+        "outputTokens": 9207,
+        "cacheReadTokens": 97280,
+        "totalTokens": 129866
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-09-topdown-farming-game/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "HTML output; internal relative files are listed explicitly"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-09-topdown-farming-game/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-09-topdown-farming-game",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-09-topdown-farming-game/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-09-topdown-farming-game/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-09-topdown-farming-game/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-09-topdown-farming-game/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-09.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-10-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-10",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-10-pixel-art-editor/prompt.txt",
+        "sha256": "b2c5639f49d534c5675cac5d3bc8e7d3db2d838b9de1bb4ed51d82c4c304bfaf",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a08984-3a94-7410-943d-5f1939fbafe3",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T04:12:19.499Z",
+        "endedAt": "2026-09-10T04:18:34.105Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 374,
+        "apiCalls": 7,
+        "toolCalls": 6,
+        "failures": 0,
+        "inputTokens": 209751,
+        "outputTokens": 10807,
+        "cacheReadTokens": 157952,
+        "totalTokens": 220558
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "README.md",
+          "app.js",
+          "index.html",
+          "styles.css"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-10-pixel-art-editor/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "HTML output; internal relative files are listed explicitly"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-10-pixel-art-editor/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-10-pixel-art-editor",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-10-pixel-art-editor/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-10-pixel-art-editor/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-10-pixel-art-editor/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-10-pixel-art-editor/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-10.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-11-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-11",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-11-floor-plan-editor/prompt.txt",
+        "sha256": "b4c65fbc69eb4f56ede8383de44a27781857f43cd257e9da6e0735372741f604",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a0898a-77a5-7843-8915-716b4b69bf33",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T04:19:08.346Z",
+        "endedAt": "2026-09-10T04:28:13.854Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 544,
+        "apiCalls": 22,
+        "toolCalls": 7,
+        "failures": 0,
+        "inputTokens": 1016747,
+        "outputTokens": 14938,
+        "cacheReadTokens": 966016,
+        "totalTokens": 1031685
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "README.md",
+          "app.js",
+          "index.html",
+          "styles.css"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-11-floor-plan-editor/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "HTML output; internal relative files are listed explicitly"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-11-floor-plan-editor/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-11-floor-plan-editor",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-11-floor-plan-editor/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-11-floor-plan-editor/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-11-floor-plan-editor/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-11-floor-plan-editor/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-11.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-12-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-12",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator/prompt.txt",
+        "sha256": "6067f883282710324a29490bb869adfc974340a626c751b2fc2999a0a9e77fe6",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a08993-4db5-7e23-9739-bda89abe7691",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T04:28:47.433Z",
+        "endedAt": "2026-09-10T04:35:24.100Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 364,
+        "apiCalls": 16,
+        "toolCalls": 8,
+        "failures": 0,
+        "inputTokens": 599359,
+        "outputTokens": 9925,
+        "cacheReadTokens": 547456,
+        "totalTokens": 609284
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "app.js",
+          "calculator.mjs",
+          "calculator.test.mjs",
+          "index.html",
+          "package.json",
+          "server.mjs",
+          "styles.css"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "HTML output; internal relative files are listed explicitly"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-12.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-13-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-13",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard/prompt.txt",
+        "sha256": "e6bbd33a57230bcd1a43d9b81e5d6b3d968356e9c0d8d1529a1834c52b2e432e",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a08999-a048-7893-87a5-7a2aa04fa76a",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T04:35:41.789Z",
+        "endedAt": "2026-09-10T04:42:11.735Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 389,
+        "apiCalls": 6,
+        "toolCalls": 5,
+        "failures": 0,
+        "inputTokens": 179199,
+        "outputTokens": 11179,
+        "cacheReadTokens": 144384,
+        "totalTokens": 190378
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "app.js",
+          "index.html",
+          "styles.css"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "HTML output; internal relative files are listed explicitly"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-13.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-14-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-14",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website/prompt.txt",
+        "sha256": "58eef25acfaf82e9b1093693ed9fcf90266d757f178a040b1f705213ac804ba5",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a089a0-2f44-7491-82d7-3e3cd62f7d6c",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T04:42:51.611Z",
+        "endedAt": "2026-09-10T04:52:23.833Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 571,
+        "apiCalls": 6,
+        "toolCalls": 5,
+        "failures": 0,
+        "inputTokens": 199293,
+        "outputTokens": 17003,
+        "cacheReadTokens": 165248,
+        "totalTokens": 216296
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "README.md",
+          "index.html",
+          "script.js",
+          "styles.css"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "HTML output; internal relative files are listed explicitly"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-14.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-gpt-5-6-sol-task-15-r1",
+      "modelId": "gpt-5-6-sol",
+      "taskId": "task-15",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker/prompt.txt",
+        "sha256": "26537263f1b65e75a2db33832d772a8d14b06d7416983db0495e1d4e53eec7b7",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Codex",
+        "harnessVersion": "0.147.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "01a089a9-42b8-78d0-b6f0-6e8bf22d266a",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "medium",
+        "startedAt": "2026-09-10T04:52:46.412Z",
+        "endedAt": "2026-09-10T04:59:39.987Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "gpt-5.6-sol"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": null,
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit found no out-of-scope access in recorded tool calls/results. Unknown is retained because workspace-only controls are policy-level and Codex reasoning text is encrypted in the log."
+      },
+      "metrics": {
+        "durationSeconds": 412,
+        "apiCalls": 8,
+        "toolCalls": 6,
+        "failures": 0,
+        "inputTokens": 261891,
+        "outputTokens": 11773,
+        "cacheReadTokens": 228480,
+        "totalTokens": 273664
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "app.js",
+          "index.html",
+          "styles.css"
+        ],
+        "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker/artifacts",
+        "commit": "a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "HTML output; internal relative files are listed explicitly"
+        }
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker",
+      "evidence": {
+        "audit": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-15.md"
+      },
+      "followups": []
     }
   ],
   "reviews": [
@@ -5126,6 +6350,116 @@
       }
     },
     {
+      "id": "review-muse-spark-v1-task-16",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-16-r1",
+      "type": "ai",
+      "authorLabel": "Muse Spark 1.3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "直接通过——8 项全中，零打滑 753.98px、暂停时钟增量 0；`<img>` 嵌入按钮失效、`_build` 只在 evidence",
+        "en": "Direct pass — all 8 requirements met, zero wheel-slip (753.98px) and a zero pause clock delta; the embedded `<img>` disables the buttons and `_build` only lives under evidence."
+      },
+      "body": {
+        "zh": "8 项硬要求结构全中：两轮 `720°/2s`（后轮 30.19%/前轮 63.75% 变化）、曲柄 `360°/2s`（臂 86.07%）、脚踝＝脚踏＋(-2,-12) 恒定（自述 9 时刻 ±0.3px，checks.log 尾段 |d|≈12.2–12.4px）、IK 膝行程约 58px（近侧 48.11%/远侧 14.09%）、身体 ±3.4px/±1.15°（身体 14.11%/颈头 32.35%/翼 25.97%）、4 层视差 19/38/121/377px/s、按钮＋Enter/Space（暂停增量 0.0000s，继续后 65685/518400px 变化）、单文件 `xmllint` 通过且无 `<image>`（http 仅两条 W3 命名空间）。\n传动自洽：传动比 2.0、循环位移 753.98px＝地面位移→零打滑；链条 150.8px/循环；去滚动层 t0/2s/4s 差 93/51px（0.018% 噪声）→闭合；18 项区域审计自述全过。\n扣分：`_build` 不在 artifacts（在 `evidence/model-verification/_build/` 可复现但未复跑）；`<img>` 嵌入脚本不执行（已明示，直接打开正常，题目未定嵌入方式）；SMIL 依赖、无 `prefers-reduced-motion`、Firefox/Safari 未验。\n\n---\n\n> 本节内容**逐字取自评价者原始汇总文件**的「三、逐项评估 · Task 16」小节（`source-summary.md`），分数与结论未改写；本次仅按 2026-09-10 组织者的归档要求拆分为逐题独立评价文件。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 92,
+      "scoreMethod": "原始需求符合度 40 / 功能与正确性 25 / 视觉与易用性 20 / 稳健性与可验证性 15；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/Reviews/ai/muse-spark-v1/task-16.md",
+        "lines": "1-26"
+      }
+    },
+    {
+      "id": "review-muse-spark-v1-task-17",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-17-r1",
+      "type": "ai",
+      "authorLabel": "Muse Spark 1.3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "直接通过——单 Q 驱动＋擒纵量化＋啮合求解＋40h 发条，暂停/对数变速/上弦齐；示意叠层＋梯形齿为声明简化",
+        "en": "Direct pass — a single-Q driven movement with quantified escapement, solved meshing and a 40h mainspring."
+      },
+      "body": {
+        "zh": "12 项＋相干性＋无外部全中：8 对轮系（发条 80T/8h↺→中心 48T/h↷→三轮 45T→四轮 48T/min↷→擒纵 15T/7.5s↺）、club-tooth 每拍半齿 12°（锁定＞85%，秒针每秒 4 小步）、摆 2Hz ±270°、发条 40h＋WIND、转向交替、暂停＋0.1×–600× 对数变速＋预设＋W/R 键、单标量 `state(Q)`（`src/model.js` 逐字内联，暂停/变速不可能失步）、129KB `xmllint` 通过、无外部、静态 10:10:30 回退。\n`submission` 9 文件与磁盘一致；自述 `verify.mjs` 84 项＋`pixels.mjs` 26 项＋浏览器探针记录（`evidence/model-verification/evidence/browser-probes.txt`＋14 截图）本次未复跑。\n扣分：示意叠层（多层压一平面）、梯形齿＋几何拦截、摆纯正弦＋耗尽即停、`<img>` 冻结（均已声明）；浏览器探针 opt-in（机主补充轮“不要再读取chrome钥匙串了”后加 mock-keychain，未给题目提示，不影响成绩）；本 run `suspected` 仅记档案（4.1 多轮声明偏差＋4.8 沙箱拒绝未取得内容），不扣分。\n\n---\n\n> 本节内容**逐字取自评价者原始汇总文件**的「三、逐项评估 · Task 17」小节（`source-summary.md`），分数与结论未改写；本次仅按 2026-09-10 组织者的归档要求拆分为逐题独立评价文件。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 94,
+      "scoreMethod": "原始需求符合度 40 / 功能与正确性 25 / 视觉与易用性 20 / 稳健性与可验证性 15；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/Reviews/ai/muse-spark-v1/task-17.md",
+        "lines": "1-26"
+      }
+    },
+    {
+      "id": "review-muse-spark-v1-task-18",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-18-r1",
+      "type": "ai",
+      "authorLabel": "Muse Spark 1.3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "通过，有明确改进——主链 1→2→3→4→6→7→8 真实；Stage 5 并行分支不断下游、牛顿摆装饰、终幕观察器触发；零浏览器验证",
+        "en": "Pass with clear defects — the main chain is real but Stage 5 is a parallel branch that never triggers downstream, and there is no browser verification."
+      },
+      "body": {
+        "zh": "8 段名实俱在（弹簧多米诺/Marble A 坡道/摆锤/溜槽配重桶/滑轮闸门/配重摆动/螺旋溜槽/铃终幕），Start/Pause/Step/Reset/Slow-mo/Sound＋键盘齐，固定 1/240s＋快照恢复，`test` 只读观察不驱动（阈值调严史真实）。\n**明确缺陷**：作者自承主链为 1→2→3→4→6→7→8，**Stage 5（闸门放 Marble E）为 Stage 4 并行分支，不触发下游**；牛顿摆三球已仿真但未命中；铃＋纸屑由观察器触发（冲击真实、庆祝为 UI）。严格“每段 visibly cause 下一段”断一环。\n**零浏览器验证**（作者原话）：UI 仅静态 id 存在性＋可解析，物理仅 headless（自述 engine 8/8、simulate 8/8，时间 1.77/5.28/6.56/7.41/7.47/8.37/10.12/10.32s；`tools/*` 在 `evidence/model-verification/tools/`）。`node --check` 本次通过；经典脚本 `file://` 可用。初态小穿透由 `M.settle(2.2)` 预静置，已文档化。\n修法：让 E 真触发下游（撞螺旋闸/锁）或将摆移入主链；补浏览器视听验证。\n\n---\n\n> 本节内容**逐字取自评价者原始汇总文件**的「三、逐项评估 · Task 18」小节（`source-summary.md`），分数与结论未改写；本次仅按 2026-09-10 组织者的归档要求拆分为逐题独立评价文件。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 83,
+      "scoreMethod": "原始需求符合度 40 / 功能与正确性 25 / 视觉与易用性 20 / 稳健性与可验证性 15；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/Reviews/ai/muse-spark-v1/task-18.md",
+        "lines": "1-27"
+      }
+    },
+    {
+      "id": "review-muse-spark-v1-task-19",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-19-r1",
+      "type": "ai",
+      "authorLabel": "Muse Spark 1.3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "通过，有小改进——太阳＋八行星＋月球＋4 伽利略卫星＋纯时间函数/单世界空间双不变式；手势与响应式未执行",
+        "en": "Pass with minor gaps — sun, eight planets, the Moon and four Galilean moons on pure time functions; gestures and responsiveness were never executed."
+      },
+      "body": {
+        "zh": "15 项＋2 硬约束全中：`data.js` 含太阳＋八行星＋月球＋Io/Europa/Ganymede/Callisto（Pluto 虚线 dwarf 超范围但标注清晰）；J2000 根数（自述开普勒三定律 0.13%、速度 1.1%）；trails 绝对间隔（月球日心外摆线）、轨道同源采样（＜0.3px）；暂停/0.01–10000 天/s 对数滑杆（含负逆行）＋23 按钮＋快捷键；拖拽/轮捏锚定缩放＋倾角旋转；单击检查＋双击聚焦＋`0` 回系统（切换仅动相机）；`moon=parent(time)+local(time)`（自述一年 1e-13AU＋13 恒星月）；`f(time)` 纯函数变速不跳（自述 erratic 同 elapsed 一致、跳变＜解析弦长）。\n距离幂压缩（0.25AU 内线性保真圆）、体尺寸次线性保序＋True 开关、太阳盘固定＋日冕（UI“not to scale”，题目未要求比例不扣）。经典脚本 `file://` 可用（`node --check` 通过）。\n扣分：零真机浏览器（canvas/手势/三视口仅静态，`tests/out` 11 张为软件光栅近似）；`tests/*` 在 `evidence/model-verification/tests/`（87＋49＋渲染＋调参）本次未复跑。\n\n---\n\n> 本节内容**逐字取自评价者原始汇总文件**的「三、逐项评估 · Task 19」小节（`source-summary.md`），分数与结论未改写；本次仅按 2026-09-10 组织者的归档要求拆分为逐题独立评价文件。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 90,
+      "scoreMethod": "原始需求符合度 40 / 功能与正确性 25 / 视觉与易用性 20 / 稳健性与可验证性 15；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/Reviews/ai/muse-spark-v1/task-19.md",
+        "lines": "1-26"
+      }
+    },
+    {
+      "id": "review-muse-spark-v1-task-20",
+      "runId": "run-deepseek-v4-1-flash-exp-0910-task-20-r1",
+      "type": "ai",
+      "authorLabel": "Muse Spark 1.3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "直接通过（本批最高）——固定铰/转动副/精确连杆/滑块/电机/读数/保存齐，四杆＋滑块双预设，残差 2.8e-14mm；模块入口需服务、单文件可直开",
+        "en": "Direct pass (best of the batch) — joints, sliders, motor, readouts and persistence all present with a 2.8e-14mm residual."
+      },
+      "body": {
+        "zh": "12 动作＋双机构＋刚性保持全中：工具 1–8（选择/固定铰/转动副/精确连杆＋use value/轨道/滑块/电机/删除）、Transport＋±2°＋scrub＋0.05×–4×、Joints/Links/Motors＋状态栏（`link error 0.0e+0`＋mobility 秩揭示）、命名槽＋JSON 导入导出＋Autosave＋损坏降级、5 预设（四杆 Grashof、直列滑块行程＝2r、偏置、双摇杆卡死、滑块＋限位）、LM＋解析 Jacobian＋线搜过死点＋去电机恢复＋ramp 跟分支＋jam 二分＋拖拽软行（240Hz 即收敛）。\n`submission` 19 文件与磁盘一致；自述 `npm test 66/66`（含 40 随机四杆＋25 随机滑块逐检查长）＋`browser-check 65/65×2 构建`（无错、真绘制、三宽无溢出、四杆 worst 2.8e-14mm、滑块 145 角＝2r 至 1e-6mm、空鼠标全流程建滑块、半成品四态不抛），`e2e-screenshot` 在 evidence；4 个真实修 bug 史（组装序、死点、`[hidden]` 被盖、指针捕获）可追溯。\n扣分：`entry=index.html` 为模块（`type=module`）需服务，`file://` 不可用，但 `dist/linkage-designer.html`（约 207KB，可再生＋stale 保护）可直开且 README 首节即给双入口，故仅 -1（优于 phase-01 T12/T15 无替代）；轨道地面固定/单关节单电机/无动力学/分支跟随均为声明裁剪；他浏览器未验。\n\n---\n\n> 本节内容**逐字取自评价者原始汇总文件**的「三、逐项评估 · Task 20」小节（`source-summary.md`），分数与结论未改写；本次仅按 2026-09-10 组织者的归档要求拆分为逐题独立评价文件。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 96,
+      "scoreMethod": "原始需求符合度 40 / 功能与正确性 25 / 视觉与易用性 20 / 稳健性与可验证性 15；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/Reviews/ai/muse-spark-v1/task-20.md",
+        "lines": "1-26"
+      }
+    },
+    {
       "id": "review-ai-run-muse-spark-1-3-xhigh-task-16-r1-maintenance-agent-v2",
       "runId": "run-muse-spark-1-3-xhigh-task-16-r1",
       "type": "ai",
@@ -5233,6 +6567,336 @@
       "source": {
         "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/Reviews/ai/maintenance-agent-v2/task-20.md",
         "lines": "1-27"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-01`",
+      "runId": "run-gpt-5-6-sol-task-01-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "五段式品牌页与配置器真实可用，零外部请求、零控制台错误经实测确认；缺 `:focus-visible`，观感由视觉桥接模型判定。",
+        "en": "A five-section brand page with a working configurator: zero external requests and zero console errors were verified at runtime; it lacks `:focus-visible`, and visual quality was judged via a vision-bridge description."
+      },
+      "body": {
+        "zh": "- **需求对照**：只使用 HTML/CSS/JavaScript ✅（3 个文件，无框架、无构建）；不使用任何外部图片或第三方库 ✅（**实测 0 条非本地请求、0 个 `<img>`、0 个 iframe**，全部图形为内联 SVG + CSS）；\"像真实的高端产品官网\" → 结构成立、观感由视觉桥接模型判定为高档（深色 hero + 金/米色点缀、衬线大标题）。\n\n- **结构**：`index.html`(9.9 KB) + `styles.css`(16.5 KB) + `script.js`(2.1 KB)。段落：`header` 导航 → `section.hero`（H1 + 内联 SVG 腕表，带 `linearGradient`/`radialGradient`/`feDropShadow`）→ `manifesto/story` → `craft` → `movement` → `configurator/reserve`（材质可切换）→ `footer`。标题层级实测为 `H1,H2,H2,H2`，无跳级。\n\n- **实测（Chromium 无头，组织者自建静态服务与 file:// 双通道）**：控制台错误 0、页面异常 0、请求失败 0、外部请求 0；`localStorage` 可用；1440×1000 与 390×844 双视口截图，**移动端横向溢出 0 px**。\n\n- **交互与可访问性**：`script.js` 有 5 个事件监听（含滚动/指针），配置器可切换材质并更新 `#material-name`；`prefers-reduced-motion` 存在 ✅；无表单控件，故无标签缺口。\n\n- **扣分**：\n  - 工程组织 −2：全文件**没有 `:focus-visible`**，键盘焦点只能依赖浏览器默认焦点环，与题目\"可访问性\"验收项不符。\n  - 需求符合度 −3：视觉/品牌完成度无法由评价者直读（−2 计入视觉维度归因），另\"premium feel\"未被独立人工盲看。\n  - 视觉与产品感 −1：桥接描述未发现缺陷，但单一视口、单张截图不足以支撑满分。\n\n- **局限**：视觉结论全部来自视觉桥接模型对截图的文字描述（评价者本人无图像输入能力）；未在真实浏览器手工走查动效与配置器交互手感；未做跨浏览器验证。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 90,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-01.md",
+        "lines": "1-32"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-02`",
+      "runId": "run-gpt-5-6-sol-task-02-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "单文件 SVG 有效、鹈鹕与自行车均可辨认且动作读作\"骑\"，但双翼收在身侧、未与车把形成接触，踏板接触点亦被桥接模型标注为风格化。",
+        "en": "A valid standalone SVG in which both the pelican and the bicycle are recognizable and the pose reads as riding, but the wings stay tucked against the body instead of contacting the handlebars, and the pedal contact is flagged as stylized by the vision bridge."
+      },
+      "body": {
+        "zh": "- **需求对照**：SVG 格式 ✅；可独立打开 ✅（1200×800，`viewBox` 与宽高一致，`xmlns` 正确）；清楚表现\"鹈鹕正在骑自行车\" ✅（**独立盲看**：主体首先被识别为戴红帽的白色鹈鹕，动作被理解为此正在骑车前进，而非站在旁边或飞过）；鹈鹕特征 ✅（长喙、喉囊、鸟体、翼）；自行车结构 ✅（双轮带辐条、车架、车把、车座、曲柄与踏板）；构图完整、缩放清晰 ✅（无外部引用，画面内元素均未被裁切）。\n\n- **实测（Chromium 无头）**：控制台错误 0、请求失败 0、外部请求 0；`<title>` / `<desc>` / `role=\"img\"` / `aria-labelledby` 齐全；文件内只有内联 `<style>` 与 `url(#…)` 内部引用，**无任何外链或嵌入图片**。\n\n- **扣分**：\n  - 需求符合度 −4：题目理论成果要求\"身体位于车座区域、**翼或脚**与操控和踩踏动作形成可信联系\"。桥接描述明确写\"双翼收在身侧\"（未握把），踏板接触被标注为\"略有风格化/看起来在踏板上\"——**\"骑\"的判读成立，但接触链只有脚一侧、且未经逐像素核对**。\n  - 正确性 −3：接触关系依赖桥接模型的措辞判断（其 `uncertain` 项即踏板接触点），评价者无法独立测量。\n  - 视觉与产品感 −2：桥接描述肯定画面完整协调，但仅单尺寸查看，未做缩略图/放大对照。\n  - 工程组织 −1：本文件未附自渲染检查（该题模型仅 1 次 `exec_command` + 1 次 `apply_patch`，无渲染与 `view_image` 记录）。\n\n- **亮点**：额外加入海滩/海天渐变背景、运动线条与喙中的小鱼；ARIA 描述文本准确概括了画面内容。\n\n- **局限**：视觉结论来自视觉桥接模型的文字描述；\"翼未握把\"是描述性判断，非几何测量；未做其他尺寸与浏览器下的观感复核。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 88,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-02.md",
+        "lines": "1-31"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-03`",
+      "runId": "run-gpt-5-6-sol-task-03-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "指针角度经独立复算与 6:25 完全一致（时针 192.5°、分针 150°），12 个小时刻度严格 30° 等距，独立读表成立，且该题是少数由模型自行渲染并查看过的交付。",
+        "en": "Independently recomputed hand angles match 6:25 exactly (hour 192.5°, minute 150°) with twelve markers at strict 30° spacing; an independent read-back confirmed the time, and this was one of the few deliverables the model rendered and inspected itself."
+      },
+      "body": {
+        "zh": "- **需求对照**：正好显示 6:25 ✅；包含小时刻度 ✅；包含三根指针 ✅；独立 SVG ✅（512×512，`viewBox` 与宽高一致）；无外部依赖 ✅（只有内部 `url(#…)` 与 `<use href=\"#…\">` 引用）。\n\n- **客观复算（读源码 `rotate()` 值）**：\n  - 时针 `rotate(192.5 256 256)` → 6 + 25/60 = 6.41667 h × 30° = **192.5°** ✅（不是正对 6，而是向 7 推进了 12 分之 5 小时）；\n  - 分针 `rotate(150 256 256)` → 25 min × 6° = **150°** ✅（正对数字 5）；\n  - 秒针采用 12 点方向的约定位置 ✅（与 6:25 不冲突，符合理论成果允许的口径）；\n  - 12 个小时刻度为 `rotate(30/60/…/330)`，即**严格 30° 等距** ✅；另有 60 个分钟刻度按 6° 等距；\n  - 所有指针与刻度共用中心 `(256,256)` ✅ 同心。\n\n- **独立读表**：在不看文件名的前提下，视觉桥接模型读作\"时针刚过 6 的位置、分针指向 25 分位置、红色秒针指向上方 12\"——与 6:25 一致 ✅。\n\n- **过程证据**：该题模型执行了 `xmllint --noout` 语法校验，并用 `qlmanage -t -s 1024` 渲染缩略图、**2 次 `view_image` 自检**；归档中保留了自渲染的 `analog-clock.svg.png`（已包含在 `artifacts.files` 内）。\n\n- **扣分**：\n  - 需求符合度 −1：表盘**没有任何数字时标**，完全依赖刻度读时；桥接模型的 `uncertain` 项即\"无数字，只有刻度\"。读表仍成立，但在可读性上不如带数字的版本。\n  - 正确性 −1：未做逐像素的刻度位置测量（仅按 `rotate()` 值与渲染结果判断）。\n  - 视觉与产品感 −2：极简风格协调（径向渐变表盘、深蓝分针、红秒针），但未做缩略图/放大两档对照。\n\n- **亮点**：`<desc>` 文本精确复述了几何关系（\"时针在 6 与 7 之间、分针在 5 上、秒针在 12\"），使无障碍描述与实际图形一致；这是本阶段最\"自证完整\"的一题。\n\n- **局限**：视觉结论来自视觉桥接模型；未做跨浏览器与多尺寸渲染对照；`192.5°/150°` 的复算以源码 `rotate()` 为准，未测量最终渲染的像素角度。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 94,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-03.md",
+        "lines": "1-39"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-04`",
+      "runId": "run-gpt-5-6-sol-task-04-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "连续走时角度 356.25°/315°/180° 与 11:52:30 逐位吻合，且带数字时标，独立读表稳定判为 11:52:30。",
+        "en": "Continuous-motion angles of 356.25° / 315° / 180° match 11:52:30 exactly, with numeral markers, and an independent read-back stably identified the time as 11:52:30."
+      },
+      "body": {
+        "zh": "- **需求对照**：显示 11:52:30 ✅；独立 SVG ✅（512×512，含 XML 声明与 `viewBox`）；表盘/刻度/中心轴/三指针完整，非文字标注 ✅；无外部依赖 ✅。\n\n- **客观复算（读源码 `rotate()` 值）**：\n  - 秒针 `rotate(180 256 256)` → 30 s × 6° = **180°** ✅（指向 6）；\n  - 分针 `rotate(315 256 256)` → 52.5 min × 6° = **315°** ✅（落在 52 分，且**包含 30 秒带来的半分钟推进**，没有偷懒对齐到整数）；\n  - 时针 `rotate(356.25 256 256)` → 11 + 52.5/60 = 11.875 h × 30° = **356.25°** ✅（在 11 与 12 之间、距 12 仅 3.75°，既\"接近 12\"又\"明显未到 12\"）；\n  - 12 个小时刻度为 `rotate(30…330)` 严格等距 ✅，且另有一处 `rotate(-0.28)` 用于表盘文字的姿态微调（不影响读数）。\n\n- **独立读表**：视觉桥接模型（不看文件名）读作\"时针刚好在 12 之前、分针在 11 之前（约 52 分）、秒针指向下方 6\"，即 **11:52:30** ✅；表盘含 12/3/6/9 数字与 CLASSIC/QUARTZ 字样。\n\n- **验收锚点逐条核对**：时针**没有**错误地直接指向 11 ✅（题目明确点名的失败模式未发生）；分针**没有**忽略 30 秒的小数推进 ✅（315° 而非 312°）。\n\n- **扣分**：\n  - 需求符合度 −1：秒针与分针的长度/样式区分度依赖长度差，桥接描述中时针与分针同为黑色，仅秒针为红色——判读依赖长度与位置（仍读对，但样式区分不如配色区分稳）。\n  - 正确性 −1：未做像素级角度测量，结论基于 `rotate()` 值与渲染观感。\n  - 视觉与产品感 −2：经典挂钟观感协调，但未做多尺寸对照。\n  - 工程组织 −2：本题模型只跑了 `xmllint --noout` 语法校验（1 次 `exec_command` + 2 次 `apply_patch`），**没有渲染与视觉自检**（题目未要求，故仅轻扣）。\n\n- **局限**：视觉结论来自视觉桥接模型；未做跨浏览器验证；`rotate()` 复算未与最终光栅化结果做像素比对。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 93,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-04.md",
+        "lines": "1-37"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-05`",
+      "runId": "run-gpt-5-6-sol-task-05-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "题目三条不可协商约束（左脚在下踏板、右脚在上踏板、双手握把）在独立盲看中全部成立，自行车结构完整；扣分主要来自纯侧视下左右身份无法由评价者独立判定，且根元素未给尺寸。",
+        "en": "All three non-negotiable constraints — left foot on the lower pedal, right foot on the upper pedal, both hands on the handlebars — held up in an independent read, with a structurally complete bicycle; the deductions come from an inability to independently verify left/right identity in a pure side view and from a root element without explicit dimensions."
+      },
+      "body": {
+        "zh": "- **需求对照（逐条）**：侧面观察的人骑车 ✅（严格侧视）；**左脚在下踏板** ✅；**右脚在上踏板** ✅；**双手均握住车把** ✅；可独立打开的 SVG ✅（`viewBox=\"0 0 1200 760\"`）；无外部依赖 ✅。\n\n- **独立盲看取证**：视觉桥接模型在不看题目的情况下报告——\"侧视红色公路车，骑者戴红头盔，**双手都握在黑色弯把上**，**左脚在下踏板（约 6 点方向）、右脚在上踏板（约 12 点方向）**，两轮为完整圆形并带辐条，车架、曲柄、踏板齐全，**没有被裁切、悬浮或结构断裂的元素**，姿态与向前踩踏一致\"。题目点名的三类失败模式（脚悬空、踏板反转、单手接触/仅靠近车把）均未出现。\n\n- **实测（Chromium 无头）**：控制台错误 0、请求失败 0、外部请求 0；`<title>` / `<desc>` / `role=\"img\"` / `aria-labelledby` 齐全。\n\n- **扣分**：\n  - 需求符合度 −2：理论成果特别强调\"左右身份不能因画面镜像而含糊\"。在纯侧视图中，**评价者无法独立判定哪条腿是解剖学左腿**——现有结论依赖模型自己在 `<desc>` 中的断言与桥接模型对该断言的复述；这正是本题最容易被\"看起来对\"掩盖的一条。\n  - 正确性 −2：未做关节/接触点的坐标级测量（如输出脚踝与踏板的坐标距离）。\n  - 视觉与产品感 −2：扁平风格配色统一，但只有单尺寸查看。\n  - 工程组织 −3：根元素**只有 `viewBox` 而没有 `width`/`height`**，嵌入到某些宿主时尺寸由宿主决定；本题未做任何渲染自检（2 次 `exec_command`，无 `view_image` 记录）。\n  - 亮点补偿 +1（计入视觉维度）：画面完整度高于题目下限（头盔、太阳、地面、完整的轮辐）。\n\n- **局限**：左右腿身份的判定是本题最关键的验收点，而本次只有**单帧视觉 + 模型自述**两项间接证据；未做骨骼坐标复算，也未做镜像反例对照。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 89,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-05.md",
+        "lines": "1-32"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-06`",
+      "runId": "run-gpt-5-6-sol-task-06-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "手—剪刀—纸的三方接触链与\"纸已被剪开\"的关键动作线索在独立盲看中成立，正是题目用来区分\"正在剪\"与\"拿着剪刀停在纸旁\"的判别点。",
+        "en": "The hand–scissors–paper contact chain and the key cue that the paper has actually been cut both held up in an independent read — exactly the criterion the task uses to separate \"actively cutting\" from \"holding scissors beside the paper\"."
+      },
+      "body": {
+        "zh": "- **需求对照（逐条）**：手、剪刀、纸三类主体均可辨认 ✅；手指合理握住剪刀环 ✅；双刃在转轴处连接并夹住纸边 ✅；**纸面存在已经剪开/正在分离的视觉证据** ✅；动作区域未被手或其他元素遮挡 ✅；独立 SVG ✅（1200×900）；无外部依赖 ✅。\n\n- **独立盲看取证**：视觉桥接模型报告——\"右手握着青绿色手柄的剪刀，**正沿红色虚线剪开一张白色带横线的纸**；纸张左下角被掀起，**露出已经开始的清晰剪口**；背景为米色台面\"。题目要求的\"连续物理接触链\"与\"纸上有剪开证据\"两项均被独立确认。\n\n- **实测（Chromium 无头）**：控制台错误 0、请求失败 0、外部请求 0；文件内部只有 `url(#…)` 渐变引用；模型执行了 `xmllint --noout hand-cutting-paper.svg`（语法有效）+ 1 次 `exec_command` 检查外部引用。\n\n- **扣分**：\n  - 需求符合度 −2：未逐像素核对\"刀刃与纸面在切口处相交\"（几何相交）与\"所有元素位于 viewBox 内\"；结论基于盲看描述。\n  - 正确性 −2：抓握姿态与转轴几何未做坐标级校验。\n  - 视觉与产品感 −1：盲看未指出缺陷，但只有单尺寸查看。\n  - 工程组织 −1：无渲染自检记录；`<title>/<desc>` 虽齐全，但描述文本较短。\n\n- **亮点**：在题目最低要求之外补足了\"虚线剪切路径 + 纸角翻起\"的叙事细节，使\"正在剪\"这一动作的可读性显著高于静态并置；渐变与配色统一。\n\n- **局限**：视觉结论来自视觉桥接模型；未做几何测量与多尺寸对照；未核对手部是否满足解剖学指数量（本阶段其它评委在同类题目上曾以\"手指数目\"作为扣分点，本评价未做该检查，属**未覆盖维度**）。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 91,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-06.md",
+        "lines": "1-33"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-07`",
+      "runId": "run-gpt-5-6-sol-task-07-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "\"推而非拉\"这一方向敏感判定在强制二选一中稳定判为\"推\"，人物位于把手后方、双臂前伸握把、独轮车结构完整，且该题由模型自行渲染并查看过。",
+        "en": "The direction-sensitive push-vs-pull judgement resolved stably to \"pushing\": the person stands behind the handles, both arms reach forward to grip them, and the wheelbarrow is structurally complete — and this was one of the deliverables the model rendered and inspected itself."
+      },
+      "body": {
+        "zh": "- **需求对照（逐条）**：单人推独轮车（非拉）✅；人物位于把手后方 ✅；身体朝向行进方向 ✅；双手向前握把 ✅；独轮车具备单前轮、车斗、支撑腿、两根把手 ✅；独立 SVG ✅（1200×800）；无外部依赖 ✅。\n\n- **强制二选一取证**：视觉桥接模型被要求只在\"推/拉\"中选一个，结果为——\"人物在把手后方、身体前倾、双臂前伸握住把手；独轮车有单前轮、橙色车斗、两根木把手、两条支撑腿；**判为\"推\"**\"。题目点名的\"拉\"的视觉信号（人在车前、面向车后、把手拖在身后）均未出现。\n\n- **过程证据（真实自检）**：该题模型先用 `qlmanage -t -s 1200` 生成缩略图、再用 `sips` 转 PNG，并 **2 次 `view_image` 查看自己的渲染结果**；`xmllint --noout` 通过；归档中保留了自渲染的 `person-pushing-wheelbarrow.svg.png`（已包含在 `artifacts.files` 内）。该题有 1 次工具失败，审计确认是自身脚本包装的 JavaScript 语法错误（`Unexpected token '??'`），**未取到任何外部内容**，之后模型改用 `sips` 完成渲染。\n\n- **扣分**：\n  - 需求符合度 −1：题目要求\"双手与把手接触\"；盲看描述为\"双臂前伸握把\"，但未做逐点接触测量。\n  - 正确性 −2：方向判定依赖单帧盲看与模型自述；未做镜像反例对照。\n  - 视觉与产品感 −2：画面完整（装土与幼苗、丘陵背景、前倾步态），但仅单尺寸查看。\n\n- **亮点**：本阶段自检最完整的两题之一（另一为 task-03）；`<desc>` 准确写明\"behind a loaded wheelbarrow … pushing it toward the right\"，与盲看结论一致。\n\n- **局限**：视觉结论来自视觉桥接模型；\"推/拉\"判定只有一次独立读（未做多次重复或多评审交叉）；未做接触点坐标测量。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 92,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-07.md",
+        "lines": "1-32"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-08`",
+      "runId": "run-gpt-5-6-sol-task-08-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "真单文件零依赖、可玩且观感精致，启动/计分/暂停经实测成立；但过关后球不自动发射而唯一的发射入口是画布点击，`Space` 仅绑暂停——纯键盘玩家从第 2 关起无法继续，且全程无音效。",
+        "en": "A genuinely self-contained, playable and visually polished game whose launch, scoring and pause were verified at runtime; however after a level clear the ball never re-launches and the only launch entry point is a canvas click while Space is bound to pause — so a keyboard-only player is stuck from level 2 onward, and there is no audio at all."
+      },
+      "body": {
+        "zh": "- **需求对照**：单 HTML 文件 ✅（唯一产物 25.9 KB，样式与脚本全部内联）；无需构建、无需服务器、可离线打开 ✅；挡板/球/砖块/碰撞/得分/生命/关卡 ✅；开始/暂停/继续/失败/重开/通关状态 ✅；\"精致\" → HUD、统一美术风格、动效齐备 ✅，**音效缺失 ✗**。\n\n- **实测（Chromium 无头，组织者自建静态服务）**：控制台错误 0、页面异常 0、请求失败 0、**外部请求 0**（全文件唯一的 `url()` 是内联 `data:` SVG）；点击 `LAUNCH BALL` 后 2.5 秒得分由 `000000` → `000105`，球确实在运动并击砖；按 `Space` 正确进入 `SYSTEM HOLD PAUSED` 覆盖层。\n\n- **代码级核验（成立项）**：碰撞使用按速度自适应的子步细分（子步步长 `≤ r*1.2`），从机制上抑制高速穿透；打板出射角被封顶在 60°（`|vy| ≥ 0.497·speed`），**从机制上排除了水平死循环**；`visibilitychange` 自动暂停；`prefers-reduced-motion`、`:focus-visible`、画布与状态区的 ARIA 标签齐备。\n\n- **高危缺陷（源码可判定，未做端到端通关复现）**：`levelClear()` 在通过第 N 关后把 `state` 置为 `paused` 并 `resetBoard()`，此时球为 `stuck`；\"Continue\" 按钮只调用 `pauseToggle()`（不发射），而**唯一的发射入口**是画布 `pointerdown` 分支中的 `state==='playing' && ball.stuck` 判断；`Space` 只绑 `pauseToggle`，但界面提示却写着 \"Space launch / pause\"。对比：掉球后代码有 650 ms 自动发射（`loseLife`），过关后**没有**对应逻辑——因此**纯键盘玩家从第 2 关起无法发球**（鼠标/触屏用户可点画布补救）。\n\n- **其余缺陷**：全程无 `AudioContext` 或任何音频（题目\"精致\"与本项目理论成果的\"适度音效\"均未覆盖）；画布坐标空间被强制 ≥280×320 而 CSS 盒高由网格剩余空间决定，视口高度不足时位图被**非等比拉伸**（球成椭圆）且 `body{overflow:hidden}` 无滚动兜底；`moveBall` 的子步循环内 `return` 只跳出一步，同帧可二次扣命（生命可显示为负）；`slow` 道具只改速度分量不改 `ball.speed`，下一次打板即还原；暂停/结束覆盖层空白处无点击处理，与触屏提示 \"Tap to launch / pause\" 不符；`ctx.roundRect` 无回退。\n\n- **扣分**：需求符合度 −8（键盘主流程断裂 −5、无音效 −3）；完整度 −1；正确性 −5；工程组织 −2。视觉维度 9/10（盲看判定为刻意的霓虹复古风格、HUD 清晰）。\n\n- **亮点**：出射角封顶与自适应子步是两处\"结构性正确\"的设计，而非靠调参掩盖问题；状态机完整含胜利与自动暂停。\n\n- **局限**：过关后卡死的结论来自**代码走查**（已定位到具体分支与绑定），未做端到端通关复现；音效缺失来自全文检索（`AudioContext`/`audio` 命中 0）；视觉结论来自视觉桥接模型。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 83,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-08.md",
+        "lines": "1-33"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-09`",
+      "runId": "run-gpt-5-6-sol-task-09-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "单文件零依赖，整地—播种—浇水—生长—收获循环真实接通、经济与存档自洽；但触屏/窄屏下\"收获\"与\"次日\"两个工具槽被媒体查询隐藏且无替代入口，核心循环在触屏设备上无法完成。",
+        "en": "A genuinely self-contained single file whose till–plant–water–grow–harvest loop, economy and save/load are wired end to end; however a media query hides the harvest and next-day tool slots on coarse-pointer or narrow viewports with no alternative entry point, making the core loop impossible to complete on touch devices."
+      },
+      "body": {
+        "zh": "- **需求对照**：单个自包含 HTML 文件 ✅（21.3 KB，唯一 `<script>` 与唯一 `<style>`，**全文 0 个 `http(s)://`、`src=`、`href=`、`url(`、`@import`、`fetch`、`import`**）；俯视角、可操作角色 ✅；至少\"整地—播种—照料—生长—收获\"循环 ✅；明确输入与状态反馈 ✅；资源/时间变化 ✅；持续目标（每日请求 + 商店 + 金币）✅。\n\n- **核心循环（代码走查，逐环节接通）**：锄头整地 → 种子工具播种（扣种子）→ 水壶浇水（扣水量，需已整地）→ **跨天时仅当 `p.watered` 为真才 `p.age++`，随后清除 `watered`**（浇水是生长的真实前提而非装饰）→ 篮子收获结算金币、累计收获数、地块复位为已整地。雨天自动浇灌全部地块、池塘免费补水、商店在临近时开启；63 个地块全部可达（含四角，已逐点核对碰撞盒与朝向偏移 `target()`）；不存在作物卡死（有作物时拒绝锄地、占用时拒绝再播，唯一清除途径是收获且必定成功）；`dt` 有 0.05 s 上限，地块键限定在网格内（最多 63 条），不存在无界增长；`load()` 有 `catch` 兜底、状态为纯可序列化对象，存档往返无损。\n\n- **高危缺陷（实测确认）**：`@media (max-width:680px),(pointer:coarse)` 隐藏第 6、7 个工具槽（`Harvest` 收获、`Next day` 次日），而选择工具槽只有\"点击槽位\"与\"数字键 1–7\"两条路径，`#act` 只对**当前选中**的工具调用 `useTool()`。**实测**：390×844 + `hasTouch` 下 7 个工具槽的 `display` 依次为 `block×5, none, none`——**触屏设备上无法收获、无法过夜，核心循环不可完成**。这是\"单文件可玩\"要求下最实质的一处失败。\n\n- **其余缺陷**：任务进度条在完成后的 1.8 秒窗口内仍用旧任务对象计算，进度可超过 100%；开始覆盖层未禁用指针穿透，点击覆盖层空白仍会落到画布并触发放置/使用提示；弹窗缺 `role=\"dialog\"`、`aria-modal` 与焦点陷阱；每帧重建工具栏 `innerHTML`（`renderToolbar`）；`save()` 无 `try/catch`，在被禁用存储的 iframe 中会抛错。\n\n- **实测（Chromium 无头）**：控制台错误 0、页面异常 0、请求失败 0、外部请求 0；开始后 HUD 显示 `Day 1 / 7:00 / 25`、每日请求与工具栏正常；窄屏无横向溢出。\n\n- **扣分**：需求符合度 −8（触屏关键路径缺失）；完整度 −1；正确性 −3；视觉 −3（盲看指出 `TODAY'S REQUEST` 面板与市场摊位顶棚有轻微重叠、部分元素间距不均）；工程 −3（可达性收口与每帧 DOM 重建）。\n\n- **亮点**：交互网格与绘制网格由同一个 `plotKey`/`Math.floor` 推导，天然对齐；清晨清除 `watered` 使浇水成为**承重机制**；雨天改变当日决策；触屏方向键与 1.8 格点击复用同一 `useTool()` 核心，没有平行实现。\n\n- **局限**：帧率与长时间随机输入下的性能未测量；真机触屏手势冲突未验证；\"地块全部可达\"\"无卡死作物\"来自代码走查而非长时间实机对局；视觉结论来自视觉桥接模型。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 82,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-09.md",
+        "lines": "1-33"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-10`",
+      "runId": "run-gpt-5-6-sol-task-10-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "七项要求逐条实测通过：像素落点精确到逻辑格、擦除产生透明像素、导出为合法 32×32 带 alpha 的 PNG 且不含网格与光标、缩放改变位图但不改变作品数据；扣分集中在笔刷/拖拽/历史的边界语义。",
+        "en": "All seven requirements passed direct measurement: drawing lands exactly on the logical pixel, erasing yields transparency, the export is a valid 32×32 RGBA PNG free of the editor grid and cursor overlay, and zooming changes the bitmap without changing artwork data; deductions are confined to brush, drag and history edge semantics."
+      },
+      "body": {
+        "zh": "- **需求对照（七项全部命中）**：绘制 ✅、擦除 ✅、颜色选择 ✅、画笔大小 ✅（1/2/3）、撤销/重做 ✅、缩放 ✅（滑块 + 按钮，实测 16×→20×）、导出 PNG ✅。\n\n- **实测（Chromium 无头 + 导出文件解码，本阶段最强证据）**：\n  1. 空画布导出：32×32、**非空像素数 0** → 编辑区可见的网格线与棋盘底纹**未进入导出** ✅；\n  2. 在逻辑格 (6,6) 单击一次后导出：**恰好 1 个非空像素**，位置 (6,6)，颜色 `rgba(255,92,122,255)` → 单击落点**精确、无偏移、无抗锯齿扩散** ✅；\n  3. 切到橡皮后在同格单击并导出：该像素变为 `rgba(0,0,0,0)` → **擦除写入的是透明而非白色** ✅；\n  4. 导出文件签名为 `89504e47 0d0a1a0a`、`IHDR` 为 32×32、colorType=6（RGBA）→ **是合法 PNG 且带 alpha 通道** ✅；\n  5. 连续两次放大后编辑位图由 512 变为 640（缩放 16→20），而导出仍为 32×32 且像素数据不变 → **缩放只改显示、不改作品数据** ✅。\n\n- **结构核验（成立项）**：绘制与擦除都以逻辑像素为单位、快速拖动用 Bresenham 插值补点（避免 move 事件稀疏造成断点）；历史采用**整幅快照**，压栈时清空 redo 栈 → \"新编辑作废重做分支\"是结构性保证而非补丁；空笔画不入历史；撤销/重做按钮的 disabled 状态与快捷键（P/E/Ctrl+Z/Ctrl+Shift+Z/Ctrl+Y）同步，且在输入框内不误触发；全文**无任何外部依赖**（无 CDN、无 `@import`、无 `url()`），可 `file://` 直接打开。\n\n- **扣分**：\n  - 需求符合度 −1：橡皮在拖出画布后被钳位到边缘格，把\"移出—移回\"连成一条用户未画的边缘直线（边界语义不干净）。\n  - 正确性 −4：2px 笔刷只用 `floor((2-1)/2)=0` 的偏移，**只向右下扩展**，与 1px/3px 的中心对齐规则不一致（笔尖偏心）；笔画进行中点 \"Clear canvas\" 未清除 `state.drawing`，随后的 `pointerup` 会把清空前才存在的快照压入历史；选取颜色会**静默切回铅笔**（橡皮状态下调色后工具被改掉）。\n  - 视觉与产品感 −1。\n  - 工程组织 −2：`role=\"radiogroup\"` 的笔刷组没有 roving tabindex 与方向键；redo 栈无长度上限；缩放 8/10 倍时网格消失而界面仍标称\"32×32 网格\"。\n\n- **亮点**：渲染路径用整数倍 `fillRect` + `clearRect` 重绘（配合 `image-rendering: pixelated`），不存在 CSS transform 采样造成的半像素模糊；导出完全重建离屏画布，网格与光标天然不入图；README 的描述与代码一致，无夸大。\n\n- **局限**：`download` 属性在 `file://` 与各浏览器下的行为未逐一验证（本次通过 Playwright 的下载事件取得文件）；触摸/笔设备下 `event.buttons` 的取值未测；视觉结论来自视觉桥接模型。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 91,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-10.md",
+        "lines": "1-38"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-11`",
+      "runId": "run-gpt-5-6-sol-task-11-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "画墙、门窗落墙与拖动、墙长实时标注真实可用；但题目四项能力中的\"拖动对象\"没有对象层，\"房间尺寸\"是写死的常量——界面看起来完整，房间数据是伪造的。",
+        "en": "Wall drawing, wall-attached draggable openings and live wall-length dimensions genuinely work, but of the four requested capabilities \"drag objects\" has no object layer and \"room dimensions\" are hard-coded constants — the interface looks complete while the room data is fabricated."
+      },
+      "body": {
+        "zh": "- **需求对照**：绘制墙体 ✅（拖拽建墙、网格吸附、长度不足 20px 拒绝并提示）；添加门窗并依附墙体 ✅（只能落在墙上，沿墙拖动只改 `wallId`/`ratio` 且 `ratio` 有 clamp，天然不脱落）；**拖动物体 ✗**（状态里只有 `walls` 与 `openings`，**没有任何对象模型**，无法新增/选择/拖动/删除除开口以外的物件）；**查看房间尺寸 ✗（部分）**——单面墙的长度尺寸是真实几何反算的实时值，但\"房间\"本身是伪造的。\n\n- **实测（Chromium 无头）**：\n  - 默认方案显示 4 个房间标签：`Living 24.8 m² / Kitchen 18.4 m² / Dining 14.2 m² / Studio 12.6 m²`，状态栏 `7 walls · 4 openings`，项目名与总面积 `Lake House / Ground floor 106.2 m²`。\n  - 点击 `New plan` 清空后重画三面墙（终点吸附生效，得到 `6.4 m / 4.0 m / 4.0 m` **真实实时尺寸**），此时状态栏为 `3 walls · 0 openings`，而**侧栏面积仍显示 106.2 m²**——即面积面板在墙数 ≠4 时**保留上一次的陈旧值**，不更新也不清空。\n  - 代码层面：`renderRoomLabels()` 只要 `state.walls.length >= 4` 就固定输出上述 4 个房间名与面积（坐标与数值均为字面常量），与几何无关；房间填充是固定路径而非几何推导；有 4 面墙时总面积用\"第 1 面墙长 × 第 2 面墙长\"冒充。\n\n- **其余缺陷**：修改墙长时不重新约束开口的位置与宽度，开口可跨出墙端（开口宽度输入也无上限）；`render()` 每次全量重建 SVG 会移除 `setPointerCapture` 的目标，拖动被渲染打断后指针捕获失效；状态栏写 \"Snap to grid 10 cm\" 而实际吸附粒度为 20 cm（与 `50px/m` 的比例不符）；\"All changes saved\" 只是一个定时器提示，**没有任何持久化**（清空即丢，也无导入路径）；尺寸线与文字的命中区域会吞掉\"点击空白取消选择\"；`styles.css` 去掉 `outline` 且全文无 `:focus-visible`。\n\n- **成立且值得肯定的部分**：撤销/重做采用全量快照，覆盖开口删除（删墙时级联清理其开口）并可完整回滚；单一 `50px/m` 比例与统一的 `metres()` 格式化使尺寸与坐标同源；工具状态有\"按钮 active + `aria-pressed` + 光标形状 + 模式提示\"四重反馈；导出为内联样式 SVG，可离线留存。\n\n- **扣分**：需求符合度 −18（对象层缺失 −10、房间数据伪造 −8）；完整度 −4；正确性 −9（陈旧面积值 −3、开口不随墙长约束 −3、无持久化 −2、单位不符 −1）；视觉 −2；工程 −3。\n\n- **亮点**：视觉层面盲看判定为\"专业、完整\"（工具栏、属性面板、项目元数据、状态栏齐备）——**这正是本题最值得警惕的地方：界面完成度与功能真实性完全脱钩**。\n\n- **局限**：`getScreenCTM().inverse()` 在缩放后的坐标精度未实机量化；触摸/触控笔下拖拽未测；大量墙体时的全量重建性能未测；视觉结论来自视觉桥接模型。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 64,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-11.md",
+        "lines": "1-34"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-12`",
+      "runId": "run-gpt-5-6-sol-task-12-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "核心算术真实可用且有真实执行过的测试（0.1+0.2 得 0.3、除零有明确提示），但入口是 ES module 导致 `file://` 打不开，且 UI 状态机存在三处可达缺陷（大/极小结果无法继续运算、前导运算符、超 12 位有效数字被静默改写）。",
+        "en": "The calculation core genuinely works and was really exercised by a test run (0.1+0.2 gives 0.3, division by zero is reported clearly), but the ES-module entry point cannot be opened via file://, and the UI state machine has three reachable defects (very large/tiny results cannot be chained, leading operators, and silent rounding of inputs beyond 12 significant digits)."
+      },
+      "body": {
+        "zh": "- **需求对照**：可工作的计算器 ✅（见实测）；技术自选 ✅（原生 ES module + 零依赖 `package.json` + 内置 `server.mjs`）；**运行它 ✅**（审计记录 `node --test` 两次、`node server.mjs` 一次的真实执行）；**测试它 ✅**（8 条断言的 `calculator.test.mjs`，逐条手工复算成立）；**修复发现的问题 ✅**（`calculator.mjs` 中的负操作数守卫 `[×÷]$`、双层输入校验、`toPrecision(12)` 收敛，均为\"出过问题才会写\"的护栏）。\n\n- **实测（Chromium 无头，双通道加载）**：\n  - **`file://` 通道**：**失败**。控制台报 `Access to script … blocked by CORS policy` 与 `net::ERR_FAILED`；显示区停在 \"Ready\"，按下数字键 7 无任何反应 → **双击打开白屏/不可用**。\n  - **HTTP 通道**：控制台错误 0；`0.1 + 0.2 =` → **0.3** ✅（浮点噪声被真正修掉）；`4 ÷ 0 =` → `Cannot divide by zero` ✅；`7 + 5 =` → 12，再按 `=` 仍为 12 ✅（幂等）；键盘输入 `55*2` + Enter → 110 ✅。\n\n- **可达缺陷（均在实测中复现）**：\n  1. **结果无法链式运算**：`=` 之后表达式被写成 `String(value)`，当 |结果| ≥ 1e21 或 < 1e-6 时产生 `1e-11` 这类文本，而核心解析器拒绝 `e`。实测 `1 ÷ 100000000000 =` 显示 `—`，再按 `+`、`5`、`=` 得到 `Invalid expression`，**只能按 AC 重来**。\n  2. **前导运算符**：先按 `-` 再按其他运算符会把表达式折叠成前导 `+`；实测显示为 `+`（结果 `—`），接 `5 =` 得到 `Invalid expression`。\n  3. **长输入被静默改写**：`toPrecision(12)` 对超过 12 位有效数字的输入直接截断；实测 `123456789012345 =` 显示 `1.23456789e+14`，与真实值相差 12345，且**没有任何提示**。\n  4. 溢出、`NaN`（如 `0÷0`）与除零共用同一条 \"Cannot divide by zero\" 文案，超出与除零被混为一谈。\n\n- **其余问题**：`artifacts/` 内**没有 README**，运行方式只能从 `package.json` 的 `start`/`test` 脚本反推（题目要求交付\"运行方式、测试方法与修复证据\"，本次仅以脚本形式隐含提供）；测试套件完全不覆盖 UI 层（0 条 DOM/状态机测试）；`calculator.mjs` 中 `'Error'` 分支不可达（死代码）；`styles.css` 首行 `@import url('data:text/css,')` 为空导入（该模型另有 2 题出现同一写法）；`.keys` 的 `aria-label` 挂在无 `role` 的 `div` 上，AC/% 无描述标签；≤900px 时历史面板整块隐藏。\n\n- **扣分**：需求符合度 −10（`file://` 不可用 −6、无交付说明 −4）；完整度 −2；正确性 −6；视觉 9/10；工程 −3。\n\n- **亮点**：这是本阶段**唯一有真实测试执行记录的 Web 应用**；把计算核心抽成独立模块并由 `node --test` 驱动，是 15 题里工程分层最清晰的一次；`server.mjs` 带路径穿越校验。\n\n- **局限**：`node --test` 的实际输出未归档（只有命令记录），本文的\"8 条断言成立\"来自逐条手工复算而非执行结果；模型是否在浏览器里点测过 UI 无法从归档判定（无截图、无自动化）；`apply_patch=3` 具体改了什么无 diff 存档。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 78,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-12.md",
+        "lines": "1-37"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-13`",
+      "runId": "run-gpt-5-6-sol-task-13-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "视觉外壳精致完整，但数据 100% 硬编码却以\"● LIVE CONDITIONS\"呈现、真实披露只在页脚小字，题目要求的\"运行→浏览器打开→自行检查→修复→重复\"没有任何可核验证据。",
+        "en": "The visual shell is polished and complete, but the data is entirely hard-coded while being presented as \"● LIVE CONDITIONS\" with disclosure confined to small footer text, and none of the prompt's required run → open in browser → self-inspect → fix → repeat loop left any verifiable evidence."
+      },
+      "body": {
+        "zh": "- **数据来源（本题最重要的事实）**：`app.js` 顶部的 `cities` 常量（Amsterdam / Copenhagen / Lisbon / Tokyo / Vancouver）是**唯一数据源**；`artifacts/` 内检索 `fetch` / `XMLHttpRequest` / `http(s)://` / `async` / `await` / `Promise` **全部 0 命中**。因此不存在真实的加载、失败、超时、缓存或\"缺失字段\"路径——凡是按\"实时接口\"设计的验收项，实际上都**没有可失败的对象**。\n\n- **需求对照**：呈现地点/当前天气/温度/体感/关键指标/逐小时与 7 天预报 ✅（视觉桥接模型确认这些区块齐备）；加载、失败、空数据、刷新四态 ✗（无任何状态节点，`render()` 同步执行）；数据真实性 ✗；按题目要求\"自行检查渲染结果并修复\" ✗（见下）。\n\n- **误导性呈现（扣分主因）**：页面以带常亮点的 **\"● LIVE CONDITIONS\"** 标题呈现硬编码数据，而真实性披露只在页脚小字 \"Updated just now · Local demo data\"，**同一屏内自相矛盾**。相关细节互相打架，可复现：\n  - `0.2 mm expected` 与 `Protection after 45 min` 是写死的阿姆斯特丹数值，切到别的城市或切 °F 后变成**错误信息**；\n  - 预报图标完全不读 `condition` 字段（只按索引与降水阈值选太阳/云），出现\"当前 Clear skies 却显示云\"的互斥；\n  - 时区换算把 `new Date().getTimezoneOffset()` **加了正号**（符号相反）；小时刻度用浏览器本地小时递推，**忽略城市的 `offset`**；\n  - 7 天标签从 `i+2` 取星期名，跳过一天且不校验星期几；\n  - 搜索只匹配 5 个硬编码城市（输入 Paris 得到 \"No saved cities found\"）；\"Use my location\" 只弹提示，未调用 `navigator.geolocation`；\n  - 切到 °F 后大号温度旁仍只有 `°`，无 C/F 指示；无主题切换控件，也没有 `prefers-color-scheme`。\n\n- **过程证据缺失（题目逐条要求的自检闭环）**：原题明确写\"1. 运行应用；2. 在浏览器中打开；3. 自行检查渲染结果；4. 修复发现的视觉或功能问题；5. 重复直到满意\"。归档中该 run 的工具构成为 `exec_command=6, apply_patch=2`，**没有任何浏览器渲染、截图或 `view_image` 调用**，`artifacts/` 也只有 3 个源文件、无任何截图产物。需要说明的是：该 run 的 `recordedCommands` 在审计 JSON 中为空数组，**无法排除**模型用 `exec_command` 直接打开过浏览器，但**没有任何记录或产物支持它完成了这一循环**，因此本评价按\"未提供证据\"处理，而非按\"已执行\"处理。\n\n- **成立且值得肯定的部分**：零依赖、`file://` 直接可用；单位换算集中在两处函数、温度/体感/露点/高低温/风速联动一致；三档响应式（窄屏预报改为横向 `scroll-snap`）；`prefers-reduced-motion`、`:focus-visible`、`aria-expanded/controls`、`role=\"tablist\"`、`aria-live` toast 等无障碍基础扎实；视觉维度盲看给 9/10（版式干净、层级清晰、无溢出重叠）。\n\n- **扣分**：需求符合度 −20（自检闭环无证据 −10、数据真实性与披露 −10）；完整度 −5（四态全缺）；正确性 −11（时区/单位/图标/日期/搜索/定位等互斥项）；视觉 −1；工程 −3。\n\n- **跨题意义**：本题是\"看起来完成了\"与\"真的完成了\"落差最大的样本——**唯一能识别它的方式是读数据来源，而不是看界面**。\n\n- **局限**：本评价未做真实网络环境复核（该 run 本身网络关闭）；对比度是否达标未测量；视觉结论来自视觉桥接模型；`recordedCommands` 为空使我们无法枚举该 run 的 6 次 shell 命令。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 60,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-13.md",
+        "lines": "1-39"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-14`",
+      "runId": "run-gpt-5-6-sol-task-14-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "站点专业可信、确认无任何真实提交，但\"演示性质\"的披露被埋没，且页面顶部直接声称 \"MEMBER FDIC\"、并列示虚构客户评分与大额客户数——违反\"不得暗示存款保险\"的硬性要求。",
+        "en": "A professional-looking site with no real data submission whatsoever, but the demonstration disclosure is buried while the page asserts \"MEMBER FDIC\" up front alongside fabricated customer ratings and user counts, violating the explicit requirement not to imply insured deposits."
+      },
+      "body": {
+        "zh": "- **需求对照**（原始 prompt 仅 \"Make me a website for a bank\"，本项按本项目为该开放题设定的理论成果口径核对）：品牌首页 ✅；个人产品概览 ✅；账户/贷款/利率信息 **部分**（5.00% APY 在 3 处文案一致，但**全站无 APR、无费率表、无 `<table>`**，\"Borrow\"只有一张卡片）；登录/开户入口 **部分**（桌面页头有，移动端被隐藏）；帮助与安全说明 部分（FAQ 用原生 `details`，安全板块较薄）；**明显标注演示性质 ✗**；**不得暗示真实收款/存款保障/数据传输 ✗**；前端表单与计算器可用 部分；安全提示、隐私、可访问性与金融数字格式 部分。\n\n- **最严重的两条（均可在代码层定位）**：\n  1. **\"MEMBER FDIC\" 与存款保险暗示**：证明条写 \"MEMBER FDIC\"，正文另有 \"FDIC insured … insured up to the legal limit\"，而 FAQ 中又承认\"FDIC 披露会出现在这里\"——**同页自相矛盾**，且正面表述正是理论成果明令禁止的\"暗示存款保障\"。\n  2. **披露被埋没**：全页唯一常驻的演示标识是页脚 `Concept website.`（0.55rem、对深色底约 3.29:1，**低于 WCAG AA**），而\"这是不是真银行\"的正式回答放在**默认折叠**的 `<details>` 内——不展开任何折叠项滚到底，正文不会出现\"虚构\"字样。\n\n- **虚构内容未标注**：`4.9 out of 5 · from 18,000+ customers`、具名客户引言、以及 `•••• 2848 RENE MORGAN` 的模拟账户界面均按真实证明呈现，无 \"示例数据\" 标注。\n\n- **计算器与交互**：储蓄计算器公式自洽（手算 5000 本金 + 300/月 × 60 期、5%/12 得终值 ≈ $26,819、利息 ≈ $3,819），但**静态回退值写的是 $27,050 / $4,050**（差 $231），且用名义月利率却标注 \"5.00% APY\"（按有效年利率应为 ≈ $26,725）；**实测全文件无 `<form>`、无 `fetch`/`XMLHttpRequest`/外链，确认不发生任何真实提交** ✅；仅有的两个控件是带 `<label for>` 的 range 滑块。\n\n- **导航与响应式**：8 个站内锚点全部可达、无死链跳转；但 `Privacy / Terms / Accessibility` 是 3 处 `href=\"#\"`（且被脚本 `preventDefault` 成纯无操作）；`Business` 落到引言区、`Wealth` 落到 FAQ，**标签与内容不符**，全站无当前小节高亮；**≤980px 时页头 \"Sign in / Open an account\" 被 CSS 隐藏且抽屉未补入口**，移动端上方无登录路径。\n\n- **无 JS 时的降级**：`.reveal{opacity:0}` 使 14 处主要内容在禁用 JS 时根本不可见（`IntersectionObserver` 有兜底，但前提是 JS 能跑）。\n\n- **可访问性**：skip-link ✅、`prefers-reduced-motion` ✅、原生 `details` ✅、`aria-selected` 与视觉状态同源 ✅；但标签页标签（≈3.37:1）、计算器免责声明（≈3.75:1）、页脚（≈3.29:1）三处对比度低于 AA，且无 `:focus-visible`；抽屉无 Escape 关闭、菜单按钮展开后名称仍为 \"Open menu\"。\n\n- **扣分**：需求符合度 −14（FDIC 与保险暗示 −8、演示披露埋没 −6）；完整度 −5；正确性 −7（回退值与计算结果不一致 −3、APY 口径错误 −2、死链与导航错配 −2）；视觉 −1；工程 −4。\n\n- **亮点**：**零表单、零 fetch/XHR、零外链**（全部相对路径），这是本题最关键的安全侧证据；`script.js` 主动拦截 `href=\"#\"` 而非留空跳转；视觉完成度高（盲看判定为\"专业、可信、无布局缺陷\"）。\n\n- **局限**：对比度为按色值计算的估算值，未用工具实测；屏幕阅读器输出、iOS 滚动锁定未验证；\"是否真的没有后端\"仅能由静态检索支持（无网络抓包）；视觉结论来自视觉桥接模型。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 69,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-14.md",
+        "lines": "1-39"
+      }
+    },
+    {
+      "id": "`review-maint-agent-v3-task-15`",
+      "runId": "run-gpt-5-6-sol-task-15-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v3（AI，非盲评）",
+      "date": "2026-09-10",
+      "conclusion": {
+        "zh": "增删改查、搜索、筛选、排序、统计与本地持久化真实可用且界面精致；但完全没有日期字段（因此\"完结写完成日期、重开清理冲突\"无法成立）、只有三种阅读状态，且存储损坏时会静默用 8 本示例书覆盖用户数据。",
+        "en": "Add/view/edit/delete, search, filtering, sorting, statistics and local persistence genuinely work in a polished UI; however there are no date fields at all (so the finish-date and conflict-resolution rules cannot hold), only three reading states exist, and corrupted storage is silently replaced by eight sample books."
+      },
+      "body": {
+        "zh": "- **需求对照**：可运行的书籍追踪应用 ✅；至少 新增/查看/编辑/删除 且记录书名、作者、阅读状态 ✅；更完整实现：页数进度 ✅、评分 ✅、类型标签 ✅、收藏/目标 ✅、搜索 ✅、筛选 ✅、排序 ✅、统计 ✅、本地持久化 ✅；**开始/完成日期 ✗（完全没有日期字段）**；导入导出 ✗；空库/无结果/无效输入/损坏存储的反馈 **部分**。\n\n- **实测（Chromium 无头）**：\n  - 首屏**渲染 8 张书籍卡片**（首次访问被播种 `seedBooks`），统计区显示 `8 books / 2 reading / 4 finished / 目标 4-24`；`#statusInput` 的选项实测只有 `reading`/`want`/`finished` **三项**；**页面内不存在任何 `input[type=\"date\"]` 或 `#finishInput`**（实测 `hasFinishDateField = false`）。\n  - **损坏存储**：把 `localStorage` 键值改成 `'{'` 后刷新 → 页面**无提示、无控制台错误**地重新显示 8 本示例书（`JSON.parse` 失败即静默回退到 `seedBooks`），用户原数据在下一次保存时被无声覆盖。\n\n- **一致性要求为何无法满足**：理论成果点名的\"完成时设置完成日期与最终进度、重新阅读时合理清理冲突字段\"是**结构性不可达**——应用里根本没有开始/完成日期字段，唯一的时间戳是新增时间 `added`。实测的相关缺口是：把已读完的书（进度 = 总页数）改回\"在读\"后，进度仍为 100%，没有任何字段被清理。\n\n- **其余缺陷**：状态机缺少 `paused`/`abandoned`（理论成果列出的五种状态只有三种）；空库状态只有在把 8 本示例书全部删光后才可达，全新用户看不到（实测首屏即 8 张卡片）；删除只有 `confirm()` 确认、**没有撤销**；ID 用 `Date.now()`，同毫秒两次新增会得到相同 ID（编辑/删除会命中两条）；页数只做上界 `Math.min` 夹取，无下界/整数校验；评分字段缺失时排序产生 `NaN`（静默失效）；\"Finished this year\" 实际上是**全部已读完数量**，不按年份过滤（因为没有日期）；搜索框的可访问名称被 `aria-hidden` 吃掉，只能靠 placeholder。\n\n- **成立且值得肯定的部分**：所有用户文本经 `escapeHtml`，未发现注入点；编辑表单用 `form.reset()` + 逐字段回填，切换编辑对象不残留上一本数据；搜索对大小写与首尾空格容错；**搜索 + 筛选 + 排序三者叠加逻辑一致**，计数与列表一致；删除有确认；无任何外部依赖，可 `file://` 直接打开；`<dialog>` + `showModal()` 自带 Esc 与焦点约束；`:focus-visible`、`prefers-reduced-motion`、三档响应式断点齐备；视觉维度盲看给 9/10。\n\n- **扣分**：需求符合度 −10（无日期字段 −5、状态不全 −3、空库不可达 −2）；完整度 −2；正确性 −6（损坏存储静默覆盖 −3、ID 碰撞 −1、页数下界 −1、年份统计口径 −1）；视觉 −1；工程 −2。\n\n- **局限**：多标签页并发写入 `localStorage` 的覆盖时序未测；iOS 无痕模式下存储抛错的真实表现未测；导入导出因不存在而无从复核；视觉结论来自视觉桥接模型。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 79,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-15.md",
+        "lines": "1-33"
       }
     }
   ],
@@ -5346,6 +7010,34 @@
         "lines": "1-24"
       },
       "note": "本批次为部分汇总：由已归档的 5 个 run 的逐题指标求和，不代表整个 phase-02（Task 16–45）。"
+    },
+    {
+      "id": "batch-gpt-5-6-sol-phase-01",
+      "modelId": "gpt-5-6-sol",
+      "phaseId": "phase-01",
+      "label": {
+        "zh": "GPT-5.6 Sol · Phase 1",
+        "en": "GPT-5.6 Sol · Phase 1"
+      },
+      "metrics": {
+        "totalTasks": 15,
+        "sessions": 15,
+        "durationSeconds": 4606,
+        "apiCalls": 120,
+        "toolCalls": 76,
+        "failures": 1,
+        "inputTokens": 4187022,
+        "outputTokens": 129130,
+        "cacheReadTokens": 3650560,
+        "totalTokens": null,
+        "costCny": null,
+        "costUsd": null
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/README.md",
+        "lines": "1-40"
+      },
+      "note": "由 15 个 run 的逐题指标求和；每题一个独立会话。"
     }
   ],
   "assessments": [

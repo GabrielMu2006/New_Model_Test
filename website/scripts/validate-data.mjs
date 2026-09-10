@@ -166,6 +166,22 @@ const museRuns = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3' &
 if (museRuns.length !== 15) fail(`Muse regression: expected 15 phase-01 Muse runs, found ${museRuns.length}`);
 const museReviews = catalog.reviews.filter((review) => museRuns.some((run) => run.id === review.runId));
 if (museReviews.length !== 45) fail(`Muse regression: expected 45 phase-01 Muse reviews (1 human + 2 AI per run), found ${museReviews.length}`);
+// GPT-5.6 Sol 第一阶段：15 题与另两个模型同题（task-01…15@1），每题 1 份 AI 评价（maintenance-agent-v3）
+const gptRuns = catalog.runs.filter((run) => run.modelId === 'gpt-5-6-sol');
+if (gptRuns.length === 0) fail('GPT regression: no archived GPT-5.6 Sol runs');
+for (const run of gptRuns) {
+  const task = taskById.get(run.taskId);
+  if (task.phaseId !== 'phase-01') fail(`${run.id}: GPT runs must attach to phase-01 tasks (shared task set)`);
+  if (run.environment?.reportedModelId !== 'gpt-5.6-sol') fail(`${run.id}: missing harness-reported snapshot id`);
+  const reviews = catalog.reviews.filter((review) => review.runId === run.id);
+  if (reviews.length !== 1) fail(`${run.id}: expected exactly one archived review, found ${reviews.length}`);
+  const [review] = reviews;
+  if (review.type !== 'ai') fail(`${run.id}: the archived review must be an AI review`);
+  if (review.score == null || !review.scoreMethod) fail(`${run.id}: AI review needs a score and a score method`);
+  if (!review.conclusion?.zh || !review.conclusion?.en) fail(`${run.id}: review conclusion must be bilingual`);
+  if (run.contamination?.telemetry === 'hidden') fail(`${run.id}: Codex CLI records tool calls, telemetry must not be marked hidden`);
+}
+
 // Muse 第二阶段：每运行恰好 1 份 AI 评价（maintenance-agent-v2），本批尚未产出人工评价
 const musePhase2Runs = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3' && phaseOfRun(run) === 'phase-02');
 if (musePhase2Runs.length === 0) fail('Muse phase-2 regression: no archived Muse phase-02 runs');

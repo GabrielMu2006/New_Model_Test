@@ -44,6 +44,45 @@ test('Muse phase-02 runs carry exactly one independent AI review and no fabricat
   }
 });
 
+test('GPT-5.6 Sol runs share the phase-1 task set and carry one independent AI review', () => {
+  const gpt = catalog.runs.filter((run) => run.modelId === 'gpt-5-6-sol');
+  assert.equal(gpt.length, 15);
+  for (const run of gpt) {
+    const task = catalog.tasks.find((item) => item.id === run.taskId);
+    assert.equal(task.phaseId, 'phase-01', `${run.id}: GPT must reuse the shared phase-1 tasks`);
+    assert.equal(run.taskVersion, 1);
+    assert.equal(run.environment.reportedModelId, 'gpt-5.6-sol');
+    assert.equal(run.isolation.level, 'workspace-only');
+    assert.match(run.prompt.sha256, /^[0-9a-f]{64}$/);
+    const reviews = catalog.reviews.filter((review) => review.runId === run.id);
+    assert.equal(reviews.length, 1, `${run.id}: one AI review expected`);
+    assert.equal(reviews[0].type, 'ai');
+    assert.equal(reviews[0].authorLabel, '维护 agent v3（AI，非盲评）');
+    assert.ok(reviews[0].score > 0 && reviews[0].score <= 100);
+    assert.match(reviews[0].source.path, /^Test_Results\/GPT-5\.6-Sol_Codex\/phase-01\/Reviews\/ai\/maintenance-agent-v3\/task-\d\d\.md$/);
+  }
+  // 第一阶段同题现在有三个模型，可直接并排对比
+  for (const taskId of ['task-01', 'task-12', 'task-15']) {
+    const models = new Set(catalog.runs.filter((run) => run.taskId === taskId).map((run) => run.modelId));
+    assert.deepEqual([...models].sort(), ['deepseek-v4-1-flash-exp-0910', 'gpt-5-6-sol', 'muse-spark-1-3'], `${taskId}: three models must be comparable`);
+  }
+});
+
+test('DeepSeek phase-2 runs carry the split muse-spark-v1 review', () => {
+  const runs = runsOf('deepseek-v4-1-flash-exp-0910', 'phase-02');
+  assert.equal(runs.length, 5);
+  const scores = [];
+  for (const run of runs) {
+    const reviews = catalog.reviews.filter((review) => review.runId === run.id);
+    assert.equal(reviews.length, 1, `${run.id}: exactly one AI review expected`);
+    assert.equal(reviews[0].authorLabel, 'Muse Spark 1.3（AI，非盲评）');
+    assert.match(reviews[0].source.path, /\/Reviews\/ai\/muse-spark-v1\/task-\d\d\.md$/);
+    assert.ok(reviews[0].scoreMethod);
+    scores.push(reviews[0].score);
+  }
+  assert.equal(scores.reduce((sum, value) => sum + value, 0) / scores.length, 91);
+});
+
 test('model identity is bilingual and snapshots stay traceable per run', () => {
   for (const model of catalog.models) {
     assert.ok(model.name.zh && model.name.en, `${model.id}: model name must be bilingual`);
@@ -163,6 +202,10 @@ test('fixture-only phase, model and repeat run expand without component changes'
   assert.equal(expanded.phases.length, catalog.phases.length + 1);
   assert.equal(expanded.models.length, catalog.models.length + 1);
   assert.equal(expanded.tasks.length, catalog.tasks.length + 1);
-  assert.equal(expanded.runs.filter((run) => run.taskId === 'task-01').length, runsOf('deepseek-v4-1-flash-exp-0910').filter((run) => run.taskId === 'task-01').length + runsOf('muse-spark-1-3').filter((run) => run.taskId === 'task-01').length + 1);
-  assert.equal(catalog.models.length, 2);
+  // 同题重复运行只增加一条，不影响其它模型（模型数由实体推导，不写死）
+  assert.equal(
+    expanded.runs.filter((run) => run.taskId === 'task-01').length,
+    catalog.runs.filter((run) => run.taskId === 'task-01').length + 1,
+  );
+  assert.ok(catalog.models.length >= 3, 'each archived model must be in the catalog');
 });

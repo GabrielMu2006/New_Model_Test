@@ -7,6 +7,7 @@
 - [GPT-5.6 Sol / Phase 1](GPT-5.6-Sol_Codex/phase-01/README.md)：GPT-5.6 Sol（Codex CLI 0.147.0，medium）的 15 次独立运行、逐字 prompt、原始成果、逐题元数据与收尾审查；独立评价尚未产出。
 - [DeepSeek-V4.1-Flash / Phase 2](DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)：Task 16–20（5/30 题，部分归档）按扁平 `task-NN-<slug>/` 布局保存逐字 prompt、成果、收尾审查报告与任务 README；尚无独立评价。
 - [Muse-Spark-1.3 / Phase 2](Muse-Spark-1.3_Opencode/phase-02/README.md)：同题 Task 16–20 的 5 次运行，含 1 份/题的 AI 评价（maintenance-agent-v2，平均 88.2/100）、可复现取证脚本与截图；人工评价待产出。
+- [GPT-5.6 Sol / Phase 1](GPT-5.6-Sol_Codex/phase-01/README.md)：**第三个模型**，与另两个模型同跑第一阶段 15 题（Codex CLI 0.147.0，medium effort，每题独立会话），含逐题 AI 评价 maintenance-agent-v3（平均 82.9/100）与审查证据。
 
 > 第一阶段的三个模型目录均采用扁平 `task-*/` + 阶段级 `Reviews/` 布局，便于同题对照；后续评价按 `Reviews/ai/<评价者>-vN/` 接口追加，不覆盖既有内容。
 > 0910 实验版与随后发布的正式版 `DeepSeek-V4.1-Flash` 视为**同一个模型**（2026-09-10 组织者决定），成绩同表记录；每条运行用 `environment.reportedModelId` 标明实际使用的快照，归档目录名保持不变。

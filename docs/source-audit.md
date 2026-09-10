@@ -66,6 +66,13 @@
 
 评价来源：`Reviews/ai/maintenance-agent-v2/task-NN.md` 与同目录 `README.md`/`phase-summary.md`；取证脚本与读数在 `evidence/evaluation-2026-09-10/`。**非盲评 AI 评价，无人工评价**；与 DeepSeek 同题分数不可比较（harness、预算、深度不同）。
 
+## GPT-5.6 Sol · Phase 1（15 题，2026-09-10 接入）
+
+来源：与另两个模型同一份 `PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md`（`taskVersion = 1`）与 `Test_Results/GPT-5.6-Sol_Codex/phase-01/task-NN-<slug>/`；成果与评价链接固定到该批次归档提交 `a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d`。
+执行：Codex CLI 0.147.0（medium effort），每题一个独立会话，共 15 个；`environment.reportedModelId = gpt-5.6-sol`（harness 报告值，供应商侧快照未独立确认）。
+评价来源：`Reviews/ai/maintenance-agent-v3/task-01.md … task-15.md`（维护 agent v3，非盲评，平均 82.9/100）；该批评价文件在本次接入时尚未提交，随接入一并入库。
+任务实体不重复定义：这 15 题已由第一阶段适配器定义，GPT 批次只新增运行、评价与批次实体。
+
 ## 保留的分歧与边界
 
 - Task 06：人工评价认为手和剪刀“很奇怪”，历史 AI 报告给 92/100 并认为关系明确。

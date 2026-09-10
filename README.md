@@ -15,7 +15,7 @@
 
 本仓库用于公开记录和展示新模型测试。每个阶段保存当期使用的原始 prompt、模型交付物、运行或测试方法、视觉证据以及复盘报告。目标不是只展示“最好看的结果”，而是尽量保留从任务输入到成果、验证和问题分析的完整链路。
 
-当前内容包括 **第一阶段（Phase 1）**：两个模型在 15 个任务上的成果、运行证据与独立评价——`DeepSeek-V4.1-Flash`（0910 实验版，DSH harness）与 `Muse Spark 1.3`（opencode harness）；以及 **第二阶段（Phase 2）的部分运行**：`DeepSeek-V4.1-Flash` 的 Task 16–20（第二阶段共 30 题，其余 25 题尚未测试，且这部分尚无独立评价）。评估的能力包括：
+当前内容包括 **第一阶段（Phase 1）**：两个模型在 15 个任务上的成果、运行证据与独立评价——`DeepSeek-V4.1-Flash`（0910 实验版，DSH harness）与 `Muse Spark 1.3`（opencode harness）；**GPT-5.6 Sol**（Codex CLI 0.147.0）在同样 15 题上的成果与独立评价；以及 **第二阶段（Phase 2）的部分运行**：`DeepSeek-V4.1-Flash` 与 `Muse Spark 1.3` 各自的 Task 16–20（第二阶段共 30 题，其余 25 题尚未测试）。评估的能力包括：
 
 - SVG 视觉生成与精确约束遵循；
 - 单文件网页、游戏和创作工具；
@@ -23,7 +23,7 @@
 - 几何、计算、数据状态与错误处理；
 - 响应式设计、可访问性、视觉完成度和自动化测试。
 
-公开展示站 [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) 目前收录 2 个模型 / 2 个阶段 / 20 个任务 / 40 条运行 / 80 条评价（第一阶段每题 1 人工 + 2 AI 评委；第二阶段 Muse 每题 1 份 AI 评价、DeepSeek 尚未产出评价）/ 3 份阶段评估，共 142 个静态页面与 40 项成果预览，支持中英文切换、任务搜索与分类筛选、同题运行对比、成果预览与深链。
+公开展示站 [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) 目前收录 3 个模型 / 2 个阶段 / 20 个任务 / 55 条运行 / 100 条评价（第一阶段三模型：Human + 各 AI 评委；第二阶段每题已各挂 1 份 AI 评价）/ 3 份阶段评估，共 174 个静态页面与 55 项成果预览，支持中英文切换、任务搜索与分类筛选、同题运行对比、成果预览与深链。
 
 仓库将保留后续阶段扩展能力。未来可在 Test_Results/ 下增加模型文件夹，并在模型目录中增加阶段文件夹，并继续沿用“任务 → 原始 prompt → 成果 → 测试 → 评估”的归档方式。
 
@@ -33,8 +33,9 @@
 | --- | --- | --- | ---: | ---: | ---: | --- |
 | Phase 1 | DeepSeek-V4.1-Flash（0910 实验版） | DSH | 15 | 15/15 | 93.6/100（历史 AI 报告引用） | 已完成 |
 | Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 交付（2 题交付方式待改） | 84.9/100（维护 agent 非盲评 v1） | 已完成 |
-| Phase 2 | DeepSeek-V4.1-Flash（0910 实验版） | DSH | 5 / 30（部分） | 5/5 交付 | —（尚无独立评价） | 部分完成（Task 16–20） |
+| Phase 1 | GPT-5.6 Sol | Codex CLI 0.147.0 | 15 | 15/15 交付 | 82.9/100（维护 agent 非盲评 v3） | 已完成 |
 | Phase 2 | Muse Spark 1.3（xhigh） | opencode 1.18.30 | 5 / 30（部分） | 5/5 交付 | 88.2/100（维护 agent v2 非盲评 AI 评价） | 部分完成（Task 16–20） |
+| Phase 2 | DeepSeek-V4.1-Flash（0910 实验版） | DSH | 5 / 30（部分） | 5/5 交付 | 91.0/100（Muse Spark 1.3 AI 评价） | 部分完成（Task 16–20） |
 
 > 两行的评分来自不同评委与不同口径，**不可直接比较**；Harness、预算与隔离等级也不同。
 
@@ -118,6 +119,7 @@ New_Model_Test/
 - [15 条原始 Prompt、双语理论成果与验收内容](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)
 - [30 条 Phase 2 高级创造题（Task 16–45）](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)
 - [Phase 2 归档与运行清单（已测 Task 16–20）](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)
+- [GPT-5.6 Sol 第一阶段索引](Test_Results/GPT-5.6-Sol_Codex/phase-01/README.md)
 - [成果归档索引](Test_Results/README.md)
 - [第一阶段项目索引与运行说明](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/README.md)
 - [Muse Spark 1.3 第一阶段索引](Test_Results/Muse-Spark-1.3_Opencode/phase-01/README.md)
@@ -192,7 +194,7 @@ npm test
 
 This repository publicly documents and showcases new-model evaluations. Each phase preserves the original prompts, model-produced artifacts, run or test instructions, visual evidence, and retrospective reports. The goal is not to present only the most attractive outputs, but to keep a traceable path from task input to result, verification, and issue analysis.
 
-The archive covers **Phase 1**: two models — `DeepSeek-V4.1-Flash` (0910 preview, DSH harness) and `Muse Spark 1.3` (opencode harness) — on the same 15 tasks, with run evidence and independent reviews; plus a **partial Phase 2**: Tasks 16–20 completed and archived by `DeepSeek-V4.1-Flash` (0910 preview; 5 of 30 tasks; the remaining 25 have not been run and this part has no independent review yet). The suite examines:
+The archive covers **Phase 1**: three models — `DeepSeek-V4.1-Flash` (0910 preview, DSH harness), `Muse Spark 1.3` (opencode harness) and `GPT-5.6 Sol` (Codex CLI 0.147.0) — on the same 15 tasks, with run evidence and independent reviews; plus a **partial Phase 2**: Tasks 16–20 completed and archived by `DeepSeek-V4.1-Flash` (0910 preview; 5 of 30 tasks; the remaining 25 have not been run and this part has no independent review yet). The suite examines:
 
 - SVG generation and compliance with exact visual constraints;
 - self-contained web pages, games, and creative tools;
@@ -200,7 +202,7 @@ The archive covers **Phase 1**: two models — `DeepSeek-V4.1-Flash` (0910 previ
 - geometry, arithmetic, data state, and error handling;
 - responsive design, accessibility, visual finish, and automated testing.
 
-The public showcase [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) currently covers 2 models / 2 phases / 20 tasks / 40 runs / 80 reviews (Phase 1: 1 human + 2 AI reviews per run; Phase 2: one AI review per Muse run, none yet for DeepSeek) across 142 static pages and 40 artifact previews, with bilingual pages, task search and filters, same-task run comparison, artifact previews and deep links.
+The public showcase [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) currently covers 3 models / 2 phases / 20 tasks / 55 runs / 100 reviews (Phase 1: three models with a human review plus one or more AI reviews each; Phase 2: one AI review per run) across 174 static pages and 55 artifact previews, with bilingual pages, task search and filters, same-task run comparison, artifact previews and deep links.
 
 The repository is designed to grow. Future results can be added under Test_Results/<model-folder>/phase-NN/ while retaining the same “task → original prompt → artifact → test → evaluation” archive pattern.
 
@@ -210,8 +212,9 @@ The repository is designed to grow. Future results can be added under Test_Resul
 | --- | --- | --- | ---: | ---: | ---: | --- |
 | Phase 1 | DeepSeek-V4.1-Flash (0910 preview) | DSH | 15 | 15/15 | 93.6/100 (quoted historical AI report) | Complete |
 | Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 delivered (2 flagged as delivery-method issues) | 84.9/100 (maintenance-agent non-blind v1) | Complete |
-| Phase 2 | DeepSeek-V4.1-Flash (0910 preview) | DSH | 5 / 30 (partial) | 5/5 delivered | — (no independent review yet) | Partial (Tasks 16–20) |
+| Phase 1 | GPT-5.6 Sol | Codex CLI 0.147.0 | 15 | 15/15 delivered | 82.9/100 (maintenance-agent non-blind v3) | Complete |
 | Phase 2 | Muse Spark 1.3 (xhigh) | opencode 1.18.30 | 5 / 30 (partial) | 5/5 delivered | 88.2/100 (maintenance-agent v2, non-blind AI review) | Partial (Tasks 16–20) |
+| Phase 2 | DeepSeek-V4.1-Flash (0910 preview) | DSH | 5 / 30 (partial) | 5/5 delivered | 91.0/100 (Muse Spark 1.3 AI review) | Partial (Tasks 16–20) |
 
 > The two rows come from different reviewers and rubrics and must not be compared directly; harness, budget and isolation level also differ.
 
@@ -295,6 +298,7 @@ Future phases live inside each model folder under Test_Results/. The root README
 - [15 original prompts with bilingual expected outcomes and acceptance checks](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)
 - [30 Phase 2 advanced creation prompts (Task 16–45)](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)
 - [Phase 2 archive and run index (Tasks 16–20 archived)](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)
+- [GPT-5.6 Sol phase 1 index](Test_Results/GPT-5.6-Sol_Codex/phase-01/README.md)
 - [Result archive index](Test_Results/README.md)
 - [Phase 1 index and run instructions](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/README.md)
 - [Muse Spark 1.3 Phase 1 index](Test_Results/Muse-Spark-1.3_Opencode/phase-01/README.md)
