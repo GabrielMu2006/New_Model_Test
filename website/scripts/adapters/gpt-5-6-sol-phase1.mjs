@@ -18,7 +18,7 @@ const archiveRoot = 'Test_Results/GPT-5.6-Sol_Codex/phase-01';
 const reviewDir = `${archiveRoot}/Reviews/ai/maintenance-agent-v3`;
 
 // 成果发布所在提交：本批次归档入库的提交。
-const archiveCommit = 'a5b0c7ea1ea8f2dfc3dd093524ca1dc24773703d';
+const archiveCommit = '92815760057a3b1de14b7f5a3f050e7345936e57';
 
 const taskDirs = [
   'task-01-aevum-luxury-watch-landing-page', 'task-02-pelican-on-bicycle', 'task-03-analog-clock-6-25',

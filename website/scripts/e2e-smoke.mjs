@@ -100,7 +100,7 @@ try {
     if (!phase2Text?.includes('94/100')) throw new Error(`${name}: phase-02 run page missing the muse-spark-v1 score`);
     if (await page.locator('.review-card').count() !== 1) throw new Error(`${name}: phase-02 run page must show exactly one review`);
     const auditHref = await page.locator('a[href*="task-17-mechanical-watch-movement/evidence/audit"]').first().getAttribute('href');
-    if (!auditHref?.includes('/blob/6c089e5')) throw new Error(`${name}: audit evidence link is not bound to the archive commit`);
+    if (!auditHref?.includes('/blob/9281576')) throw new Error(`${name}: audit evidence link is not bound to the archive commit`);
     // SVG 成果作为预览发布，且入口可用
     await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/`);
     if (await page.locator('img[src$="pelican-bicycle.svg"]').count() !== 1) throw new Error(`${name}: phase-02 SVG artifact missing`);
