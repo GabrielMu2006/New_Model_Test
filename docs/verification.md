@@ -1,5 +1,16 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 越界处置口径：只标注，不排除成绩
+
+- 组织者决定（2026-09-10）：**越界判定只影响标注，不影响成绩录入**。任何 run 都不因越界判定被排除、作废、重测或改写分数。
+- 三档处置：① 未发现越界 → 无标注；② **越界尝试 / 有嫌疑**（有越界动作但 `tool/result` 未返回外部内容，或只有嫌疑、无证据）→ 只记入审计档案（`contamination.events`，状态可记 `suspected`），**不作外显标注、不排除、不改分**；③ **确认作弊成功**（实际读到他人答案 / 成果，或从仓库、网络取到题目相关内容）→ `status = contaminated`，**必须标注**「已确认获取外部答案」，且标注与成绩同处显示。
+- 依据（组织者）：只有确实作弊成功才影响成绩的可信度；未遂与嫌疑属于过程事实，记在档案里即可，不改变成绩口径。
+- 落点：`docs/audit-method.md` 第 5 节（新增三档处置表）与 4.11、`AGENTS.md`（「禁止作弊与隔离要求」「后续阶段与结果接入」两处）、`docs/testing-protocol.md` 第 8 节统计口径、`docs/known-issues.md`、`docs/result-interface.md` 污染行、`test-workspace/README.md` 第 4 节。原文中「排除出汇总」「建议作废该 run」的表述已全部清除。
+- 既有档案同步：`test-workspace/phase-02/SUMMARY.md` 第 2 节改为「5 个 run 全部计入；排除数量 0 / 5；标注数量 0 / 5」——`task-17`、`task-20` 的「越界尝试，未取得内容」保留为上表与 `evidence/audit-2026-09-10.*` 的档案层记录，不再排除出汇总；`phase-02/PLAN.md` 第 7 节同步。这两份文件位于 `.gitignore` 覆盖的脚手架目录，随该阶段归档一并提交。
+- 展示站对齐：run 页不再显示裸 `suspected` / `contaminated`——`suspected` 显示为「存在越界尝试，未取得内容 · 不影响成绩」，`contaminated` 显示为「已确认获取外部答案（标注）」，`unknown` 显示为「未判定」，字段名由「污染状态」改为「越界判定」（英文 `Boundary check`）。
+- 门禁：`npm run import:data`、`validate:data`、`check`、`npm test`、`build` 全部通过（110 个生成页 / 26 个 HTML 成果，静态链接检查通过）。本次仅改文案与文档，未触及路由、交互、预览与比较，按 AGENTS.md 未跑 `test:e2e`。
+- 发布记录：提交 `0f65778` 推送 `main`；回退标签 `website-rollback-20260910-453b6d3` 指向上一已成功部署且公网验证通过的提交 `453b6d3`。Actions run `34433597168` 构建与 Pages 部署成功；匿名 HTTPS 复核 `/`、`/en/`、`/zh/models/`、`/zh/tasks/task-01/`、`/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-01-r1/` 均返回 HTTP 200，运行页实测渲染「越界判定：未判定」。
+
 ## 2026-09-10 建立并行测试副本（同时测多个模型）
 
 - 需求：在不改动正在运行的 `test-workspace/`（其中 task-16～19 已有成果）的前提下，复制出两份工作区，用于同时测试多个模型。
