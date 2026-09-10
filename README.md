@@ -15,7 +15,7 @@
 
 本仓库用于公开记录和展示新模型测试。每个阶段保存当期使用的原始 prompt、模型交付物、运行或测试方法、视觉证据以及复盘报告。目标不是只展示“最好看的结果”，而是尽量保留从任务输入到成果、验证和问题分析的完整链路。
 
-当前内容为 **第一阶段（Phase 1）**：两个模型在 15 个任务上的成果、运行证据与独立评价——`DeepSeek-V4.1-Flash-Exp-0910`（DSH harness）与 `Muse Spark 1.3`（opencode harness）。评估的能力包括：
+当前内容包括 **第一阶段（Phase 1）**：两个模型在 15 个任务上的成果、运行证据与独立评价——`DeepSeek-V4.1-Flash-Exp-0910`（DSH harness）与 `Muse Spark 1.3`（opencode harness）；以及 **第二阶段（Phase 2）的部分运行**：`DeepSeek-V4.1-Flash-Exp-0910` 的 Task 16–20（第二阶段共 30 题，其余 25 题尚未测试，且这部分尚无独立评价）。评估的能力包括：
 
 - SVG 视觉生成与精确约束遵循；
 - 单文件网页、游戏和创作工具；
@@ -23,7 +23,7 @@
 - 几何、计算、数据状态与错误处理；
 - 响应式设计、可访问性、视觉完成度和自动化测试。
 
-公开展示站 [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) 目前收录 2 个模型 / 1 个阶段 / 15 个任务 / 30 条运行 / 75 条评价（每题 1 人工 + 2 AI 评委）/ 3 份阶段评估，共 110 个静态页面与 30 项成果预览，支持中英文切换、任务搜索与分类筛选、同题运行对比、成果预览与深链。
+公开展示站 [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) 目前收录 2 个模型 / 2 个阶段 / 20 个任务 / 35 条运行 / 75 条评价（第一阶段每题 1 人工 + 2 AI 评委；第二阶段尚未产出评价）/ 3 份阶段评估，共 132 个静态页面与 35 项成果预览，支持中英文切换、任务搜索与分类筛选、同题运行对比、成果预览与深链。
 
 仓库将保留后续阶段扩展能力。未来可在 Test_Results/ 下增加模型文件夹，并在模型目录中增加阶段文件夹，并继续沿用“任务 → 原始 prompt → 成果 → 测试 → 评估”的归档方式。
 
@@ -33,6 +33,7 @@
 | --- | --- | --- | ---: | ---: | ---: | --- |
 | Phase 1 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 15 | 15/15 | 93.6/100（历史 AI 报告引用） | 已完成 |
 | Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 交付（2 题交付方式待改） | 84.9/100（维护 agent 非盲评 v1） | 已完成 |
+| Phase 2 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 5 / 30（部分） | 5/5 交付 | —（尚无独立评价） | 部分完成（Task 16–20） |
 
 > 两行的评分来自不同评委与不同口径，**不可直接比较**；Harness、预算与隔离等级也不同。
 
@@ -60,7 +61,9 @@
 
 ### 后续阶段（Phase 2）
 
-Phase 2 的 30 条高级纯创造题（Task 16–45）已写入 [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)，强调从空目录起步的复杂系统创作。目前**尚未执行任何模型运行**，因此不计入上表，也不进入展示站生产索引；测试流程与接入步骤见[测试隔离与防答案污染](docs/testing-protocol.md)与[接入操作步骤](docs/adding-results.md)。
+Phase 2 的 30 条高级纯创造题（Task 16–45）已写入 [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)，强调从空目录起步的复杂系统创作。**Task 16–20（5 题）已由 DeepSeek-V4.1-Flash-Exp-0910 完成、审查并接入展示站**（归档见 [phase-02 运行清单](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)）；Task 21–45 尚未测试。第二阶段目前**没有人工或 AI 评价**，因此上表只列交付情况、不给分数。
+
+Phase 2 的隔离等级为 `workspace-only`（`AGENTS.md` 两条绝对规则 + 收尾日志审查）：这是**策略级约束**，不是强制隔离，也不表示「无污染」。Task 16–45 的题目已在公开仓库发布（提交 `0540edf`，见 [已知问题](docs/known-issues.md)），成绩须同时标注该暴露。越界判定只影响标注、不影响成绩录入（2026-09-10 组织者决定）：`task-17`、`task-20` 记录了「越界尝试，未取得内容」，只留在审计档案与运行页说明里，不作排除。测试流程与接入步骤见[测试隔离与防答案污染](docs/testing-protocol.md)与[接入操作步骤](docs/adding-results.md)。
 
 ### 仓库结构
 
@@ -71,14 +74,17 @@ New_Model_Test/
 ├── PROMPT/
 │   ├── README.md
 │   ├── Phase1_TEST_PROMPTS_BILINGUAL.md
-│   └── PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md   # Phase 2 题目（尚未运行）
+│   └── PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md   # Phase 2 题目（Task 16–45）
 ├── Test_Results/
 │   ├── README.md
 │   ├── DeepSeek-V4.1-Flash-Exp-0910_DSH/
-│   │   └── phase-01/
+│   │   ├── phase-01/
+│   │   │   ├── README.md
+│   │   │   ├── Reviews/
+│   │   │   └── task-01-.../ ... task-15-.../
+│   │   └── phase-02/                  # Task 16–20（部分：共 30 题）
 │   │       ├── README.md
-│   │       ├── Reviews/
-│   │       └── task-01-.../ ... task-15-.../
+│   │       └── runs/<run-id>/
 │   └── Muse-Spark-1.3_Opencode/
 │       └── phase-01/
 │           ├── README.md
@@ -102,7 +108,8 @@ New_Model_Test/
 - [网站维护、发布及回退](docs/deployment.md)
 
 - [15 条原始 Prompt、双语理论成果与验收内容](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)
-- [30 条 Phase 2 高级创造题（Task 16–45，尚未运行）](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)
+- [30 条 Phase 2 高级创造题（Task 16–45）](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)
+- [Phase 2 归档与运行清单（已测 Task 16–20）](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)
 - [成果归档索引](Test_Results/README.md)
 - [第一阶段项目索引与运行说明](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/README.md)
 - [Muse Spark 1.3 第一阶段索引](Test_Results/Muse-Spark-1.3_Opencode/phase-01/README.md)
@@ -177,7 +184,7 @@ npm test
 
 This repository publicly documents and showcases new-model evaluations. Each phase preserves the original prompts, model-produced artifacts, run or test instructions, visual evidence, and retrospective reports. The goal is not to present only the most attractive outputs, but to keep a traceable path from task input to result, verification, and issue analysis.
 
-The current archive is **Phase 1**: two models — `DeepSeek-V4.1-Flash-Exp-0910` (DSH harness) and `Muse Spark 1.3` (opencode harness) — on the same 15 tasks, with run evidence and independent reviews. The suite examines:
+The archive covers **Phase 1**: two models — `DeepSeek-V4.1-Flash-Exp-0910` (DSH harness) and `Muse Spark 1.3` (opencode harness) — on the same 15 tasks, with run evidence and independent reviews; plus a **partial Phase 2**: Tasks 16–20 completed and archived by `DeepSeek-V4.1-Flash-Exp-0910` (5 of 30 tasks; the remaining 25 have not been run and this part has no independent review yet). The suite examines:
 
 - SVG generation and compliance with exact visual constraints;
 - self-contained web pages, games, and creative tools;
@@ -185,7 +192,7 @@ The current archive is **Phase 1**: two models — `DeepSeek-V4.1-Flash-Exp-0910
 - geometry, arithmetic, data state, and error handling;
 - responsive design, accessibility, visual finish, and automated testing.
 
-The public showcase [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) currently covers 2 models / 1 phase / 15 tasks / 30 runs / 60 reviews across 110 static pages and 30 artifact previews, with bilingual pages, task search and filters, same-task run comparison, artifact previews and deep links.
+The public showcase [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) currently covers 2 models / 2 phases / 20 tasks / 35 runs / 75 reviews (Phase 1: 1 human + 2 AI reviews per run; Phase 2: no review produced yet) across 132 static pages and 35 artifact previews, with bilingual pages, task search and filters, same-task run comparison, artifact previews and deep links.
 
 The repository is designed to grow. Future results can be added under Test_Results/<model-folder>/phase-NN/ while retaining the same “task → original prompt → artifact → test → evaluation” archive pattern.
 
@@ -195,6 +202,7 @@ The repository is designed to grow. Future results can be added under Test_Resul
 | --- | --- | --- | ---: | ---: | ---: | --- |
 | Phase 1 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 15 | 15/15 | 93.6/100 (quoted historical AI report) | Complete |
 | Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 delivered (2 flagged as delivery-method issues) | 84.9/100 (maintenance-agent non-blind v1) | Complete |
+| Phase 2 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 5 / 30 (partial) | 5/5 delivered | — (no independent review yet) | Partial (Tasks 16–20) |
 
 > The two rows come from different reviewers and rubrics and must not be compared directly; harness, budget and isolation level also differ.
 
@@ -222,7 +230,9 @@ The repository is designed to grow. Future results can be added under Test_Resul
 
 ### Later phase (Phase 2)
 
-Phase 2 adds 30 advanced creation prompts (Task 16–45) in [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md), focused on complex systems built from an empty directory. **No model run has been executed for it yet**, so it is not part of the table above and is not in the showcase production index; see the [test isolation and anti-contamination protocol](docs/testing-protocol.md) and the [integration workflow](docs/adding-results.md).
+Phase 2 adds 30 advanced creation prompts (Task 16–45) in [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md), focused on complex systems built from an empty directory. **Tasks 16–20 were completed, audited and published by DeepSeek-V4.1-Flash-Exp-0910** (see the [phase-02 run index](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)); Tasks 21–45 have not been run. This phase has **no human or AI review yet**, so the table above records delivery only, with no score.
+
+Phase 2 isolation is `workspace-only` (two absolute `AGENTS.md` rules plus a post-hoc log audit): a **policy-level constraint**, not enforced isolation, and not a claim of “no contamination”. The Task 16–45 prompts are also published in this public repository (commit `0540edf`, see [known issues](docs/known-issues.md)), which the scores must be labelled with. A boundary finding affects annotation only, never score entry (organizer decision, 2026-09-10): `task-17` and `task-20` record “boundary attempt, no external content obtained”, kept in the audit archive and on the run page, with no exclusion. See the [test isolation and anti-contamination protocol](docs/testing-protocol.md) and the [integration workflow](docs/adding-results.md).
 
 ### Repository layout
 
@@ -233,14 +243,17 @@ New_Model_Test/
 ├── PROMPT/
 │   ├── README.md
 │   ├── Phase1_TEST_PROMPTS_BILINGUAL.md
-│   └── PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md   # Phase 2 prompts (not run yet)
+│   └── PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md   # Phase 2 prompts (Tasks 16-45)
 ├── Test_Results/
 │   ├── README.md
 │   ├── DeepSeek-V4.1-Flash-Exp-0910_DSH/
-│   │   └── phase-01/
+│   │   ├── phase-01/
+│   │   │   ├── README.md
+│   │   │   ├── Reviews/
+│   │   │   └── task-01-.../ ... task-15-.../
+│   │   └── phase-02/                  # Tasks 16-20 (partial: 5 of 30)
 │   │       ├── README.md
-│   │       ├── Reviews/
-│   │       └── task-01-.../ ... task-15-.../
+│   │       └── runs/<run-id>/
 │   └── Muse-Spark-1.3_Opencode/
 │       └── phase-01/
 │           ├── README.md
@@ -264,7 +277,8 @@ Future phases live inside each model folder under Test_Results/. The root README
 - [Deployment and rollback](docs/deployment.md)
 
 - [15 original prompts with bilingual expected outcomes and acceptance checks](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)
-- [30 Phase 2 advanced creation prompts (Task 16–45, not run yet)](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)
+- [30 Phase 2 advanced creation prompts (Task 16–45)](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)
+- [Phase 2 archive and run index (Tasks 16–20 archived)](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)
 - [Result archive index](Test_Results/README.md)
 - [Phase 1 index and run instructions](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/README.md)
 - [Muse Spark 1.3 Phase 1 index](Test_Results/Muse-Spark-1.3_Opencode/phase-01/README.md)

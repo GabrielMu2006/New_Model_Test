@@ -38,12 +38,28 @@ if (generatedPages.length !== expectedPages) {
   throw new Error(`Expected ${expectedPages} generated pages from entities, found ${generatedPages.length}`);
 }
 
-// ---- 首批档案回归：DeepSeek 的 15 个运行页必须仍然存在 ----
-const phase1RunPages = catalog.runs
-  .filter((run) => run.modelId === 'deepseek-v4-1-flash-exp-0910')
-  .flatMap((run) => locales.map((locale) => path.join(root, locale, 'runs', run.id, 'index.html')));
-const missingPhase1 = phase1RunPages.filter((file) => !fs.existsSync(file));
-if (missingPhase1.length) throw new Error(`Phase 1 regression: missing run pages ${missingPhase1.slice(0, 5).join(', ')}`);
+// ---- 档案回归：按阶段收敛，断言已归档运行的页面必须仍然存在 ----
+const phaseById = new Map(catalog.phases.map((phase) => [phase.id, phase]));
+const phaseOfRun = (run) => catalog.tasks.find((task) => task.id === run.taskId)?.phaseId;
+const regressionPhases = ['phase-01', 'phase-02'];
+for (const phaseId of regressionPhases) {
+  if (!phaseById.has(phaseId)) throw new Error(`Regression: phase ${phaseId} disappeared from the catalog`);
+  const runs = catalog.runs.filter((run) => phaseOfRun(run) === phaseId);
+  if (runs.length === 0) throw new Error(`Regression: no runs left for phase ${phaseId}`);
+  const pages = runs.flatMap((run) => locales.map((locale) => path.join(root, locale, 'runs', run.id, 'index.html')));
+  const missing = pages.filter((file) => !fs.existsSync(file));
+  if (missing.length) throw new Error(`Regression: missing run pages for ${phaseId}: ${missing.slice(0, 5).join(', ')}`);
+}
+// 已归档运行的成果入口必须随构建发布
+const artifactRoot = path.join(siteRoot, 'public/artifacts');
+for (const phaseId of regressionPhases) {
+  for (const run of catalog.runs.filter((item) => phaseOfRun(item) === phaseId)) {
+    for (const file of run.artifact.files) {
+      const published = path.join(artifactRoot, run.id, file);
+      if (!fs.existsSync(published)) throw new Error(`Missing published artifact ${run.id}/${file}`);
+    }
+  }
+}
 
 console.log(
   `Static link check passed across ${generatedPages.length} generated pages (expected ${expectedPages}) `

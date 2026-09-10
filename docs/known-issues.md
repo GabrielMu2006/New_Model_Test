@@ -66,6 +66,13 @@
 
 ## 3. 网站能力待办
 
+### 3.0 第二阶段接入（Task 16–20）——✅ 已接入（2026-09-10）
+
+- 新增 `website/scripts/adapters/deepseek-phase2.mjs`：读取 `runs/<run-id>/submission.json` 作为唯一元数据来源，导入时校验 `prompt.txt` 的 SHA-256 与归档声明一致；成果、隔离与越界状态原样带入，不在导入层改写。
+- 通用层补强：阶段的 `taskVersions` 必须与目录中任务一一对应（不变量），第一阶段 15 题/15 运行/30 评价的回归改为**按阶段收敛**，`check-dist.mjs` 新增「已归档成果必须随构建发布」检查。
+- 页面补强：运行详情新增收尾审查证据链接（绑定该批次归档提交）与补充轮逐字输入；无评价时显式显示「本运行暂无独立评价」，不再留空白；首页计数与任务类别文案不再写死第一阶段。
+- 仍缺：Task 21–45 未测试；第二阶段尚无人工 / AI 评价（`reviews/` 为空）；一个运行挂多份 AI 评价的展示仍按 3.1 处理。
+
 ### 3.1 支持一个运行挂多份 AI 评价
 
 - 现状：每个 run 固定 1 条人工 + 1 条 AI，共 30 条；`reviewsFor(runId)` 已能返回全部，但导入层与校验层按 30 条硬编码。
@@ -74,8 +81,8 @@
 
 ### 3.2 多阶段 / 多模型接入
 
-- **多模型（同阶段）已完成**：`website/scripts/import-data.mjs` 为编排器，`scripts/adapters/deepseek-phase1.mjs` 与 `scripts/adapters/muse-spark-phase1.mjs` 分别适配；Muse 适配器按 `Reviews/ai/<评委>-vN/` **通用加载任意多份 AI 评价**。页面计数、批次统计、路由、`runsForTask()`、`validate-data.mjs`、`check-dist.mjs` 均按实体推导（当前 2 模型 / 1 阶段 / 15 任务 / 30 运行 / 75 评价 / 3 阶段评估 / 110 页）。
-- **多阶段仍未做**：新阶段若采用 `runs/<run-id>/` 布局，需要新增对应适配器；通用目录扫描器不存在，也不会自动接入。
+- **多模型（同阶段）已完成**：`website/scripts/import-data.mjs` 为编排器，`scripts/adapters/deepseek-phase1.mjs` 与 `scripts/adapters/muse-spark-phase1.mjs` 分别适配；Muse 适配器按 `Reviews/ai/<评委>-vN/` **通用加载任意多份 AI 评价**。页面计数、批次统计、路由、`runsForTask()`、`validate-data.mjs`、`check-dist.mjs` 均按实体推导（当前 2 模型 / 2 阶段 / 20 任务 / 35 运行 / 75 评价 / 3 阶段评估 / 132 页）。
+- **多阶段部分完成（2026-09-10）**：DeepSeek phase-02（Task 16–20）已按 `runs/<run-id>/` 布局接入，见 3.0；其余阶段仍需要新增对应适配器，通用目录扫描器不存在，也不会自动接入。当前生产索引为 2 模型 / 2 阶段 / 20 任务 / 35 运行 / 75 评价 / 3 批次 / 3 阶段评估 / 132 页。
 
 ## 4. 已定方案（非缺陷，供后续遵循）
 

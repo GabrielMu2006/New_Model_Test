@@ -42,6 +42,17 @@ for (const phase of catalog.phases) {
   }
 }
 
+for (const phase of catalog.phases) {
+  const owned = catalog.tasks
+    .filter((task) => task.phaseId === phase.id)
+    .map((task) => `${task.id}@${task.version}`)
+    .sort();
+  const declared = [...phase.taskVersions].map(String).sort();
+  if (JSON.stringify(owned) !== JSON.stringify(declared)) {
+    fail(`phase ${phase.id}: taskVersions ${JSON.stringify(declared)} do not match catalog tasks ${JSON.stringify(owned)}`);
+  }
+}
+
 for (const task of catalog.tasks) {
   if (!phaseIds.has(task.phaseId)) fail(`${task.id}: missing phase ${task.phaseId}`);
   if (!task.promptOriginal || !task.promptTranslation) fail(`${task.id}: prompt or translation is empty`);
@@ -106,15 +117,34 @@ for (const assessment of catalog.assessments) {
 }
 
 // ---- 首批档案回归基线（独立于上面的通用校验，防止接入新数据时被悄悄改动） ----
-const deepseekRuns = catalog.runs.filter((run) => run.modelId === 'deepseek-v4-1-flash-exp-0910');
+const phaseOfRun = (run) => taskById.get(run.taskId)?.phaseId;
+const phase1Tasks = catalog.tasks.filter((task) => task.phaseId === 'phase-01');
+if (phase1Tasks.length !== 15) fail(`Phase 1 regression: expected 15 phase-01 tasks, found ${phase1Tasks.length}`);
+const deepseekRuns = catalog.runs.filter((run) => run.modelId === 'deepseek-v4-1-flash-exp-0910' && phaseOfRun(run) === 'phase-01');
 const deepseekReviews = catalog.reviews.filter((review) => deepseekRuns.some((run) => run.id === review.runId));
-if (catalog.tasks.length !== 15) fail(`Phase 1 regression: expected 15 tasks, found ${catalog.tasks.length}`);
-if (deepseekRuns.length !== 15) fail(`Phase 1 regression: expected 15 DeepSeek runs, found ${deepseekRuns.length}`);
-if (deepseekReviews.length !== 30) fail(`Phase 1 regression: expected 30 DeepSeek reviews, found ${deepseekReviews.length}`);
+if (deepseekRuns.length !== 15) fail(`Phase 1 regression: expected 15 phase-01 DeepSeek runs, found ${deepseekRuns.length}`);
+if (deepseekReviews.length !== 30) fail(`Phase 1 regression: expected 30 phase-01 DeepSeek reviews, found ${deepseekReviews.length}`);
 const museRuns = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3');
 if (museRuns.length !== 15) fail(`Muse regression: expected 15 Muse runs, found ${museRuns.length}`);
 const museReviews = catalog.reviews.filter((review) => museRuns.some((run) => run.id === review.runId));
 if (museReviews.length !== 45) fail(`Muse regression: expected 45 Muse reviews (1 human + 2 AI per run), found ${museReviews.length}`);
+// ---- 第二阶段（Task 16–20）：已归档运行必须仍在；新增题目只增不改 ----
+const phase2Tasks = catalog.tasks.filter((task) => task.phaseId === 'phase-02');
+if (phase2Tasks.length === 0) fail('Phase 2 regression: no phase-02 tasks in catalog');
+const phase2Runs = catalog.runs.filter((run) => phaseOfRun(run) === 'phase-02');
+for (const id of [
+  'run-deepseek-v4-1-flash-exp-0910-task-16-r1', 'run-deepseek-v4-1-flash-exp-0910-task-17-r1',
+  'run-deepseek-v4-1-flash-exp-0910-task-18-r1', 'run-deepseek-v4-1-flash-exp-0910-task-19-r1',
+  'run-deepseek-v4-1-flash-exp-0910-task-20-r1',
+]) {
+  if (!phase2Runs.some((run) => run.id === id)) fail(`Phase 2 regression: missing archived run ${id}`);
+}
+for (const run of phase2Runs) {
+  if (run.isolation?.level !== 'workspace-only') fail(`${run.id}: phase-02 runs must record isolation.level=workspace-only`);
+  if (!run.prompt?.sha256) fail(`${run.id}: phase-02 runs must record the verbatim prompt hash`);
+  if (!run.evidence?.audit) fail(`${run.id}: phase-02 runs must link the boundary audit evidence`);
+}
+
 // 每个 Muse 运行必须同时挂人工评价与每一份已归档的 AI 评价
 const aiEvaluations = new Set(museReviews.filter((review) => review.type === 'ai').map((review) => review.id.split('-r1-').slice(1).join('-r1-')));
 for (const run of museRuns) {

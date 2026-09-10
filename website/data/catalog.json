@@ -44,6 +44,25 @@
         "task-14@1",
         "task-15@1"
       ]
+    },
+    {
+      "id": "phase-02",
+      "number": 2,
+      "name": {
+        "zh": "第二阶段 · 高级纯创造任务（Task 16–45）",
+        "en": "Phase 2 · advanced creation tasks (Tasks 16–45)"
+      },
+      "description": {
+        "zh": "浏览器内的动画、模拟、工程与创作类工具；本档案当前只含已测试并归档的 Task 16–20（5 题），其余题目尚未测试。",
+        "en": "In-browser animation, simulation, engineering and authoring tools. This archive currently covers only the tested and archived Tasks 16–20; the remaining tasks have not been run."
+      },
+      "taskVersions": [
+        "task-16@1",
+        "task-17@1",
+        "task-18@1",
+        "task-19@1",
+        "task-20@1"
+      ]
     }
   ],
   "models": [
@@ -577,6 +596,176 @@
       "source": {
         "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
         "lines": "439-470"
+      }
+    },
+    {
+      "id": "task-16",
+      "version": 1,
+      "phaseId": "phase-02",
+      "title": {
+        "zh": "骑自行车鹈鹕动画",
+        "en": "Animated Pelican Bicycle"
+      },
+      "category": "svg-illustration",
+      "promptOriginal": "Create a standalone animated SVG of a pelican riding a bicycle from left to right.\n\nRequirements:\n- both bicycle wheels must rotate naturally\n- the pedals and crank must rotate\n- the pelican's feet must remain connected to the pedals throughout the cycle\n- its legs should move naturally with the pedals\n- the body should subtly respond to the pedaling motion\n- the background should scroll to communicate forward movement\n- include controls to pause and resume the animation\n\nThe final deliverable must be a single SVG file with no external dependencies.",
+      "promptTranslation": "创建一个独立可运行的动画 SVG，表现一只鹈鹕从左向右骑自行车。两个车轮必须自然旋转，踏板和曲柄同步转动，鹈鹕双脚在整个运动周期中都保持与踏板连接，腿部随踏板自然运动，身体也应对踩踏产生轻微响应。背景需要滚动以传达前进感，并提供暂停与继续控制。最终成果必须是单一 SVG 文件，不依赖外部资源。",
+      "expectedOutcome": {
+        "zh": "应交付一个可独立打开的动画 SVG，清楚表现鹈鹕骑车前进的连续运动。自行车的车轮、曲柄和踏板应构成统一运动系统，鹈鹕双脚始终与踏板保持可信接触，腿部关节随踩踏周期自然变化，身体存在适度上下起伏或姿态响应。背景滚动速度与车辆前进感一致，暂停/继续功能能够冻结并恢复整个动画系统，而不是只暂停部分元素。",
+        "en": "The deliverable should be a standalone animated SVG that clearly communicates a pelican riding a bicycle forward. Wheels, crank, pedals, feet, legs, and body motion should form one coherent motion system. Background scrolling should reinforce forward travel, while pause/resume controls preserve the full animation state rather than restarting or pausing only selected parts."
+      },
+      "verification": {
+        "zh": [
+          "连续运行多个踩踏周期，检查车轮、曲柄、踏板、双脚和腿部是否相位一致，不出现脚离开踏板、曲柄逆跳或腿部瞬移。",
+          "暂停动画并确认所有动态元素同时冻结，继续后应从原状态平滑恢复而不是重置。",
+          "检查背景滚动方向、速度与车辆姿态是否共同表达从左向右前进，不产生视觉倒退或打滑感。",
+          "验证 SVG 可离线打开、无外部资源、缩放无损且所有元素位于 viewBox 内。"
+        ],
+        "en": [
+          "Run multiple pedaling cycles and verify phase consistency among the wheels, crank, pedals, feet, and legs, with no detached feet, crank jumps, or limb teleportation.",
+          "Pause the animation and confirm all moving elements freeze together; resuming should continue smoothly from the paused state rather than restart.",
+          "Check that background direction, speed, and bicycle motion consistently communicate left-to-right travel without apparent backward motion or sliding.",
+          "Confirm the SVG opens offline, has no external dependencies, scales cleanly, and keeps all content inside the viewBox."
+        ]
+      },
+      "source": {
+        "path": "PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md",
+        "lines": "11-53"
+      }
+    },
+    {
+      "id": "task-17",
+      "version": 1,
+      "phaseId": "phase-02",
+      "title": {
+        "zh": "机械腕表机芯动画",
+        "en": "Mechanical Watch Movement"
+      },
+      "category": "svg-illustration",
+      "promptOriginal": "Create a standalone animated SVG showing a transparent mechanical wristwatch movement.\n\nIt should include:\n- hour, minute, and second hands\n- multiple interlocking gears\n- an escapement mechanism\n- an oscillating balance wheel\n- a mainspring or power source\n- realistic relative rotation directions between connected gears\n- different gear rotation speeds\n- pause/resume controls\n- a speed control\n\nThe mechanisms must behave as a coherent system rather than as unrelated decorative animations.\n\nDo not use external assets.",
+      "promptTranslation": "创建一个独立的动画 SVG，以透明机械腕表机芯为主题。它应包含时针、分针、秒针，多组相互啮合的齿轮，擒纵机构，往复摆动的摆轮，以及发条或其他动力来源。相互连接的齿轮应具有合理的相对旋转方向和不同转速，并提供暂停/继续与速度控制。机械机构必须作为统一系统运行，而不是彼此无关的装饰动画。不得使用外部资源。",
+      "expectedOutcome": {
+        "zh": "应交付一个高完成度的机械腕表 SVG 动画。直接啮合的齿轮应以相反方向旋转，并通过尺寸或传动关系体现不同角速度；时针、分针、秒针的速度比例合理。摆轮应往复振荡而非持续单向旋转，擒纵机构与摆轮运动形成可理解的机械联系。速度控制应统一影响整个机芯模拟，暂停与继续应保持系统相位。",
+        "en": "The deliverable should be a polished mechanical-watch SVG animation with coherent transmission behavior. Meshing gears should rotate in opposite directions at sensible relative speeds, the three hands should maintain realistic speed ratios, and the balance wheel plus escapement should visibly behave as linked mechanisms. Pause/resume and speed control should preserve the mechanism's phase."
+      },
+      "verification": {
+        "zh": [
+          "检查所有直接啮合齿轮的旋转方向是否相反，且不存在明显相互穿透、脱离或独立乱转。",
+          "比较秒针、分针、时针和不同齿轮的相对转速，确认不存在全部同速等明显错误。",
+          "检查摆轮是否往复振荡，擒纵动作是否与其节奏存在可见关联；暂停、继续和速度变化不得破坏相位。",
+          "验证离线打开、SVG 语法、缩放清晰度、控制交互和整体技术插画质感。"
+        ],
+        "en": [
+          "Verify that directly meshing gears rotate in opposite directions and do not visibly intersect, detach, or spin independently.",
+          "Compare relative speeds of hands and gears and confirm there are no obvious errors such as all elements rotating at the same rate.",
+          "Confirm that the balance wheel oscillates, the escapement visibly relates to that rhythm, and pause/resume or speed changes do not corrupt phase.",
+          "Validate offline operation, SVG syntax, crisp scaling, controls, and overall technical-illustration quality."
+        ]
+      },
+      "source": {
+        "path": "PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md",
+        "lines": "53-99"
+      }
+    },
+    {
+      "id": "task-18",
+      "version": 1,
+      "phaseId": "phase-02",
+      "title": {
+        "zh": "鲁布·戈德堡连锁机关",
+        "en": "Rube Goldberg Machine"
+      },
+      "category": "simulation",
+      "promptOriginal": "Create an animated interactive Rube Goldberg machine in the browser.\n\nThe machine must contain at least eight distinct stages forming one continuous causal chain.\n\nThe user should be able to:\n- start the machine\n- pause it\n- resume it\n- reset it\n- step through the simulation slowly\n\nEach stage must visibly cause the next stage rather than merely playing on a fixed independent timer.\n\nMake the result visually polished and satisfying to watch.",
+      "promptTranslation": "在浏览器中创建一个可交互的鲁布·戈德堡连锁机关。整个装置至少包含八个彼此不同的阶段，并形成一条连续的因果链。用户应能够启动、暂停、继续、重置，并以慢速或逐步方式观察模拟。每个阶段必须由前一阶段的实际状态触发，而不是依靠相互独立的固定时间定时器播放。整体视觉应精致，并具有令人满意的连续运动感。",
+      "expectedOutcome": {
+        "zh": "应交付一个真正基于状态、碰撞或事件触发的连锁机关模拟，而不是按时间轴顺序播放八段动画。每个阶段都应存在可识别的因果关系，例如球撞击杠杆、杠杆释放骨牌、骨牌触发滑轮。暂停和单步功能应作用于统一模拟时钟，重置后系统完整恢复初始状态。",
+        "en": "The deliverable should be a state- or event-driven chain-reaction simulation rather than a sequence of unrelated timed animations. Each stage should visibly trigger the next through a causal transition. Pause and step controls should operate on one coherent simulation clock, and reset should fully restore the initial state."
+      },
+      "verification": {
+        "zh": [
+          "暂停在任意阶段并确认后续阶段不会继续自行播放；只有前一阶段满足触发条件后，下一阶段才启动。",
+          "使用单步或慢速模式逐段观察因果链，检查至少八个阶段均存在可辨识触发关系。",
+          "重置多次并重复运行，确认结果可重复、无遗留状态、无阶段提前触发或永久卡死。",
+          "检查不同窗口尺寸和帧率下机关仍保持可用、完整和同步。"
+        ],
+        "en": [
+          "Pause at arbitrary stages and confirm later stages do not continue independently; each stage should start only after its preceding trigger condition is satisfied.",
+          "Use step or slow-motion mode to inspect the chain and verify at least eight distinct, visibly causal stages.",
+          "Reset and rerun multiple times to confirm repeatability, no stale state, no premature triggers, and no permanent deadlocks.",
+          "Verify that the machine remains usable, complete, and synchronized across different viewport sizes and frame rates."
+        ]
+      },
+      "source": {
+        "path": "PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md",
+        "lines": "99-143"
+      }
+    },
+    {
+      "id": "task-19",
+      "version": 1,
+      "phaseId": "phase-02",
+      "title": {
+        "zh": "交互式太阳系模拟",
+        "en": "Interactive Solar System"
+      },
+      "category": "simulation",
+      "promptOriginal": "Build an interactive animated Solar System visualization.\n\nInclude:\n- the Sun\n- all eight planets\n- planetary orbits\n- Earth's Moon\n- several major moons of Jupiter\n- relative orbital speeds\n- orbital trails\n- pause/resume\n- adjustable simulation speed\n- zoom and pan\n- clicking a planet to inspect it\n- switching between a Solar System view and a selected-planet view\n\nMoons must continue orbiting their parent planet correctly while the planet itself moves around the Sun.\n\nChanging simulation speed must not cause objects to jump or lose orbital state.",
+      "promptTranslation": "构建一个交互式太阳系动画可视化。包含太阳、八大行星、行星轨道、地球月球、木星若干主要卫星、相对轨道速度和轨迹显示。支持暂停/继续、调整模拟速度、缩放和平移、点击行星查看信息，以及在太阳系视图和选中行星视图之间切换。卫星必须在母行星绕太阳运动的同时继续正确围绕母行星运行；改变模拟速度时，各天体不得瞬移或丢失轨道状态。",
+      "expectedOutcome": {
+        "zh": "应交付一个具有层级坐标和统一时间系统的太阳系模拟。卫星位置应由“母行星位置 + 局部卫星轨道”共同决定，而不是围绕固定屏幕坐标旋转。暂停、速度调整和视角切换不能重置轨道相位。视觉比例可为可读性进行非真实缩放，但结构和运动关系应保持一致。",
+        "en": "The deliverable should use hierarchical coordinates and one coherent simulation clock. Moon positions should derive from a moving parent planet plus local satellite orbits. Pause, speed changes, and camera-mode switching must not reset orbital phase. Visual scale may be non-physical for readability, but structural and motion relationships should remain coherent."
+      },
+      "verification": {
+        "zh": [
+          "长时间观察地球月球和木星卫星，确认它们围绕移动中的母行星运行。",
+          "在运行中多次切换模拟速度，确认天体位置连续、相位不重置、轨道不跳变。",
+          "测试暂停、继续、缩放、平移、行星点击和视图切换，确认交互不会破坏模拟状态。",
+          "检查八大行星、轨道、标签和轨迹在不同视口下保持可辨识，性能可接受。"
+        ],
+        "en": [
+          "Observe Earth's Moon and Jupiter's moons over time and verify they orbit moving parent planets.",
+          "Change simulation speed repeatedly during motion and confirm continuous positions, preserved phase, and no orbital jumps.",
+          "Test pause/resume, zoom, pan, planet selection, and view switching and confirm interactions do not corrupt simulation state.",
+          "Verify that all eight planets, orbits, labels, and trails remain legible across viewports with acceptable performance."
+        ]
+      },
+      "source": {
+        "path": "PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md",
+        "lines": "143-192"
+      }
+    },
+    {
+      "id": "task-20",
+      "version": 1,
+      "phaseId": "phase-02",
+      "title": {
+        "zh": "二维机械连杆设计器",
+        "en": "2D Mechanical Linkage Designer"
+      },
+      "category": "engineering-tool",
+      "promptOriginal": "Build an interactive 2D mechanical linkage designer.\n\nUsers should be able to:\n- create fixed pivots\n- create rotating joints\n- create rigid links with exact lengths\n- create sliders constrained to tracks\n- connect components into mechanisms\n- choose a driving joint or motor\n- play, pause, reset, and step the simulation\n- display joint coordinates and link lengths\n- save and reload mechanisms\n\nSupport at least:\n- a four-bar linkage\n- a crank-slider mechanism\n\nRigid links must preserve their lengths throughout the simulation, and constrained joints must remain attached.",
+      "promptTranslation": "构建一个交互式二维机械连杆设计器。用户可以创建固定转轴、旋转关节、具有精确长度的刚性杆件、受轨道约束的滑块，并将它们连接为机械机构；可选择驱动关节或电机，支持播放、暂停、重置、单步，显示关节坐标与杆长，并保存/加载机构。至少应支持四连杆机构和曲柄滑块机构。整个模拟过程中刚性杆长度必须保持不变，受约束关节不能脱离连接。",
+      "expectedOutcome": {
+        "zh": "应交付一个基于几何约束而非逐帧手工动画的二维机构模拟器。杆件长度、转轴连接和滑块轨道应形成持续有效的约束关系；驱动一个关节时，其余关节位置通过机构约束求解。四连杆与曲柄滑块应能稳定连续运动，并允许用户观察关键尺寸和关节轨迹。",
+        "en": "The deliverable should be a geometric-constraint-based mechanism simulator rather than a frame-by-frame decorative animation. Link lengths, pivots, and slider tracks should remain continuously constrained while a driven joint causes the rest of the mechanism to solve accordingly. Four-bar and crank-slider mechanisms should move stably and expose useful measurements and joint trajectories."
+      },
+      "verification": {
+        "zh": [
+          "在整个运动周期内采样各刚性杆长度，确认误差始终处于合理容差范围内。",
+          "运行四连杆和曲柄滑块机构，检查关节不脱离、滑块始终位于轨道上。",
+          "暂停后逐步推进，确认单步结果与连续运行到相同状态时一致。",
+          "保存并重新加载机构，确认几何、连接、驱动设置和尺寸完整恢复。"
+        ],
+        "en": [
+          "Sample rigid-link lengths throughout the motion cycle and confirm errors remain within a reasonable tolerance.",
+          "Run four-bar and crank-slider mechanisms and verify that joints remain attached and sliders stay on their tracks.",
+          "Pause and step the mechanism, confirming step results match continuous simulation at equivalent states.",
+          "Save and reload mechanisms and verify geometry, connections, drive settings, and dimensions restore completely."
+        ]
+      },
+      "source": {
+        "path": "PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md",
+        "lines": "192-240"
       }
     }
   ],
@@ -2383,6 +2572,481 @@
         "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-01/Reviews/Muse-Spark-1.3-任务评测复盘.md",
         "lines": "74-74"
       }
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-16-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-16",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/prompt.txt",
+        "sha256": "13e4465c50efbe8b3caef2291d35722c5a39a029fc9c2c2d89620f6c63f92308",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "DSH",
+        "harnessVersion": "2.0.5 (desktop app)",
+        "surface": "desktop",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "session-3e6b3dce-f3b4-409c-beab-79d726832733",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "startedAt": "2026-09-09T15:48:51.368Z",
+        "endedAt": "2026-09-09T16:18:20.293Z",
+        "timezone": "Asia/Shanghai"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "收尾审查未发现越界；审计只覆盖声明的渠道，不代表「无污染」。详见 evidence/audit-2026-09-10.md。"
+      },
+      "metrics": {
+        "durationSeconds": 1769,
+        "apiCalls": 136,
+        "toolCalls": 137,
+        "failures": 0,
+        "inputTokens": 69351,
+        "outputTokens": 154143,
+        "cacheReadTokens": 18479744,
+        "totalTokens": null
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "pelican-bicycle.svg",
+        "files": [
+          "pelican-bicycle.svg",
+          "README.md"
+        ],
+        "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/artifacts",
+        "commit": "a9925d853af078d931e96ee769aa119e2f0bd997",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "单文件动画 SVG，无外部依赖"
+        },
+        "fileSha256": {
+          "pelican-bicycle.svg": "d52fa800da6fe963a4413d67ce68153c7c676e7c6477774012eb9ead5ae19c6a",
+          "README.md": "6994f71b387421ed503a31b8f800a8c4c1b7e0452c386bf015d71a42d60afa62"
+        }
+      },
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/evidence/session-log.sha256.txt"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-17-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-17",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/prompt.txt",
+        "sha256": "bfae57d571daa0901d16971f08cab7bf8dc2f5746492bde5cee71841a7f83b27",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "DSH",
+        "harnessVersion": "2.0.5 (desktop app)",
+        "surface": "desktop",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "session-f4bf2a9f-9ea2-4642-b2e7-59de1ab1013b",
+        "sharedContext": false,
+        "continuationTurns": 1,
+        "startedAt": "2026-09-09T15:49:25.507Z",
+        "endedAt": "2026-09-09T16:29:22.236Z",
+        "timezone": "Asia/Shanghai"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "suspected",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "越界尝试，未取得内容：只记入审计档案，不作外显标注、不排除、不影响成绩。详见 evidence/audit-2026-09-10.md。"
+      },
+      "metrics": {
+        "durationSeconds": 2397,
+        "apiCalls": 117,
+        "toolCalls": 117,
+        "failures": 0,
+        "inputTokens": 51361,
+        "outputTokens": 237863,
+        "cacheReadTokens": 24286080,
+        "totalTokens": null
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "mechanical-watch-movement.svg",
+        "files": [
+          "mechanical-watch-movement.svg",
+          "build.mjs",
+          "verify.mjs",
+          "check.sh",
+          "src/model.js",
+          "src/runtime.js",
+          "tools/browser.mjs",
+          "tools/pixels.mjs",
+          "README.md"
+        ],
+        "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/artifacts",
+        "commit": "a9925d853af078d931e96ee769aa119e2f0bd997",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "生成的单文件动画 SVG；build.mjs 可重新生成"
+        },
+        "fileSha256": {
+          "mechanical-watch-movement.svg": "2de65946a80c791fd39b43bded057b1e43bf36c78a67166b9cc01e4b10c98a1b",
+          "build.mjs": "08c4729087e2c516169e39cdeba0a7657540e5cb19acad9908152356d364e297",
+          "verify.mjs": "51c618253839d452ca6310f7d44b25ececc1ba5e60abe9f30214063c90ce0496",
+          "check.sh": "2f290c75244a224e393611af778df955bace5c6c3945f4911d7801934869cc7a",
+          "src/model.js": "cd5effc528ae380337c9a7bed1ad96d88ba778cec351cb859253eafc7fd4a0cf",
+          "src/runtime.js": "1f8256575a5a4207ccdbc22d7df78e70cb8d7f573f7ea9c6696ca647a8b4b30c",
+          "tools/browser.mjs": "dea8982232cf93be39cc9702a8283499ffbe13e8a53d53cd0deaa113c8a569e1",
+          "tools/pixels.mjs": "5c7fed34933efbaf7ac7d90ab94ed8bfd2e51e2b651d9f0999d06fdcc6ba37c1",
+          "README.md": "f5c99e6087343b6308d7e00f88836cd7ea3f8165cf3846efd5c1afdace653d49"
+        }
+      },
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/evidence/session-log.sha256.txt"
+      },
+      "followups": [
+        {
+          "turn": 2,
+          "at": "2026-09-09T16:27:55+08:00",
+          "actor": "organizer (human)",
+          "verbatim": "不要再读取chrome钥匙串了",
+          "reason": "运行中观察到 Chrome 启动触碰钥匙串/默认 profile 活动，机主中途介入要求停止",
+          "effect": "模型随后为浏览器启动加上 --use-mock-keychain --password-store=basic --disable-sync，并把浏览器步骤改为 opt-in；该轮输入未提供任何题目提示或答案"
+        }
+      ]
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-18-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-18",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-18-r1/prompt.txt",
+        "sha256": "dbcbcefdf8b81ff6f1782a8dcb917a4b941e4f8828b4dbede77fe8456e6da95a",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "DSH",
+        "harnessVersion": "2.0.5 (desktop app)",
+        "surface": "desktop",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "session-f220eec5-8ac1-461f-bbd7-0ddb43d452ae",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "startedAt": "2026-09-09T15:49:53.116Z",
+        "endedAt": "2026-09-09T16:49:06.100Z",
+        "timezone": "Asia/Shanghai"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "收尾审查未发现越界；审计只覆盖声明的渠道，不代表「无污染」。详见 evidence/audit-2026-09-10.md。"
+      },
+      "metrics": {
+        "durationSeconds": 3553,
+        "apiCalls": 398,
+        "toolCalls": 401,
+        "failures": 0,
+        "inputTokens": 197968,
+        "outputTokens": 616694,
+        "cacheReadTokens": 144166528,
+        "totalTokens": null
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "styles.css",
+          "js/app.js",
+          "js/audio.js",
+          "js/machine.js",
+          "js/physics.js",
+          "js/render.js",
+          "README.md"
+        ],
+        "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-18-r1/artifacts",
+        "commit": "a9925d853af078d931e96ee769aa119e2f0bd997",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "多文件页面，需保留 js/ 与 styles.css 的相对结构"
+        },
+        "fileSha256": {
+          "index.html": "c301d31fda92a98fac4f89cf601ae49584498ded953378f1098e8ee8c4061f43",
+          "styles.css": "f6af05ace41bc44ab3e42ec43d9278c8fdcf708c2096d871bd2b9e5f5cd7f1c2",
+          "js/app.js": "47a3be7f62696e0538f9ccd1ecf280af3775f78914a88dd7cbd56db91de56859",
+          "js/audio.js": "7281a22592ed1dee39875dc423c27140a528a7f57db07feb3e547ffbdfe68229",
+          "js/machine.js": "5c5bd47cf87647462568d1e4ec1b96455e2a751105c5765251a6bcc86f7eab36",
+          "js/physics.js": "b554dc58ba07b0976c0723dc732bccc26d87476c456dda1bc1eafb063093180d",
+          "js/render.js": "e6d46d0080e0f60e9202f8820c3b165ca0e7940c0f2fafe26d2cc4f8dea913ca",
+          "README.md": "04f98d34843c173c59f1e03942adc730377103f8825a50cad25ab3ea2eefaedc"
+        }
+      },
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-18-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-18-r1/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-18-r1/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-18-r1/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-18-r1/evidence/session-log.sha256.txt"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-19-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-19",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-19-r1/prompt.txt",
+        "sha256": "029fba735d92a80073d554d52a9d8015a3221a27a5fa8a740c14a58104385736",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "DSH",
+        "harnessVersion": "2.0.5 (desktop app)",
+        "surface": "desktop",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "session-34287563-2efd-4e37-ac24-1d35dc877a58",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "startedAt": "2026-09-10T02:05:20.539Z",
+        "endedAt": "2026-09-10T02:34:09.569Z",
+        "timezone": "Asia/Shanghai"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "收尾审查未发现越界；审计只覆盖声明的渠道，不代表「无污染」。详见 evidence/audit-2026-09-10.md。"
+      },
+      "metrics": {
+        "durationSeconds": 1729,
+        "apiCalls": 153,
+        "toolCalls": 160,
+        "failures": 0,
+        "inputTokens": 78264,
+        "outputTokens": 241459,
+        "cacheReadTokens": 27585664,
+        "totalTokens": null
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "styles.css",
+          "js/data.js",
+          "js/main.js",
+          "js/orbital.js",
+          "js/projection.js",
+          "js/render.js",
+          "js/simulation.js",
+          "js/ui.js",
+          "README.md"
+        ],
+        "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-19-r1/artifacts",
+        "commit": "a9925d853af078d931e96ee769aa119e2f0bd997",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "多文件页面，需保留 js/ 与 styles.css 的相对结构"
+        },
+        "fileSha256": {
+          "index.html": "3b69160f9f9a5da780af3bb2ab5f6a9e39c4153309c9340ca12c24cbe9e6afc8",
+          "styles.css": "be23b44351e9b2ef33c7a33b188ffeba850e5158404bc1b6c8ede50a43cfe591",
+          "js/data.js": "2c4bec91a44ec90c1aeaeae7dfbb679f491a5faaede0bd00843a86c9e7834668",
+          "js/main.js": "d61265a585ef52771b3da9c43f465c294fe3f8ec5da1db84dd37ca4490160aef",
+          "js/orbital.js": "b94b83a3d453071e644646c34f85bb307edacc6d498ba6e929f00502283e2215",
+          "js/projection.js": "f995fd2972419c931020b87a5049796fe4016ea746becab6c2f144bb2085008a",
+          "js/render.js": "c85bb75b69be5970d1e88015452ede1728745549846039651426e61deb7bd9bc",
+          "js/simulation.js": "0974df679400d4f5ffe05641415481d2f40556c67a875d02d87c034f62db9690",
+          "js/ui.js": "60dcb2c9b1da0cb9f65e5f9f1c9444b8f1619ef3cb67a0996fb31dce09540f4f",
+          "README.md": "1aa69af3459bc5e48b89439718020b1517da93b16c98013db2e1f4fd149dbb12"
+        }
+      },
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-19-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-19-r1/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-19-r1/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-19-r1/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-19-r1/evidence/session-log.sha256.txt"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-deepseek-v4-1-flash-exp-0910-task-20-r1",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "taskId": "task-20",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-20-r1/prompt.txt",
+        "sha256": "b8567a4ced624f073fb4129d4649e1b2b2b5ce41ceb0b6cc067d822baa0bd1fc",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "DSH",
+        "harnessVersion": "2.0.5 (desktop app)",
+        "surface": "desktop",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "session-b84d3d60-6b52-4dda-b136-f0833e04cc89",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "startedAt": "2026-09-10T02:38:36.963Z",
+        "endedAt": "2026-09-10T03:07:24.903Z",
+        "timezone": "Asia/Shanghai"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "suspected",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "越界尝试，未取得内容：只记入审计档案，不作外显标注、不排除、不影响成绩。详见 evidence/audit-2026-09-10.md。"
+      },
+      "metrics": {
+        "durationSeconds": 1728,
+        "apiCalls": 123,
+        "toolCalls": 125,
+        "failures": 0,
+        "inputTokens": 60712,
+        "outputTokens": 225326,
+        "cacheReadTokens": 19783936,
+        "totalTokens": null
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "styles.css",
+          "src/app.js",
+          "src/history.js",
+          "src/math.js",
+          "src/model.js",
+          "src/presets.js",
+          "src/render.js",
+          "src/serialize.js",
+          "src/simulate.js",
+          "src/solver.js",
+          "src/view.js",
+          "package.json",
+          "dist/linkage-designer.html",
+          "tools/browser-check.mjs",
+          "tools/build-single-file.mjs",
+          "tools/serve.mjs",
+          "tests/run-tests.mjs",
+          "README.md"
+        ],
+        "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-20-r1/artifacts",
+        "commit": "a9925d853af078d931e96ee769aa119e2f0bd997",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": "模块化入口 index.html + 单文件构建 dist/linkage-designer.html"
+        },
+        "fileSha256": {
+          "index.html": "78941746eea63ca49b812376704f1310616bf1ae041ee895c9aaea22af1eb095",
+          "styles.css": "4a7e282ed27213a24370c2097f795eb8cc14bf227d6fe9a752258e38478114da",
+          "src/app.js": "ddb2085b921b2de12517f9841f515419c6fdd7afb60bfac378625e84f456bfb6",
+          "src/history.js": "2aa380d65c730f8ef4ee15f75ac28d6daae27f42f1089099c302f1ea515e9b28",
+          "src/math.js": "66eee9b7f09a231f11fba65337dd27cf3fe76a14a349db51ef4b7df63d25fc29",
+          "src/model.js": "a02a2b2fc0972ff43ab97b8220090784161aa1f7dd19b478ce29972a68fed3ad",
+          "src/presets.js": "63a29df4b080a33f4a26d86f081b5a015e2a08d8b7c3baad6551804297e89e57",
+          "src/render.js": "425357d1e2dabca7080037802aa4296d0c7c42e0f1de0d840436344ee92b3c43",
+          "src/serialize.js": "668aa46d7a14ff1f78a54fa054ef28e2fc5612aeade3c7e5aa1f79844b005ef4",
+          "src/simulate.js": "1989c2e9bfaba2787ca5b847cd82074ad91b48f1b145f2bf07cd5599142c1c6b",
+          "src/solver.js": "b17287b28cbed5de898a27f7c57ca8e262f0c2f305fc0282744aa005e338d6b4",
+          "src/view.js": "46fdfe46bdc6b36c6268fcbf006707fe07f132f62afe284d636be00de51e302d",
+          "package.json": "ba82d9689d6f25a2d4d11cb3f968abeec21f697b966f3e0247b50845b6bf5a08",
+          "dist/linkage-designer.html": "a8e6f7351ea497b62f3e47ded85aace8af0825031c7a0219da31bfc6a2968d3e",
+          "tools/browser-check.mjs": "dcc53eca9d712182d116532bdd29901adbe3cb28964c5000afdf96cc5c7c8be7",
+          "tools/build-single-file.mjs": "0688ff88a174560ff5b8f20e6ef792595460b6730ea0827e688c1b2af76ac663",
+          "tools/serve.mjs": "80b22d5b6a9cbea1f0cf91c381e53909bb7dd74571f8178b68ced5306399b238",
+          "tests/run-tests.mjs": "6d1684083b1b16d0d15c9e41dc35630d5872a7ed51e2464d8a9b81c58640f757",
+          "README.md": "ad0bb0e767a0ec8745a53b2292dddc95d6db07df1f3a4fbe5dfaf425c578f954"
+        }
+      },
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-20-r1/README.md",
+        "lines": null
+      },
+      "evidence": {
+        "audit": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-20-r1/evidence/audit-2026-09-10.md",
+        "auditJson": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-20-r1/evidence/audit-2026-09-10.json",
+        "isolationRules": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-20-r1/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-20-r1/evidence/session-log.sha256.txt"
+      },
+      "followups": []
     }
   ],
   "reviews": [
@@ -4061,6 +4725,34 @@
         "path": "Test_Results/Muse-Spark-1.3_Opencode/phase-01/Reviews/Muse-Spark-1.3-任务评测复盘.md",
         "lines": "37-50"
       }
+    },
+    {
+      "id": "batch-deepseek-v4-1-flash-exp-0910-phase-02-partial",
+      "modelId": "deepseek-v4-1-flash-exp-0910",
+      "phaseId": "phase-02",
+      "label": {
+        "zh": "DeepSeek V4.1 Flash Exp 0910 · Phase 2（Task 16–20，部分）",
+        "en": "DeepSeek V4.1 Flash Exp 0910 · Phase 2 (Task 16–20, partial)"
+      },
+      "metrics": {
+        "totalTasks": 5,
+        "sessions": 5,
+        "durationSeconds": 11176,
+        "apiCalls": 927,
+        "toolCalls": 940,
+        "failures": 0,
+        "inputTokens": 457656,
+        "outputTokens": 1475485,
+        "cacheReadTokens": 234301952,
+        "totalTokens": null,
+        "costCny": null,
+        "costUsd": null
+      },
+      "source": {
+        "path": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md",
+        "lines": "1-20"
+      },
+      "note": "本批次为部分汇总：由已归档的 5 个 run 的逐题指标求和，不代表整个 phase-02（Task 16–45）。"
     }
   ],
   "assessments": [

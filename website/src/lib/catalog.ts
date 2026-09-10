@@ -19,7 +19,7 @@ export const asset = (path: string) => `${base}/${path}`.replace(/(?<!:)\/+/g, '
  * 调用方应传入 run.artifact.commit / run.prompt 所在批次的提交。
  * 仅当提交与映射条目一致时才套用历史路径映射（第一阶段目录迁移）。
  */
-export const sourceUrl = (path: string, lines?: string, commit?: string) => {
+export const sourceUrl = (path: string, lines?: string | null, commit?: string) => {
   const anchor = lines ? `#L${lines.split(/[-,]/)[0]}` : '';
   const target = commit ?? catalog.archiveCommit;
   const mapping = catalog.sourcePathMappings.find(

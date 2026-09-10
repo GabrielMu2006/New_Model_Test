@@ -6,11 +6,16 @@ const catalog = JSON.parse(fs.readFileSync(new URL('../data/catalog.json', impor
 const server = await preview({ root: fileURLToPath(new URL('../', import.meta.url)), server: { host: '127.0.0.1', port: 0, open: false } });
 const base = `http://127.0.0.1:${server.port}`;
 const browsers = [];
+// 本机沙箱下 Firefox 会 _crashed_（既有环境限制，见 docs/verification.md）；
+// 可用 E2E_BROWSERS=chromium,webkit 只跑可用的浏览器，默认仍是三浏览器全套。
+const launchers = { chromium, firefox, webkit };
+const selected = (process.env.E2E_BROWSERS ?? 'chromium,firefox,webkit').split(',').map((item) => item.trim()).filter(Boolean);
+for (const name of selected) if (!launchers[name]) throw new Error(`Unknown browser in E2E_BROWSERS: ${name}`);
 const deepseekRuns = catalog.runs.filter((run) => run.modelId === 'deepseek-v4-1-flash-exp-0910');
 const museRuns = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3');
 try {
   if (!(await fetch(`${base}/zh/`, { signal: AbortSignal.timeout(10000) })).ok) throw new Error('Preview failed to serve the build.');
-  for (const [name, launcher] of Object.entries({ chromium, firefox, webkit })) {
+  for (const name of selected) { const launcher = launchers[name];
     const browser = await launcher.launch({ headless: true }); const page = await browser.newPage(); const errors = [];
     browsers.push(browser); page.setDefaultTimeout(15000);
     page.on('console', (message) => message.type() === 'error' && errors.push(message.text())); page.on('pageerror', (error) => errors.push(error.message));
@@ -47,6 +52,24 @@ try {
     const aiHtml = await aiCard.innerHTML();
     if (aiHtml.includes('<title>') || aiHtml.includes('<desc>')) throw new Error(`${name}: raw HTML not escaped in review body`);
 
+    // 第二阶段（Task 16–20）：阶段页、越界标注、审查证据、补充轮逐字输入与「暂无评价」说明
+    await page.goto(`${base}/zh/phases/phase-02/`);
+    if (await page.locator('.run-tile').count() !== 5) throw new Error(`${name}: phase-02 page did not list the 5 archived tasks`);
+    await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/`);
+    const phase2Text = await page.locator('.detail-page').textContent();
+    for (const expected of ['策略级（workspace-only）', '存在越界尝试，未取得内容 · 不影响成绩', '不要再读取chrome钥匙串了', '本运行暂无独立评价']) {
+      if (!phase2Text?.includes(expected)) throw new Error(`${name}: phase-02 run page missing "${expected}"`);
+    }
+    const auditHref = await page.locator('a[href*="task-17-r1/evidence/audit"]').first().getAttribute('href');
+    if (!auditHref?.includes('/blob/a9925d8')) throw new Error(`${name}: audit evidence link is not bound to the archive commit`);
+    // SVG 成果作为预览发布，且入口可用
+    await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/`);
+    if (await page.locator('img[src$="pelican-bicycle.svg"]').count() !== 1) throw new Error(`${name}: phase-02 SVG artifact missing`);
+    // 第二阶段 HTML 成果：懒加载预览
+    await page.goto(`${base}/zh/tasks/task-19/`);
+    await page.getByRole('button', { name: /加载交互预览/ }).first().click();
+    if (await page.locator('.preview-stage iframe').count() !== 1) throw new Error(`${name}: phase-02 lazy preview failed`);
+
     for (const width of [390, 768, 1440]) { await page.setViewportSize({ width, height: 900 }); await page.goto(`${base}/zh/`); if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)) throw new Error(`${name}: horizontal overflow at ${width}`); }
     if (errors.length) throw new Error(`${name}: console errors: ${errors.join('; ')}`); await browser.close();
   }
@@ -62,7 +85,7 @@ try {
   await browser.close();
 
   for (const run of catalog.runs) { const url = `${base}/artifacts/${run.id}/${run.artifact.entry}`; const response = await fetch(url, { signal: AbortSignal.timeout(10000) }); if (!response.ok) throw new Error(`Artifact failed: ${url}`); }
-  console.log(`Browser flows passed in Chromium, Firefox, and WebKit; all ${catalog.runs.length} artifact entries loaded (${deepseekRuns.length} DeepSeek + ${museRuns.length} Muse).`);
+  console.log(`Browser flows passed in ${selected.join(', ')}; all ${catalog.runs.length} artifact entries loaded (${deepseekRuns.length} DeepSeek + ${museRuns.length} Muse).`);
 } finally {
   await Promise.allSettled(browsers.map((browser) => browser.close()));
   await server.stop();

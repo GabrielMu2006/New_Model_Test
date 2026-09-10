@@ -21,6 +21,21 @@
 | 14 | 214420b0 | 9-page bank site | HTML |
 | 15 | b25a11c4 | Book tracker | HTML |
 
+## Phase 2（Task 16–20，2026-09-10 接入）
+
+来源：`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md` 的 Task 16–20（`taskVersion = 1`）与 `Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/<run-id>/`。
+成果与运行页源码链接固定到本批次的归档提交 `a9925d853af078d931e96ee769aa119e2f0bd997`（不再是第一阶段基线提交）；历史路径映射只对第一阶段提交生效，不会套用到新目录。
+
+| 任务 | 会话 | 成果 | 类型 | 越界判定 |
+|---|---|---|---|---|
+| 16 | `session-3e6b3dce` | `pelican-bicycle.svg` | SVG | `unknown`（未发现越界） |
+| 17 | `session-f4bf2a9f` | `mechanical-watch-movement.svg` + 构建/验证脚本 | SVG | `suspected`（越界尝试，未取得内容；另有 1 次组织者补充轮） |
+| 18 | `session-f220eec5` | Rube Goldberg 多文件应用 | HTML | `unknown`（未发现越界） |
+| 19 | `session-34287563` | 交互式太阳系模拟 | HTML | `unknown`（未发现越界） |
+| 20 | `session-b84d3d60` | 二维连杆设计器 | HTML | `suspected`（越界尝试，未取得内容） |
+
+口径：`prompt.txt` 为**逐字存档**（组织者粘贴进对话，导入时与归档声明的 SHA-256 校验一致），不是事后补录；独立评价尚未产出，因此本批次不计综合分。
+
 ## 保留的分歧与边界
 
 - Task 06：人工评价认为手和剪刀“很奇怪”，历史 AI 报告给 92/100 并认为关系明确。
