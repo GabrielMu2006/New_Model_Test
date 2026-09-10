@@ -1,0 +1,45 @@
+---
+// 模型索引（规范第 28 节）：艺术家档案入口，不做排行榜。
+import { catalog, duration, href, type Locale } from '../../lib/catalog';
+import { labelsFor } from '../../lib/labels';
+import { assessmentSummary } from '../../lib/catalog';
+import { modelAccent, pad } from '../../lib/naming';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = labelsFor(locale);
+const l = locale === 'zh';
+const entries = catalog.models.map((model) => {
+  const runs = catalog.runs.filter((run) => run.modelId === model.id);
+  const taskIds = new Set(runs.map((run) => run.taskId));
+  const phases = catalog.phases.filter((phase) => catalog.tasks.some((task) => task.phaseId === phase.id && taskIds.has(task.id)));
+  const seconds = runs.reduce((sum, run) => sum + (run.metrics.durationSeconds ?? 0), 0);
+  return { model, runs, taskCount: taskIds.size, phases, seconds, summary: assessmentSummary(model.id) };
+});
+---
+<section class="shell page-block">
+  <div class="page-heading">
+    <span class="kicker">{t.modelArchiveKicker}</span>
+    <h1>{t.modelArchive}</h1>
+    <p>{l
+      ? '每个模型以「艺术家档案」的形式保存：先看它做出来的作品，再看运行记录与逐份独立评价。'
+      : 'Each model is kept as an artist archive: first the works it produced, then its run records and each independent review.'}</p>
+  </div>
+  <div class="model-list">
+    {entries.map(({ model, runs, taskCount, phases, seconds, summary }, index) => (
+      <a class="model-card" href={href(locale, `models/${model.id}/`)}>
+        <span class="model-monogram" style={`--accent:${modelAccent(model.id)}`}>{`M${pad(index + 1)}`}</span>
+        <div>
+          <span class="kicker">{model.provider}{model.version ? ` · ${model.version}` : ''}</span>
+          <h2>{model.name[locale]}</h2>
+          <p>
+            {taskCount} {t.worksSuffix} · {runs.length} {t.runs} · {duration(seconds, locale)} ·
+            {' '}{summary.average == null ? t.noAssessment : `${t.aiAverage} ${summary.average}/100（${summary.scored}）`}
+          </p>
+          <p class="note">{phases.map((phase) => `PHASE ${pad(phase.number)}`).join(' · ') || t.noAssessment}</p>
+        </div>
+        <b>→</b>
+      </a>
+    ))}
+  </div>
+</section>

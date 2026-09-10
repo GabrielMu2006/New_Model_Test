@@ -115,6 +115,7 @@ New_Model_Test/
 - [测试隔离与防答案污染](docs/testing-protocol.md)
 - [测试工作区启动方案](test-workspace/README.md)：按阶段建任务目录、逐题隔离测试、汇总归档。
 - [网站维护、发布及回退](docs/deployment.md)
+- [展示站 UI 设计规范（Digital Museum / 编辑出版物）](website/VibeTest%20Digital%20Museum%20UI%20Design%20Specification.md)
 
 - [15 条原始 Prompt、双语理论成果与验收内容](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)
 - [30 条 Phase 2 高级创造题（Task 16–45）](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)
@@ -294,6 +295,7 @@ Future phases live inside each model folder under Test_Results/. The root README
 - [Test isolation and anti-contamination protocol](docs/testing-protocol.md)
 - [Test workspace runbook](test-workspace/README.md): phase scaffolding, per-task isolation, summary and archiving.
 - [Deployment and rollback](docs/deployment.md)
+- [Website UI design specification (Digital Museum / editorial archive)](website/VibeTest%20Digital%20Museum%20UI%20Design%20Specification.md)
 
 - [15 original prompts with bilingual expected outcomes and acceptance checks](PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md)
 - [30 Phase 2 advanced creation prompts (Task 16–45)](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)

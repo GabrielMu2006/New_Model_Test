@@ -1,5 +1,26 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 UI 改版：Digital Museum / 编辑出版物风格（设计规范落地）
+
+- **触发与依据**：组织者给出设计稿与 `website/VibeTest Digital Museum UI Design Specification.md`（80 节），要求把展示站从深色「数据看板」改为「数字美术馆 + 编辑出版物 + 实验档案馆」。设计稿中的四个界面（首页、任务档案、运行档案、设计系统页）是视觉基准；本文只记录落地与验证，不改档案数据与评分口径。
+- **设计令牌**：`website/src/styles/global.css` 全量重写。色板 Museum Canvas `#F1EFE9` / Paper `#FAF9F6` / Ink `#161616` / Muted Ink `#686661` / Hairline `#D8D5CE`，强调色 Museum Red `#E64132`、Archive Blue `#3454D1`、Muse Pink `#D55C88`、GPT Green `#2E7D5B`；圆角 4 / 6 / 8px；默认 `box-shadow: none`、Hover 仅 `0 8px 24px rgba(0,0,0,.05)`；动效 180–300ms ease-out；分隔线（1px hairline）取代大面积卡片容器。原来深色主题的发光渐变、玻璃拟态与霓虹强调色全部移除。
+- **字体自托管**：Playfair Display（标题与数字，衬线）、Inter（界面）、JetBrains Mono（档案元信息）三个 latin 子集可变字体落在 `website/public/fonts/`（4 个 woff2，合计 162.4 KB），`src/styles/fonts.css` 提供 4 条 `@font-face`，SIL OFL 授权随文件保存为 `public/fonts/OFL.txt`。运行时不依赖任何第三方字体 CDN；中文按 `unicode-range` 回落到系统宋体/黑体（有意为之，不引入 CJK 子集）。
+- **代码结构**：`AppPage.astro` 由 389 行单文件拆为路由 + `src/components/pages/` 十个页面组件（Home / TasksIndex / TaskDetail / RunDetail / ModelsIndex / ModelDetail / PhasesIndex / PhaseDetail / Compare / Methodology / NotFound）；新增 `src/lib/site.ts`（展览身份：ARCHIVE 001 / 2026、品牌语句、导航）、`src/lib/naming.ts`（统一编号 PHASE 01 · TASK 01 · WORK A · RUN 01.A.01 · MODEL M01，全部由既有数据推导）、`src/lib/labels.ts`（265 条双语展示文案）；新增组件 `ArtworkCard`、`ArtworkImage`、`ModelDots`，重写 `ArtifactPreview`、`RunRow`。
+- **页面改版要点**（对应设计稿）：
+  - **首页** = 展览入口页：品牌主标题 + 两行品牌核心语句 + 数字条（03 模型 / 02 阶段 / 55 运行 / 20-45 任务）+ 档案进度（含分母来源说明）+ 4 列精选作品展墙 + 当前展览 + 档案中的模型 + 最新归档 + 方法简介。精选作品由「归档顺序中每类任务的首件」推导，是排版选择而非排名。
+  - **任务档案** = 藏品索引：**每道题只出现一张作品卡**（设计规范第 22 节，此前同题按模型重复三张），类型 / 模型 / 阶段三行极简 Chip（含计数、组内单选、组间 AND），下方为档案进度。
+  - **任务详情** = 原始需求（默认收起、可展开全文）+ 三种解释（等宽等高、同一预览比例、缺模型的题目显示「尚未归档」而不是 N/A 或 0）+ 执行对比表（时长 / API / 工具 / 重试 / token / AI 评价，数字右对齐）+ 运行档案 + 相关任务。
+  - **运行档案** = Museum Object Record：首屏作品预览与预览控件，下方依次为档案记录（RUN ID / 归档时间 / 运行时间 / 调用 / 重试 / tokens / harness / 归档提交）、人工评价、AI 评价（大号衬线分数）、默认折叠的技术记录、编号来源证据清单；右侧为档案摘要、本节导航与同题三作缩略图。
+  - **模型 / 阶段 / 对比 / 方法**：模型页为艺术家档案（精选作品 → 档案统计 → 批次指标 → 阶段进度 → 快照 → 全部作品 → 运行历史表）；阶段页为展览季（进度条 + 作品墙 + 逐题记录）；对比页为并排作品 + 执行/评价对比表；方法页为图录论文版式（620–760px 阅读宽度、五条编号原则）。
+  - **全站搜索**：页头改为 `⌕` 图标 + 命令面板（`/` 或 ⌘K 打开、Esc 关闭、↑↓ 选择、Enter 打开），索引在构建期生成（20 任务 + 3 模型 + 55 运行），无脚本时其余页面不受影响。
+  - **移动端**：精选作品改横向展墙（80% 宽露出下一件）、三种解释改 Tab、运行页保持「标题 → 作品 → 模型 → 评价 → 元信息」顺序、页头 ☰ 折叠导航。
+- **改版中发现并修复的三个展示层缺陷**：① `[hidden]` 被组件自身 `display`（`.artwork-card{display:flex}`）压过，导致任务筛选「隐藏」不生效——补 `[hidden]{display:none!important}`；② WebKit 为 `<option>` 生成比 `<select>` 更宽的内部盒，对比页 390px 溢出 +153px——按既有做法在 `.compare-controls` 上裁剪；③ 归档未生成封面的 HTML 运行此前会渲染裂图——改为档案标签占位（题号 + 类型），不再引出不存在的图片。
+- **保留的既有约束（逐条复验）**：缺失值仍显示「未记录」（新增断言：第一阶段运行无 `startedAt/endedAt` 时归档时间显示未记录）；`suspected` 仍不外显；AI 均分仍只作概览且逐评委并列；时长仍 `M:SS` / `H:MM:SS`；`taskId@version` 才可比较；对比页 URL 契约（`?task=&left=&right=`）与语言切换保留查询参数不变；来源链接逐条绑定各自归档提交（1266/1266 通过）；成果仍按 `artifact.files` 显式清单发布；HTML 预览仍懒加载 + 沙箱 + 独立打开。
+- **门禁实测（本机，Node 24.19.0）**：`import:data`、`validate:data`、`astro check`（**0 errors / 0 warnings / 0 hints**）、`npm test`（**26/26**）、`npm run build`（**174 页** + 43 个 HTML 成果；静态链接检查通过；源码链接 **1266/1266** 存在于其固定提交）、`E2E_BROWSERS=chromium,webkit npm run test:e2e` **通过**（55/55 成果入口）。本机 Firefox 仍按既有环境限制崩溃（`docs/known-issues.md`），由 CI 三浏览器覆盖。
+- **新增 e2e 断言**（在原有覆盖之上）：一题一卡的展墙、三行 Chip 过滤与「选中唯一」、命令面板开关/分组/Esc、首页品牌标题与数字条与进度条无障碍名、三种解释等宽与「尚未归档」占位（且不含 N/A / 0）、展开完整需求、档案记录字段与归档时间「未记录」、技术记录默认折叠、来源证据清单、移动端横向展墙与 Tab 切换、移动端运行页「作品先于档案」的文档顺序。语言切换、对比恢复、404、溢出（390/768/1440）等原有断言全部保留。
+- **视觉复核**：以 Chromium 截取 14 个视图状态（首页、任务档案、任务详情、运行档案、模型索引与模型页、阶段索引与阶段页、对比、方法、英文首页、390px 首页与运行页、768px 任务档案）逐张核对版式，控制台 **0 error**。
+- **发布与公网核验**：见下方「本次改版发布记录」小节。
+
 ## 2026-09-10 收尾裁定：统一时长写法 + 关闭三项不再需要的待办
 
 - **时长写法统一**（组织者要求）：展示层一律由 `metrics.durationSeconds` 格式化——≥1 小时 `H:MM:SS`，不足 1 小时 `M:SS`；归档自带的 `durationLabel`（「4分51秒」）**只作数据保留、不再参与渲染**，此前两种写法会在同一页内外并存。落点：`src/lib/format.ts` 新增 `runDuration()`，`AppPage.astro`（运行指标格、模型页运行格、阶段页逐题格、对比页数据岛）与 `RunRow.astro` 全部改用它；`tests/format.test.mjs` 新增用例（含「只有文本、没有秒数」时回落到原文不丢值），e2e 新增断言「运行页时长必须是 `M:SS`/`H:MM:SS`」且「页面不得出现 `N分N秒`」。实测：`dist/zh` 下 0 个页面仍渲染归档时长文本；`/zh/tasks/task-01/` 三个运行的累计用时为 `4:51` / `2:13` / `6:06`。

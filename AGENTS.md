@@ -46,6 +46,7 @@ website/                                # Astro 展示站、导入器、模板�
 - `website/astro.config.mjs` 的 site 使用该 HTTPS 域名，base 为 `/`；`website/public/CNAME` 保留 `vibetest.gabrielmu2006.cn`。不恢复旧项目子路径，不改主站 DNS/Pages。
 - 页脚保留 `mailto:limuzhi2006@stu.pku.edu.cn` 和 `https://gabrielmu2006.cn/`；不把主站统计代码直接复制过来。新增统计须单独明确范围和站点标识。
 - 沿用 Astro、TypeScript、npm 锁文件及现有界面。中英文、页面深链、对比查询参数、键盘访问和移动布局同步维护。
+- 界面遵循 `website/VibeTest Digital Museum UI Design Specification.md`（Digital Museum / 编辑出版物 / 实验档案馆）：暖色纸质底、衬线标题、1px 分隔线、克制的强调色、默认无阴影、不做排行榜视觉。改 UI 时同步维护设计令牌（`website/src/styles/global.css`）、编号（`website/src/lib/naming.ts`）与双语文案（`website/src/lib/labels.ts`），不要把界面改回深色数据看板风格。
 - 资源地址统一经过路径辅助函数。公开成果只复制 `artifact.files` 的显式清单，保留多页相对结构；不得递归发布整个成果根目录。
 - HTML 预览按需加载；同源 iframe 不同时授予 `allow-scripts` 和 `allow-same-origin`，外部新窗口使用 `noopener`。预览不支持的存储/下载应如实说明并提供独立打开。
 - 每条原始需求、指标和评价可追溯。缺失值为 null，不能以 0、臆造评分或未经验证的配置补齐。人工、AI、作者自述测试、本次测试分别标注。

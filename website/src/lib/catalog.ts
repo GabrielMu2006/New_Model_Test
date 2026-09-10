@@ -6,6 +6,7 @@ export type Task = (typeof catalog.tasks)[number];
 export type Run = (typeof catalog.runs)[number];
 export type Review = (typeof catalog.reviews)[number];
 export type Model = (typeof catalog.models)[number];
+export type Phase = (typeof catalog.phases)[number];
 export type Batch = (typeof catalog.batches)[number];
 export type Assessment = (typeof catalog.assessments)[number];
 

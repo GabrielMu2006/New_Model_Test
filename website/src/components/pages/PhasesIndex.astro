@@ -1,0 +1,53 @@
+---
+// 阶段索引（规范第 43 节）：像「展览季」而不是版本列表。
+import { catalog, href, type Locale } from '../../lib/catalog';
+import { labelsFor } from '../../lib/labels';
+import { pad } from '../../lib/naming';
+import ArtworkCard from '../../components/ArtworkCard.astro';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = labelsFor(locale);
+const l = locale === 'zh';
+const firstRun = (taskId: string) => catalog.runs.find((run) => run.taskId === taskId);
+const entries = catalog.phases.map((phase) => {
+  const tasks = catalog.tasks.filter((task) => task.phaseId === phase.id);
+  const taskIds = new Set(tasks.map((task) => task.id));
+  const runs = catalog.runs.filter((run) => taskIds.has(run.taskId));
+  const models = new Set(runs.map((run) => run.modelId));
+  const percent = phase.plannedTasks ? Math.round((phase.taskVersions.length / phase.plannedTasks) * 1000) / 10 : 0;
+  return { phase, tasks: tasks.filter((task) => firstRun(task.id)), runs, models, percent };
+});
+---
+<section class="shell page-block">
+  <div class="page-heading">
+    <span class="kicker">{t.phaseIndexKicker} · {t.exhibitionSeason}</span>
+    <h1>{t.phases}</h1>
+    <p>{l
+      ? '每个阶段是一季展览：同一套题目、同一套资源限制，作品与运行记录一并保存。'
+      : 'Each phase is a season: one task set, one set of resource limits, with works and run records kept together.'}</p>
+  </div>
+
+  {entries.map(({ phase, tasks, runs, models, percent }) => (
+    <section class="section-block">
+      <a class="phase-card" href={href(locale, `phases/${phase.id}/`)}>
+        <b>{pad(phase.number)}</b>
+        <div>
+          <span class="kicker">{phase.id.toUpperCase()} · {percent >= 100 ? t.completed : t.inProgress}</span>
+          <h2>{phase.name[locale]}</h2>
+          <p>{phase.description[locale]}</p>
+        </div>
+        <div class="phase-stats">
+          <div class="phase-progress">
+            <i style={`--progress:${percent}%`}></i>
+            <span>{phase.taskVersions.length} / {phase.plannedTasks} {t.tasks} · {runs.length} {t.runs} · {models.size} {t.models}</span>
+          </div>
+          <span class="note">{phase.plannedTasksNote[locale]}</span>
+        </div>
+      </a>
+      <div class="gallery" style="margin-top:1.75rem">
+        {tasks.slice(0, 4).map((task) => <ArtworkCard locale={locale} task={task} run={firstRun(task.id)!} />)}
+      </div>
+    </section>
+  ))}
+</section>

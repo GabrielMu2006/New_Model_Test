@@ -1,0 +1,67 @@
+/*
+ * 自托管字体（self-hosted webfonts）
+ *
+ * 本文件仅包含下面 4 个 @font-face 声明，不含任何其他 CSS 规则。
+ * 字体文件全部放在 website/public/fonts/，构建后通过站点根路径 /fonts/ 访问
+ * （站点 base 为 `/`，因此这里用绝对路径 /fonts/... 即可）。
+ *
+ * 这 4 个文件都是 latin 子集的可变字体（variable font，带 wght 轴），
+ * 直接取自 Google Fonts 的 CSS2 接口返回的 latin 区块，因此运行时不依赖
+ * 任何第三方字体 CDN；字体文件与 SIL OFL 1.1 授权说明见：
+ *   website/public/fonts/OFL.txt
+ *
+ * 刻意只声明 latin 的 unicode-range：中文（CJK）字形不在本子集内，
+ * 中文字符会按 unicode-range 规则自动回退到系统 CJK 字体，这是有意为之，
+ * 不要为此额外引入体积巨大的中文字体子集。
+ *
+ * 注意：unicode-range 只决定“哪些字符使用本字体”，并不保证字体内一定有
+ * 对应字形；若某字符在范围内但字体内无字形，浏览器不会回退到下一个字体。
+ */
+
+@font-face {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/playfair-display-latin-var.woff2") format("woff2-variations"),
+    url("/fonts/playfair-display-latin-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/playfair-display-latin-italic-var.woff2") format("woff2-variations"),
+    url("/fonts/playfair-display-latin-italic-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-latin-var.woff2") format("woff2-variations"),
+    url("/fonts/inter-latin-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin-var.woff2") format("woff2-variations"),
+    url("/fonts/jetbrains-mono-latin-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}

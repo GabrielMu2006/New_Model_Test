@@ -1,0 +1,201 @@
+---
+// 同题对比（规范第 26、27、75 节）：任务选择 → 两个作品选择 → 并排作品 → 执行对比 → 评价对比 → 打开运行档案。
+// URL 契约保持不变：?task=&left=&right= 写入地址栏，可直接分享、刷新恢复、切换语言后保留。
+import { catalog, href, modelById, reviewsFor, runDuration, number, asset, type Locale } from '../../lib/catalog';
+import { labelsFor, metricLabels } from '../../lib/labels';
+import { modelAccent, modelShortName, runCode } from '../../lib/naming';
+import { jsonIsland } from '../../lib/serialize';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = labelsFor(locale);
+const m = metricLabels(locale);
+// 对比页只需要「任务 + 每次运行的展示值」，展示串在构建期算好，客户端不再用 Intl 重算
+// （此前 null 会被格式化成 0）。
+const aiScore = (runId: string) => reviewsFor(runId).find((review) => review.type === 'ai' && review.score != null)?.score ?? null;
+const payload = {
+  tasks: catalog.tasks.map((task) => ({ id: task.id, version: task.version, title: task.title })),
+  runs: catalog.runs.map((run) => ({
+    id: run.id,
+    taskId: run.taskId,
+    taskVersion: run.taskVersion,
+    modelId: run.modelId,
+    modelName: modelById(run.modelId)?.name ?? { zh: run.modelId, en: run.modelId },
+    modelShort: modelShortName(modelById(run.modelId), locale),
+    accent: modelAccent(run.modelId),
+    code: runCode(run),
+    artifact: { type: run.artifact.type, entry: run.artifact.entry, sandbox: run.artifact.preview?.sandbox ?? '' },
+    display: {
+      duration: runDuration(run.metrics, locale),
+      totalTokens: number(run.metrics.totalTokens, locale),
+      apiCalls: number(run.metrics.apiCalls, locale),
+      toolCalls: number(run.metrics.toolCalls, locale),
+      failures: number(run.metrics.failures, locale),
+      review: aiScore(run.id) == null ? t.notRecorded : `${aiScore(run.id)}/100`,
+    },
+  })),
+  labels: {
+    unavailable: t.unavailable, invalid: t.invalid, noRight: m.noRight,
+    duration: m.duration, tokens: t.tokens, api: m.api, tools: m.tools, failures: m.failures,
+    review: t.aiReview, view: t.viewRecord, copied: t.copied, openRecord: t.openRunRecord,
+    sideOne: t.sideOne, sideTwo: t.sideTwo, notRecorded: t.notRecorded,
+    comparison: t.executionComparison, evaluation: t.evaluationComparison, metricRow: t.metricRow,
+    workA: t.sideOne, workB: t.sideTwo,
+  },
+};
+---
+<section class="shell page-block compare-page" data-compare-root data-locale={locale} data-base={href(locale)} data-artifact-base={asset('artifacts')}>
+  <div class="page-heading">
+    <span class="kicker">{t.compareKicker}</span>
+    <h1>{t.compareTitle}</h1>
+    <p>{t.compareIntro}</p>
+  </div>
+  <p class="notice">{t.crossModel}</p>
+
+  <div class="section-block" style="padding-top:1.5rem">
+    <div class="compare-controls">
+      <label><span>{t.selectTask}</span><select data-compare-task>{catalog.tasks.map((task) => <option value={task.id}>{task.id} · {task.title[locale]}</option>)}</select></label>
+      <label><span>{`${t.sideOne} · 01`}</span><select data-compare-left></select></label>
+      <label><span>{`${t.sideTwo} · 02`}</span><select data-compare-right></select></label>
+      <button class="button" type="button" data-share>{t.share}</button>
+    </div>
+    <p class="notice" data-compare-notice hidden>{t.unavailable}</p>
+    <p class="notice" data-compare-invalid hidden>{t.invalid}</p>
+  </div>
+
+  <div class="compare-grid">
+    <div data-left-panel></div>
+    <div data-right-panel><div class="missing-panel"><span>02</span><p>{m.noRight}</p></div></div>
+  </div>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.metricsKicker}</span><h2>{t.executionComparison}</h2><p>{t.evaluationComparison}</p></div>
+    </div>
+    <div class="table-scroll" data-compare-table></div>
+  </section>
+
+  <script is:inline type="application/json" data-catalog set:html={jsonIsland(payload)}></script>
+</section>
+
+<script>
+  // @ts-nocheck
+  const compareRoot = document.querySelector<HTMLElement>('[data-compare-root]');
+  if (compareRoot) {
+    const data = JSON.parse(compareRoot.querySelector('[data-catalog]')!.textContent || '{}');
+    const taskSelect = compareRoot.querySelector<HTMLSelectElement>('[data-compare-task]')!;
+    const leftSelect = compareRoot.querySelector<HTMLSelectElement>('[data-compare-left]')!;
+    const rightSelect = compareRoot.querySelector<HTMLSelectElement>('[data-compare-right]')!;
+    const notice = compareRoot.querySelector<HTMLElement>('[data-compare-notice]')!;
+    const invalidNotice = compareRoot.querySelector<HTMLElement>('[data-compare-invalid]')!;
+    const leftPanel = compareRoot.querySelector<HTMLElement>('[data-left-panel]')!;
+    const rightPanel = compareRoot.querySelector<HTMLElement>('[data-right-panel]')!;
+    const tableHost = compareRoot.querySelector<HTMLElement>('[data-compare-table]')!;
+    const locale = compareRoot.dataset.locale || 'zh';
+    const params = new URLSearchParams(location.search);
+    const esc = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]!));
+    // 「请求的参数不适用于当前任务」只反映初始 URL；用户一旦自己操作就不再提示。
+    let ignoredRequest = false;
+    const selectedTask = () => data.tasks.find((task: any) => task.id === taskSelect.value);
+    // 只允许同题**同版本**的运行进入对比。
+    const runsFor = () => {
+      const task = selectedTask();
+      return data.runs.filter((run: any) => run.taskId === taskSelect.value && (!task || run.taskVersion === task.version));
+    };
+    const placeholder = (side: string, text: string) => `<div class="missing-panel"><span>${side}</span><p>${esc(text)}</p></div>`;
+    const option = (run: any) => `<option value="${esc(run.id)}">${esc(run.modelShort)} · ${esc(run.code)} · ${esc(run.id)}</option>`;
+    const panel = (runId: string, side: string) => {
+      const run = data.runs.find((entry: any) => entry.id === runId);
+      if (!run) return placeholder(side, data.labels.noRight);
+      const task = data.tasks.find((entry: any) => entry.id === run.taskId);
+      const title = task.title[locale] ?? task.title.en ?? task.id;
+      const artifact = `${compareRoot.dataset.artifactBase}/${run.id}/${run.artifact.entry}`;
+      const visual = run.artifact.type === 'svg'
+        ? `<img src="${esc(artifact)}" alt="${esc(title)}">`
+        : `<iframe src="${esc(artifact)}" sandbox="${esc(run.artifact.sandbox)}" title="${esc(title)}"></iframe>`;
+      const modelName = run.modelName[locale] ?? run.modelName.en ?? run.modelId;
+      const sideLabel = side === '01' ? data.labels.workA : data.labels.workB;
+      return `<article class="comparison-panel">
+        <span class="kicker">${esc(sideLabel)} · ${esc(run.code)} · ${esc(run.id)}</span>
+        <h2><span class="model-dot" style="color:${esc(run.accent)}"><i aria-hidden="true"></i>${esc(modelName)}</span></h2>
+        <div class="compare-preview">${visual}</div>
+        <dl class="compare-metrics">
+          <div><dt>${esc(data.labels.duration)}</dt><dd>${esc(run.display.duration)}</dd></div>
+          <div><dt>${esc(data.labels.tokens)}</dt><dd>${esc(run.display.totalTokens)}</dd></div>
+          <div><dt>${esc(data.labels.api)}</dt><dd>${esc(run.display.apiCalls)}</dd></div>
+          <div><dt>${esc(data.labels.tools)}</dt><dd>${esc(run.display.toolCalls)}</dd></div>
+          <div><dt>${esc(data.labels.review)}</dt><dd>${esc(run.display.review)}</dd></div>
+        </dl>
+        <a class="text-link" href="${esc(compareRoot.dataset.base)}runs/${esc(run.id)}/">${esc(data.labels.openRecord)} →</a>
+      </article>`;
+    };
+    /** 执行 / 评价对比表：两列数字左右对齐（规范第 27 节）。 */
+    const table = () => {
+      const left = data.runs.find((entry: any) => entry.id === leftSelect.value);
+      const right = data.runs.find((entry: any) => entry.id === rightSelect.value);
+      if (!left) { tableHost.innerHTML = ''; return; }
+      const rows = [
+        [data.labels.api, 'apiCalls'], [data.labels.tools, 'toolCalls'], [data.labels.failures, 'failures'],
+        [data.labels.tokens, 'totalTokens'], [data.labels.review, 'review'],
+      ];
+      const head = (run: any) => run
+        ? `<th scope="col"><span class="model-dot" style="color:${esc(run.accent)}"><i aria-hidden="true"></i>${esc(run.modelShort)}</span><small>${esc(run.code)} · ${esc(run.id)}</small></th>`
+        : `<th scope="col"><span class="muted">—</span></th>`;
+      tableHost.innerHTML = `<table class="metrics-table"><thead><tr><th scope="col">${esc(data.labels.metricRow)}</th>${head(left)}${head(right)}</tr></thead><tbody>
+        <tr><th scope="row">${esc(data.labels.duration)}</th><td>${esc(left.display.duration)}</td><td>${right ? esc(right.display.duration) : '—'}</td></tr>
+        ${rows.map(([label, key]) => `<tr><th scope="row">${esc(label)}</th><td>${esc(left.display[key])}</td><td>${right ? esc(right.display[key]) : '—'}</td></tr>`).join('')}
+      </tbody></table>`;
+    };
+    const render = () => {
+      if (rightSelect.value === leftSelect.value) rightSelect.value = '';
+      const runs = runsFor();
+      leftPanel.innerHTML = panel(leftSelect.value, '01');
+      rightPanel.innerHTML = rightSelect.value ? panel(rightSelect.value, '02') : placeholder('02', data.labels.noRight);
+      table();
+      // 「该任务只有一条运行」与「还没选右侧运行」是两件事，不能共用同一句话。
+      notice.hidden = runs.length > 1;
+      invalidNotice.hidden = !ignoredRequest;
+      const next = new URL(location.href);
+      next.searchParams.set('task', taskSelect.value);
+      next.searchParams.set('left', leftSelect.value);
+      rightSelect.value ? next.searchParams.set('right', rightSelect.value) : next.searchParams.delete('right');
+      history.replaceState({}, '', next);
+    };
+    /** 用给定的 left/right 请求填充下拉框；不匹配的请求会被忽略并显式提示。 */
+    const fill = (requestedLeft: string | null, requestedRight: string | null) => {
+      const runs = runsFor();
+      leftSelect.innerHTML = runs.map(option).join('');
+      rightSelect.innerHTML = `<option value="">-</option>${runs.map(option).join('')}`;
+      if (!runs.length) { render(); return; }
+      if (requestedLeft) {
+        if (runs.some((run: any) => run.id === requestedLeft)) leftSelect.value = requestedLeft;
+        else ignoredRequest = true;
+      }
+      if (requestedRight) {
+        if (runs.some((run: any) => run.id === requestedRight) && requestedRight !== leftSelect.value) rightSelect.value = requestedRight;
+        else ignoredRequest = true;
+      }
+      render();
+    };
+    const requestedTask = params.get('task');
+    if (data.tasks.some((task: any) => task.id === requestedTask)) taskSelect.value = requestedTask;
+    else if (requestedTask) ignoredRequest = true;
+    // 切换任务时不再沿用上一次的 left/right：陈旧参数会被套用到另一个任务上。
+    taskSelect.addEventListener('change', () => { ignoredRequest = false; fill(null, null); });
+    leftSelect.addEventListener('change', () => { ignoredRequest = false; render(); });
+    rightSelect.addEventListener('change', () => { ignoredRequest = false; render(); });
+    compareRoot.querySelector('[data-share]')?.addEventListener('click', async (event) => {
+      const button = event.currentTarget as HTMLButtonElement;
+      const old = button.textContent;
+      try {
+        await navigator.clipboard.writeText(location.href);
+        button.textContent = data.labels.copied;
+      } catch {
+        // 剪贴板不可用（非安全上下文 / 未授权）时退回可复制的地址栏提示，不能静默失败。
+        button.textContent = location.href;
+      }
+      setTimeout(() => { button.textContent = old; }, 1800);
+    });
+    fill(params.get('left'), params.get('right'));
+  }
+</script>

@@ -1,0 +1,23 @@
+---
+// 作品缩略图：SVG 直接用成果文件，HTML 用归档封面。
+// 归档未生成封面的 HTML 运行不渲染 <img>（会得到裂图），而是显示档案标签占位
+// （题号 + 类型），保证展墙上每一格都有可读内容。
+import { asset, type Run } from '../lib/catalog';
+import { artworkThumb, taskNumber } from '../lib/naming';
+
+interface Props {
+  run: Run;
+  loading?: 'lazy' | 'eager';
+  alt?: string;
+  /** 占位块中显示的题号（默认取运行所属题目）。 */
+  label?: string;
+}
+const { run, loading = 'lazy', alt = '', label } = Astro.props;
+const src = artworkThumb(run);
+---
+{src
+  ? <img src={asset(src)} alt={alt} loading={loading} decoding="async" data-kind={run.artifact.type} />
+  : <span class="artwork-missing" role="img" aria-label={`${run.artifact.type.toUpperCase()} ${label ?? taskNumber(run.taskId)}`}>
+      <b class="serif-num">{label ?? taskNumber(run.taskId)}</b>
+      <em class="mono">{run.artifact.type.toUpperCase()}</em>
+    </span>}

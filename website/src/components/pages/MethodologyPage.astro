@@ -1,0 +1,80 @@
+---
+// 方法页（规范第 45、46 节）：像「展览图录论文」——左侧 METHOD，正文保持 620–760px 可读宽度。
+import { catalog, duration, entityCommit, modelById, number, sourceUrl, type Locale } from '../../lib/catalog';
+import { labelsFor, metricLabels } from '../../lib/labels';
+import { pad } from '../../lib/naming';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = labelsFor(locale);
+const m = metricLabels(locale);
+const l = locale === 'zh';
+const batchItems = (metrics: (typeof catalog.batches)[number]['metrics']): [string, string][] => [
+  [m.tasks, number(metrics.totalTasks, locale)], [m.sessions, number(metrics.sessions, locale)],
+  [m.duration, duration(metrics.durationSeconds, locale)], [m.api, number(metrics.apiCalls, locale)],
+  [m.tools, number(metrics.toolCalls, locale)], [m.failures, number(metrics.failures, locale)],
+  [m.inputTokens, number(metrics.inputTokens, locale)], [m.outputTokens, number(metrics.outputTokens, locale)],
+  [m.cacheRead, number(metrics.cacheReadTokens, locale)],
+  [t.cost, metrics.costCny == null ? t.notRecorded : `¥${metrics.costCny}`],
+];
+const principles: [string, string][] = [
+  [t.principleSame, t.principleSameBody],
+  [t.principleReal, t.principleRealBody],
+  [t.principleIndependent, t.principleIndependentBody],
+  [t.principleNoRanking, t.principleNoRankingBody],
+  [t.principleProvenance, t.principleProvenanceBody],
+];
+---
+<section class="shell page-block methodology">
+  <div class="page-heading">
+    <span class="kicker">{t.methodologyKicker} · METHOD</span>
+    <h1>{t.methodology}</h1>
+    <p>{t.methodologyIntro}</p>
+  </div>
+
+  <div class="essay">
+    <p>{t.methodologyLead}</p>
+  </div>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{l ? '方法原则' : 'METHOD PRINCIPLES'}</span><h2>{l ? '五条原则' : 'Five principles'}</h2></div>
+    </div>
+    <div class="principle-grid">
+      {principles.map(([title, body], index) => (
+        <article><span>{pad(index + 1)}</span><div><h2>{title}</h2><p>{body}</p></div></article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block essay">
+    <h2>{t.historicalTitle}</h2>
+    <p>{t.historicalBody}</p>
+    <h2>{t.boundariesTitle}</h2>
+    <p>{t.boundariesBody}</p>
+    <p class="note">{l
+      ? '术语与字段的权威定义见仓库 docs/result-interface.md、docs/data-model.md 与 docs/audit-method.md；本页只说明展示口径。'
+      : 'Authoritative field definitions live in the repository docs (result-interface, data-model, audit-method); this page only describes the display rules.'}</p>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{l ? 'BATCH MEASUREMENTS' : 'BATCH MEASUREMENTS'}</span><h2>{t.batchStats}</h2><p>{t.perTask}</p></div>
+    </div>
+    <div class="batch-table">
+      {catalog.batches.map((batch) => {
+        const model = modelById(batch.modelId);
+        return (
+          <article class="prose-card">
+            <span class="kicker">{model?.provider ?? batch.modelId}</span>
+            <h2>{batch.label[locale] ?? model?.name[locale]}</h2>
+            <dl class="metric-grid">
+              {batchItems(batch.metrics).map(([label, value]) => <div><span>{label}</span><strong>{value}</strong></div>)}
+            </dl>
+            <p style="margin-top:1rem"><a href={sourceUrl(batch.source.path, batch.source.lines, entityCommit(batch, catalog.runs.find((run) => run.modelId === batch.modelId)?.artifact.commit))} target="_blank" rel="noopener">{t.sourceReport} ↗</a></p>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+</section>

@@ -1,26 +1,28 @@
 ---
+// 运行行：任务页与阶段页的运行入口。缺失值一律显示「未记录」，不留空单元格：
+// 同一行里有的缺失显示「未记录」、有的显示空白，会被读成「这一项是 0 或没问题」。
 import { compact, href, modelById, number, runDuration, type Locale, type Run } from '../lib/catalog';
+import { labelsFor, metricLabels } from '../lib/labels';
+import { modelAccent, modelShortName, runCode, runStatus, statusGlyph, statusLabel } from '../lib/naming';
+
 interface Props { locale: Locale; run: Run; }
 const { locale, run } = Astro.props;
+const t = labelsFor(locale);
+const m = metricLabels(locale);
 const model = modelById(run.modelId);
-const l = locale === 'zh';
-const labels = {
-  // 缺失值一律显示「未记录」，不能留空单元格：同一行里有的缺失显示「未记录」、
-  // 有的显示空白，会被读成「这一项是 0 或没问题」。
-  duration: l ? '累计用时' : 'Total duration',
-  tokens: l ? 'Token 过路量' : 'Token throughput',
-  api: l ? 'API 调用' : 'API calls',
-  view: l ? '查看详情' : 'View details',
-  notRecorded: l ? '未记录' : 'Not recorded',
-};
+const status = runStatus(run);
 const durationText = runDuration(run.metrics, locale);
 ---
 <article class="run-row">
-  <div><span class="status-dot"></span><strong>{model?.name[locale]}</strong><small>{run.id}</small></div>
+  <div>
+    <span class="kicker">{runCode(run)} · {run.id}</span>
+    <strong style={`color:${modelAccent(run.modelId)}`}>{modelShortName(model, locale)}</strong>
+    <small>{statusGlyph[status]} {statusLabel(status, locale)}</small>
+  </div>
   <dl>
-    <div><dt>{labels.duration}</dt><dd>{durationText}</dd></div>
-    <div><dt>{labels.tokens}</dt><dd>{compact(run.metrics.totalTokens, locale)}</dd></div>
-    <div><dt>{labels.api}</dt><dd>{number(run.metrics.apiCalls, locale)}</dd></div>
+    <div><dt>{t.runtime}</dt><dd>{durationText}</dd></div>
+    <div><dt>{t.tokens}</dt><dd>{compact(run.metrics.totalTokens, locale)}</dd></div>
+    <div><dt>{m.api}</dt><dd>{number(run.metrics.apiCalls, locale)}</dd></div>
   </dl>
-  <a class="button quiet" href={href(locale, `runs/${run.id}/`)}>{labels.view} →</a>
+  <a class="text-link" href={href(locale, `runs/${run.id}/`)}>{t.viewRecord} →</a>
 </article>

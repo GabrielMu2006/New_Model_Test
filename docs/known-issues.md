@@ -3,7 +3,18 @@
 > 本文件记录**已确认**的展示站缺陷、后续接入缺口与组织者决定。修复时按小节逐项处理，完成后更新 `verification.md` 并勾掉本文件对应条目。
 > 记录时间：2026-09-09（维护 agent 只读复核产出）。
 > **状态（2026-09-09 更新）**：第 1 节的 1.1–1.4 已全部修复并发布，记录保留用于追溯；第 2、3 节仍未处理。
-> **状态（2026-09-10 更新）**：见第 6 节「2026-09-10 全站缺陷排查（已完成一轮修复）」。
+> **状态（2026-09-10 更新）**：见第 6 节「2026-09-10 全站缺陷排查（已完成一轮修复）」与第 7 节「UI 改版同步修复」。
+> **状态（UI 改版）**：界面已按 `website/VibeTest Digital Museum UI Design Specification.md` 改为 Digital Museum / 编辑出版物风格（详见 `verification.md` 同日条目）；第 2、3 节的展示站待办不受影响。
+
+## 7. UI 改版（Digital Museum）同步修复的展示层缺陷
+
+改版过程中由门禁与全站溢出扫描发现并修复，均已加入 e2e 断言：
+
+- **`[hidden]` 失效导致筛选不生效**：作品卡是 `display:flex`、画廊格是 `grid`，作者样式覆盖了 UA 的 `[hidden]{display:none}`，任务筛选点下去「隐藏」无效（Chromium/WebKit 均如此）。修复：`global.css` 增加 `[hidden]{display:none!important}`；e2e 断言 Chip 过滤后的可见卡数等于该筛选条件下的题目数。
+- **WebKit 下对比页 390px 溢出 +153px**：`<option>` 的内部盒比 `<select>` 宽并计入页面 `scrollWidth`（2026-09-09 已记录过同类问题，改版重写 CSS 时被遗漏）。修复：在 `.compare-controls` 上裁剪并留出焦点环内边距。
+- **任务详情 390px 溢出（task-01 +37px）**：`.detail-columns` 在窄屏仍是两栏，每栏 167px，卡片内长单词撑破容器。修复：`max-width:900px` 时改为单栏，并给 `.prose-card` 段落与列表加 `overflow-wrap:anywhere`。
+- **归档未生成封面的 HTML 运行渲染裂图**：新增 `ArtworkImage` 组件，没有封面时显示档案标签占位（题号 + 类型），并把「HTML 无封面」的运行纳入同一占位逻辑（含任务详情三种解释、运行页右侧缩略图、首页展墙）。
+- **长源码路径溢出**：说明文字里的 `PROMPT/Phase2_...md` 等长路径在窄屏撑破容器（阶段索引 1440px 溢出 +123px）。修复：`.section-heading p/span/small`、`.phase-card .note`、`.record-grid code`、`.evidence-list small` 允许 `overflow-wrap:anywhere`。
 
 ## 6. 2026-09-10 全站缺陷排查（已完成一轮修复）
 

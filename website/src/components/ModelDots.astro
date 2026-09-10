@@ -1,0 +1,14 @@
+---
+// 模型圆点：说明这道题有哪些模型的归档运行；颜色只作用于小圆点（规范第 6、50 节）。
+import { modelAccent, modelShortName, taskModelRuns } from '../lib/naming';
+import type { Locale } from '../lib/catalog';
+interface Props { locale: Locale; taskId: string; caption?: string; }
+const { locale, taskId, caption = '' } = Astro.props;
+const entries = taskModelRuns(taskId);
+const names = entries.map(({ model }) => modelShortName(model, locale)).join(' · ');
+---
+<span class="model-dots" aria-label={caption ? `${caption}: ${names}` : undefined}>
+  {entries.map(({ model }) => (
+    <span class="model-dot" style={`color:${modelAccent(model.id)}`}><i aria-hidden="true"></i>{modelShortName(model, locale)}</span>
+  ))}
+</span>

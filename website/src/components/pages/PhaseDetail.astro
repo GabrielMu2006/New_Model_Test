@@ -1,0 +1,84 @@
+---
+// 阶段详情（规范第 43、44 节）：展览季详情 + 作品墙 + 逐题记录。
+import { catalog, duration, href, runDuration, type Locale, type Phase } from '../../lib/catalog';
+import { labelsFor, metricLabels } from '../../lib/labels';
+import { modelAccent, modelName, pad, taskNumber } from '../../lib/naming';
+import ArtworkCard from '../../components/ArtworkCard.astro';
+
+interface Props { locale: Locale; phase: Phase; }
+const { locale, phase } = Astro.props;
+const t = labelsFor(locale);
+const m = metricLabels(locale);
+const l = locale === 'zh';
+const firstRun = (taskId: string) => catalog.runs.find((run) => run.taskId === taskId);
+const tasks = catalog.tasks.filter((task) => task.phaseId === phase.id);
+const taskIds = new Set(tasks.map((task) => task.id));
+const runs = catalog.runs.filter((run) => taskIds.has(run.taskId));
+const models = catalog.models.filter((model) => runs.some((run) => run.modelId === model.id));
+const percent = phase.plannedTasks ? Math.round((phase.taskVersions.length / phase.plannedTasks) * 1000) / 10 : 0;
+const seconds = runs.reduce((sum, run) => sum + (run.metrics.durationSeconds ?? 0), 0);
+const taskRuns = (taskId: string) => catalog.runs.filter((run) => run.taskId === taskId);
+---
+<section class="shell page-block">
+  <nav class="breadcrumb" aria-label={t.navLabel}>
+    <a href={href(locale, 'phases/')}>{t.phases}</a>
+    <span aria-hidden="true">/</span>
+    <span>{pad(phase.number)}</span>
+  </nav>
+  <div class="page-heading">
+    <span class="kicker">{t.phaseKicker} {pad(phase.number)} · {percent >= 100 ? t.completed : t.inProgress}</span>
+    <h1>{phase.name[locale]}</h1>
+    <p>{phase.description[locale]}</p>
+    <small>{phase.plannedTasksNote[locale]}</small>
+  </div>
+
+  <div class="timeline">
+    <b>{pad(phase.number)}</b>
+    <i aria-hidden="true"></i>
+    <strong>{phase.taskVersions.length} / {phase.plannedTasks} {t.tasks}</strong>
+    <i aria-hidden="true"></i>
+    <strong>{models.length} {t.models}</strong>
+    <i aria-hidden="true"></i>
+    <strong>{runs.length} {t.runs}</strong>
+  </div>
+
+  <div class="record-grid" style="margin-bottom:2.5rem">
+    <div><span>{t.taskVersions}</span><strong>{phase.taskVersions.join(' · ')}</strong></div>
+    <div><span>{t.duration}</span><strong>{duration(seconds, locale)}</strong></div>
+    <div><span>{t.models}</span><strong>{models.map((model) => model.name[locale]).join(' / ') || t.notRecorded}</strong></div>
+  </div>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.selectedWorksKicker}</span><h2>{t.selectedWorks}</h2></div>
+      <a class="text-link" href={href(locale, 'tasks/')}>{t.viewAllTasks} →</a>
+    </div>
+    <div class="gallery">
+      {tasks.filter((task) => firstRun(task.id)).slice(0, 8).map((task) => <ArtworkCard locale={locale} task={task} run={firstRun(task.id)!} />)}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{l ? 'PER-TASK RECORDS' : 'PER-TASK RECORDS'}</span><h2>{t.perTask}</h2></div>
+    </div>
+    <div class="compact-grid">
+      {tasks.map((task) => (
+        <article class="run-tile">
+          <span>{taskNumber(task.id)}</span>
+          <h2>{task.title[locale]}</h2>
+          <p>{task.category}</p>
+          <dl>
+            {taskRuns(task.id).map((run) => (
+              <div>
+                <dt><span class="model-dot" style={`color:${modelAccent(run.modelId)}`}><i aria-hidden="true"></i>{modelName(run.modelId, locale)}</span></dt>
+                <dd>{runDuration(run.metrics, locale)} · {run.metrics.apiCalls ?? t.notRecorded} {m.api}</dd>
+              </div>
+            ))}
+          </dl>
+          <a class="text-link" href={href(locale, `tasks/${task.id}/`)}>{t.viewTask} →</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</section>

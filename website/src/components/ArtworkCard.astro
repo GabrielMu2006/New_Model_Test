@@ -1,0 +1,54 @@
+---
+// Artwork Card（规范第 18、53 节）：全站最重要的组件。图像 80% / 文字 20%。
+// 同一题目只出现一张卡片（规范第 22 节），卡片内的模型圆点说明这道题有几次运行。
+import { href, type Locale, type Run, type Task } from '../lib/catalog';
+import { labelsFor, runsCount } from '../lib/labels';
+import { taskModelRuns, taskNumber, artifactGroup } from '../lib/naming';
+import ArtworkImage from './ArtworkImage.astro';
+import ModelDots from './ModelDots.astro';
+
+interface Props {
+  locale: Locale;
+  task: Task;
+  run: Run;
+  /** 列表页筛选用的数据属性；首页等静态展墙不需要。 */
+  filterable?: boolean;
+  /** 移动端横向展墙浏览（规范第 63 节）。 */
+  wall?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+const { locale, task, run, filterable = false, wall = false, headingLevel = 'h3' } = Astro.props;
+const t = labelsFor(locale);
+const other: Locale = locale === 'zh' ? 'en' : 'zh';
+const entries = taskModelRuns(task.id);
+const url = href(locale, `tasks/${task.id}/`);
+const searchBlob = `${task.id} ${task.title.zh} ${task.title.en} ${task.promptOriginal} ${task.category} ${entries
+  .map(({ model }) => `${model.id} ${model.name.zh} ${model.name.en}`).join(' ')}`.toLowerCase();
+const Heading = headingLevel;
+---
+<article
+  class:list={['artwork-card', wall && 'artwork-card--wall']}
+  data-task-card={filterable ? '' : undefined}
+  data-category={filterable ? task.category : undefined}
+  data-phase={filterable ? task.phaseId : undefined}
+  data-type={filterable ? artifactGroup(run.artifact.type) : undefined}
+  data-models={filterable ? entries.map(({ model }) => model.id).join(' ') : undefined}
+  data-search={filterable ? searchBlob : undefined}
+>
+  <div class="artwork-head">
+    <span>{taskNumber(task.id)}</span>
+    <em>{run.artifact.type.toUpperCase()}</em>
+  </div>
+  <a class="artwork-frame" href={url} aria-label={`${task.title[locale]} · ${t.viewTask}`}>
+    <ArtworkImage run={run} label={taskNumber(task.id)} />
+    <figcaption>{t.viewTask} →</figcaption>
+  </a>
+  <div class="artwork-body">
+    <Heading><a href={url}>{task.title[locale]}</a></Heading>
+    <p class="artwork-sub">{task.title[other]}</p>
+    <div class="artwork-foot">
+      <span class="status status--archived">{runsCount(locale, entries.length)}</span>
+      <ModelDots locale={locale} taskId={task.id} />
+    </div>
+  </div>
+</article>

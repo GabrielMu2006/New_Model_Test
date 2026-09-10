@@ -1,21 +1,30 @@
 ---
+// 作品预览（规范第 35、36、68、69 节）：运行页首屏的核心，控件优先使用文本按钮。
+// 懒加载、沙箱 iframe、独立打开与来源链接的既有行为保持不变；
+// 加载中显示纸质骨架块（不用转圈），加载失败给出「作品无法加载」+ 可读说明。
 import { asset, href, sourceUrl, type Locale, type Run, type Task } from '../lib/catalog';
+import { labelsFor } from '../lib/labels';
+import { runCode, taskCode } from '../lib/naming';
+
 interface Props { locale: Locale; run: Run; task: Task; compact?: boolean; side?: string; }
 const { locale, run, task, compact = false, side = '' } = Astro.props;
+const t = labelsFor(locale);
 const artifactUrl = asset(`artifacts/${run.id}/${run.artifact.entry}`);
-const labels = locale === 'zh' ? { load: '加载交互预览', reload: '重新加载', expand: '扩大显示', open: '独立打开', source: '查看源码', download: '下载 SVG', note: '预览说明' } : { load: 'Load interactive preview', reload: 'Reload', expand: 'Expand', open: 'Open standalone', source: 'View source', download: 'Download SVG', note: 'Preview note' };
 // 说明可能是双语对象（本站撰写的提示，中文页优先）或归档里的原文字符串（原样显示，不臆造译文）。
 const rawNote = run.artifact.preview.note;
 const previewNote = typeof rawNote === 'string' ? rawNote : rawNote?.[locale] ?? rawNote?.en ?? null;
 ---
 <section class:list={['artifact-preview', compact && 'compact']} data-preview data-side={side}>
   <div class="preview-toolbar">
-    <div><span class="eyebrow">{task.id} · {run.artifact.type.toUpperCase()}</span><strong>{task.title[locale]}</strong></div>
+    <div>
+      <span class="kicker">{taskCode(task.id)} · {runCode(run)} · {run.artifact.type.toUpperCase()}</span>
+      <strong>{task.title[locale]}</strong>
+    </div>
     <div class="button-row">
-      {run.artifact.type === 'svg' && <a class="button quiet" href={artifactUrl} download>{labels.download}</a>}
-      {run.artifact.type === 'html' && <button class="button quiet" type="button" data-reload disabled>{labels.reload}</button>}
-      <button class="button quiet" type="button" data-expand>{labels.expand}</button>
-      <a class="button quiet" href={artifactUrl} target="_blank" rel="noopener">{labels.open}</a>
+      {run.artifact.type === 'svg' && <a class="button quiet" href={artifactUrl} download>{t.downloadSvg} ↓</a>}
+      {run.artifact.type === 'html' && <button class="button quiet" type="button" data-reload disabled>{t.reload}</button>}
+      <button class="button quiet" type="button" data-expand aria-pressed="false">{t.openFullscreen} ↗</button>
+      <a class="button quiet" href={artifactUrl} target="_blank" rel="noopener">{t.openStandalone} ↗</a>
     </div>
   </div>
   <div class="preview-stage">
@@ -24,13 +33,24 @@ const previewNote = typeof rawNote === 'string' ? rawNote : rawNote?.[locale] ??
     ) : (
       <div class="preview-cover" data-cover>
         {run.artifact.cover && <img src={asset(run.artifact.cover)} alt="" loading="lazy" />}
-        <div class="cover-overlay"><span>{task.title[locale]}</span><button class="button primary" type="button" data-load data-src={artifactUrl} data-sandbox={run.artifact.preview.sandbox}>{labels.load}</button></div>
+        <div class="cover-overlay">
+          <span>{task.title[locale]}</span>
+          <button
+            class="button primary"
+            type="button"
+            data-load
+            data-src={artifactUrl}
+            data-sandbox={run.artifact.preview.sandbox}
+            data-error={t.artworkUnavailable}
+            data-error-note={t.artworkUnavailableNote}
+          >{t.loadPreview}</button>
+        </div>
       </div>
     )}
   </div>
-  {previewNote && <p class="preview-note"><strong>{labels.note}:</strong> {previewNote}</p>}
+  {previewNote && <p class="preview-note"><strong>{t.previewNote}:</strong> {previewNote}</p>}
   <div class="preview-links">
-    <a href={sourceUrl(`${run.artifact.sourcePath}/${run.artifact.entry}`, undefined, run.artifact.commit)} target="_blank" rel="noopener">{labels.source} ↗</a>
+    <a href={sourceUrl(`${run.artifact.sourcePath}/${run.artifact.entry}`, undefined, run.artifact.commit)} target="_blank" rel="noopener">{t.viewSource} ↗</a>
     <a href={href(locale, `runs/${run.id}/`)}>{run.id}</a>
   </div>
 </section>
@@ -48,11 +68,33 @@ const previewNote = typeof rawNote === 'string' ? rawNote : rawNote?.[locale] ??
       frame.sandbox.value = load.dataset.sandbox || '';
       frame.loading = 'lazy';
       frame.title = load.closest('[data-preview]')?.querySelector('strong')?.textContent || 'Artifact preview';
-      stage.replaceChildren(frame);
+      // 纸质骨架块占位（规范第 68 节），加载完成后移除；超时则给出可读的错误状态。
+      const skeleton = document.createElement('div');
+      skeleton.className = 'preview-skeleton';
+      stage.replaceChildren(skeleton);
+      let settled = false;
+      frame.addEventListener('load', () => { settled = true; skeleton.remove(); });
+      stage.append(frame);
+      window.setTimeout(() => {
+        if (settled) return;
+        skeleton.remove();
+        const failure = document.createElement('div');
+        failure.className = 'interpretation-missing';
+        const title = document.createElement('strong');
+        title.textContent = load.dataset.error || 'Artwork unavailable';
+        const note = document.createElement('small');
+        note.textContent = load.dataset.errorNote || '';
+        failure.append(title, note);
+        stage.prepend(failure);
+      }, 12000);
       if (reload) reload.disabled = false;
+      load.remove();
     };
     load?.addEventListener('click', mount);
     reload?.addEventListener('click', () => { const frame = stage?.querySelector('iframe'); if (frame) frame.src = frame.src; });
-    expand?.addEventListener('click', () => { preview.classList.toggle('expanded'); expand.setAttribute('aria-pressed', String(preview.classList.contains('expanded'))); });
+    expand?.addEventListener('click', () => {
+      preview.classList.toggle('expanded');
+      expand.setAttribute('aria-pressed', String(preview.classList.contains('expanded')));
+    });
   });
 </script>

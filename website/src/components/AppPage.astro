@@ -1,60 +1,33 @@
 ---
+// 页面路由：把 [locale]/[...path] 解析成具体页面组件。
+// 文案、编号与展示组件都拆到 lib 与 components/pages，这里只负责选页与 <title>。
 import SiteLayout from '../layouts/SiteLayout.astro';
-import ArtifactPreview from './ArtifactPreview.astro';
-import RunRow from './RunRow.astro';
-import {
-  asset, assessmentSummary, assessmentsForModel, batchesForModel, catalog, compact, duration, entityCommit, href, modelById, number, runDuration,
-  reviewsFor, runById, runCards, runsForModel, runsForTask, sourceUrl, taskById, type Locale,
-} from '../lib/catalog';
-import { renderMarkdown } from '../lib/markdown';
-import { jsonIsland } from '../lib/serialize';
-import { contaminationDisplay } from '../lib/contamination';
+import { catalog, modelById, runById, taskById, type Locale } from '../lib/catalog';
+import { labelsFor } from '../lib/labels';
+import HomePage from './pages/HomePage.astro';
+import TasksIndex from './pages/TasksIndex.astro';
+import TaskDetail from './pages/TaskDetail.astro';
+import RunDetail from './pages/RunDetail.astro';
+import ModelsIndex from './pages/ModelsIndex.astro';
+import ModelDetail from './pages/ModelDetail.astro';
+import PhasesIndex from './pages/PhasesIndex.astro';
+import PhaseDetail from './pages/PhaseDetail.astro';
+import ComparePage from './pages/ComparePage.astro';
+import MethodologyPage from './pages/MethodologyPage.astro';
+import NotFoundPage from './pages/NotFoundPage.astro';
 
 interface Props { locale: Locale; path: string; }
 const { locale, path } = Astro.props;
+const t = labelsFor(locale);
 const bits = path.split('/').filter(Boolean);
 const section = bits[0] || 'home';
 const id = bits[1];
-const l = locale === 'zh';
-const labels = l ? {
-  overview: '模型评测档案', intro: '浏览多模型在同一套题目上的真实成果、原始需求、运行证据与彼此独立的评价来源。', browse: '浏览任务', compare: '同题对比', phase: '阶段', model: '模型', models: '模型', tasks: '任务', artifacts: '成果', runs: '运行', duration: '累计用时', tokens: 'Token 过路量', filters: '检索与筛选', search: '搜索任务标题、Prompt 或模型', category: '全部类别', allModelsFilter: '全部模型', noResults: '没有符合条件的任务。', view: '查看详情', source: '来源', prompt: '原始 Prompt', translation: '中文译文', expected: '理论成果', verification: '后补验收建议', runDetails: '运行记录', metrics: '运行指标', reviews: '评价与证据', human: '人工评价', ai: 'AI 评价', method: '评测方法', notRecorded: '未记录', config: '执行配置', session: '会话', continuation: '补充轮', disclaimer: '引用结论，不代表网站独立复验', allTasks: '全部任务', allModels: '全部模型', aiAverage: 'AI 均分', noAssessment: '暂无阶段评估', phaseDetail: '阶段详情', modelDetail: '模型详情', methodology: '评测方法与边界', compareTitle: '同题运行对比', selectTask: '选择任务', left: '左侧运行', right: '右侧运行', unavailable: '当前任务只有一条真实运行记录，尚无第二项可比较。', invalid: '无效或不匹配的选择已被忽略。', share: '复制分享链接', copied: '链接已复制', archive: '归档版本', sourceReport: '原始报告', results: '项结果', total: '合计', perTask: '逐任务记录', batchStats: '批次统计', promptInput: '逐字输入', postHoc: '事后补录', isolation: '隔离等级', contamination: '越界判定', assessment: '阶段评估', telemetryHidden: '工具调用不可见 · 默认视为遵守规则', telemetryNote: '该模型 / harness 不提供中间工具调用记录，收尾审查无法覆盖路径、命令、仓库查询等维度；按既定规则默认视为遵守规则，不影响成绩。', snapshots: '模型快照（harness 报告的 model id）', snapshot: '运行快照', snapshotNote: '本次运行实际使用的模型快照；同一模型的不同快照不构成同一配置。', snapshotCurrent: '当前', snapshotRetired: '已退役', audit: '收尾审查', auditReport: '审查报告', sessionLogHash: '会话日志哈希', followupInput: '补充轮输入（逐字）', noReviews: '本运行暂无独立评价：人工评价与 AI 评价均未产出。', allRuns: '全部运行', translationNote: '原文为中文，未提供英译', translatedNote: '英文为译文', cost: '费用', harness: 'Harness', crossModel: '跨模型比较需注明 harness、预算与隔离差异。', taskRuns: '本题全部运行', compareHint: '同一任务版本下的两次运行可并排比较。',
-} : {
-  overview: 'Model evaluation archive', intro: 'Browse real artifacts from multiple models on the same task set, with original requests, run evidence, and independent review sources.', browse: 'Browse tasks', compare: 'Compare runs', phase: 'Phase', model: 'Model', models: 'Models', tasks: 'Tasks', artifacts: 'Artifacts', runs: 'Runs', duration: 'Total duration', tokens: 'Token throughput', filters: 'Search and filters', search: 'Search task title, prompt or model', category: 'All categories', allModelsFilter: 'All models', noResults: 'No tasks match these filters.', view: 'View details', source: 'Source', prompt: 'Original prompt', translation: 'Chinese translation', expected: 'Expected outcome', verification: 'Additional verification guidance', runDetails: 'Run record', metrics: 'Run metrics', reviews: 'Reviews and evidence', human: 'Human review', ai: 'AI review', method: 'Methodology', notRecorded: 'Not recorded', config: 'Execution configuration', session: 'Session', continuation: 'Continuation turns', disclaimer: 'Quoted conclusion; not independently reverified by this website', allTasks: 'All tasks', allModels: 'All models', aiAverage: 'AI average', noAssessment: 'No phase assessment', phaseDetail: 'Phase details', modelDetail: 'Model details', methodology: 'Methodology and boundaries', compareTitle: 'Compare runs on one task', selectTask: 'Select task', left: 'Left run', right: 'Right run', unavailable: 'Only one real run exists for this task, so there is no second result to compare yet.', invalid: 'Invalid or mismatched selections were ignored.', share: 'Copy share link', copied: 'Link copied', archive: 'Archive version', sourceReport: 'Source report', results: 'results', total: 'Total', perTask: 'Per-task records', batchStats: 'Batch metrics', promptInput: 'Verbatim input', postHoc: 'post-hoc reconstruction', isolation: 'Isolation level', contamination: 'Boundary check', assessment: 'Phase assessment', telemetryHidden: 'Tool calls not exposed · assumed compliant by default', telemetryNote: 'This model/harness does not expose intermediate tool calls, so the post-hoc audit cannot cover paths, commands or repository queries; per the standing rule it is assumed compliant and the score is unaffected.', snapshots: 'Model snapshots (harness-reported model ids)', snapshot: 'Run snapshot', snapshotNote: 'The model snapshot this run actually used; two snapshots of one model are not the same configuration.', snapshotCurrent: 'Current', snapshotRetired: 'Retired', audit: 'Boundary audit', auditReport: 'Audit report', sessionLogHash: 'Session log hash', followupInput: 'Continuation input (verbatim)', noReviews: 'No independent review has been produced for this run yet (neither human nor AI).', allRuns: 'All runs', translationNote: 'Original Chinese; no English translation provided', translatedNote: 'English is a translation', cost: 'Cost', harness: 'Harness', crossModel: 'Cross-model comparison must note harness, budget and isolation differences.', taskRuns: 'All runs for this task', compareHint: 'Two runs of the same task version can be compared side by side.',
-};
-const categoryNames: Record<string, string> = l ? { website: '网站', 'svg-illustration': 'SVG 插画', 'svg-clock': 'SVG 时钟', game: '游戏', 'creative-tool': '创作工具', 'productivity-tool': '效率工具', utility: '实用工具', 'data-dashboard': '数据仪表盘', simulation: '交互模拟', 'engineering-tool': '工程工具' } : { website: 'Website', 'svg-illustration': 'SVG illustration', 'svg-clock': 'SVG clock', game: 'Game', 'creative-tool': 'Creative tool', 'productivity-tool': 'Productivity tool', utility: 'Utility', 'data-dashboard': 'Data dashboard', simulation: 'Interactive simulation', 'engineering-tool': 'Engineering tool' };
-const isolationLabels: Record<string, { zh: string; en: string }> = {
-  'workspace-only': { zh: '策略级（workspace-only）', en: 'Policy-level (workspace-only)' },
-  'os-user-isolation': { zh: '独立用户隔离', en: 'Separate OS user' },
-  container: { zh: '容器隔离', en: 'Container' },
-  unknown: { zh: '未记录', en: 'Not recorded' },
-};
-const contaminationLabels: Record<string, { zh: string; en: string }> = {
-  clean: { zh: '未发现越界（已声明范围内通过检查）', en: 'No boundary violation observed (passed within declared scope)' },
-  // `suspected`（越界尝试但未取得内容）不作外显标注，因此这里没有对应文案：
-  // 该状态只记入审计档案，运行页不显示（2026-09-10 组织者决定，见 docs/audit-method.md 第 5 节）。
-  contaminated: { zh: '已确认获取外部答案（标注）', en: 'Confirmed access to external answers (flagged)' },
-  unknown: { zh: '未判定', en: 'Not assessed' },
-};
-/**
- * 指标名与批次表标签：中英双语。此前这些名字在两种语言下都硬编码英文，
- * 中文页因此中英混排。
- */
-const metricLabels = l ? {
-  duration: '累计用时', api: 'API 调用', tools: '工具调用', failures: '失败 / 重试',
-  inputTokens: '输入 token', outputTokens: '输出 token', cacheRead: '缓存读 token', totalTokens: '总 token 过路量',
-  tasks: '任务数', sessions: '会话数', noRight: '请选择右侧运行以开始对比',
-} : {
-  duration: 'Total duration', api: 'API calls', tools: 'Tool calls', failures: 'Failures / retries',
-  inputTokens: 'Input tokens', outputTokens: 'Output tokens', cacheRead: 'Cache read', totalTokens: 'Total tokens',
-  tasks: 'Tasks', sessions: 'Sessions', noRight: 'Select a right-hand run to start comparing',
-};
+
 const currentTask = taskById(id);
 const currentRun = runById(id);
 const currentModel = modelById(id);
 const currentPhase = section === 'phases' ? catalog.phases.find((phase) => phase.id === id) : undefined;
 const currentRunTask = currentRun ? taskById(currentRun.taskId) : undefined;
-const snapshots = currentModel?.snapshots ?? [];
-const snapshotStatus = (status: string) => (status === 'current' ? { zh: labels.snapshotCurrent, en: 'Current' } : { zh: labels.snapshotRetired, en: 'Retired' });
 /**
  * 标题解析顺序：任务 → 模型 → （运行页）该运行所属任务 → 阶段 → 各列表页的通用标题。
  * 运行页的 id 是 runId，currentTask 必为 undefined，因此必须用 currentRunTask 取名，
@@ -64,326 +37,22 @@ const pageTitle = currentTask?.title[locale]
   || currentModel?.name[locale]
   || currentRunTask?.title[locale]
   || currentPhase?.name[locale]
-  || (section === 'compare' ? labels.compareTitle : section === 'methodology' ? labels.methodology : section === 'phases' ? labels.phaseDetail : section === 'models' ? labels.allModels : section === 'tasks' ? labels.allTasks : labels.overview);
-const alternatePath = path;
-const cards = runCards();
-// 覆盖率 = 已测试并归档的任务数 / 各阶段计划题目数之和（两个数字都来自数据）。
-// 此前分子分母同为 tasks.length，恒为满值，读起来像「全部完成」。
-const archivedTasks = catalog.tasks.filter((task) => catalog.runs.some((run) => run.taskId === task.id)).length;
-const plannedTasks = catalog.phases.reduce((sum, phase) => sum + (phase.plannedTasks ?? 0), 0);
-const featured = catalog.tasks.slice(0, 4).flatMap((task) => catalog.models.map((model) => {
-  const run = catalog.runs.find((item) => item.taskId === task.id && item.modelId === model.id);
-  return run ? { task, run, model } : null;
-}).filter((entry): entry is { task: typeof task; run: (typeof catalog.runs)[number]; model: (typeof catalog.models)[number] } => Boolean(entry)));
-const github = (p: string, lines?: string | null, commit?: string) => sourceUrl(p, lines, commit);
-const metricItems = (run: (typeof catalog.runs)[number]) => [
-  [metricLabels.duration, runDuration(run.metrics, locale)],
-  [metricLabels.api, number(run.metrics.apiCalls, locale)], [metricLabels.tools, number(run.metrics.toolCalls, locale)],
-  [metricLabels.failures, number(run.metrics.failures, locale)], [metricLabels.inputTokens, number(run.metrics.inputTokens, locale)],
-  [metricLabels.outputTokens, number(run.metrics.outputTokens, locale)], [metricLabels.cacheRead, number(run.metrics.cacheReadTokens, locale)],
-  [metricLabels.totalTokens, number(run.metrics.totalTokens, locale)],
-];
-/** 批次指标行：两种语言共用一套标签，缺失值走 number()/compact() 显示「未记录」。 */
-const batchItems = (metrics: (typeof catalog.batches)[number]['metrics']) => [
-  [metricLabels.tasks, number(metrics.totalTasks, locale)], [metricLabels.sessions, number(metrics.sessions, locale)],
-  [metricLabels.duration, duration(metrics.durationSeconds, locale)], [metricLabels.api, number(metrics.apiCalls, locale)],
-  [metricLabels.tools, number(metrics.toolCalls, locale)], [metricLabels.failures, number(metrics.failures, locale)],
-  [metricLabels.inputTokens, number(metrics.inputTokens, locale)], [metricLabels.outputTokens, number(metrics.outputTokens, locale)],
-  [metricLabels.cacheRead, number(metrics.cacheReadTokens, locale)],
-  [labels.cost, metrics.costCny == null ? labels.notRecorded : `¥${metrics.costCny}`],
-];
+  || (section === 'compare' ? t.compareTitle : section === 'methodology' ? t.methodology : section === 'phases' ? t.phases : section === 'models' ? t.modelArchive : section === 'tasks' ? t.taskArchive : t.brandSubtitle);
+const notFound = (section === 'tasks' && id && !currentTask)
+  || (section === 'runs' && id && !currentRun)
+  || (section === 'models' && id && !currentModel)
+  || (section === 'phases' && id && !currentPhase && Boolean(id));
 ---
-<SiteLayout locale={locale} title={pageTitle || labels.overview} description={labels.intro} alternatePath={alternatePath}>
-  {section === 'home' && <>
-    <section class="hero shell">
-      <div class="hero-copy">
-        <span class="eyebrow">{catalog.models.length} MODELS · {catalog.phases.length} PHASES</span>
-        <h1>{labels.overview}</h1>
-        <p>{labels.intro}</p>
-        <div class="button-row"><a class="button primary" href={href(locale, 'tasks/')}>{labels.browse}</a><a class="button" href={href(locale, 'compare/')}>{labels.compare}</a></div>
-      </div>
-      <div class="signal-card" aria-label={l ? '归档概况' : 'Archive summary'}>
-        <span>ARCHIVE SIGNAL · {l ? '已测试 / 计划' : 'TESTED / PLANNED'}</span><b>{archivedTasks} / {plannedTasks}</b><i></i>
-        <dl>
-          <div><dt>{labels.models}</dt><dd>{catalog.models.length}</dd></div>
-          <div><dt>{labels.phase}</dt><dd>{catalog.phases.length}</dd></div>
-          <div><dt>{labels.runs}</dt><dd>{catalog.runs.length}</dd></div>
-        </dl>
-      </div>
-    </section>
-    <section class="stats shell" aria-label={labels.batchStats}>
-      {catalog.batches.map((batch) => {
-        const model = modelById(batch.modelId);
-        return <div>
-          <span>{batch.label[locale] ?? model?.name[locale]}</span>
-          <strong>{duration(batch.metrics.durationSeconds, locale)}</strong>
-          <small>{compact(batch.metrics.totalTokens, locale)} tokens · {number(batch.metrics.apiCalls, locale)} API · {batch.metrics.costCny == null ? labels.notRecorded : `¥${batch.metrics.costCny}`}</small>
-        </div>;
-      })}
-      <div><span>{labels.artifacts}</span><strong>{catalog.runs.filter((run) => run.artifact.type === 'svg').length} SVG / {catalog.runs.filter((run) => run.artifact.type === 'html').length} HTML</strong><small>{labels.results}</small></div>
-    </section>
-    <section class="shell section-block">
-      <div class="section-heading"><div><span class="eyebrow">CATALOG</span><h2>{labels.tasks}</h2></div><a href={href(locale, 'tasks/')}>{labels.allTasks} →</a></div>
-      <div class="artifact-strip">
-        {featured.map(({ task, run, model }) => <a class="artifact-tile" href={href(locale, `tasks/${task.id}/`)}>
-          <div class="tile-visual">{run.artifact.type === 'svg' ? <img src={asset(`artifacts/${run.id}/${run.artifact.entry}`)} alt="" /> : run.artifact.cover ? <img src={asset(run.artifact.cover)} alt="" /> : <span>{task.id}</span>}</div>
-          <span>{task.id} · {model?.name[locale]}</span><strong>{task.title[locale]}</strong>
-        </a>)}
-      </div>
-    </section>
-  </>}
-
-  {section === 'tasks' && !id && <section class="shell page-block">
-    <div class="page-heading"><span class="eyebrow">{catalog.runs.length} RUNS / {catalog.models.length} MODELS</span><h1>{labels.allTasks}</h1><p>{labels.intro}</p></div>
-    <div class="filter-panel" data-filter-panel>
-      <label><span>{labels.search}</span><input type="search" data-search placeholder={labels.search} /></label>
-      <label><span>{l ? '任务类别' : 'Task category'}</span><select data-category><option value="">{labels.category}</option>{Object.entries(categoryNames).map(([value, name]) => <option value={value}>{name}</option>)}</select></label>
-      <label><span>{labels.model}</span><select data-model><option value="">{labels.allModelsFilter}</option>{catalog.models.map((model) => <option value={model.id}>{model.name[locale]}</option>)}</select></label>
-    </div>
-    <div class="task-grid" data-task-grid>
-      {cards.map(({ task, run, model }) => <article class="task-card" data-task-card data-category={task.category} data-model={run.modelId} data-search={`${task.id} ${task.title.zh} ${task.title.en} ${task.promptOriginal} ${model ? `${model.id} ${model.name.zh} ${model.name.en}` : ''}`.toLowerCase()}>
-        <a class="task-visual" href={href(locale, `runs/${run.id}/`)}>{run.artifact.type === 'svg' ? <img src={asset(`artifacts/${run.id}/${run.artifact.entry}`)} alt="" loading="lazy" /> : run.artifact.cover ? <img src={asset(run.artifact.cover)} alt="" loading="lazy" /> : <span>{run.artifact.type}</span>}<em>{run.artifact.type.toUpperCase()}</em></a>
-        <div class="task-card-body"><span class="eyebrow">{task.id} · {model?.name[locale]}</span><h2>{task.title[locale]}</h2><p>{task.promptOriginal}</p><a href={href(locale, `runs/${run.id}/`)}>{labels.view} →</a></div>
-      </article>)}
-    </div>
-    <p class="empty-state" data-empty hidden>{labels.noResults}</p>
-  </section>}
-
-  {section === 'tasks' && currentTask && (() => {
-    const taskRuns = runsForTask(currentTask.id, currentTask.version);
-    const primary = taskRuns[0];
-    return <section class="shell page-block detail-page">
-      <div class="breadcrumb"><a href={href(locale, 'tasks/')}>{labels.tasks}</a><span>/</span><span>{currentTask.id}</span></div>
-      <div class="detail-heading"><div><span class="eyebrow">{currentTask.id} · V{currentTask.version} · {categoryNames[currentTask.category]}</span><h1>{currentTask.title[locale]}</h1></div><a class="button" href={href(locale, `compare/?task=${currentTask.id}&left=${taskRuns[0]?.id ?? ''}${taskRuns[1] ? `&right=${taskRuns[1].id}` : ''}`)}>{labels.compare}</a></div>
-      {primary && <ArtifactPreview locale={locale} task={currentTask} run={primary} />}
-      <div class="detail-columns">
-        <article class="prose-card"><span class="eyebrow">SOURCE REQUEST</span><h2>{labels.prompt}</h2><pre>{currentTask.promptOriginal}</pre><h3>{labels.translation}</h3><p>{currentTask.promptTranslation}</p><a href={github(currentTask.source.path, currentTask.source.lines, primary?.artifact.commit)} target="_blank" rel="noopener">{labels.source} · {currentTask.source.path} ↗</a></article>
-        <article class="prose-card"><span class="eyebrow">EVALUATION FRAME</span><h2>{labels.expected}</h2><p>{currentTask.expectedOutcome[locale]}</p><h3>{labels.verification}</h3><ul>{currentTask.verification[locale].map((item) => <li>{item}</li>)}</ul></article>
-      </div>
-      <div class="section-heading"><div><span class="eyebrow">RUNS</span><h2>{labels.taskRuns}</h2></div></div>
-      <div class="run-list">{taskRuns.map((run) => <RunRow locale={locale} run={run} />)}</div>
-    </section>;
-  })()}
-
-  {section === 'runs' && currentRun && (() => {
-    const task = taskById(currentRun.taskId)!;
-    const model = modelById(currentRun.modelId)!;
-    const reviews = reviewsFor(currentRun.id);
-    const followups = (currentRun.followups ?? []) as { verbatim: string; reason?: string }[];
-    return <section class="shell page-block detail-page">
-      <div class="breadcrumb"><a href={href(locale, 'tasks/')}>{labels.tasks}</a><span>/</span><a href={href(locale, `tasks/${task.id}/`)}>{task.id}</a><span>/</span><span>{labels.runs}</span></div>
-      <div class="detail-heading"><div><span class="eyebrow">RUN RECORD / {task.id}@{currentRun.taskVersion} · {model?.name[locale]}</span><h1>{task.title[locale]}</h1><p>{currentRun.id}</p></div><span class="verified-badge">ARCHIVED · {currentRun.artifact.commit.slice(0, 7)}</span></div>
-      <ArtifactPreview locale={locale} task={task} run={currentRun} />
-      {currentRun.prompt && <section class="source-card"><span>{labels.promptInput}</span><code>{currentRun.prompt.path}</code><code>sha256:{currentRun.prompt.sha256.slice(0, 16)}…</code>{currentRun.prompt.provenance === 'post-hoc-reconstruction' && <b class="verified-badge">{labels.postHoc}</b>}<a href={github(currentRun.prompt.path, undefined, currentRun.artifact.commit)} target="_blank" rel="noopener">{labels.source} ↗</a></section>}
-      <section class="section-block"><div class="section-heading"><div><span class="eyebrow">MEASUREMENTS</span><h2>{labels.metrics}</h2></div><a href={github(currentRun.source.path, currentRun.source.lines, currentRun.artifact.commit)} target="_blank" rel="noopener">{labels.sourceReport} ↗</a></div>
-        <div class="metric-grid">{metricItems(currentRun).map(([key, value]) => <div><span>{key}</span><strong>{value}</strong></div>)}</div>
-        <div class="config-line"><span>{labels.config}</span><b>{labels.harness}: {currentRun.environment.harness}{currentRun.environment.harnessVersion ? ` ${currentRun.environment.harnessVersion}` : ''}</b><b>{labels.session}: {currentRun.environment.sessionId}</b><b>{labels.continuation}: {currentRun.environment.continuationTurns}</b>{currentRun.environment.reasoningEffort && <b>reasoning: {currentRun.environment.reasoningEffort}</b>}</div>
-        <div class="config-line"><span>{labels.snapshot}</span><b>{currentRun.environment.reportedModelId ?? labels.notRecorded}</b><small>{labels.snapshotNote}</small></div>
-        {currentRun.isolation && <div class="config-line"><span>{labels.isolation}</span><b>{isolationLabels[currentRun.isolation.level]?.[locale] ?? currentRun.isolation.level}</b>{currentRun.isolation.note && <small>{currentRun.isolation.note}</small>}</div>}
-        {/* `withheld`（suspected）只记入审计档案，不作外显标注：整行不渲染（收尾审查行仍给出审计报告链接）。 */}
-        {currentRun.contamination && contaminationDisplay(currentRun) !== 'withheld' && <div class="config-line"><span>{labels.contamination}</span>{contaminationDisplay(currentRun) === 'assumed-compliant' ? <><b>{labels.telemetryHidden}</b><small>{labels.telemetryNote}</small></> : <><b>{contaminationLabels[currentRun.contamination.status]?.[locale] ?? currentRun.contamination.status}</b>{currentRun.contamination.note && <small>{currentRun.contamination.note}</small>}</>}</div>}
-        {currentRun.evidence?.audit && <div class="config-line"><span>{labels.audit}</span><b><a href={github(currentRun.evidence.audit, undefined, currentRun.artifact.commit)} target="_blank" rel="noopener">{labels.auditReport} ↗</a></b>{currentRun.evidence.sessionLogSha256 && <b><a href={github(currentRun.evidence.sessionLogSha256, undefined, currentRun.artifact.commit)} target="_blank" rel="noopener">{labels.sessionLogHash} ↗</a></b>}</div>}
-        {followups.length > 0 && followups.map((entry) => <div class="config-line"><span>{labels.followupInput}</span><b>「{entry.verbatim}」</b>{entry.reason && <small>{entry.reason}</small>}</div>)}
-      </section>
-      <section class="section-block"><div class="section-heading"><div><span class="eyebrow">INDEPENDENT SOURCES</span><h2>{labels.reviews}</h2></div></div>
-        {reviews.length === 0 && <p>{labels.noReviews}</p>}
-        <div class="review-grid">{reviews.map((review) => <article class={`review-card ${review.type}`}><div class="review-meta"><span>{review.type === 'human' ? labels.human : labels.ai}</span>{review.score != null && <strong>{review.score}/100</strong>}</div><h3>{review.conclusion[locale]}</h3><div class="review-body" set:html={renderMarkdown(review.body[locale])} />{review.translated === false && !l && <small>{labels.translationNote}</small>}{review.translated === true && review.type === 'human' && !l && <small>{labels.translatedNote}</small>}{review.type === 'ai' && <small>{labels.disclaimer}</small>}<a href={github(review.source.path, review.source.lines, entityCommit(review, currentRun.artifact.commit))} target="_blank" rel="noopener">{review.authorLabel} ↗</a></article>)}</div>
-      </section>
-      <section class="source-card"><span>{labels.archive}</span><code>{currentRun.artifact.commit}</code><a href={github(currentRun.artifact.sourcePath, undefined, currentRun.artifact.commit)} target="_blank" rel="noopener">{currentRun.artifact.sourcePath} ↗</a></section>
-    </section>;
-  })()}
-
-  {section === 'models' && !id && <section class="shell page-block"><div class="page-heading"><span class="eyebrow">MODEL INDEX</span><h1>{labels.allModels}</h1></div><div class="model-list">{catalog.models.map((model) => {
-    const modelRuns = runsForModel(model.id);
-    const batches = batchesForModel(model.id);
-    const summary = assessmentSummary(model.id);
-    return <a class="model-card" href={href(locale, `models/${model.id}/`)}><span class="model-monogram">{model.name[locale].slice(0, 2).toUpperCase()}</span><div><span class="eyebrow">{model.provider}{model.version ? ` · ${model.version}` : ''}</span><h2>{model.name[locale]}</h2><p>{modelRuns.length} {labels.results} · {batches.length > 0 ? duration(batches.reduce((sum, item) => sum + (item.metrics.durationSeconds ?? 0), 0), locale) : labels.notRecorded} · {summary.average == null ? labels.noAssessment : `${labels.aiAverage} ${summary.average}/100（${summary.scored}）`}</p></div><b>→</b></a>;
-  })}</div></section>}
-
-  {section === 'models' && currentModel && <section class="shell page-block"><div class="breadcrumb"><a href={href(locale, 'models/')}>{labels.models}</a><span>/</span><span>{currentModel.id}</span></div><div class="page-heading"><span class="eyebrow">{currentModel.provider}{currentModel.version ? ` · ${currentModel.version}` : ''}</span><h1>{currentModel.name[locale]}</h1><p>{currentModel.notes[locale]}</p>{currentModel.versionNote && <small>{currentModel.versionNote[locale]}</small>}</div>
-    {snapshots.length > 0 && <div class="section-block"><div class="section-heading"><div><span class="eyebrow">SNAPSHOTS</span><h2>{labels.snapshots}</h2></div></div><div class="prose-card wide"><ul>{snapshots.map((snapshot) => <li><strong>{snapshot.label[locale]}</strong> · <code>{snapshot.id ?? labels.notRecorded}</code> · {snapshotStatus(snapshot.status)[locale]}<br /><small>{snapshot.evidence[locale]}</small></li>)}</ul></div></div>}
-    {(() => { const batches = batchesForModel(currentModel.id); const assessments = assessmentsForModel(currentModel.id); const summary = assessmentSummary(currentModel.id); return <>
-      {batches.map((batch) => <div class="section-block"><div class="section-heading"><div><span class="eyebrow">BATCH</span><h2>{batch.label[locale]}</h2></div></div>{batch.note && <p>{batch.note}</p>}<div class="metric-grid">{batchItems(batch.metrics).map(([key, value]) => <div><span>{key}</span><strong>{value}</strong></div>)}</div></div>)}
-      {summary.scored > 1 && <p class="notice">{l ? `本模型有 ${summary.scored} 份 AI 阶段评估，简单均分 ${summary.average}/100。各评委口径不同，逐份评分、口径与免责声明并列在下方；均分只作概览，不得据此排序或做跨模型排行榜。` : `${summary.scored} AI phase assessments, simple average ${summary.average}/100. The rubrics differ, so each score, method and disclaimer is kept side by side below; the average is an overview only and must not be turned into a ranking.`}</p>}
-      {assessments.map((assessment) => <article class="prose-card wide"><h2>{labels.assessment} · {assessment.label[locale]}</h2><p><strong>{assessment.score == null ? labels.notRecorded : `${assessment.score}/100`}</strong>{assessment.coreSummary ? ` · ${assessment.coreSummary}` : ''}</p><small>{assessment.disclaimer[locale] ?? assessment.disclaimer.en}</small><a href={github(assessment.source.path, assessment.source.lines, entityCommit(assessment, catalog.runs.find((run) => run.modelId === currentModel.id)?.artifact.commit))} target="_blank" rel="noopener">{labels.sourceReport} ↗</a></article>)}
-    </>; })()}
-    <div class="section-heading"><div><span class="eyebrow">RUNS</span><h2>{labels.allRuns}</h2></div></div>
-    <div class="task-grid compact-grid">{runsForModel(currentModel.id).map((run) => { const task = taskById(run.taskId)!; return <article class="run-tile"><span>{task.id}</span><h2>{task.title[locale]}</h2><dl><div><dt>{labels.duration}</dt><dd>{runDuration(run.metrics, locale)}</dd></div><div><dt>Tokens</dt><dd>{compact(run.metrics.totalTokens, locale)}</dd></div></dl><a href={href(locale, `runs/${run.id}/`)}>{labels.view} →</a></article>; })}</div></section>}
-
-  {section === 'phases' && !id && <section class="shell page-block"><div class="page-heading"><span class="eyebrow">PHASE INDEX</span><h1>{labels.phase}</h1></div>{catalog.phases.map((phase) => <a class="phase-card" href={href(locale, `phases/${phase.id}/`)}><b>{String(phase.number).padStart(2, '0')}</b><div><span class="eyebrow">{phase.id}</span><h2>{phase.name[locale]}</h2><p>{phase.description[locale]}</p></div><strong>{phase.taskVersions.length} / {phase.plannedTasks} {labels.tasks} →</strong></a>)}</section>}
-
-  {section === 'phases' && id && catalog.phases.some((phase) => phase.id === id) && (() => {
-    const phase = catalog.phases.find((item) => item.id === id)!;
-    const phaseTasks = catalog.tasks.filter((task) => task.phaseId === phase.id);
-    const phaseTaskIds = new Set(phaseTasks.map((task) => task.id));
-    const phaseRuns = catalog.runs.filter((run) => phaseTaskIds.has(run.taskId));
-    // 模型数按「该阶段实际有运行」的模型统计：用 catalog.models.length 会把没跑过本阶段的模型也算进来。
-    const phaseModels = new Set(phaseRuns.map((run) => run.modelId));
-    return <section class="shell page-block"><div class="breadcrumb"><a href={href(locale, 'phases/')}>{labels.phase}</a><span>/</span><span>{phase.id}</span></div><div class="page-heading"><span class="eyebrow">PHASE {String(phase.number).padStart(2, '0')} · ARCHIVE</span><h1>{phase.name[locale]}</h1><p>{phase.description[locale]}</p><small>{phase.plannedTasksNote[locale]}</small></div><div class="timeline"><span></span><b>{String(phase.number).padStart(2, '0')}</b><i></i><strong>{phaseTasks.length} / {phase.plannedTasks} {labels.tasks}</strong><i></i><strong>{phaseModels.size} {labels.models}</strong><i></i><strong>{phaseRuns.length} {labels.runs}</strong></div>
-      <div class="task-grid compact-grid">{phaseTasks.map((task) => { const taskRuns = runsForTask(task.id, task.version); return <article class="run-tile"><span>{task.id}</span><h2>{task.title[locale]}</h2><p>{categoryNames[task.category]}</p><dl>{taskRuns.map((run) => <div><dt>{modelById(run.modelId)?.name[locale]}</dt><dd>{runDuration(run.metrics, locale)}</dd></div>)}</dl><a href={href(locale, `tasks/${task.id}/`)}>{labels.view} →</a></article>; })}</div></section>;
-  })()}
-
-  {section === 'compare' && (() => {
-    // 对比页只需要「任务 + 每次运行的展示值」，不再把整份 catalog 塞进数据岛：
-    // 展示值在构建期算好，客户端不再用 Intl 重算（此前 null 会被格式化成 0）。
-    const payload = {
-      tasks: catalog.tasks.map((task) => ({ id: task.id, version: task.version, title: task.title })),
-      runs: catalog.runs.map((run) => ({
-        id: run.id, taskId: run.taskId, taskVersion: run.taskVersion, modelId: run.modelId,
-        modelName: modelById(run.modelId)?.name ?? { zh: run.modelId, en: run.modelId },
-        artifact: { type: run.artifact.type, entry: run.artifact.entry, sandbox: run.artifact.preview?.sandbox ?? '' },
-        display: {
-          duration: runDuration(run.metrics, locale),
-          totalTokens: number(run.metrics.totalTokens, locale),
-          apiCalls: number(run.metrics.apiCalls, locale),
-          toolCalls: number(run.metrics.toolCalls, locale),
-        },
-      })),
-      labels: {
-        unavailable: labels.unavailable, invalid: labels.invalid, noRight: metricLabels.noRight,
-        duration: metricLabels.duration, tokens: labels.tokens, api: metricLabels.api, tools: metricLabels.tools,
-        view: labels.view, copied: labels.copied,
-      },
-    };
-    return <section class="shell page-block compare-page" data-compare-root data-locale={locale} data-base={href(locale)} data-artifact-base={asset('artifacts')}>
-      <div class="page-heading"><span class="eyebrow">SIDE BY SIDE</span><h1>{labels.compareTitle}</h1><p>{l ? '选择同一任务版本下的两条运行。选择会写入 URL，可直接分享和刷新恢复。' : 'Choose two runs for the same task version. Selections are stored in the URL for sharing and refresh.'}</p><p class="notice">{labels.crossModel}</p></div>
-      <div class="compare-controls">
-        <label><span>{labels.selectTask}</span><select data-compare-task>{catalog.tasks.map((task) => <option value={task.id}>{task.id} · {task.title[locale]}</option>)}</select></label>
-        <label><span>{labels.left}</span><select data-compare-left></select></label>
-        <label><span>{labels.right}</span><select data-compare-right></select></label>
-        <button class="button" type="button" data-share>{labels.share}</button>
-      </div>
-      <p class="notice" data-compare-notice hidden>{labels.unavailable}</p>
-      <p class="notice" data-compare-invalid hidden>{labels.invalid}</p>
-      <div class="compare-grid"><div data-left-panel></div><div data-right-panel><div class="missing-panel"><span>02</span><p>{metricLabels.noRight}</p></div></div></div>
-      <script type="application/json" data-catalog set:html={jsonIsland(payload)}></script>
-    </section>;
-  })()}
-
-  {section === 'methodology' && <section class="shell page-block methodology"><div class="page-heading"><span class="eyebrow">PROVENANCE FIRST</span><h1>{labels.methodology}</h1><p>{l ? '本网站呈现可追溯的归档记录，不把缺失值解释为零，也不把不同口径的数字压成排行榜。' : 'This site presents traceable archive records. Missing values are not zero, and incompatible measurements are not collapsed into a leaderboard.'}</p></div>
-    <div class="principle-grid">{[
-      [l ? '来源优先' : 'Provenance first', l ? '每条运行指标、Prompt 和评价均保留文件与行定位，并绑定各自的归档提交。' : 'Every prompt, run metric, and review retains its source file, line location, and archive commit.'],
-      [l ? '评价分离' : 'Reviews stay separate', l ? '人工评价、各版 AI 评价和本次展示站验证不静默合并。' : 'Human reviews, each AI review version, and this site verification are never silently merged.'],
-      [l ? '缺失即缺失' : 'Missing means missing', l ? '未知配置显示“未记录”，不推断单题费用或模型能力。' : 'Unknown configuration is shown as not recorded; per-task costs and capabilities are not inferred.'],
-      [l ? '同题才比较' : 'Compare like with like', l ? '只有同一任务版本的运行可进入对比；跨模型比较必须注明 harness、预算与隔离差异。' : 'Only runs for the same task version can be compared; cross-model comparison must note harness, budget and isolation differences.'],
-    ].map(([title, body], index) => <article><span>0{index + 1}</span><h2>{title}</h2><p>{body}</p></article>)}</div>
-    <article class="prose-card wide"><h2>{l ? '历史结论如何展示' : 'How historical conclusions are presented'}</h2><p>{l ? '每条阶段评估都标注来源与口径：DeepSeek 的 93.6/100 引自历史 AI 报告；Muse Spark 的 84.9/100 来自维护 agent 的非盲评 v1。两者口径不同，不可直接比较，也不作为网站独立证明。任务 06、07 的人工观感与 AI 评估存在分歧，两种判断在运行详情中并列保留。' : 'Every phase assessment carries its source and method: the DeepSeek 93.6/100 is quoted from a historical AI report, while the Muse Spark 84.9/100 comes from the maintenance agent non-blind v1 review. The two use different rubrics and must not be compared directly; neither is an independent proof by this website. For tasks 06 and 07 the human judgment differs from the AI assessment, so both are retained side by side.'}</p></article>
-    <div class="section-heading"><div><span class="eyebrow">BATCH MEASUREMENTS</span><h2>{labels.batchStats}</h2></div></div>
-    <div class="batch-table">{catalog.batches.map((batch) => { const model = modelById(batch.modelId); return <article class="prose-card"><h2>{batch.label[locale] ?? model?.name[locale]}</h2><dl class="metric-grid">{batchItems(batch.metrics).map(([key, value]) => <div><span>{key}</span><strong>{value}</strong></div>)}</dl><a href={github(batch.source.path, batch.source.lines, entityCommit(batch, catalog.runs.find((run) => run.modelId === batch.modelId)?.artifact.commit))} target="_blank" rel="noopener">{labels.sourceReport} ↗</a></article>; })}</div>
-  </section>}
-
-  {((section === 'tasks' && id && !currentTask) || (section === 'runs' && id && !currentRun) || (section === 'models' && id && !currentModel) || (section === 'phases' && id && !catalog.phases.some((phase) => phase.id === id))) && <section class="shell error-page"><span>404</span><h1>{l ? '未找到这条归档记录' : 'Archive record not found'}</h1><p>{l ? '链接中的标识不存在，或这条记录尚未进入公开索引。' : 'The identifier does not exist or is not included in the public index.'}</p><a class="button primary" href={href(locale)}>{l ? '返回概览' : 'Back to overview'}</a></section>}
+<SiteLayout locale={locale} title={pageTitle} description={t.heroIntro} alternatePath={path} section={section}>
+  {section === 'home' && <HomePage locale={locale} />}
+  {section === 'tasks' && !id && <TasksIndex locale={locale} />}
+  {section === 'tasks' && currentTask && <TaskDetail locale={locale} task={currentTask} />}
+  {section === 'runs' && currentRun && <RunDetail locale={locale} run={currentRun} />}
+  {section === 'models' && !id && <ModelsIndex locale={locale} />}
+  {section === 'models' && currentModel && <ModelDetail locale={locale} model={currentModel} />}
+  {section === 'phases' && !id && <PhasesIndex locale={locale} />}
+  {section === 'phases' && currentPhase && <PhaseDetail locale={locale} phase={currentPhase} />}
+  {section === 'compare' && <ComparePage locale={locale} />}
+  {section === 'methodology' && <MethodologyPage locale={locale} />}
+  {notFound && <NotFoundPage locale={locale} />}
 </SiteLayout>
-
-<script>
-  // @ts-nocheck
-  const filterPanel = document.querySelector<HTMLElement>('[data-filter-panel]');
-  if (filterPanel) {
-    const search = filterPanel.querySelector<HTMLInputElement>('[data-search]')!;
-    const category = filterPanel.querySelector<HTMLSelectElement>('[data-category]')!;
-    const model = filterPanel.querySelector<HTMLSelectElement>('[data-model]')!;
-    const cards = [...document.querySelectorAll<HTMLElement>('[data-task-card]')];
-    const empty = document.querySelector<HTMLElement>('[data-empty]')!;
-    const apply = () => {
-      const query = search.value.trim().toLowerCase(); let visible = 0;
-      cards.forEach((card) => {
-        const show = (!query || card.dataset.search?.includes(query))
-          && (!category.value || card.dataset.category === category.value)
-          && (!model.value || card.dataset.model === model.value);
-        card.hidden = !show; if (show) visible++;
-      });
-      empty.hidden = visible > 0;
-    };
-    search.addEventListener('input', apply); category.addEventListener('change', apply); model.addEventListener('change', apply);
-  }
-
-  const compareRoot = document.querySelector<HTMLElement>('[data-compare-root]');
-  if (compareRoot) {
-    const data = JSON.parse(compareRoot.querySelector('[data-catalog]')!.textContent || '{}');
-    const taskSelect = compareRoot.querySelector<HTMLSelectElement>('[data-compare-task]')!;
-    const leftSelect = compareRoot.querySelector<HTMLSelectElement>('[data-compare-left]')!;
-    const rightSelect = compareRoot.querySelector<HTMLSelectElement>('[data-compare-right]')!;
-    const notice = compareRoot.querySelector<HTMLElement>('[data-compare-notice]')!;
-    const invalidNotice = compareRoot.querySelector<HTMLElement>('[data-compare-invalid]')!;
-    const leftPanel = compareRoot.querySelector<HTMLElement>('[data-left-panel]')!;
-    const rightPanel = compareRoot.querySelector<HTMLElement>('[data-right-panel]')!;
-    const locale = compareRoot.dataset.locale || 'zh';
-    const params = new URLSearchParams(location.search);
-    const esc = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]!));
-    // 「请求的参数不适用于当前任务」只反映初始 URL；用户一旦自己操作就不再提示。
-    let ignoredRequest = false;
-    const selectedTask = () => data.tasks.find((task: any) => task.id === taskSelect.value);
-    // 只允许同题**同版本**的运行进入对比。
-    const runsFor = () => {
-      const task = selectedTask();
-      return data.runs.filter((run: any) => run.taskId === taskSelect.value && (!task || run.taskVersion === task.version));
-    };
-    const placeholder = (side: string, text: string) => `<div class="missing-panel"><span>${side}</span><p>${esc(text)}</p></div>`;
-    const option = (run: any) => {
-      const name = run.modelName[locale] ?? run.modelName.en ?? run.modelId;
-      return `<option value="${esc(run.id)}">${esc(name)} · ${esc(run.id)}</option>`;
-    };
-    const panel = (runId: string, side: string) => {
-      const run = data.runs.find((entry: any) => entry.id === runId);
-      if (!run) return placeholder(side, data.labels.noRight);
-      const task = data.tasks.find((entry: any) => entry.id === run.taskId);
-      const title = task.title[locale] ?? task.title.en ?? task.id;
-      const artifact = `${compareRoot.dataset.artifactBase}/${run.id}/${run.artifact.entry}`;
-      const visual = run.artifact.type === 'svg'
-        ? `<img src="${esc(artifact)}" alt="${esc(title)}">`
-        : `<iframe src="${esc(artifact)}" sandbox="${esc(run.artifact.sandbox)}" title="${esc(title)}"></iframe>`;
-      const modelName = run.modelName[locale] ?? run.modelName.en ?? run.modelId;
-      return `<article class="comparison-panel"><span class="eyebrow">${esc(side)} · ${esc(run.id)}</span><h2>${esc(modelName)}</h2><div class="compare-preview">${visual}</div><dl><div><dt>${esc(data.labels.duration)}</dt><dd>${esc(run.display.duration)}</dd></div><div><dt>${esc(data.labels.tokens)}</dt><dd>${esc(run.display.totalTokens)}</dd></div><div><dt>${esc(data.labels.api)}</dt><dd>${esc(run.display.apiCalls)}</dd></div><div><dt>${esc(data.labels.tools)}</dt><dd>${esc(run.display.toolCalls)}</dd></div></div><a href="${esc(compareRoot.dataset.base)}runs/${esc(run.id)}/">${esc(data.labels.view)} →</a></article>`;
-    };
-    const render = () => {
-      if (rightSelect.value === leftSelect.value) rightSelect.value = '';
-      const runs = runsFor();
-      leftPanel.innerHTML = panel(leftSelect.value, '01');
-      rightPanel.innerHTML = rightSelect.value ? panel(rightSelect.value, '02') : placeholder('02', data.labels.noRight);
-      // 「该任务只有一条运行」与「还没选右侧运行」是两件事，不能共用同一句话。
-      notice.hidden = runs.length > 1;
-      invalidNotice.hidden = !ignoredRequest;
-      const next = new URL(location.href);
-      next.searchParams.set('task', taskSelect.value);
-      next.searchParams.set('left', leftSelect.value);
-      rightSelect.value ? next.searchParams.set('right', rightSelect.value) : next.searchParams.delete('right');
-      history.replaceState({}, '', next);
-    };
-    /** 用给定的 left/right 请求填充下拉框；不匹配的请求会被忽略并显式提示。 */
-    const fill = (requestedLeft: string | null, requestedRight: string | null) => {
-      const runs = runsFor();
-      leftSelect.innerHTML = runs.map(option).join('');
-      rightSelect.innerHTML = `<option value="">-</option>${runs.map(option).join('')}`;
-      if (!runs.length) { render(); return; }
-      if (requestedLeft) {
-        if (runs.some((run: any) => run.id === requestedLeft)) leftSelect.value = requestedLeft;
-        else ignoredRequest = true;
-      }
-      if (requestedRight) {
-        if (runs.some((run: any) => run.id === requestedRight) && requestedRight !== leftSelect.value) rightSelect.value = requestedRight;
-        else ignoredRequest = true;
-      }
-      render();
-    };
-    const requestedTask = params.get('task');
-    if (data.tasks.some((task: any) => task.id === requestedTask)) taskSelect.value = requestedTask;
-    else if (requestedTask) ignoredRequest = true;
-    // 切换任务时不再沿用上一次的 left/right：陈旧参数会被套用到另一个任务上。
-    taskSelect.addEventListener('change', () => { ignoredRequest = false; fill(null, null); });
-    leftSelect.addEventListener('change', () => { ignoredRequest = false; render(); });
-    rightSelect.addEventListener('change', () => { ignoredRequest = false; render(); });
-    compareRoot.querySelector('[data-share]')?.addEventListener('click', async (event) => {
-      const button = event.currentTarget as HTMLButtonElement;
-      const old = button.textContent;
-      try {
-        await navigator.clipboard.writeText(location.href);
-        button.textContent = data.labels.copied;
-      } catch {
-        // 剪贴板不可用（非安全上下文 / 未授权）时退回可复制的地址栏提示，不能静默失败。
-        button.textContent = location.href;
-      }
-      setTimeout(() => { button.textContent = old; }, 1800);
-    });
-    fill(params.get('left'), params.get('right'));
-  }
-</script>

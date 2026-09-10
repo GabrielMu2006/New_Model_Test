@@ -1,0 +1,217 @@
+---
+// 首页 = 展览入口页（规范第 13–17、70 节），不是 Dashboard。
+import { catalog, duration, href, type Locale } from '../../lib/catalog';
+import { labelsFor } from '../../lib/labels';
+import { modelAccent, pad, taskNumber } from '../../lib/naming';
+import { site } from '../../lib/site';
+import ArtworkCard from '../../components/ArtworkCard.astro';
+import ArtworkImage from '../../components/ArtworkImage.astro';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = labelsFor(locale);
+const l = locale === 'zh';
+const firstRun = (taskId: string) => catalog.runs.find((run) => run.taskId === taskId);
+
+// 覆盖率 = 已归档且有运行的任务数 / 各阶段计划题数之和（两个数字都来自数据）。
+const archivedTasks = catalog.tasks.filter((task) => catalog.runs.some((run) => run.taskId === task.id)).length;
+const plannedTasks = catalog.phases.reduce((sum, phase) => sum + (phase.plannedTasks ?? 0), 0);
+const progress = plannedTasks > 0 ? Math.round((archivedTasks / plannedTasks) * 1000) / 10 : 0;
+
+/**
+ * 精选作品（展墙）：按归档顺序取「每个类别里的第一道题」，最多 4 件。
+ * 这是排版选择而不是排名——不挑选高分、不挑选模型，同一类别不会重复出现，
+ * 因此展墙天然覆盖不同形态的作品。
+ */
+const featuredTasks = (() => {
+  const seen = new Set<string>();
+  const picked: typeof catalog.tasks = [];
+  for (const task of catalog.tasks) {
+    if (seen.has(task.category)) continue;
+    if (!firstRun(task.id)) continue;
+    seen.add(task.category);
+    picked.push(task);
+    if (picked.length === 4) break;
+  }
+  return picked;
+})();
+const wallTasks = [...featuredTasks, ...catalog.tasks.filter((task) => !featuredTasks.includes(task) && firstRun(task.id))].slice(0, 3);
+
+// 当前展览：阶段进度（已归档题目版本 / 计划题数）。
+const phases = catalog.phases.map((phase) => {
+  const tasks = catalog.tasks.filter((task) => task.phaseId === phase.id);
+  const taskIds = new Set(tasks.map((task) => task.id));
+  const runs = catalog.runs.filter((run) => taskIds.has(run.taskId));
+  const models = new Set(runs.map((run) => run.modelId));
+  return {
+    phase,
+    archived: phase.taskVersions.length,
+    planned: phase.plannedTasks ?? 0,
+    percent: phase.plannedTasks ? Math.round((phase.taskVersions.length / phase.plannedTasks) * 1000) / 10 : 0,
+    models: models.size,
+    runs: runs.length,
+    tasks,
+  };
+});
+
+const modelEntries = catalog.models.map((model) => {
+  const runs = catalog.runs.filter((run) => run.modelId === model.id);
+  const taskCount = new Set(runs.map((run) => run.taskId)).size;
+  const seconds = runs.reduce((sum, run) => sum + (run.metrics.durationSeconds ?? 0), 0);
+  return { model, runs, taskCount, seconds };
+});
+
+/**
+ * 「最新归档」= 归档顺序中最后一个阶段的作品。
+ * 档案没有逐运行的归档日期（reviews.date 为 null，run 不含时间字段），
+ * 因此这里按阶段与归档顺序排列，并在页面上如实说明，不臆造时间。
+ */
+const latestPhase = [...catalog.phases].sort((a, b) => b.number - a.number)[0];
+const recentTasks = catalog.tasks.filter((task) => task.phaseId === latestPhase?.id && firstRun(task.id)).slice(-4).reverse();
+const latestRuns = catalog.runs.filter((run) => recentTasks.some((task) => task.id === run.taskId));
+const recentSeconds = latestRuns.reduce((sum, run) => sum + (run.metrics.durationSeconds ?? 0), 0);
+---
+<section class="shell hero">
+  <div class="hero-copy">
+    <span class="kicker">{site.archiveLabel} · {t.exhibitionSeason}</span>
+    {/* 设计稿的首页主标题是品牌名，核心语句紧随其后成两行衬线体。 */}
+    <h1>{site.name}</h1>
+    <p class="hero-statement">{site.statement.en}</p>
+    <p class="hero-lead">{site.statement.zh}</p>
+    <p class="hero-intro">{t.heroIntro}</p>
+    <div class="button-row">
+      <a class="button primary" href={href(locale, 'tasks/')}>{t.browseTasks} →</a>
+      <a class="button" href={href(locale, 'compare/')}>{t.compareWorks} →</a>
+    </div>
+    <ul class="hero-pillars">
+      {site.pillars[locale].map((pillar) => <li>{pillar}</li>)}
+    </ul>
+  </div>
+  <div class="hero-visual">
+    <div class="wall" aria-label={l ? '展墙：归档作品的非对称拼贴' : 'Museum wall: an asymmetric collage of archived works'}>
+      <figure class="wall-figure">
+        {firstRun(wallTasks[0].id) && <ArtworkImage run={firstRun(wallTasks[0].id)!} loading="eager" label={taskNumber(wallTasks[0].id)} />}
+      </figure>
+      {wallTasks.slice(1, 3).map((task) => {
+        const run = firstRun(task.id)!;
+        return <figure class="wall-frame">
+          <ArtworkImage run={run} label={taskNumber(task.id)} />
+          <span>{taskNumber(task.id)} · {run.artifact.type.toUpperCase()}</span>
+        </figure>;
+      })}
+      <figcaption class="wall-caption">
+        <strong>{t.wallCaption}</strong>
+        <small>{t.wallNote}</small>
+      </figcaption>
+    </div>
+  </div>
+</section>
+
+<section class="shell" aria-label={t.stats}>
+  <div class="stats">
+    <div><strong>{pad(modelEntries.length)}</strong><span>{t.models}</span><small>{l ? '同一套题目' : 'Same task set'}</small></div>
+    <div><strong>{pad(catalog.phases.length)}</strong><span>{t.phases}</span><small>{l ? '第一阶段已完成' : 'Phase 1 complete'}</small></div>
+    <div><strong>{catalog.runs.length}</strong><span>{t.runs}</span><small>{l ? '全部保留运行记录' : 'Every run kept'}</small></div>
+    <div><strong>{archivedTasks} / {plannedTasks}</strong><span>{t.tasks}</span><small>{l ? '已归档 / 计划' : 'Archived / planned'}</small></div>
+  </div>
+  <div class="archive-progress">
+    <div class="signal-card">
+      <span>{t.archiveProgress} · {t.archiveSignal}</span>
+      <b>{archivedTasks} / {plannedTasks}</b>
+      <small>{progress}%</small>
+      <i style={`--progress:${progress}%`} role="img" aria-label={`${archivedTasks} / ${plannedTasks} · ${progress}%`}></i>
+      <dl>
+        <div><dt>{l ? '分母来源' : 'Denominator'}</dt><dd>{l ? '各阶段计划题数之和' : 'Sum of planned tasks'}</dd></div>
+        <div><dt>{l ? '题目版本' : 'Task versions'}</dt><dd>{catalog.tasks.length}</dd></div>
+        <div><dt>{l ? '累计运行时长' : 'Total runtime'}</dt><dd>{duration(catalog.runs.reduce((sum, run) => sum + (run.metrics.durationSeconds ?? 0), 0), locale)}</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="shell section-block">
+  <div class="section-heading">
+    <div><span class="kicker">{t.featuredKicker}</span><h2>{t.featured}</h2><p>{t.interpretationsNote}</p></div>
+    <a class="text-link" href={href(locale, 'tasks/')}>{t.viewAllTasks} →</a>
+  </div>
+  <div class="gallery gallery--wall">
+    {featuredTasks.map((task) => <ArtworkCard locale={locale} task={task} run={firstRun(task.id)!} wall />)}
+  </div>
+</section>
+
+<section class="shell section-block">
+  <div class="section-heading">
+    <div><span class="kicker">{t.exhibitionKicker}</span><h2>{t.currentExhibition}</h2></div>
+    <a class="text-link" href={href(locale, 'phases/')}>{t.phases} →</a>
+  </div>
+  <div>
+    {phases.map((entry) => (
+      <a class="phase-card" href={href(locale, `phases/${entry.phase.id}/`)}>
+        <b>{pad(entry.phase.number)}</b>
+        <div>
+          <span class="kicker">{entry.phase.id.toUpperCase()}</span>
+          <h2>{entry.phase.name[locale]}</h2>
+          <p>{entry.phase.description[locale]}</p>
+        </div>
+        <div class="phase-stats">
+          <div class="phase-progress">
+            <i style={`--progress:${entry.percent}%`}></i>
+            <span>{entry.archived} / {entry.planned} {t.tasks} · {entry.percent >= 100 ? t.completed : t.inProgress}</span>
+          </div>
+          <span class="note">{entry.models} {t.models} · {entry.runs} {t.runs}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<section class="shell section-block">
+  <div class="section-heading">
+    <div><span class="kicker">{t.modelsKicker}</span><h2>{t.modelsInArchive}</h2></div>
+    <a class="text-link" href={href(locale, 'models/')}>{t.allModels} →</a>
+  </div>
+  <div class="model-list">
+    {modelEntries.map(({ model, taskCount, seconds }) => (
+      <a class="model-card" href={href(locale, `models/${model.id}/`)}>
+        <span class="model-monogram" style={`--accent:${modelAccent(model.id)}`}>{`M${pad(catalog.models.findIndex((item) => item.id === model.id) + 1)}`}</span>
+        <div>
+          <span class="kicker">{model.provider}</span>
+          <h2>{model.name[locale]}</h2>
+          <p>{taskCount} {t.worksSuffix} · {duration(seconds, locale)}</p>
+        </div>
+        <b>→</b>
+      </a>
+    ))}
+  </div>
+</section>
+
+<section class="shell section-block">
+  <div class="section-heading">
+    <div>
+      <span class="kicker">{t.recentlyKicker}</span>
+      <h2>{t.recentlyArchived}</h2>
+      <p>{l
+        ? `归档数据未记录逐运行的归档日期，这里按阶段 ${pad(latestPhase?.number ?? 0)} 与归档顺序列出（本组累计用时 ${duration(recentSeconds, locale)}）。`
+        : `The archive does not record a per-run archive date, so these are listed by phase ${pad(latestPhase?.number ?? 0)} and archive order (group runtime ${duration(recentSeconds, locale)}).`}</p>
+    </div>
+    <a class="text-link" href={href(locale, `phases/${latestPhase?.id ?? ''}/`)}>{t.phaseDetail} →</a>
+  </div>
+  <div class="gallery">
+    {recentTasks.map((task) => <ArtworkCard locale={locale} task={task} run={firstRun(task.id)!} />)}
+  </div>
+</section>
+
+<section class="shell section-block">
+  <div class="section-heading">
+    <div><span class="kicker">{t.methodologyTeaserKicker}</span><h2>{t.methodologyTeaser}</h2></div>
+    <a class="text-link" href={href(locale, 'methodology/')}>{t.readMethodology} →</a>
+  </div>
+  <div class="principle-grid">
+    {[
+      [t.principleSame, t.principleSameBody],
+      [t.principleReal, t.principleRealBody],
+      [t.principleIndependent, t.principleIndependentBody],
+      [t.principleNoRanking, t.principleNoRankingBody],
+    ].map(([title, body], index) => <article><span>{pad(index + 1)}</span><div><h2>{title}</h2><p>{body}</p></div></article>)}
+  </div>
+</section>

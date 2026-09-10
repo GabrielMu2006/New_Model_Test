@@ -1,0 +1,222 @@
+---
+// 任务详情（规范第 23–25、72 节）：网站最重要的页面之一。
+// 结构：TASK HERO → 原始需求 → 三种解释 → 执行对比 → 运行档案 → 相关任务。
+import { catalog, compact, href, number, reviewsFor, runDuration, runsForTask, sourceUrl, type Locale, type Task } from '../../lib/catalog';
+import { categoryName, labelsFor, metricLabels, runsCount } from '../../lib/labels';
+import { artifactGroup, modelAccent, modelShortName, runCode, taskCode, taskNumber } from '../../lib/naming';
+import ArtifactPreview from '../../components/ArtifactPreview.astro';
+import ArtworkCard from '../../components/ArtworkCard.astro';
+import ArtworkImage from '../../components/ArtworkImage.astro';
+import RunRow from '../../components/RunRow.astro';
+
+interface Props { locale: Locale; task: Task; }
+const { locale, task } = Astro.props;
+const t = labelsFor(locale);
+const m = metricLabels(locale);
+const l = locale === 'zh';
+const other: Locale = locale === 'zh' ? 'en' : 'zh';
+const taskRuns = runsForTask(task.id, task.version);
+const primary = taskRuns[0];
+/** AI 评价分数：只取归档评价里的分数，缺失显示「未记录」，不推断。 */
+const aiScore = (runId: string) => {
+  const review = reviewsFor(runId).find((item) => item.type === 'ai' && item.score != null);
+  return review?.score ?? null;
+};
+const interpretations = catalog.models.map((model) => ({ model, run: taskRuns.find((run) => run.modelId === model.id) }));
+const metricRows: [string, (run: (typeof taskRuns)[number]) => string][] = [
+  [t.runtime, (run) => runDuration(run.metrics, locale)],
+  [m.api, (run) => number(run.metrics.apiCalls, locale)],
+  [m.tools, (run) => number(run.metrics.toolCalls, locale)],
+  [m.failures, (run) => number(run.metrics.failures, locale)],
+  [t.tokens, (run) => compact(run.metrics.totalTokens, locale)],
+  [t.aiReview, (run) => (aiScore(run.id) == null ? t.notRecorded : `${aiScore(run.id)}/100`)],
+];
+// 相关任务：优先同类别的其他题目；不够时按归档顺序补齐相邻题目。
+const related = [
+  ...catalog.tasks.filter((item) => item.category === task.category && item.id !== task.id),
+  ...catalog.tasks.filter((item) => item.category !== task.category && item.id !== task.id),
+].filter((item) => catalog.runs.some((run) => run.taskId === item.id)).slice(0, 4);
+const compareUrl = `${href(locale, 'compare/')}?task=${task.id}&left=${taskRuns[0]?.id ?? ''}${taskRuns[1] ? `&right=${taskRuns[1].id}` : ''}`;
+// 验收建议按 Markdown 行渲染成列表（与导入器的双语解析结果一致）。
+const verificationItems = task.verification[locale];
+---
+<section class="shell page-block detail-page">
+  <nav class="breadcrumb" aria-label={t.navLabel}>
+    <a href={href(locale, 'tasks/')}>{t.tasks}</a>
+    <span aria-hidden="true">/</span>
+    <span>{taskNumber(task.id)}</span>
+  </nav>
+
+  <div class="detail-heading">
+    <div>
+      <span class="kicker">{taskCode(task.id)} / {artifactGroup(primary?.artifact.type ?? 'html').toUpperCase()} · V{task.version} · {categoryName(task.category, locale)}</span>
+      <h1>{task.title[locale]}</h1>
+      <p class="detail-sub">{task.title[other]}</p>
+      <p>{runsCount(locale, taskRuns.length)} · {primary ? runCode(primary) : '—'} · {primary?.artifact.type.toUpperCase() ?? ''}</p>
+    </div>
+    <a class="button" href={compareUrl}>{t.compareWorks} →</a>
+  </div>
+
+  {primary && <ArtifactPreview locale={locale} run={primary} task={task} />}
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div>
+        <span class="kicker">{t.promptKicker}</span>
+        <h2>{t.originalPrompt}</h2>
+        <p>{task.source.path} · {l ? '逐字保留原始需求，未做改写' : 'The original prompt is kept verbatim'}</p>
+      </div>
+      <a class="text-link" href={sourceUrl(task.source.path, task.source.lines, primary?.artifact.commit)} target="_blank" rel="noopener">{t.source} ↗</a>
+    </div>
+    <div class="detail-columns">
+      <article class="prose-card">
+        <span class="kicker">{t.promptKicker}</span>
+        <h2>{t.originalPrompt}</h2>
+        <div class="prompt-body" data-prompt-text>
+          <pre>{task.promptOriginal}</pre>
+        </div>
+        <div class="button-row" style="margin-top:1rem">
+          <button class="button quiet" type="button" data-prompt-toggle aria-expanded="false" data-more={t.viewFullPrompt} data-less={t.viewLessPrompt}>{t.viewFullPrompt}</button>
+        </div>
+      </article>
+      <article class="prose-card">
+        <span class="kicker">{l ? '中文译文 / TRANSLATION' : 'TRANSLATION'}</span>
+        <h2>{t.translation}</h2>
+        <p>{task.promptTranslation}</p>
+        <h3>{t.expected}</h3>
+        <p>{task.expectedOutcome[locale]}</p>
+        <h3>{t.verification}</h3>
+        <ul>{verificationItems.map((item) => <li>{item}</li>)}</ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div>
+        <span class="kicker">{t.interpretationsKicker}</span>
+        <h2>{t.threeInterpretations}</h2>
+        <p>{t.interpretationsNote}</p>
+      </div>
+    </div>
+    <div class="interp-tabs" data-interp-tabs role="tablist" aria-label={t.threeInterpretations}>
+      {interpretations.map(({ model }, index) => (
+        <button class="chip" type="button" role="tab" data-interp-tab={index} aria-pressed={index === 0 ? 'true' : 'false'} aria-controls={`interpretation-${index}`}>
+          <span class="chip-head"><i aria-hidden="true" style={`color:${modelAccent(model.id)}`}></i>{modelShortName(model, locale)}</span>
+        </button>
+      ))}
+    </div>
+    <div class="interpretations" data-interpretations>
+      {interpretations.map(({ model, run }, index) => (
+        <article class="interpretation" id={`interpretation-${index}`} style={`--accent:${modelAccent(model.id)}`} data-active={index === 0 ? 'true' : 'false'}>
+          <div class="interpretation-model">
+            <strong style={`color:${modelAccent(model.id)}`}>{model.name[locale]}</strong>
+            <span>{run ? runCode(run) : '—'}</span>
+          </div>
+          {run ? (
+            <>
+              <a class="interpretation-figure" href={href(locale, `runs/${run.id}/`)} aria-label={`${model.name[locale]} · ${t.viewRecord}`}>
+                <ArtworkImage run={run} label={taskNumber(task.id)} />
+              </a>
+              <div class="interpretation-metrics">
+                <div><dt>{t.runtime}</dt><dd>{runDuration(run.metrics, locale)}</dd></div>
+                <div><dt>{m.api}</dt><dd>{number(run.metrics.apiCalls, locale)}</dd></div>
+              </div>
+              <a class="text-link" href={href(locale, `runs/${run.id}/`)}>{t.viewRecord} →</a>
+            </>
+          ) : (
+            <div class="interpretation-figure interpretation-figure--contain">
+              <div class="interpretation-missing">
+                <strong>{t.notArchivedYet}</strong>
+                <small>{t.notArchivedNote}</small>
+              </div>
+            </div>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.metricsKicker}</span><h2>{t.comparisonMetrics}</h2><p>{t.crossModel}</p></div>
+    </div>
+    <div class="table-scroll">
+      <table class="metrics-table">
+        <thead>
+          <tr>
+            <th scope="col">{t.metricRow}</th>
+            {interpretations.map(({ model, run }) => (
+              <th scope="col">
+                <span class="model-dot" style={`color:${modelAccent(model.id)}`}><i aria-hidden="true"></i>{modelShortName(model, locale)}</span>
+                <small>{run ? run.id : t.notArchivedYet}</small>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {metricRows.map(([label, read]) => (
+            <tr>
+              <th scope="row">{label}</th>
+              {interpretations.map(({ run }) => <td>{run ? read(run) : <span class="muted">—</span>}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.runRecordsKicker}</span><h2>{t.runRecords}</h2><p>{t.compareHint}</p></div>
+    </div>
+    {taskRuns.length > 0
+      ? <div class="run-list">{taskRuns.map((run) => <RunRow locale={locale} run={run} />)}</div>
+      : <p class="notice">{t.noRunYet}</p>}
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.relatedKicker}</span><h2>{t.relatedTasks}</h2></div>
+      <a class="text-link" href={href(locale, 'tasks/')}>{t.viewAllTasks} →</a>
+    </div>
+    <div class="gallery">
+      {related.map((item) => <ArtworkCard locale={locale} task={item} run={catalog.runs.find((run) => run.taskId === item.id)!} />)}
+    </div>
+  </section>
+</section>
+
+<script>
+  // 「展开完整需求」：默认只展示前几行（规范第 23 节）。
+  const toggle = document.querySelector<HTMLButtonElement>('[data-prompt-toggle]');
+  const promptText = document.querySelector<HTMLElement>('[data-prompt-text]');
+  toggle?.addEventListener('click', () => {
+    const expanded = promptText?.dataset.expanded === 'true';
+    if (promptText) promptText.dataset.expanded = String(!expanded);
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.textContent = expanded ? (toggle.dataset.more ?? '') : (toggle.dataset.less ?? '');
+  });
+
+  // 移动端三种解释改为 Tab 切换（规范第 64 节）：仅窄屏启用，宽屏三栏并排。
+  const tabs = document.querySelector<HTMLElement>('[data-interp-tabs]');
+  const panels = [...document.querySelectorAll<HTMLElement>('[data-interpretations] .interpretation')];
+  const container = document.querySelector<HTMLElement>('[data-interpretations]');
+  if (tabs && container && panels.length) {
+    const sync = () => {
+      const narrow = window.matchMedia('(max-width: 640px)').matches;
+      container.dataset.tabsReady = String(narrow);
+      tabs.dataset.tabsReady = String(narrow);
+      if (!narrow) panels.forEach((panel) => panel.removeAttribute('data-active'));
+      else if (!panels.some((panel) => panel.dataset.active === 'true')) panels[0].dataset.active = 'true';
+    };
+    tabs.querySelectorAll<HTMLButtonElement>('[data-interp-tab]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = Number(button.dataset.interpTab);
+        panels.forEach((panel, position) => { panel.dataset.active = String(position === index); });
+        tabs.querySelectorAll<HTMLButtonElement>('[data-interp-tab]').forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
+      });
+    });
+    sync();
+    window.addEventListener('resize', sync);
+  }
+</script>

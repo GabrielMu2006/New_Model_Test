@@ -36,13 +36,83 @@ try {
     browsers.push(browser); page.setDefaultTimeout(15000);
     page.on('console', (message) => message.type() === 'error' && errors.push(message.text())); page.on('pageerror', (error) => errors.push(error.message));
 
-    // 任务列表：搜索命中两个模型的同题运行，模型筛选收敛到一条
+    // 任务档案（规范第 22 节）：每个题目只出现一张作品卡，搜索 + Chip 筛选收敛
     await page.goto(`${base}/zh/tasks/`);
+    if (await page.locator('[data-task-card]').count() !== catalog.tasks.length) throw new Error(`${name}: task archive must show exactly one card per task`);
     await page.getByPlaceholder('搜索任务标题、Prompt 或模型').fill('calculator');
-    const expectedCards = new Set(catalog.runs.filter((run) => run.taskId === 'task-12').map((run) => run.modelId)).size;
-    if (await page.locator('[data-task-card]:visible').count() !== expectedCards) throw new Error(`${name}: search did not return every model's run for task-12`);
-    await page.locator('select[data-model]').selectOption('muse-spark-1-3');
-    if (await page.locator('[data-task-card]:visible').count() !== 1) throw new Error(`${name}: model filter failed`);
+    if (await page.locator('[data-task-card]:visible').count() !== 1) throw new Error(`${name}: searching "calculator" must leave one task card`);
+    const museTasks = catalog.tasks.filter((task) => catalog.runs.some((run) => run.taskId === task.id && run.modelId === 'muse-spark-1-3')).length;
+    await page.fill('[data-search]', '');
+    await page.locator('[data-filter-model="muse-spark-1-3"]').click();
+    if (await page.locator('[data-task-card]:visible').count() !== museTasks) throw new Error(`${name}: model chip filter failed`);
+    if (await page.locator('[data-filter-model][aria-pressed="true"]').count() !== 1) throw new Error(`${name}: chip group must keep exactly one selection`);
+    await page.locator('[data-filter-model=""]').click();
+    // 类型 Chip：收敛到该类型下的任务数（从数据推导）
+    const svgTasks = catalog.tasks.filter((task) => {
+      const run = catalog.runs.find((item) => item.taskId === task.id);
+      return run && run.artifact.type === 'svg';
+    }).length;
+    await page.locator('[data-filter-type="svg"]').click();
+    if (await page.locator('[data-task-card]:visible').count() !== svgTasks) throw new Error(`${name}: type chip filter failed`);
+    await page.locator('[data-filter-type=""]').click();
+    // 阶段 Chip
+    const phase2Tasks = catalog.tasks.filter((task) => task.phaseId === 'phase-02').length;
+    await page.locator('[data-filter-phase="phase-02"]').click();
+    if (await page.locator('[data-task-card]:visible').count() !== phase2Tasks) throw new Error(`${name}: phase chip filter failed`);
+    await page.locator('[data-filter-phase=""]').click();
+
+    // 命令面板（规范第 47、48 节）：页头搜索打开、按关键词过滤、Esc 关闭
+    await page.locator('[data-palette-open]').click();
+    await page.locator('[data-palette-input]').fill('aevum');
+    if (await page.locator('[data-palette-item]').count() < 2) throw new Error(`${name}: command palette did not return task + run hits`);
+    const paletteKinds = await page.locator('[data-palette-item] i').allTextContents();
+    if (!paletteKinds.includes('任务') || !paletteKinds.includes('运行')) throw new Error(`${name}: command palette groups are missing`);
+    await page.keyboard.press('Escape');
+    if (await page.locator('[data-palette]').isVisible()) throw new Error(`${name}: Escape must close the command palette`);
+    await page.keyboard.press('/');
+    if (!(await page.locator('[data-palette]').isVisible())) throw new Error(`${name}: "/" must open the command palette`);
+    await page.keyboard.press('Escape');
+
+    // 首页：品牌主标题 + 数字条 + 档案进度 + 精选作品展墙
+    await page.goto(`${base}/zh/`);
+    if ((await page.locator('.hero h1').textContent())?.trim() !== 'VibeTest') throw new Error(`${name}: hero h1 must be the brand name`);
+    const statText = await page.locator('.stats').textContent();
+    for (const expected of [String(catalog.models.length), String(catalog.phases.length), String(catalog.runs.length), `${archivedTasks} / ${plannedTasks}`]) {
+      if (!statText?.includes(expected)) throw new Error(`${name}: home stats missing ${expected}`);
+    }
+    if (await page.locator('.stats > div').count() !== 4) throw new Error(`${name}: home stats strip must have four figures`);
+    if ((await page.locator('.gallery--wall .artwork-card').count()) !== 4) throw new Error(`${name}: featured wall must show four works`);
+    const progressLabel = await page.locator('.signal-card > i').getAttribute('aria-label');
+    if (!progressLabel?.includes(`${archivedTasks} / ${plannedTasks}`)) throw new Error(`${name}: archive progress bar is missing its accessible label`);
+
+    // 任务详情：三种解释等宽 + 未归档模型占位（规范第 24、67 节）
+    await page.goto(`${base}/zh/tasks/task-16/`);
+    if (await page.locator('.interpretation').count() !== catalog.models.length) throw new Error(`${name}: task page must render one interpretation per model`);
+    if (await page.locator('.interpretation .interpretation-missing').count() < 1) throw new Error(`${name}: a model without a run must show the "not archived yet" panel, not a zero`);
+    const widths = await page.locator('.interpretation').evaluateAll((nodes) => nodes.map((node) => Math.round(node.getBoundingClientRect().width)));
+    if (new Set(widths).size !== 1) throw new Error(`${name}: interpretations must have equal width (${widths.join('/')})`);
+    const missingText = (await page.locator('.interpretation-missing').first().textContent()) ?? '';
+    if (missingText.includes('N/A') || missingText.includes('0/100') || missingText.includes('未记录')) throw new Error(`${name}: missing interpretation must say "not archived yet" instead of N/A, 0 or a placeholder metric`);
+    // 「展开完整需求」
+    const promptToggle = page.locator('[data-prompt-toggle]');
+    await promptToggle.click();
+    if ((await promptToggle.getAttribute('aria-expanded')) !== 'true') throw new Error(`${name}: show-full-prompt toggle failed`);
+
+    // 运行档案：档案记录、技术记录折叠、右侧本节导航
+    await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-01-r1/`);
+    const recordText = await page.locator('#record').textContent();
+    for (const expected of ['RUN ID', '归档提交', 'run-deepseek-v4-1-flash-exp-0910-task-01-r1']) {
+      if (!recordText?.includes(expected)) throw new Error(`${name}: archive record missing ${expected}`);
+    }
+    // 第一阶段没有 startedAt/endedAt：归档时间必须显示「未记录」，不能猜
+    if (!recordText?.includes('未记录')) throw new Error(`${name}: unknown archive date must render as 未记录`);
+    const tech = page.locator('.tech-record');
+    if (await tech.getAttribute('open') !== null) throw new Error(`${name}: technical record must start collapsed`);
+    await tech.locator('summary').click();
+    if (await tech.locator('.config-line').count() < 3) throw new Error(`${name}: technical record did not expand`);
+    if (await page.locator('.rail-nav a[href="#human"]').count() !== 1) throw new Error(`${name}: run rail must link to the human review section`);
+    if (await page.locator('#ai .review-card.ai').count() < 1) throw new Error(`${name}: AI review section missing`);
+    if (await page.locator('.evidence-list a').count() < 3) throw new Error(`${name}: source evidence list missing`);
 
     // 英文详情直达 + 双语验收建议
     await page.goto(`${base}/en/tasks/task-06/`); if (!(await page.locator('h1').textContent())?.includes('Scissors')) throw new Error(`${name}: English route failed`);
@@ -83,7 +153,8 @@ try {
     for (const expected of ['0910 实验版（即将退役）', '正式版（尚未运行）', 'Phase 2（Task 16–20，部分）']) {
       if (!modelText?.includes(expected)) throw new Error(`${name}: model page missing "${expected}"`);
     }
-    if (await modelPage.locator('.metric-grid').count() !== 2) throw new Error(`${name}: model page must show both batches`);
+    const deepseekBatches = catalog.batches.filter((batch) => batch.modelId === 'deepseek-v4-1-flash-exp-0910').length;
+    if (await modelPage.locator('.metric-grid').count() !== deepseekBatches) throw new Error(`${name}: model page must show every batch's metrics (${deepseekBatches})`);
     // 运行详情必须写明本次实际使用的快照
     await page.goto(`${base}/en/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/`);
     if (!(await page.locator('.detail-page').textContent())?.includes('deepseek-v4.1-flash-expires-on-0910')) throw new Error(`${name}: run page missing the harness-reported snapshot id`);
@@ -133,13 +204,33 @@ try {
     if (!auditHref?.includes('/blob/9281576')) throw new Error(`${name}: audit evidence link is not bound to the archive commit`);
     // SVG 成果作为预览发布，且入口可用
     await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/`);
-    if (await page.locator('img[src$="pelican-bicycle.svg"]').count() !== 1) throw new Error(`${name}: phase-02 SVG artifact missing`);
+    // 预览舞台里必须挂上归档的 SVG 成果本身（右侧作品缩略图也会引用同一文件，因此按舞台限定）
+    if (await page.locator('.preview-stage img[src$="pelican-bicycle.svg"]').count() !== 1) throw new Error(`${name}: phase-02 SVG artifact missing from the preview stage`);
     // 第二阶段 HTML 成果：懒加载预览
     await page.goto(`${base}/zh/tasks/task-19/`);
     await page.getByRole('button', { name: /加载交互预览/ }).first().click();
     if (await page.locator('.preview-stage iframe').count() !== 1) throw new Error(`${name}: phase-02 lazy preview failed`);
 
     for (const width of [390, 768, 1440]) { await page.setViewportSize({ width, height: 900 }); await page.goto(`${base}/zh/`); if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)) throw new Error(`${name}: horizontal overflow at ${width}`); }
+
+    // 移动端（规范第 63、64、65 节）：精选作品横向展墙、三种解释改为 Tab、作品排在档案之前
+    await page.setViewportSize({ width: 390, height: 900 });
+    await page.goto(`${base}/zh/`);
+    const wallScroll = await page.locator('.gallery--wall').evaluate((node) => node.scrollWidth - node.clientWidth);
+    if (wallScroll <= 0) throw new Error(`${name}: mobile featured works must scroll horizontally`);
+    await page.goto(`${base}/zh/tasks/task-01/`);
+    if ((await page.locator('[data-interpretations]').getAttribute('data-tabs-ready')) !== 'true') throw new Error(`${name}: mobile interpretations must switch to tabs`);
+    if (await page.locator('.interpretation:visible').count() !== 1) throw new Error(`${name}: mobile tabs must show exactly one interpretation`);
+    await page.locator('[data-interp-tab]').nth(1).click();
+    if (await page.locator('.interpretation:visible').count() !== 1) throw new Error(`${name}: switching interpretation tabs failed`);
+    await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-01-r1/`);
+    const order = await page.evaluate(() => {
+      const preview = document.querySelector('#artwork');
+      const rail = document.querySelector('.run-rail');
+      return preview && rail ? preview.compareDocumentPosition(rail) & Node.DOCUMENT_POSITION_FOLLOWING : 0;
+    });
+    if (!order) throw new Error(`${name}: mobile run page must show the artwork before the archive rail`);
+    await page.setViewportSize({ width: 1440, height: 900 });
 
     // 语言切换：实体深链直达 + 对比页保留查询参数
     // 注意：点击后必须等到导航完成、面板脚本跑完再断言——`count()` 不会自动等待，
@@ -162,23 +253,34 @@ try {
     if (await page.locator('[data-left-panel] img, [data-left-panel] iframe').count() !== 1) throw new Error(`${name}: compare left panel lost after refresh`);
     if (await page.locator('[data-right-panel] img, [data-right-panel] iframe').count() !== 1) throw new Error(`${name}: compare right panel lost after refresh`);
 
-    // 筛选：按模型名搜索、按任务 ID 搜索、按类别筛选（此前模型名不可搜、下拉选项渲染成 [object Object]）
+    // 筛选：按模型名搜索、按任务 ID 搜索、Chip 筛选（此前模型名不可搜、选项文本渲染成 [object Object]）
     await page.goto(`${base}/zh/tasks/`);
-    const modelOptionLabels = await page.locator('select[data-model] option').evaluateAll((nodes) => nodes.map((node) => node.textContent ?? ''));
-    if (modelOptionLabels.some((label) => label.includes('[object'))) throw new Error(`${name}: model filter option rendered a non-string label`);
+    const chipLabels = await page.locator('[data-filter-model]').allTextContents();
+    if (chipLabels.some((label) => label.includes('[object'))) throw new Error(`${name}: model chip rendered a non-string label`);
+    // Chip 用紧凑短名（去掉括号补充说明）；完整名称在模型页标题与运行环境里保留
+    const shortName = (model) => model.name.zh.replace(/[（(][^）)]*[）)]\s*$/, '').trim() || model.name.zh;
+    for (const model of catalog.models) {
+      if (!chipLabels.some((label) => label.includes(shortName(model)))) throw new Error(`${name}: model chip missing ${model.id}`);
+    }
     await page.getByPlaceholder('搜索任务标题、Prompt 或模型').fill('Muse');
-    const visibleModels = await page.locator('[data-task-card]:visible').evaluateAll((nodes) => [...new Set(nodes.map((node) => node.dataset.model))]);
-    if (visibleModels.join(',') !== 'muse-spark-1-3') throw new Error(`${name}: search by model name returned ${visibleModels.join(',') || 'nothing'}`);
+    // 一张卡代表一道题：搜索模型名应命中该模型跑过的全部题目，且每张卡都标注了这个模型
+    const museCardCount = await page.locator('[data-task-card]:visible').count();
+    if (museCardCount !== museTasks) throw new Error(`${name}: search by model name returned ${museCardCount} tasks, expected ${museTasks}`);
+    const visibleModels = await page.locator('[data-task-card]:visible').evaluateAll((nodes) => [...new Set(nodes.flatMap((node) => (node.dataset.models ?? '').split(/\s+/)))]);
+    if (!visibleModels.includes('muse-spark-1-3')) throw new Error(`${name}: search by model name did not surface the model (${visibleModels.join(',') || 'nothing'})`);
     await page.fill('[data-search]', 'task-16');
     if (await page.locator('[data-task-card]:visible').count() === 0) throw new Error(`${name}: search by task id matched nothing`);
     await page.fill('[data-search]', '');
-    await page.selectOption('[data-category]', 'svg-clock');
-    const clockCards = catalog.runs.filter((run) => catalog.tasks.find((task) => task.id === run.taskId)?.category === 'svg-clock').length;
-    if (await page.locator('[data-task-card]:visible').count() !== clockCards) throw new Error(`${name}: category filter failed`);
+    await page.locator('[data-filter-type="svg"]').click();
+    const svgArtifacts = catalog.runs.filter((run) => run.artifact.type === 'svg').length;
+    const svgLabel = await page.locator('[data-filter-type="svg"]').textContent();
+    if (!svgLabel?.includes(String(svgTasks))) throw new Error(`${name}: type chip count does not match the archive (${svgArtifacts} runs, ${svgTasks} tasks)`);
+    await page.locator('[data-filter-type=""]').click();
 
     // 时长写法统一（2026-09-10）：展示一律 `M:SS` / `H:MM:SS`，归档的「4分51秒」不再混入页面
     await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-01-r1/`);
-    const durationCell = await page.locator('.metric-grid > div').filter({ hasText: '累计用时' }).locator('strong').first().textContent();
+    // 运行页的运行时长行标签是「运行时间」；「累计用时」用于会话/批次累计值。
+    const durationCell = await page.locator('.metric-grid > div').filter({ hasText: '运行时间' }).locator('strong').first().textContent();
     if (!/^(\d+:\d\d|\d+:\d\d:\d\d)$/.test((durationCell ?? '').trim())) throw new Error(`${name}: run duration must render as M:SS or H:MM:SS, got "${durationCell}"`);
     if (/\d+分\d+秒/.test((await page.locator('.detail-page').textContent()) ?? '')) throw new Error(`${name}: archived duration label leaked into the run page`);
 
@@ -186,9 +288,12 @@ try {
     await page.goto(`${base}/zh/`);
     const homeText = await page.locator('.signal-card').textContent();
     if (!homeText?.includes(`${archivedTasks} / ${plannedTasks}`)) throw new Error(`${name}: archive coverage card must show ${archivedTasks} / ${plannedTasks}`);
-    const homeStats = await page.locator('.stats').textContent();
-    if (/\b\d{3,}:[0-5]\d\b/.test(homeStats ?? '')) throw new Error(`${name}: batch duration still uses "minutes:seconds" beyond 59 minutes: ${homeStats?.slice(0, 120)}`);
-    if (!/\b\d+:\d\d:\d\d\b/.test(homeStats ?? '')) throw new Error(`${name}: long batch duration is not rendered as H:MM:SS`);
+    // 时长写法统一（2026-09-10）：≥1 小时用 H:MM:SS。批次累计时长现在只出现在模型页 / 方法页。
+    await page.goto(`${base}/zh/models/deepseek-v4-1-flash-exp-0910/`);
+    const batchDurations = (await page.locator('.metric-grid > div').filter({ hasText: '累计用时' }).locator('strong').allTextContents()).map((text) => text.trim());
+    if (batchDurations.length === 0) throw new Error(`${name}: batch metric grid has no duration row`);
+    if (batchDurations.some((text) => /^\d{3,}:[0-5]\d$/.test(text))) throw new Error(`${name}: batch duration still uses "minutes:seconds" beyond 59 minutes: ${batchDurations.join(' | ')}`);
+    if (!batchDurations.some((text) => /^\d+:\d\d:\d\d$/.test(text))) throw new Error(`${name}: long batch duration is not rendered as H:MM:SS: ${batchDurations.join(' | ')}`);
     await page.goto(`${base}/zh/models/`);
     const modelIndex = await page.locator('.model-list').textContent();
     for (const model of catalog.models) {
@@ -226,7 +331,7 @@ try {
     // 横向溢出：不只首页——对比页与含长源码路径的任务页此前都会溢出
     for (const width of [390, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 });
-      for (const path of ['/zh/tasks/', '/zh/tasks/task-16/', '/en/tasks/task-16/', '/zh/compare/?task=task-16&left=run-deepseek-v4-1-flash-exp-0910-task-16-r1&right=run-muse-spark-1-3-xhigh-task-16-r1', '/zh/models/muse-spark-1-3/', '/zh/phases/phase-02/', '/en/methodology/']) {
+      for (const path of ['/zh/tasks/', '/zh/tasks/task-01/', '/zh/tasks/task-16/', '/en/tasks/task-16/', '/zh/compare/?task=task-16&left=run-deepseek-v4-1-flash-exp-0910-task-16-r1&right=run-muse-spark-1-3-xhigh-task-16-r1', '/zh/models/muse-spark-1-3/', '/zh/phases/phase-02/', '/en/methodology/']) {
         await page.goto(base + path);
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
         if (overflow > 1) throw new Error(`${name}: horizontal overflow +${overflow}px at ${width} on ${path}`);

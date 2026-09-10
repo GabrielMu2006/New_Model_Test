@@ -1,0 +1,130 @@
+---
+// 任务档案页（规范第 20–22、71 节）：从「运行列表」重新定义为「藏品索引」。
+// 每道题只出现一张作品卡（规范第 22 节），卡片上的模型圆点说明这道题有几次运行；
+// 筛选使用极简 Chip：类型 / 模型 / 阶段各一行，选中态为黑底白字。
+import { catalog, type Locale } from '../../lib/catalog';
+import { labelsFor } from '../../lib/labels';
+import { artifactGroup, modelAccent, modelShortName, pad } from '../../lib/naming';
+import ArtworkCard from '../../components/ArtworkCard.astro';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = labelsFor(locale);
+const l = locale === 'zh';
+const firstRun = (taskId: string) => catalog.runs.find((run) => run.taskId === taskId);
+const tasks = catalog.tasks.filter((task) => firstRun(task.id));
+const archivedTasks = tasks.length;
+const plannedTasks = catalog.phases.reduce((sum, phase) => sum + (phase.plannedTasks ?? 0), 0);
+const progress = plannedTasks > 0 ? Math.round((archivedTasks / plannedTasks) * 1000) / 10 : 0;
+const typeGroups = ['html', 'svg', 'other'] as const;
+const countByType = (group: string) => tasks.filter((task) => artifactGroup(firstRun(task.id)!.artifact.type) === group).length;
+const countByModel = (modelId: string) => tasks.filter((task) => catalog.runs.some((run) => run.taskId === task.id && run.modelId === modelId)).length;
+const countByPhase = (phaseId: string) => tasks.filter((task) => task.phaseId === phaseId).length;
+---
+<section class="shell page-block">
+  <div class="page-heading">
+    <span class="kicker">{t.taskArchiveKicker} · {t.archiveSignal}</span>
+    <h1>{t.taskArchive}</h1>
+    <p>{archivedTasks} / {plannedTasks} {t.tasks} · {catalog.runs.length} {t.archivedRunsLabel}</p>
+  </div>
+
+  <div class="filter-panel" data-filter-panel>
+    <label class="filter-search">
+      <span class="kicker">{t.searchLabel}</span>
+      <input type="search" data-search placeholder={t.searchPlaceholder} />
+    </label>
+    <div class="filter-row" data-filter-group="type">
+      <span>{t.filterType}</span>
+      <button class="chip" type="button" data-filter-type="" aria-pressed="true"><span class="chip-head">{t.all}<em>{tasks.length}</em></span></button>
+      {typeGroups.map((group) => (
+        <button class="chip" type="button" data-filter-type={group} aria-pressed="false">
+          <span class="chip-head">{group === 'other' ? t.typeOther : group.toUpperCase()}<em>{countByType(group)}</em></span>
+        </button>
+      ))}
+    </div>
+    <div class="filter-row" data-filter-group="model">
+      <span>{t.filterModel}</span>
+      <button class="chip" type="button" data-filter-model="" aria-pressed="true"><span class="chip-head">{t.allModels}<em>{tasks.length}</em></span></button>
+      {catalog.models.map((model) => (
+        <button class="chip" type="button" data-filter-model={model.id} aria-pressed="false">
+          <span class="chip-head"><i aria-hidden="true" style={`color:${modelAccent(model.id)}`}></i>{modelShortName(model, locale)}<em>{countByModel(model.id)}</em></span>
+        </button>
+      ))}
+    </div>
+    <div class="filter-row" data-filter-group="phase">
+      <span>{t.filterPhase}</span>
+      <button class="chip" type="button" data-filter-phase="" aria-pressed="true"><span class="chip-head">{t.allPhases}<em>{tasks.length}</em></span></button>
+      {catalog.phases.map((phase) => (
+        <button class="chip" type="button" data-filter-phase={phase.id} aria-pressed="false">
+          <span class="chip-head">{`PHASE ${pad(phase.number)}`}<em>{countByPhase(phase.id)}</em></span>
+        </button>
+      ))}
+    </div>
+    <p class="note">{l
+      ? '筛选只改变展墙的可见性：不排序、不评分、不隐藏失败记录。'
+      : 'Filters only change what is visible on the wall: nothing is ranked, scored or hidden.'}</p>
+  </div>
+
+  <div class="task-grid" data-task-grid>
+    {tasks.map((task) => <ArtworkCard locale={locale} task={task} run={firstRun(task.id)!} filterable />)}
+  </div>
+  <p class="empty-state" data-empty hidden>{t.noResults}</p>
+
+  <div class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.archiveSignal}</span><h2>{t.archiveProgress}</h2><p>{t.archiveProgressNote}</p></div>
+      <span class="serif-num" style="font-size:1.6rem">{archivedTasks} / {plannedTasks}</span>
+    </div>
+    <div class="signal-card">
+      <span>{t.archiveProgress}</span>
+      <b>{progress}%</b>
+      <small>{archivedTasks} / {plannedTasks}</small>
+      <i style={`--progress:${progress}%`} role="img" aria-label={`${archivedTasks} / ${plannedTasks} · ${progress}%`}></i>
+      <dl>
+        {catalog.phases.map((phase) => (
+          <div>
+            <dt>{`PHASE ${pad(phase.number)}`}</dt>
+            <dd>{phase.taskVersions.length} / {phase.plannedTasks} · {phase.taskVersions.length >= (phase.plannedTasks ?? 0) ? t.completed : t.inProgress}</dd>
+          </div>
+        ))}
+        <div><dt>{t.archivedRunsLabel}</dt><dd>{catalog.runs.length}</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<script>
+  // 极简 Chip 筛选（规范第 21 节）：类型 / 模型 / 阶段三组，组内单选，组间 AND。
+  const panel = document.querySelector<HTMLElement>('[data-filter-panel]');
+  if (panel) {
+    const search = panel.querySelector<HTMLInputElement>('[data-search]')!;
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-task-card]')];
+    const empty = document.querySelector<HTMLElement>('[data-empty]');
+    const active: Record<string, string> = { type: '', model: '', phase: '' };
+    const chips = [...panel.querySelectorAll<HTMLButtonElement>('[data-filter-type], [data-filter-model], [data-filter-phase]')];
+    const apply = () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const models = (card.dataset.models || '').split(/\s+/).filter(Boolean);
+        const show = (!query || card.dataset.search?.includes(query))
+          && (!active.type || card.dataset.type === active.type)
+          && (!active.model || models.includes(active.model))
+          && (!active.phase || card.dataset.phase === active.phase);
+        card.hidden = !show;
+        if (show) visible += 1;
+      });
+      if (empty) empty.hidden = visible > 0;
+    };
+    chips.forEach((chip) => chip.addEventListener('click', () => {
+      const key = chip.dataset.filterType !== undefined ? 'type' : chip.dataset.filterModel !== undefined ? 'model' : 'phase';
+      active[key] = (chip.dataset.filterType ?? chip.dataset.filterModel ?? chip.dataset.filterPhase) || '';
+      chips.forEach((other) => {
+        const otherKey = other.dataset.filterType !== undefined ? 'type' : other.dataset.filterModel !== undefined ? 'model' : 'phase';
+        if (otherKey === key) other.setAttribute('aria-pressed', String(other === chip));
+      });
+      apply();
+    }));
+    search.addEventListener('input', apply);
+  }
+</script>

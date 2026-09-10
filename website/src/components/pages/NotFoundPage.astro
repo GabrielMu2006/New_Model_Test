@@ -1,0 +1,20 @@
+---
+// 归档记录不存在 / 404 的内容块（独立 404 页面与未知深链共用同一套视觉）。
+import { href, type Locale } from '../../lib/catalog';
+import { labelsFor } from '../../lib/labels';
+import { site } from '../../lib/site';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = labelsFor(locale);
+---
+<section class="shell error-page">
+  <span aria-hidden="true">404</span>
+  <h1>{t.notFound}</h1>
+  <p>{t.notFoundNote}</p>
+  <p class="note mono">{site.archiveLabel}</p>
+  <div class="button-row">
+    <a class="button primary" href={href(locale)}>{t.notFoundBack} →</a>
+    <a class="button" href={href(locale, 'tasks/')}>{t.allTasks}</a>
+  </div>
+</section>

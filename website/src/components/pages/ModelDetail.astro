@@ -1,0 +1,228 @@
+---
+// 模型档案页（规范第 28–32、74 节）：艺术家档案 / 藏品档案，不是 Leaderboard Profile。
+// 结构：MODEL HERO → 精选作品 → 档案统计 → 阶段进度 → 全部作品 → 运行历史。
+import { assessmentSummary, batchesForModel, catalog, compact, duration, entityCommit, href, number, runsForModel, sourceUrl, type Locale, type Model } from '../../lib/catalog';
+import { labelsFor, metricLabels } from '../../lib/labels';
+import { modelShortName, pad, runCode } from '../../lib/naming';
+import ArtworkCard from '../../components/ArtworkCard.astro';
+
+interface Props { locale: Locale; model: Model; }
+const { locale, model } = Astro.props;
+const t = labelsFor(locale);
+const m = metricLabels(locale);
+const l = locale === 'zh';
+const runs = runsForModel(model.id);
+const batches = batchesForModel(model.id);
+const summary = assessmentSummary(model.id);
+const assessments = catalog.assessments.filter((item) => item.modelId === model.id);
+const snapshots = model.snapshots ?? [];
+const taskIds = new Set(runs.map((run) => run.taskId));
+const works = catalog.tasks.filter((task) => taskIds.has(task.id));
+const fallbackCommit = runs[0]?.artifact.commit ?? catalog.archiveCommit;
+const totals = {
+  runs: runs.length,
+  seconds: runs.reduce((sum, run) => sum + (run.metrics.durationSeconds ?? 0), 0),
+  api: runs.reduce((sum, run) => sum + (run.metrics.apiCalls ?? 0), 0),
+  tools: runs.reduce((sum, run) => sum + (run.metrics.toolCalls ?? 0), 0),
+  tokens: runs.reduce((sum, run) => sum + (run.metrics.totalTokens ?? 0), 0),
+  failures: runs.reduce((sum, run) => sum + (run.metrics.failures ?? 0), 0),
+};
+const phaseEntries = catalog.phases.map((phase) => {
+  const phaseTaskIds = new Set(catalog.tasks.filter((task) => task.phaseId === phase.id).map((task) => task.id));
+  const phaseRuns = runs.filter((run) => phaseTaskIds.has(run.taskId));
+  const archived = new Set(phaseRuns.map((run) => run.taskId)).size;
+  return {
+    phase,
+    runs: phaseRuns.length,
+    archived,
+    planned: phase.plannedTasks ?? 0,
+    percent: phase.plannedTasks ? Math.round((archived / phase.plannedTasks) * 1000) / 10 : 0,
+  };
+});
+const batchItems = (metrics: (typeof catalog.batches)[number]['metrics']): [string, string][] => [
+  [m.tasks, number(metrics.totalTasks, locale)], [m.sessions, number(metrics.sessions, locale)],
+  [m.duration, duration(metrics.durationSeconds, locale)], [m.api, number(metrics.apiCalls, locale)],
+  [m.tools, number(metrics.toolCalls, locale)], [m.failures, number(metrics.failures, locale)],
+  [m.inputTokens, number(metrics.inputTokens, locale)], [m.outputTokens, number(metrics.outputTokens, locale)],
+  [m.cacheRead, number(metrics.cacheReadTokens, locale)],
+  [t.cost, metrics.costCny == null ? t.notRecorded : `¥${metrics.costCny}`],
+];
+const averageNote = l
+  ? `本模型有 ${summary.scored} 份 AI 阶段评估，简单均分 ${summary.average}/100。各评委口径不同，逐份评分、口径与免责声明并列在下方；均分只作概览，不得据此排序或做跨模型排行榜。`
+  : t.averageNoteSuffix.replace('{avg}', String(summary.average));
+---
+<section class="shell page-block">
+  <nav class="breadcrumb" aria-label={t.navLabel}>
+    <a href={href(locale, 'models/')}>{t.models}</a>
+    <span aria-hidden="true">/</span>
+    <span>{modelShortName(model, locale)}</span>
+  </nav>
+  <div class="detail-heading">
+    <div>
+      <span class="kicker">{t.modelArchiveKicker} · {`M${pad(catalog.models.findIndex((item) => item.id === model.id) + 1)}`} · {model.provider}</span>
+      <h1>{model.name[locale]}</h1>
+      <p>{model.notes[locale]}</p>
+      {model.versionNote && <small class="note">{t.versionNote}: {model.versionNote[locale]}</small>}
+    </div>
+    <span class="verified-badge verified-badge--archived">● {works.length} {t.archivedWorksSuffix}</span>
+  </div>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.selectedWorksKicker}</span><h2>{t.selectedWorks}</h2><p>{l ? '先看作品，再看数据。' : 'Works first, numbers second.'}</p></div>
+      <a class="text-link" href={href(locale, 'tasks/')}>{t.viewAllTasks} →</a>
+    </div>
+    <div class="gallery">
+      {works.slice(0, 4).map((task) => <ArtworkCard locale={locale} task={task} run={runs.find((run) => run.taskId === task.id)!} />)}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.archiveStatsKicker}</span><h2>{t.archiveStatistics}</h2></div>
+    </div>
+    <div class="record-grid">
+      <div><span>{t.runs}</span><strong>{totals.runs}</strong></div>
+      <div><span>{t.duration}</span><strong>{duration(totals.seconds, locale)}</strong></div>
+      <div><span>{m.api}</span><strong>{number(totals.api, locale)}</strong></div>
+      <div><span>{m.tools}</span><strong>{number(totals.tools, locale)}</strong></div>
+      <div><span>{m.failures}</span><strong>{number(totals.failures, locale)}</strong></div>
+      <div><span>{m.totalTokens}</span><strong>{compact(totals.tokens, locale)}</strong></div>
+    </div>
+    {batches.map((batch) => (
+      <div>
+        <div class="section-heading" style="margin-top:2.5rem">
+          <div><span class="kicker">{t.batch}</span><h2>{batch.label[locale]}</h2>{batch.note && <p>{batch.note}</p>}</div>
+          <a class="text-link" href={sourceUrl(batch.source.path, batch.source.lines, entityCommit(batch, fallbackCommit))} target="_blank" rel="noopener">{t.sourceReport} ↗</a>
+        </div>
+        <div class="metric-grid">
+          {batchItems(batch.metrics).map(([label, value]) => <div><span>{label}</span><strong>{value}</strong></div>)}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.phaseProgressKicker}</span><h2>{t.phaseProgress}</h2></div>
+    </div>
+    <div>
+      {phaseEntries.filter((entry) => entry.runs > 0).map((entry) => (
+        <a class="phase-card" href={href(locale, `phases/${entry.phase.id}/`)}>
+          <b>{pad(entry.phase.number)}</b>
+          <div>
+            <span class="kicker">{entry.phase.id.toUpperCase()}</span>
+            <h2>{entry.phase.name[locale]}</h2>
+            <p>{entry.phase.description[locale]}</p>
+          </div>
+          <div class="phase-stats">
+            <div class="phase-progress">
+              <i style={`--progress:${entry.percent}%`}></i>
+              <span>{entry.archived} / {entry.planned} {t.tasks} · {entry.archived >= entry.planned ? t.completed : t.inProgress}</span>
+            </div>
+            <span class="note">{entry.runs} {t.runs}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  {snapshots.length > 0 && <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">SNAPSHOTS</span><h2>{t.snapshots}</h2><p>{t.snapshotNote}</p></div>
+    </div>
+    <div class="record-grid" style="grid-template-columns:repeat(auto-fit,minmax(16rem,1fr))">
+      {snapshots.map((snapshot) => (
+        <div>
+          <span>{snapshot.status === 'current' ? t.snapshotCurrent : t.snapshotRetired}</span>
+          <strong>{snapshot.label[locale]}</strong>
+          <code>{snapshot.id ?? t.notRecorded}</code>
+          <small class="note">{snapshot.evidence[locale]}</small>
+        </div>
+      ))}
+    </div>
+  </section>}
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.criticalNotesKicker}</span><h2>{t.assessment}</h2></div>
+    </div>
+    {summary.scored > 1 && <p class="notice" style="margin-bottom:1.5rem">{averageNote}</p>}
+    {assessments.length === 0
+      ? <p class="notice">{t.noAssessment}</p>
+      : <div class="review-list">
+        {assessments.map((assessment) => (
+          <article class="review-card ai">
+            <div class="review-meta">
+              <span>{assessment.label[locale]}</span>
+              <span>{assessment.scope === 'phase' ? assessment.phaseId : assessment.scope}</span>
+            </div>
+            <p class="review-score">{assessment.score == null ? t.notRecorded : assessment.score}{assessment.score != null && <small class="score-unit mono muted">/100</small>}</p>
+            <h3>{assessment.coreSummary ?? t.noAssessment}</h3>
+            <div class="review-foot">
+              <small>{assessment.disclaimer[locale] ?? assessment.disclaimer.en}</small>
+              <a href={sourceUrl(assessment.source.path, assessment.source.lines, entityCommit(assessment, fallbackCommit))} target="_blank" rel="noopener">{t.sourceReport} ↗</a>
+            </div>
+          </article>
+        ))}
+      </div>}
+    {summary.scored === 1 && <p class="note" style="margin-top:1rem">{l
+      ? `本模型目前只有 1 份 AI 阶段评估（${summary.average}/100），不计算均分；各评委口径不同，不跨模型比较。`
+      : `Only one AI phase assessment (${summary.average}/100) is archived for this model, so no average is computed; rubrics differ and are not compared across models.`}</p>}
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.allWorksKicker}</span><h2>{t.allWorks}</h2></div>
+    </div>
+    <div class="task-grid">
+      {works.map((task) => <ArtworkCard locale={locale} task={task} run={runs.find((run) => run.taskId === task.id)!} headingLevel="h3" />)}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div><span class="kicker">{t.runHistoryKicker}</span><h2>{t.runHistory}</h2><p>{l ? '本题库每个题目每次运行一行；点击进入完整档案。' : 'One row per archived run; open a row for the full record.'}</p></div>
+    </div>
+    <div class="table-scroll">
+      <table class="metrics-table">
+        <thead>
+          <tr>
+            <th scope="col">{t.runId}</th>
+            <th scope="col">{t.tasks}</th>
+            <th scope="col">{t.runtime}</th>
+            <th scope="col">{m.api}</th>
+            <th scope="col">{m.tools}</th>
+            <th scope="col">{t.tokens}</th>
+            <th scope="col" />
+          </tr>
+        </thead>
+        <tbody>
+          {runs.map((run) => {
+            const task = catalog.tasks.find((item) => item.id === run.taskId)!;
+            return (
+              <tr>
+                <th scope="row"><span class="mono" style="font-size:12px">{runCode(run)}</span></th>
+                <td><a href={href(locale, `tasks/${task.id}/`)}>{task.title[locale]}</a></td>
+                <td>{duration(run.metrics.durationSeconds, locale)}</td>
+                <td>{number(run.metrics.apiCalls, locale)}</td>
+                <td>{number(run.metrics.toolCalls, locale)}</td>
+                <td>{compact(run.metrics.totalTokens, locale)}</td>
+                <td><a class="text-link" href={href(locale, `runs/${run.id}/`)}>{t.viewRecord} →</a></td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="record-grid" style="grid-template-columns:repeat(auto-fit,minmax(14rem,1fr))">
+      <div><span>{t.provider}</span><strong>{model.provider}</strong></div>
+      <div><span>{t.modelWorks}</span><strong>{works.length}</strong></div>
+      <div><span>{t.aiAverage}</span><strong>{summary.average == null ? t.noAssessment : `${summary.average}/100（${summary.scored}）`}</strong></div>
+      <div><span>{t.archiveCommit}</span><code>{fallbackCommit.slice(0, 12)}…</code></div>
+    </div>
+  </section>
+</section>

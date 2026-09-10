@@ -1,0 +1,254 @@
+---
+// 运行档案页（规范第 33–42、73 节）：一个单独 AI 作品的完整档案 —— Museum Object Record。
+// 结构：运行标题 → 作品预览 → 预览控件 → 档案记录 → 人工评价 → AI 评价 → 技术记录 → 来源证据。
+import { asset, catalog, compact, href, modelById, number, runDuration, sourceUrl, type Locale, type Run } from '../../lib/catalog';
+import { contaminationLabels, isolationLabels, labelsFor, metricLabels } from '../../lib/labels';
+import { modelAccent, modelShortName, modelName, runCode, taskCode, taskNumber } from '../../lib/naming';
+import { renderMarkdown } from '../../lib/markdown';
+import { contaminationDisplay } from '../../lib/contamination';
+import ArtifactPreview from '../../components/ArtifactPreview.astro';
+import ArtworkImage from '../../components/ArtworkImage.astro';
+
+interface Props { locale: Locale; run: Run; }
+const { locale, run } = Astro.props;
+const t = labelsFor(locale);
+const m = metricLabels(locale);
+const l = locale === 'zh';
+const task = catalog.tasks.find((item) => item.id === run.taskId)!;
+const model = modelById(run.modelId)!;
+const other: Locale = locale === 'zh' ? 'en' : 'zh';
+const reviews = catalog.reviews.filter((review) => review.runId === run.id);
+const humanReviews = reviews.filter((review) => review.type === 'human');
+const aiReviews = reviews.filter((review) => review.type === 'ai');
+const followups = (run.followups ?? []) as { turn?: number; verbatim: string; reason?: string; effect?: string; actor?: string }[];
+const env = run.environment as Record<string, unknown> & { harness: string; harnessVersion?: string | null; sessionId: string; continuationTurns: number };
+const siblings = catalog.runs.filter((item) => item.taskId === run.taskId);
+const totalForTask = siblings.length;
+const position = siblings.findIndex((item) => item.id === run.id) + 1;
+// 档案未记录第一阶段运行的开始/结束时间（startedAt 为 null），此时如实显示「未记录」。
+const recordedDate = typeof env.endedAt === 'string' && env.endedAt ? env.endedAt.slice(0, 10) : null;
+const metricItems: [string, string][] = [
+  [t.runtime, runDuration(run.metrics, locale)],
+  [m.api, number(run.metrics.apiCalls, locale)],
+  [m.tools, number(run.metrics.toolCalls, locale)],
+  [m.failures, number(run.metrics.failures, locale)],
+  [m.inputTokens, number(run.metrics.inputTokens, locale)],
+  [m.outputTokens, number(run.metrics.outputTokens, locale)],
+  [m.cacheRead, number(run.metrics.cacheReadTokens, locale)],
+  [m.totalTokens, number(run.metrics.totalTokens, locale)],
+];
+/** 来源证据清单（规范第 42 节）：按档案索引编号，每条绑定各自归档提交。 */
+const evidence: { label: string; detail: string; url: string }[] = [
+  ...humanReviews.map((review) => ({
+    label: `${t.humanReview} · ${review.authorLabel}`,
+    detail: review.source.path,
+    url: sourceUrl(review.source.path, review.source.lines, review.commit ?? run.artifact.commit),
+  })),
+  ...aiReviews.map((review) => ({
+    label: `${t.aiReview} · ${review.authorLabel}`,
+    detail: review.source.path,
+    url: sourceUrl(review.source.path, review.source.lines, review.commit ?? run.artifact.commit),
+  })),
+  ...(run.prompt ? [{ label: t.promptInput, detail: run.prompt.path, url: sourceUrl(run.prompt.path, undefined, run.artifact.commit) }] : []),
+  { label: t.sourceReport, detail: run.source.path, url: sourceUrl(run.source.path, run.source.lines, run.artifact.commit) },
+  ...(run.evidence?.audit ? [{ label: t.auditReport, detail: run.evidence.audit, url: sourceUrl(run.evidence.audit, undefined, run.artifact.commit) }] : []),
+  ...(run.evidence?.sessionLogSha256 ? [{ label: t.sessionLogHash, detail: run.evidence.sessionLogSha256, url: sourceUrl(run.evidence.sessionLogSha256, undefined, run.artifact.commit) }] : []),
+  ...(run.isolation?.evidencePaths ?? []).map((path) => ({ label: t.isolation, detail: path, url: sourceUrl(path, undefined, run.artifact.commit) })),
+  { label: l ? '生成成果（归档）' : 'Generated artifact (archive)', detail: `${run.artifact.sourcePath}/${run.artifact.entry}`, url: sourceUrl(`${run.artifact.sourcePath}/${run.artifact.entry}`, undefined, run.artifact.commit) },
+  { label: l ? '生成成果（独立打开）' : 'Generated artifact (standalone)', detail: `artifacts/${run.id}/${run.artifact.entry}`, url: asset(`artifacts/${run.id}/${run.artifact.entry}`) },
+];
+---
+<section class="shell page-block detail-page">
+  <nav class="breadcrumb" aria-label={t.navLabel}>
+    <a href={href(locale, 'tasks/')}>{t.tasks}</a>
+    <span aria-hidden="true">/</span>
+    <a href={href(locale, `tasks/${task.id}/`)}>{taskNumber(task.id)}</a>
+    <span aria-hidden="true">/</span>
+    <span>{runCode(run)}</span>
+  </nav>
+
+  <div class="detail-heading">
+    <div>
+      <span class="kicker">{t.runRecordKicker} · {position} / {totalForTask} · {taskCode(task.id)}</span>
+      <h1>{task.title[locale]}</h1>
+      <p class="detail-sub">{task.title[other]}</p>
+      <p>
+        <a href={href(locale, `models/${model.id}/`)}><span class="model-dot" style={`color:${modelAccent(model.id)}`}><i aria-hidden="true"></i>{modelShortName(model, locale)}</span></a>
+        <span class="muted mono" style="margin-left:.75rem">{run.id}</span>
+      </p>
+    </div>
+    <span class="verified-badge verified-badge--archived">● {t.statusArchived} · {run.artifact.commit.slice(0, 7)}</span>
+  </div>
+
+  <div class="run-layout">
+    <div>
+      <section id="artwork">
+        <ArtifactPreview locale={locale} run={run} task={task} />
+      </section>
+
+      <section class="section-block" id="record">
+        <div class="section-heading">
+          <div><span class="kicker">{t.archiveRecordKicker}</span><h2>{t.archiveRecord}</h2><p>{t.snapshotNote}</p></div>
+          <a class="text-link" href={sourceUrl(run.source.path, run.source.lines, run.artifact.commit)} target="_blank" rel="noopener">{t.sourceReport} ↗</a>
+        </div>
+        <div class="metric-grid">
+          {metricItems.map(([label, value]) => <div><span>{label}</span><strong>{value}</strong></div>)}
+        </div>
+        <div class="record-grid" style="margin-top:1.5rem">
+          <div><span>{t.runId}</span><code>{run.id}</code></div>
+          <div><span>{t.recorded}</span><strong>{recordedDate ?? t.notRecorded}</strong></div>
+          <div><span>{t.harness}</span><strong>{env.harness}{env.harnessVersion ? ` ${env.harnessVersion}` : ''}</strong></div>
+          <div><span>{t.archiveCommit}</span><code>{run.artifact.commit.slice(0, 12)}…</code></div>
+          <div><span>{t.artifactType}</span><strong>{run.artifact.type.toUpperCase()}</strong></div>
+          <div><span>{t.artifactEntry}</span><code>{run.artifact.entry}</code></div>
+        </div>
+        {!recordedDate && <p class="note" style="margin-top:.75rem">{l
+          ? '档案未记录逐运行的归档日期（第一阶段运行的 startedAt / endedAt 为空），此处按归档原样显示「未记录」。'
+          : 'The archive does not record a per-run archive date (Phase 1 runs have no startedAt / endedAt), so it stays "Not recorded" rather than being inferred.'}</p>}
+      </section>
+
+      <section class="section-block" id="human">
+        <div class="section-heading">
+          <div><span class="kicker">{t.criticalNotesKicker}</span><h2>{t.humanReview}</h2><p>01 / {t.reviewKickerHuman}</p></div>
+        </div>
+        {humanReviews.length === 0
+          ? <p class="notice">{t.noReviews}</p>
+          : <div class="review-list">
+            {humanReviews.map((review) => (
+              <article class="review-card human">
+                <div class="review-meta">
+                  <span>01 / {t.reviewKickerHuman}</span>
+                  <span>{review.date ?? t.notRecorded}</span>
+                </div>
+                <h3>{review.conclusion[locale]}</h3>
+                <div class="review-body" set:html={renderMarkdown(review.body[locale])} />
+                <div class="review-foot">
+                  <small>{review.translated === false && !l ? t.translationNote : review.translated === true && !l ? t.translatedNote : ''}</small>
+                  <a href={sourceUrl(review.source.path, review.source.lines, review.commit ?? run.artifact.commit)} target="_blank" rel="noopener">{review.authorLabel} ↗</a>
+                </div>
+              </article>
+            ))}
+          </div>}
+      </section>
+
+      <section class="section-block" id="ai">
+        <div class="section-heading">
+          <div><span class="kicker">{t.criticalNotesKicker}</span><h2>{t.aiReview}</h2><p>02 / {t.reviewKickerAi}</p></div>
+        </div>
+        {aiReviews.length === 0
+          ? <p class="notice">{t.noReviews}</p>
+          : <div class="review-list">
+            {aiReviews.map((review) => (
+              <article class="review-card ai">
+                <div class="review-meta">
+                  <span>02 / {t.reviewKickerAi}</span>
+                  <span>{review.authorLabel}{review.date ? ` · ${review.date}` : ''}</span>
+                </div>
+                <p class="review-score">{review.score == null ? t.notRecorded : `${review.score}`}{review.score != null && <small class="score-unit mono muted">/100</small>}</p>
+                <h3>{review.conclusion[locale]}</h3>
+                <div class="review-body" set:html={renderMarkdown(review.body[locale])} />
+                <div class="review-foot">
+                  <small>{review.scoreMethod ? `${l ? '评分口径' : 'Scoring method'}: ${review.scoreMethod}` : ''} {t.disclaimer}</small>
+                  <a href={sourceUrl(review.source.path, review.source.lines, review.commit ?? run.artifact.commit)} target="_blank" rel="noopener">{review.authorLabel} ↗</a>
+                </div>
+              </article>
+            ))}
+          </div>}
+      </section>
+
+      <section class="section-block" id="technical">
+        <div class="section-heading">
+          <div><span class="kicker">{l ? 'TECHNICAL RECORD' : 'TECHNICAL RECORD'}</span><h2>{t.technicalRecord}</h2><p>{t.technicalRecordNote}</p></div>
+        </div>
+        <details class="tech-record">
+          <summary>
+            <span>
+              <strong>{t.configuration}</strong>
+              <small>{env.harness} · {t.session} {env.sessionId} · {t.isolation}: {isolationLabels[run.isolation?.level ?? 'unknown']?.[locale] ?? run.isolation?.level ?? t.notRecorded}</small>
+            </span>
+          </summary>
+          <div>
+            <div class="config-line"><span>{t.harness}</span><b>{env.harness}{env.harnessVersion ? ` ${env.harnessVersion}` : ''}</b>{typeof env.surface === 'string' && env.surface && <small>surface: {env.surface}</small>}{typeof env.runtime === 'string' && env.runtime && <small>runtime: {env.runtime}</small>}{typeof env.os === 'string' && env.os && <small>os: {env.os}</small>}</div>
+            <div class="config-line"><span>{t.session}</span><b>{env.sessionId}</b>{typeof env.timezone === 'string' && env.timezone && <small>timezone: {env.timezone}</small>}</div>
+            <div class="config-line"><span>{t.continuation}</span><b>{String(env.continuationTurns)}</b>{typeof env.reasoningEffort === 'string' && env.reasoningEffort && <small>reasoning: {env.reasoningEffort}</small>}{env.sharedContext === true && <small>sharedContext: true</small>}</div>
+            <div class="config-line"><span>{t.snapshot}</span><b>{typeof env.reportedModelId === 'string' && env.reportedModelId ? env.reportedModelId : t.notRecorded}</b><small>{t.snapshotNote}</small></div>
+            {run.isolation && <div class="config-line"><span>{t.isolation}</span><b>{isolationLabels[run.isolation.level]?.[locale] ?? run.isolation.level}</b>{run.isolation.note && <small>{run.isolation.note}</small>}</div>}
+            {/* `withheld`（suspected）只记入审计档案，不作外显标注：整行不渲染（收尾审查行仍给出审计报告链接）。 */}
+            {run.contamination && contaminationDisplay(run) !== 'withheld' && <div class="config-line"><span>{t.contamination}</span>{contaminationDisplay(run) === 'assumed-compliant' ? <><b>{t.telemetryHidden}</b><small>{t.telemetryNote}</small></> : <><b>{contaminationLabels[run.contamination.status]?.[locale] ?? run.contamination.status}</b>{run.contamination.note && <small>{run.contamination.note}</small>}</>}</div>}
+            {run.evidence?.audit && <div class="config-line"><span>{t.audit}</span><b><a href={sourceUrl(run.evidence.audit, undefined, run.artifact.commit)} target="_blank" rel="noopener">{t.auditReport} ↗</a></b>{run.evidence.sessionLogSha256 && <b><a href={sourceUrl(run.evidence.sessionLogSha256, undefined, run.artifact.commit)} target="_blank" rel="noopener">{t.sessionLogHash} ↗</a></b>}</div>}
+            {run.prompt && <div class="config-line"><span>{t.promptInput}</span><b><code>{run.prompt.path}</code></b><small>sha256:{run.prompt.sha256.slice(0, 16)}…{run.prompt.provenance === 'post-hoc-reconstruction' ? ` · ${t.postHoc}` : ''}</small>{run.prompt.note && <small>{run.prompt.note}</small>}</div>}
+            {followups.map((entry) => <div class="config-line"><span>{t.followupInput}</span><b>「{entry.verbatim}」</b>{entry.actor && <small>{entry.actor}</small>}{entry.reason && <small>{entry.reason}</small>}{entry.effect && <small>{entry.effect}</small>}</div>)}
+            <div class="config-line"><span>{t.archive}</span><b><code>{run.artifact.commit}</code></b><small>{run.artifact.sourcePath}</small></div>
+          </div>
+        </details>
+      </section>
+
+      <section class="section-block" id="evidence">
+        <div class="section-heading">
+          <div><span class="kicker">{t.sourceEvidenceKicker}</span><h2>{t.sourceEvidence}</h2><p>{l ? '每条链接固定到该文件所在的归档提交，可逐条复核。' : 'Each link is pinned to the archive commit that holds that file.'}</p></div>
+        </div>
+        <div class="evidence-list">
+          {evidence.map((entry, index) => (
+            <a href={entry.url} target="_blank" rel="noopener">
+              <i>{String(index + 1).padStart(2, '0')}</i>
+              <span><strong>{entry.label}</strong><small>{entry.detail}</small></span>
+              <span>↗</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <aside class="run-rail">
+      <div>
+        <span class="status status--archived">{t.statusArchived}</span>
+        <p class="kicker" style="margin-top:.5rem">{t.positionLabel} {position} / {totalForTask} · {runCode(run)}</p>
+        <p style="margin:.5rem 0 0;font-family:var(--display);font-size:1.35rem">{modelShortName(model, locale)}</p>
+      </div>
+      <div class="record-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <div><span>{t.runtime}</span><strong>{runDuration(run.metrics, locale)}</strong></div>
+        <div><span>{m.api}</span><strong>{number(run.metrics.apiCalls, locale)}</strong></div>
+        <div><span>{m.tools}</span><strong>{number(run.metrics.toolCalls, locale)}</strong></div>
+        <div><span>{m.failures}</span><strong>{number(run.metrics.failures, locale)}</strong></div>
+        <div><span>{t.tokens}</span><strong>{compact(run.metrics.totalTokens, locale)}</strong></div>
+        <div><span>{t.harness}</span><strong>{env.harness}</strong></div>
+      </div>
+      <nav class="rail-nav" aria-label={t.runNav} data-rail-nav>
+        <a href="#artwork"><i>01</i>{t.artworkSection}</a>
+        <a href="#record"><i>02</i>{t.recordSection}</a>
+        <a href="#human"><i>03</i>{t.humanReview}</a>
+        <a href="#ai"><i>04</i>{t.aiReview}</a>
+        <a href="#technical"><i>05</i>{t.environmentSection}</a>
+        <a href="#evidence"><i>06</i>{t.sourceEvidence}</a>
+      </nav>
+      <div>
+        <p class="kicker" style="margin-bottom:.5rem">{t.threeInterpretations}</p>
+        <div class="rail-thumbs">
+          {siblings.map((item) => (
+            <a href={href(locale, `runs/${item.id}/`)} aria-label={`${modelName(item.modelId, locale)} · ${runCode(item)}`} aria-current={item.id === run.id ? 'true' : undefined} title={`${modelName(item.modelId, locale)} · ${runCode(item)}`}>
+              <ArtworkImage run={item} label={taskNumber(item.taskId)} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<script>
+  // 右侧本节导航：滚动时高亮当前小节（无 IntersectionObserver 时保持静态，不影响可用性）。
+  const railNav = document.querySelector<HTMLElement>('[data-rail-nav]');
+  if (railNav && 'IntersectionObserver' in window) {
+    const links = [...railNav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')];
+    const sections = links.map((link) => document.querySelector<HTMLElement>(link.getAttribute('href')!)).filter(Boolean) as HTMLElement[];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((link) => link.removeAttribute('aria-current'));
+        const match = links.find((link) => link.getAttribute('href') === `#${entry.target.id}`);
+        match?.setAttribute('aria-current', 'true');
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>
