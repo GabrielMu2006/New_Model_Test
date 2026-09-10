@@ -143,7 +143,9 @@ export function load({ read, repoRoot }) {
         type: artifact.type, entry: artifact.entry, files: artifact.files,
         sourcePath: artifact.sourcePath,
         commit: archiveCommit,
-        cover: artifact.cover,
+        // 归档未自带截图时，回落到 `npm run capture:covers` 产出的封面（与 phase-01 适配器同一口径）：
+        // 封面是展示层指针，不写回 submission.json，也不影响任何指标。
+        cover: artifact.cover ?? (artifact.type === 'html' ? `covers/${submission.runId}.png` : null),
         preview: bilingualPreview(artifact.preview),
       },
       source: { path: `${runRoot}/README.md`, lines: null },

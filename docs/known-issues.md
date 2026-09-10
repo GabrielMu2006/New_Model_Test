@@ -14,6 +14,7 @@
 - **WebKit 下对比页 390px 溢出 +153px**：`<option>` 的内部盒比 `<select>` 宽并计入页面 `scrollWidth`（2026-09-09 已记录过同类问题，改版重写 CSS 时被遗漏）。修复：在 `.compare-controls` 上裁剪并留出焦点环内边距。
 - **任务详情 390px 溢出（task-01 +37px）**：`.detail-columns` 在窄屏仍是两栏，每栏 167px，卡片内长单词撑破容器。修复：`max-width:900px` 时改为单栏，并给 `.prose-card` 段落与列表加 `overflow-wrap:anywhere`。
 - **归档未生成封面的 HTML 运行渲染裂图**：新增 `ArtworkImage` 组件，没有封面时显示档案标签占位（题号 + 类型），并把「HTML 无封面」的运行纳入同一占位逻辑（含任务详情三种解释、运行页右侧缩略图、首页展墙）。
+- **16 张空占位卡（封面缺口）**：三个适配器把归档未声明的 `artifact.cover` 透传为 `null`，phase-02 的 HTML 运行（deepseek task-18/19/20、muse task-17/18/19/20）与 GPT 第一阶段 9 个 HTML 运行在展墙上只剩题号占位。修复：按 `docs/adding-results.md` 的既定路径跑 `npm run capture:covers` 产出 16 张封面并提交，适配器改为回落到 `covers/<runId>.png`；`import:data` 后占位卡为 0，`build` 逐张校验封面 `src` 存在。今后接入新批次时必须同时提交封面，否则卡片会退回占位（不会再出现裂图）。
 - **长源码路径溢出**：说明文字里的 `PROMPT/Phase2_...md` 等长路径在窄屏撑破容器（阶段索引 1440px 溢出 +123px）。修复：`.section-heading p/span/small`、`.phase-card .note`、`.record-grid code`、`.evidence-list small` 允许 `overflow-wrap:anywhere`。
 
 ## 6. 2026-09-10 全站缺陷排查（已完成一轮修复）

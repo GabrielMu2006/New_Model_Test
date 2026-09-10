@@ -2978,7 +2978,7 @@
         ],
         "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/task-18-rube-goldberg-machine/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-deepseek-v4-1-flash-exp-0910-task-18-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -3072,7 +3072,7 @@
         ],
         "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/task-19-interactive-solar-system/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-deepseek-v4-1-flash-exp-0910-task-19-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -3177,7 +3177,7 @@
         ],
         "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/task-20-2d-mechanical-linkage-designer/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-deepseek-v4-1-flash-exp-0910-task-20-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -3349,7 +3349,7 @@
         ],
         "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/task-17-mechanical-watch-movement/artifacts",
         "commit": "6c089e570622b1b684f5327e47183d16af668d44",
-        "cover": null,
+        "cover": "covers/run-muse-spark-1-3-xhigh-task-17-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -3424,7 +3424,7 @@
         ],
         "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/task-18-rube-goldberg-machine/artifacts",
         "commit": "6c089e570622b1b684f5327e47183d16af668d44",
-        "cover": null,
+        "cover": "covers/run-muse-spark-1-3-xhigh-task-18-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -3499,7 +3499,7 @@
         ],
         "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/task-19-interactive-solar-system/artifacts",
         "commit": "6c089e570622b1b684f5327e47183d16af668d44",
-        "cover": null,
+        "cover": "covers/run-muse-spark-1-3-xhigh-task-19-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -3578,7 +3578,7 @@
         ],
         "sourcePath": "Test_Results/Muse-Spark-1.3_Opencode/phase-02/task-20-2d-mechanical-linkage-designer/artifacts",
         "commit": "6c089e570622b1b684f5327e47183d16af668d44",
-        "cover": null,
+        "cover": "covers/run-muse-spark-1-3-xhigh-task-20-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -3657,7 +3657,7 @@
         ],
         "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-01-aevum-luxury-watch-landing-page/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-gpt-5-6-sol-task-01-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -4226,7 +4226,7 @@
         ],
         "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-08-breakout-game/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-gpt-5-6-sol-task-08-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -4307,7 +4307,7 @@
         ],
         "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-09-topdown-farming-game/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-gpt-5-6-sol-task-09-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -4391,7 +4391,7 @@
         ],
         "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-10-pixel-art-editor/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-gpt-5-6-sol-task-10-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -4475,7 +4475,7 @@
         ],
         "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-11-floor-plan-editor/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-gpt-5-6-sol-task-11-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -4562,7 +4562,7 @@
         ],
         "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-12-calculator/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-gpt-5-6-sol-task-12-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -4645,7 +4645,7 @@
         ],
         "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-13-weather-dashboard/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-gpt-5-6-sol-task-13-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -4729,7 +4729,7 @@
         ],
         "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-14-bank-website/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-gpt-5-6-sol-task-14-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
@@ -4812,7 +4812,7 @@
         ],
         "sourcePath": "Test_Results/GPT-5.6-Sol_Codex/phase-01/task-15-book-tracker/artifacts",
         "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
-        "cover": null,
+        "cover": "covers/run-gpt-5-6-sol-task-15-r1.png",
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
