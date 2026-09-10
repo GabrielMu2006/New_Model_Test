@@ -1,10 +1,34 @@
 {
   "id": "phase-01",
   "number": 1,
-  "name": { "zh": "第一阶段 · 15 项基准任务", "en": "Phase 1 · 15 benchmark tasks" },
+  "plannedTasks": 15,
+  "plannedTasksNote": {
+    "zh": "本阶段计划的题目数（Task 01–15），来源 PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md。",
+    "en": "Tasks planned for this phase (Task 01–15), per PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md."
+  },
+  "name": {
+    "zh": "第一阶段 · 15 项基准任务",
+    "en": "Phase 1 · 15 benchmark tasks"
+  },
   "description": {
     "zh": "覆盖 SVG 绘制、单文件交互应用和多文件网页应用。",
     "en": "SVG illustration, single-file interactive apps, and multi-file web applications."
   },
-  "taskVersions": ["task-01@1", "task-02@1", "task-03@1", "task-04@1", "task-05@1", "task-06@1", "task-07@1", "task-08@1", "task-09@1", "task-10@1", "task-11@1", "task-12@1", "task-13@1", "task-14@1", "task-15@1"]
+  "taskVersions": [
+    "task-01@1",
+    "task-02@1",
+    "task-03@1",
+    "task-04@1",
+    "task-05@1",
+    "task-06@1",
+    "task-07@1",
+    "task-08@1",
+    "task-09@1",
+    "task-10@1",
+    "task-11@1",
+    "task-12@1",
+    "task-13@1",
+    "task-14@1",
+    "task-15@1"
+  ]
 }

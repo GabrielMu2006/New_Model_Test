@@ -19,6 +19,11 @@
     {
       "id": "phase-01",
       "number": 1,
+      "plannedTasks": 15,
+      "plannedTasksNote": {
+        "zh": "本阶段计划的题目数（Task 01–15），来源 PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md。",
+        "en": "Tasks planned for this phase (Task 01–15), per PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md."
+      },
       "name": {
         "zh": "第一阶段 · 15 项基准任务",
         "en": "Phase 1 · 15 benchmark tasks"
@@ -48,6 +53,11 @@
     {
       "id": "phase-02",
       "number": 2,
+      "plannedTasks": 30,
+      "plannedTasksNote": {
+        "zh": "本阶段计划的题目数（Task 16–45，共 30 题），来源 README.md 与 PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md；已归档的只是其中 5 题。",
+        "en": "Tasks planned for this phase (Tasks 16–45, 30 total) per README.md and PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md; only 5 of them are archived."
+      },
       "name": {
         "zh": "第二阶段 · 高级纯创造任务（Task 16–45）",
         "en": "Phase 2 · advanced creation tasks (Tasks 16–45)"
@@ -894,7 +904,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -1251,7 +1264,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -1302,7 +1318,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -1353,7 +1372,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -1407,7 +1429,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -1462,7 +1487,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -1521,7 +1549,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Live weather requests may be unavailable; the artifact includes cached and offline fallbacks."
+          "note": {
+            "zh": "实时天气请求可能不可用；成果内置缓存与离线回退。",
+            "en": "Live weather requests may be unavailable; the artifact includes cached and offline fallbacks."
+          }
         }
       },
       "source": {
@@ -1591,7 +1622,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -1646,7 +1680,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -1715,7 +1752,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -2184,7 +2224,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -2251,7 +2294,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -2318,7 +2364,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -2385,7 +2434,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          "note": {
+            "zh": "浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。",
+            "en": "Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior."
+          }
         }
       },
       "source": {
@@ -2455,7 +2507,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "The artifact uses ES modules, so it must be served over HTTP; opening the file directly fails under CORS. This preview is served over HTTP."
+          "note": {
+            "zh": "成果使用 ES module，需经 HTTP 服务才能运行；直接打开文件会因 CORS 失败。本预览页面经 HTTP 提供。",
+            "en": "The artifact uses ES modules, so it must be served over HTTP; opening the file directly fails under CORS. This preview is served over HTTP."
+          }
         }
       },
       "source": {
@@ -2522,7 +2577,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "Live weather requests go to Open-Meteo and may be unavailable; the artifact falls back to offline demo data."
+          "note": {
+            "zh": "实时天气请求发往 Open-Meteo，可能不可用；成果会回退到离线演示数据。",
+            "en": "Live weather requests go to Open-Meteo and may be unavailable; the artifact falls back to offline demo data."
+          }
         }
       },
       "source": {
@@ -2591,7 +2649,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "The page links Google Fonts; offline rendering falls back to system fonts."
+          "note": {
+            "zh": "该页面引用 Google Fonts；离线渲染会回退到系统字体。",
+            "en": "The page links Google Fonts; offline rendering falls back to system fonts."
+          }
         }
       },
       "source": {
@@ -2661,7 +2722,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "The artifact uses ES modules, so it must be served over HTTP; opening the file directly fails under CORS. This preview is served over HTTP."
+          "note": {
+            "zh": "成果使用 ES module，需经 HTTP 服务才能运行；直接打开文件会因 CORS 失败。本预览页面经 HTTP 提供。",
+            "en": "The artifact uses ES modules, so it must be served over HTTP; opening the file directly fails under CORS. This preview is served over HTTP."
+          }
         }
       },
       "source": {
@@ -3597,7 +3661,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "HTML output; internal relative files are listed explicitly"
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
         }
       },
       "source": {
@@ -3675,7 +3742,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "SVG output; any accompanying PNG is preserved as original run output"
+          "note": {
+            "zh": "SVG 成果；随附的 PNG 按原始运行输出保留",
+            "en": "SVG output; any accompanying PNG is preserved as original run output"
+          }
         }
       },
       "source": {
@@ -3754,7 +3824,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "SVG output; any accompanying PNG is preserved as original run output"
+          "note": {
+            "zh": "SVG 成果；随附的 PNG 按原始运行输出保留",
+            "en": "SVG output; any accompanying PNG is preserved as original run output"
+          }
         }
       },
       "source": {
@@ -3832,7 +3905,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "SVG output; any accompanying PNG is preserved as original run output"
+          "note": {
+            "zh": "SVG 成果；随附的 PNG 按原始运行输出保留",
+            "en": "SVG output; any accompanying PNG is preserved as original run output"
+          }
         }
       },
       "source": {
@@ -3910,7 +3986,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "SVG output; any accompanying PNG is preserved as original run output"
+          "note": {
+            "zh": "SVG 成果；随附的 PNG 按原始运行输出保留",
+            "en": "SVG output; any accompanying PNG is preserved as original run output"
+          }
         }
       },
       "source": {
@@ -3988,7 +4067,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "SVG output; any accompanying PNG is preserved as original run output"
+          "note": {
+            "zh": "SVG 成果；随附的 PNG 按原始运行输出保留",
+            "en": "SVG output; any accompanying PNG is preserved as original run output"
+          }
         }
       },
       "source": {
@@ -4067,7 +4149,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "SVG output; any accompanying PNG is preserved as original run output"
+          "note": {
+            "zh": "SVG 成果；随附的 PNG 按原始运行输出保留",
+            "en": "SVG output; any accompanying PNG is preserved as original run output"
+          }
         }
       },
       "source": {
@@ -4145,7 +4230,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "HTML output; internal relative files are listed explicitly"
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
         }
       },
       "source": {
@@ -4223,7 +4311,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "HTML output; internal relative files are listed explicitly"
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
         }
       },
       "source": {
@@ -4304,7 +4395,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "HTML output; internal relative files are listed explicitly"
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
         }
       },
       "source": {
@@ -4385,7 +4479,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "HTML output; internal relative files are listed explicitly"
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
         }
       },
       "source": {
@@ -4469,7 +4566,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "HTML output; internal relative files are listed explicitly"
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
         }
       },
       "source": {
@@ -4549,7 +4649,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "HTML output; internal relative files are listed explicitly"
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
         }
       },
       "source": {
@@ -4630,7 +4733,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "HTML output; internal relative files are listed explicitly"
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
         }
       },
       "source": {
@@ -4710,7 +4816,10 @@
         "preview": {
           "lazy": true,
           "sandbox": "allow-scripts allow-downloads allow-forms",
-          "note": "HTML output; internal relative files are listed explicitly"
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
         }
       },
       "source": {

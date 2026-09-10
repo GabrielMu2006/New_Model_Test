@@ -20,3 +20,6 @@ jobs:
       - run: npm run check
       - run: npm test
       - run: npm run build
+      # 浏览器流程纳入 CI：装三套浏览器后跑 e2e（需完整历史，见上面的 checkout 配置）。
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run test:e2e

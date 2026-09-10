@@ -191,11 +191,13 @@ arguments: {"code": "try { const a = await tools.bash({ command: 'pwd' }) ..."}
 | **工具调用不可见**（`telemetry: hidden`） | 保持 `unknown`（或按组织者裁定） | 「**工具调用不可见，按既定规则默认视为遵守规则**」+ 未覆盖维度清单 + 仍做过的检查 |
 | --- | --- | --- |
 | 全部维度未命中 | 保持 `unknown`（或按组织者裁定） | 「**未发现越界**」+ 覆盖范围 + 未覆盖渠道 |
-| 有越界尝试但未取得内容 | `suspected` | 「存在越界尝试，未取得内容」（不标注、不影响成绩） |
+| 有越界尝试但未取得内容 | `suspected` | **不标注**：只写入审计报告与 `contamination.events`；展示层不出现该状态（2026-09-10 组织者决定，见下） |
 | 确认作弊成功（取得外部答案/成果） | `contaminated` | 「已确认获取外部答案」+ 必须标注 |
 | 证据缺失/日志不完整 | `unknown` | 「证据不完整，无法判定」 |
 
 **禁止**写「clean」「无污染」「证明未作弊」——审计只能证明"在这些渠道里没看到越界"。
+
+> **2026-09-10 组织者裁定（消除本表此前的自相矛盾）**：`suspected` 一律**不标注**——上表曾同时给出「不作外显标注」与「存在越界尝试，未取得内容」的措辞，导致展示站把该状态当成标签渲染。现口径以本节表格为准：`suspected` 只进审计报告与归档数据（`contamination.status` / `events`），运行页**不渲染该行**；`contaminated`（确认作弊成功）仍必须标注且与成绩同处显示。实现见 `website/src/lib/contamination.ts`（`isWithheld` / `contaminationDisplay === 'withheld'`）与 `tests/contamination.test.mjs`。
 
 ---
 

@@ -4,6 +4,9 @@ interface Props { locale: Locale; run: Run; task: Task; compact?: boolean; side?
 const { locale, run, task, compact = false, side = '' } = Astro.props;
 const artifactUrl = asset(`artifacts/${run.id}/${run.artifact.entry}`);
 const labels = locale === 'zh' ? { load: '加载交互预览', reload: '重新加载', expand: '扩大显示', open: '独立打开', source: '查看源码', download: '下载 SVG', note: '预览说明' } : { load: 'Load interactive preview', reload: 'Reload', expand: 'Expand', open: 'Open standalone', source: 'View source', download: 'Download SVG', note: 'Preview note' };
+// 说明可能是双语对象（本站撰写的提示，中文页优先）或归档里的原文字符串（原样显示，不臆造译文）。
+const rawNote = run.artifact.preview.note;
+const previewNote = typeof rawNote === 'string' ? rawNote : rawNote?.[locale] ?? rawNote?.en ?? null;
 ---
 <section class:list={['artifact-preview', compact && 'compact']} data-preview data-side={side}>
   <div class="preview-toolbar">
@@ -25,7 +28,7 @@ const labels = locale === 'zh' ? { load: '加载交互预览', reload: '重新�
       </div>
     )}
   </div>
-  {run.artifact.preview.note && <p class="preview-note"><strong>{labels.note}:</strong> {run.artifact.preview.note}</p>}
+  {previewNote && <p class="preview-note"><strong>{labels.note}:</strong> {previewNote}</p>}
   <div class="preview-links">
     <a href={sourceUrl(`${run.artifact.sourcePath}/${run.artifact.entry}`, undefined, run.artifact.commit)} target="_blank" rel="noopener">{labels.source} ↗</a>
     <a href={href(locale, `runs/${run.id}/`)}>{run.id}</a>

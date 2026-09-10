@@ -26,6 +26,12 @@ jobs:
       - run: npm run check
       - run: npm test
       - run: npm run build
+      # 发布前跑浏览器流程：交互/布局回归不应靠人工发现。
+      # 用 source_ref 回退到已发布过的已知良好版本时不重跑（回退优先保证可用，且那时测的不是当前代码）。
+      - if: ${{ !inputs.source_ref }}
+        run: npx playwright install --with-deps chromium firefox webkit
+      - if: ${{ !inputs.source_ref }}
+        run: npm run test:e2e
       - uses: actions/upload-pages-artifact@v4
         with: { path: website/dist, retention-days: 30 }
   deploy:

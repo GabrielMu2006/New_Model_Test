@@ -27,7 +27,13 @@ Muse Spark 接入时已逐项完成的适配（可作为后续批次的参照）
 
 **Phase 2（Task 16–20）接入时已补齐**：扁平布局适配器（读 `submission.json`，导入时校验 `prompt.txt` 的 SHA-256 与归档声明一致，拒绝题目被改动；Muse 批次另从阶段级 `Reviews/ai/<评委>-vN/task-NN.md` 解析评价）；`validate-data.mjs` 新增「阶段 `taskVersions` 必须与目录中任务一一对应」的通用不变量，第一阶段计数改为按阶段收敛；`check-dist.mjs` 的回归按阶段推导并新增「已归档成果必须随构建发布」检查；网站运行页新展示收尾审查证据链接与补充轮逐字输入，无评价时显式说明而不是留空白；`e2e-smoke.mjs` 覆盖第二阶段阶段页、越界标注、审查链接、SVG 成果与懒加载预览，并支持 `E2E_BROWSERS` 选择浏览器。
 
-仍然未实现的部分（后续接入新阶段时仍需处理）：通用批次扫描器、按运行挂多份 AI 评价的网站展示（数据层已支持一个运行多条评价，页面按运行渲染全部评价）、以及第二阶段其余 25 题的评价接入（当前 `reviews/` 为空，运行页会显式显示「暂无独立评价」）。
+仍然未实现的部分（后续接入新阶段时仍需处理）：通用批次扫描器、第二阶段其余 25 题的评价接入（当前 Muse 只有 Task 16–20 的 1 份/题 AI 评价，DeepSeek 与两批 phase-02 均无人工评价）。
+
+**封面（HTML 成果必须自带一张）**：卡片与预览占位用的是 `public/covers/<runId>.png`，由 `npm run capture:covers`（`scripts/capture-covers.mjs`，本地手动运行，需要 Playwright 浏览器）为「HTML 类型且没写 `artifact.cover`」的运行截图。归档时二选一：① 成果目录自带截图并在 `submission.json` 写 `artifacts.cover`；② 本地 build 后跑一次 `npm run capture:covers` 并把生成的 PNG 一起提交。**缺少封面会让 `npm run build` 的静态链接检查直接失败**（封面是页面上的 `src`），所以这一张图不是可选项；该脚本没有接进 CI（CI 需要额外装浏览器），因此封面必须在归档/接入时产出。
+
+**重复运行（r2+）**：当前计划不再产生 r2 运行（2026-09-10 组织者确认）。如将来确实要重跑，除了按 `runs/<run-id>/` 归档外，任务网格与题图取「该题该模型的第一条运行」，需要先决定卡片是否改为「一运行一卡」再接入。
+
+**新阶段要带的字段**：每批的 Review / Batch / Assessment 必须各自带 `commit`（该文件入库的提交，用于源码链接），阶段的 `plannedTasks` + 双语 `plannedTasksNote` 必须写明计划题数及其来源。
 
 ## 3. 验证、发布与交付
 

@@ -44,11 +44,24 @@ const artifacts = {
   'task-15': { files: ['index.html', 'app.js', 'books.js', 'style.css'], entry: 'index.html', type: 'html' },
 };
 
+// 预览说明（本站撰写的提示，非归档内容）：中英双语，中文页优先显示中文。
 const previewNotes = {
-  'task-12': 'The artifact uses ES modules, so it must be served over HTTP; opening the file directly fails under CORS. This preview is served over HTTP.',
-  'task-15': 'The artifact uses ES modules, so it must be served over HTTP; opening the file directly fails under CORS. This preview is served over HTTP.',
-  'task-13': 'Live weather requests go to Open-Meteo and may be unavailable; the artifact falls back to offline demo data.',
-  'task-14': 'The page links Google Fonts; offline rendering falls back to system fonts.',
+  'task-12': {
+    zh: '成果使用 ES module，需经 HTTP 服务才能运行；直接打开文件会因 CORS 失败。本预览页面经 HTTP 提供。',
+    en: 'The artifact uses ES modules, so it must be served over HTTP; opening the file directly fails under CORS. This preview is served over HTTP.',
+  },
+  'task-15': {
+    zh: '成果使用 ES module，需经 HTTP 服务才能运行；直接打开文件会因 CORS 失败。本预览页面经 HTTP 提供。',
+    en: 'The artifact uses ES modules, so it must be served over HTTP; opening the file directly fails under CORS. This preview is served over HTTP.',
+  },
+  'task-13': {
+    zh: '实时天气请求发往 Open-Meteo，可能不可用；成果会回退到离线演示数据。',
+    en: 'Live weather requests go to Open-Meteo and may be unavailable; the artifact falls back to offline demo data.',
+  },
+  'task-14': {
+    zh: '该页面引用 Google Fonts；离线渲染会回退到系统字体。',
+    en: 'The page links Google Fonts; offline rendering falls back to system fonts.',
+  },
 };
 
 // 人工评语英文译文（原评为中文，译文在此显式提供并标记 translated）。
@@ -227,7 +240,10 @@ export function load({ read, repoRoot, siteRoot }) {
           lazy: artifact.type === 'html',
           sandbox: artifact.type === 'html' ? 'allow-scripts allow-downloads allow-forms' : null,
           note: previewNotes[taskId] ?? (artifact.type === 'html'
-            ? 'Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior.'
+            ? {
+              zh: '浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。',
+              en: 'Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior.',
+            }
             : null),
         },
       },

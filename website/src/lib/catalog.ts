@@ -51,6 +51,19 @@ export const batchesForModel = (modelId: string) => catalog.batches.filter((batc
 /** 模型声明的快照（harness 报告的 model id）；未声明时返回空数组。 */
 export const snapshotsForModel = (modelId: string) => modelById(modelId)?.snapshots ?? [];
 export const assessmentsForModel = (modelId: string) => catalog.assessments.filter((assessment) => assessment.modelId === modelId);
+/**
+ * 模型索引页用的 AI 阶段评估概览。
+ * 2026-09-10 组织者决定：索引页显示该模型 AI 阶段评估的**简单均分**，点进模型页可看到各评委的逐份评分。
+ * 均分只作概览——各评委口径不同，不得据此排序或做跨模型排行榜。
+ */
+export const assessmentSummary = (modelId: string) => {
+  const list = assessmentsForModel(modelId);
+  const scored = list.filter((assessment) => assessment.score != null);
+  const average = scored.length
+    ? Math.round(scored.reduce((sum, assessment) => sum + assessment.score, 0) / scored.length * 10) / 10
+    : null;
+  return { count: list.length, scored: scored.length, average };
+};
 export const tasksForModel = (modelId: string) => {
   const ids = new Set(runsForModel(modelId).map((run) => run.taskId));
   return catalog.tasks.filter((task) => ids.has(task.id));
@@ -60,11 +73,5 @@ export const runCards = () => catalog.tasks.flatMap((task) => catalog.models.fla
   const run = catalog.runs.find((item) => item.taskId === task.id && item.modelId === model.id);
   return run ? [{ task, run, model }] : [];
 }));
-export const compact = (value: number | null, locale: Locale) => value == null ? (locale === 'zh' ? '未记录' : 'Not recorded') : new Intl.NumberFormat(locale === 'zh' ? 'zh-CN' : 'en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(value);
-export const number = (value: number | null, locale: Locale) => value == null ? (locale === 'zh' ? '未记录' : 'Not recorded') : new Intl.NumberFormat(locale === 'zh' ? 'zh-CN' : 'en-US').format(value);
-export const duration = (seconds: number | null, locale: Locale) => {
-  if (seconds == null) return locale === 'zh' ? '未记录' : 'Not recorded';
-  const minutes = Math.floor(seconds / 60);
-  const rest = Math.round(seconds % 60);
-  return `${minutes}:${String(rest).padStart(2, '0')}`;
-};
+// 数值/时长格式化搬到 ./format.ts（可在 Node 原生测试里直接导入）。
+export { compact, number, duration, type Locale as FormatLocale } from './format';

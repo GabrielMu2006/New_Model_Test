@@ -35,6 +35,10 @@ for (const phase of catalog.phases) {
   if (!Number.isInteger(phase.number) || phase.number < 1) fail(`phase ${phase.id}: invalid number`);
   if (!phase.name?.zh || !phase.name?.en) fail(`phase ${phase.id}: name must be bilingual`);
   if (!Array.isArray(phase.taskVersions) || phase.taskVersions.length === 0) fail(`phase ${phase.id}: taskVersions must be a non-empty array`);
+  // 计划题数用于首页覆盖率；必须是不小于已归档题数的正整数，不能小于实际数据。
+  if (!Number.isInteger(phase.plannedTasks) || phase.plannedTasks < 1) fail(`phase ${phase.id}: plannedTasks must be a positive integer`);
+  if (phase.plannedTasks < phase.taskVersions.length) fail(`phase ${phase.id}: plannedTasks ${phase.plannedTasks} is below the archived task count ${phase.taskVersions.length}`);
+  if (!phase.plannedTasksNote?.zh || !phase.plannedTasksNote?.en) fail(`phase ${phase.id}: plannedTasksNote must be bilingual (state where the planned count comes from)`);
   for (const ref of phase.taskVersions) {
     const [taskId, version] = String(ref).split('@');
     const task = taskById.get(taskId);
@@ -91,6 +95,11 @@ for (const run of catalog.runs) {
   if (task.version !== run.taskVersion) fail(`${run.id}: taskVersion ${run.taskVersion} does not match task ${run.taskId}@${task.version}`);
   if (!['svg', 'html'].includes(run.artifact.type)) fail(`${run.id}: invalid artifact type`);
   if (!run.artifact.files.includes(run.artifact.entry)) fail(`${run.id}: entry ${run.artifact.entry} is not in the artifact file list`);
+  // 预览说明：本站撰写的提示用双语对象（中文页优先），归档里的原文字符串原样保留。
+  const previewNote = run.artifact.preview?.note;
+  if (previewNote != null && typeof previewNote !== 'string') {
+    if (!previewNote.zh || !previewNote.en) fail(`${run.id}: preview.note must be a string (verbatim archive text) or bilingual { zh, en }`);
+  }
   if (!run.artifact.commit || !/^[0-9a-f]{40}$/.test(run.artifact.commit)) fail(`${run.id}: artifact.commit must be a full SHA`);
   for (const file of run.artifact.files) {
     if (path.isAbsolute(file) || file.split('/').includes('..')) fail(`${run.id}: unsafe file path ${file}`);

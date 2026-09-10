@@ -34,6 +34,23 @@ const numericMetrics = [
   'inputTokens', 'outputTokens', 'cacheReadTokens', 'totalTokens',
 ];
 
+/**
+ * 归档 `submission.json` 的预览说明是英文原文。展示时提供中文，中文页优先显示中文、
+ * 英文页显示归档原文（`en` 一律是归档原样文本，`zh` 是本站为中文页面补的说明）。
+ */
+const previewNoteZh = {
+  'HTML output; internal relative files are listed explicitly': 'HTML 成果；引用的内部相对文件已逐项列出',
+  'SVG output; any accompanying PNG is preserved as original run output': 'SVG 成果；随附的 PNG 按原始运行输出保留',
+};
+
+const bilingualPreview = (preview) => {
+  if (!preview) return preview;
+  const note = preview.note;
+  if (typeof note !== 'string' || !note) return preview;
+  const zh = previewNoteZh[note];
+  return zh ? { ...preview, note: { zh, en: note } } : preview;
+};
+
 const readJson = (repoRoot, relative) => JSON.parse(fs.readFileSync(path.join(repoRoot, relative), 'utf8'));
 
 function pickMetrics(metrics) {
@@ -127,7 +144,7 @@ export function load({ read, repoRoot }) {
         sourcePath: artifact.sourcePath,
         commit: archiveCommit,
         cover: artifact.cover,
-        preview: artifact.preview,
+        preview: bilingualPreview(artifact.preview),
       },
       source: { path: `${runRoot}/README.md`, lines: null },
       directory: runRoot,

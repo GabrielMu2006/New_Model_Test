@@ -139,10 +139,17 @@ export function load({ read, siteRoot }) {
         preview: {
           lazy: artifactType === 'html',
           sandbox: artifactType === 'html' ? 'allow-scripts allow-downloads allow-forms' : null,
+          // 展示说明是本站撰写的提示（非归档内容），因此提供双语；中文页优先显示中文。
           note: id === 'task-13'
-            ? 'Live weather requests may be unavailable; the artifact includes cached and offline fallbacks.'
+            ? {
+              zh: '实时天气请求可能不可用；成果内置缓存与离线回退。',
+              en: 'Live weather requests may be unavailable; the artifact includes cached and offline fallbacks.',
+            }
             : artifactType === 'html'
-              ? 'Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior.'
+              ? {
+                zh: '浏览器沙箱可能限制内嵌页面的本地存储与下载；需要完整行为请用「独立打开」。',
+                en: 'Embedded storage and downloads can be restricted by browser sandboxing; use the standalone view for full behavior.',
+              }
               : null,
         },
       },

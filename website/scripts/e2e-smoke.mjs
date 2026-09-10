@@ -13,6 +13,13 @@ const selected = (process.env.E2E_BROWSERS ?? 'chromium,firefox,webkit').split('
 for (const name of selected) if (!launchers[name]) throw new Error(`Unknown browser in E2E_BROWSERS: ${name}`);
 const deepseekRuns = catalog.runs.filter((run) => run.modelId === 'deepseek-v4-1-flash-exp-0910');
 const museRuns = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3');
+// 覆盖率与 AI 均分都从数据推导，避免把数字写死在断言里。
+const archivedTasks = catalog.tasks.filter((task) => catalog.runs.some((run) => run.taskId === task.id)).length;
+const plannedTasks = catalog.phases.reduce((sum, phase) => sum + phase.plannedTasks, 0);
+const aiAverage = (modelId) => {
+  const scores = catalog.assessments.filter((assessment) => assessment.modelId === modelId && assessment.score != null).map((assessment) => assessment.score);
+  return scores.length ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length * 10) / 10 : null;
+};
 try {
   if (!(await fetch(`${base}/zh/`, { signal: AbortSignal.timeout(10000) })).ok) throw new Error('Preview failed to serve the build.');
   for (const name of selected) { const launcher = launchers[name];
@@ -102,9 +109,23 @@ try {
     if (await page.locator('.run-tile').count() !== 5) throw new Error(`${name}: phase-02 page did not list the 5 archived tasks`);
     await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/`);
     const phase2Text = await page.locator('.detail-page').textContent();
-    for (const expected of ['策略级（workspace-only）', '存在越界尝试，未取得内容 · 不影响成绩', '不要再读取chrome钥匙串了']) {
+    for (const expected of ['策略级（workspace-only）', '不要再读取chrome钥匙串了']) {
       if (!phase2Text?.includes(expected)) throw new Error(`${name}: phase-02 run page missing "${expected}"`);
     }
+    // 2026-09-10 组织者决定：越界尝试只记入审计档案，运行页的「越界判定」行不得出现。
+    // 注意：评价正文里出现该状态属于归档原文（逐字保留），不在断言范围内，因此按配置行判定而不是全文搜词。
+    for (const [path, label] of [
+      ['/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/', '越界判定'],
+      ['/en/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/', 'Boundary check'],
+    ]) {
+      await page.goto(base + path);
+      if (await page.locator('.config-line').filter({ hasText: label }).count() !== 0) {
+        throw new Error(`${name}: ${path} must not annotate a boundary attempt`);
+      }
+    }
+    const suspectedRun = catalog.runs.find((run) => run.id === 'run-deepseek-v4-1-flash-exp-0910-task-17-r1');
+    if (suspectedRun.contamination.status !== 'suspected') throw new Error(`${name}: the archive must still record the boundary attempt`);
+    await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-17-r1/`);
     // 该运行现在挂着 Muse Spark 1.3 拆出的逐题评价
     if (!phase2Text?.includes('94/100')) throw new Error(`${name}: phase-02 run page missing the muse-spark-v1 score`);
     if (await page.locator('.review-card').count() !== 1) throw new Error(`${name}: phase-02 run page must show exactly one review`);
@@ -151,6 +172,38 @@ try {
     const clockCards = catalog.runs.filter((run) => catalog.tasks.find((task) => task.id === run.taskId)?.category === 'svg-clock').length;
     if (await page.locator('[data-task-card]:visible').count() !== clockCards) throw new Error(`${name}: category filter failed`);
 
+    // 覆盖率、AI 均分与时长格式（都从数据推导）
+    await page.goto(`${base}/zh/`);
+    const homeText = await page.locator('.signal-card').textContent();
+    if (!homeText?.includes(`${archivedTasks} / ${plannedTasks}`)) throw new Error(`${name}: archive coverage card must show ${archivedTasks} / ${plannedTasks}`);
+    const homeStats = await page.locator('.stats').textContent();
+    if (/\b\d{3,}:[0-5]\d\b/.test(homeStats ?? '')) throw new Error(`${name}: batch duration still uses "minutes:seconds" beyond 59 minutes: ${homeStats?.slice(0, 120)}`);
+    if (!/\b\d+:\d\d:\d\d\b/.test(homeStats ?? '')) throw new Error(`${name}: long batch duration is not rendered as H:MM:SS`);
+    await page.goto(`${base}/zh/models/`);
+    const modelIndex = await page.locator('.model-list').textContent();
+    for (const model of catalog.models) {
+      const average = aiAverage(model.id);
+      if (average == null) { if (!modelIndex?.includes('暂无阶段评估')) throw new Error(`${name}: ${model.id}: missing "no phase assessment" placeholder`); continue; }
+      if (!modelIndex?.includes(`AI 均分 ${average}/100`)) throw new Error(`${name}: ${model.id}: model index must show the AI average ${average}`);
+    }
+    // 每个 AI 评委的逐份评分在模型页并列保留
+    await page.goto(`${base}/zh/models/muse-spark-1-3/`);
+    const musePage = await page.locator('section.page-block').first().textContent();
+    for (const assessment of catalog.assessments.filter((item) => item.modelId === 'muse-spark-1-3')) {
+      if (!musePage?.includes(`${assessment.score}/100`)) throw new Error(`${name}: ${assessment.id}: per-reviewer score missing on the model page`);
+    }
+    if (!musePage?.includes('均分')) throw new Error(`${name}: model page must explain what the average means`);
+    // 预览说明在中文页中文优先（双语说明不得回落到英文原文）
+    await page.goto(`${base}/zh/runs/run-muse-spark-1-3-task-13-r1/`);
+    const noteText = await page.locator('.preview-note').textContent();
+    if (!noteText?.includes('Open-Meteo')) throw new Error(`${name}: Chinese preview note missing`);
+    if (noteText.includes('falls back to offline demo data')) throw new Error(`${name}: Chinese page fell back to the English preview note`);
+    // 阶段页显示「已归档 / 计划」
+    const phase2 = catalog.phases.find((phase) => phase.id === 'phase-02');
+    await page.goto(`${base}/zh/phases/phase-02/`);
+    const phaseText = await page.locator('.timeline').textContent();
+    if (!phaseText?.includes(`${phase2.taskVersions.length} / ${phase2.plannedTasks}`)) throw new Error(`${name}: phase page must show archived/planned tasks`);
+
     // 未知路径必须落到 404 页面（用独立页面，避免这条预期内的 404 污染控制台断言）
     const notFoundPage = await browser.newPage();
     notFoundPage.setDefaultTimeout(15000);
@@ -163,7 +216,7 @@ try {
     // 横向溢出：不只首页——对比页与含长源码路径的任务页此前都会溢出
     for (const width of [390, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 });
-      for (const path of ['/zh/tasks/', '/zh/tasks/task-16/', '/en/tasks/task-16/', '/zh/compare/?task=task-16&left=run-deepseek-v4-1-flash-exp-0910-task-16-r1&right=run-muse-spark-1-3-xhigh-task-16-r1', '/zh/models/muse-spark-1-3/', '/en/methodology/']) {
+      for (const path of ['/zh/tasks/', '/zh/tasks/task-16/', '/en/tasks/task-16/', '/zh/compare/?task=task-16&left=run-deepseek-v4-1-flash-exp-0910-task-16-r1&right=run-muse-spark-1-3-xhigh-task-16-r1', '/zh/models/muse-spark-1-3/', '/zh/phases/phase-02/', '/en/methodology/']) {
         await page.goto(base + path);
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
         if (overflow > 1) throw new Error(`${name}: horizontal overflow +${overflow}px at ${width} on ${path}`);

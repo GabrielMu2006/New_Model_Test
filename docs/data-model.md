@@ -6,6 +6,8 @@
 - Model 只记录来源可确认的身份；未知值用 `null`。
 - Run 把模型身份与实际 harness、会话、补充轮及指标分离；另带 `prompt`（路径、SHA-256、是否事后补录）、`isolation.level`、`contamination.status` 与 `status`。
 - Artifact 使用显式文件清单、入口、预览权限和**自己的**归档提交（`artifact.commit`）；构建不会递归发布整个任务目录。
+- `artifact.preview.note` 可能是**双语对象** `{ zh, en }` 或**归档原样的字符串**：本站撰写的提示提供双语（中文页优先），来自归档 `submission.json` 的英文说明保留原文、并在中文页配中文说明（`en` 始终是归档原样文本）。校验要求双语对象两项都非空。
+- `phase.plannedTasks` 是该阶段**计划**的题目数（phase-01 = 15，phase-02 = 30，来源见同文件的 `plannedTasksNote`），用于首页与阶段页的「已测试 / 计划」覆盖率；必须是不小于该阶段已归档题数的正整数。
 - Review 按 human / ai 独立记录，评分方法和原始报告定位不合并；同一 Run 允许挂多份 AI 评价，`translated` 标明结论是否为他语译文。
 - Batch 记录该模型在该阶段的批次指标（用时/token/API/工具/失败/费用）与来源，页面分开展示，不合成跨批次排名。
 - Assessment 记录阶段级评估（评分、口径、来源、免责声明）；不同评委的分数并列保留，不互相覆盖。
