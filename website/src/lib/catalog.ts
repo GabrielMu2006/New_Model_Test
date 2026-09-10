@@ -74,4 +74,4 @@ export const runCards = () => catalog.tasks.flatMap((task) => catalog.models.fla
   return run ? [{ task, run, model }] : [];
 }));
 // 数值/时长格式化搬到 ./format.ts（可在 Node 原生测试里直接导入）。
-export { compact, number, duration, type Locale as FormatLocale } from './format';
+export { compact, number, duration, runDuration, type Locale as FormatLocale } from './format';

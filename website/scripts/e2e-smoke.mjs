@@ -176,6 +176,12 @@ try {
     const clockCards = catalog.runs.filter((run) => catalog.tasks.find((task) => task.id === run.taskId)?.category === 'svg-clock').length;
     if (await page.locator('[data-task-card]:visible').count() !== clockCards) throw new Error(`${name}: category filter failed`);
 
+    // 时长写法统一（2026-09-10）：展示一律 `M:SS` / `H:MM:SS`，归档的「4分51秒」不再混入页面
+    await page.goto(`${base}/zh/runs/run-deepseek-v4-1-flash-exp-0910-task-01-r1/`);
+    const durationCell = await page.locator('.metric-grid > div').filter({ hasText: '累计用时' }).locator('strong').first().textContent();
+    if (!/^(\d+:\d\d|\d+:\d\d:\d\d)$/.test((durationCell ?? '').trim())) throw new Error(`${name}: run duration must render as M:SS or H:MM:SS, got "${durationCell}"`);
+    if (/\d+分\d+秒/.test((await page.locator('.detail-page').textContent()) ?? '')) throw new Error(`${name}: archived duration label leaked into the run page`);
+
     // 覆盖率、AI 均分与时长格式（都从数据推导）
     await page.goto(`${base}/zh/`);
     const homeText = await page.locator('.signal-card').textContent();

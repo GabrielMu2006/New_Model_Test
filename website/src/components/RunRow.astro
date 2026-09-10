@@ -1,5 +1,5 @@
 ---
-import { compact, duration, href, modelById, number, type Locale, type Run } from '../lib/catalog';
+import { compact, href, modelById, number, runDuration, type Locale, type Run } from '../lib/catalog';
 interface Props { locale: Locale; run: Run; }
 const { locale, run } = Astro.props;
 const model = modelById(run.modelId);
@@ -13,7 +13,7 @@ const labels = {
   view: l ? '查看详情' : 'View details',
   notRecorded: l ? '未记录' : 'Not recorded',
 };
-const durationText = run.metrics.durationLabel ?? (run.metrics.durationSeconds == null ? labels.notRecorded : duration(run.metrics.durationSeconds, locale));
+const durationText = runDuration(run.metrics, locale);
 ---
 <article class="run-row">
   <div><span class="status-dot"></span><strong>{model?.name[locale]}</strong><small>{run.id}</small></div>

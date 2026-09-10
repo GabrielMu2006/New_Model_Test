@@ -32,3 +32,11 @@ export const duration = (seconds: number | null, locale: Locale) => {
   const ss = String(rest).padStart(2, '0');
   return hours > 0 ? `${hours}:${mm}:${ss}` : `${minutes}:${ss}`;
 };
+
+/**
+ * 运行时长：展示层**一律**用 `durationSeconds` 格式化，写法统一。
+ * 归档自带的 `durationLabel`（如「4分51秒」）只作为数据保留（来源可追溯），不再参与渲染——
+ * 此前两种写法会在同一页并存。仅当归档只有文本、没有秒数时才回落到该文本，避免丢值。
+ */
+export const runDuration = (metrics: { durationSeconds: number | null; durationLabel?: string | null }, locale: Locale) =>
+  metrics.durationSeconds != null ? duration(metrics.durationSeconds, locale) : (metrics.durationLabel ?? notRecorded(locale));
