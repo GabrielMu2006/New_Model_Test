@@ -16,6 +16,8 @@
 | `session.jsonl.zstd`（每个 run 一个） | `~/.dsh/sessions/<workspace>/session-<id>/` | ✅ |
 | `prompt.txt` 及其 SHA-256 | 任务目录 | ✅ |
 | `PLAN.md`（隔离等级、网络策略、允许域名、预算） | `test-workspace/phase-NN/` | ✅ |
+| 本副本身份（副本名、模型 slug、绑定时间） | 副本根目录 `.binding.json`（由 `_tools/set-model.mjs` 写入） | 多副本并行时 ✅ |
+| 同时存在的其他副本路径清单 | 组织者给出（如 `test-workspace/`、`test-workspace-2/`、`test-workspace-3/`） | 多副本并行时 ✅ |
 | 任务目录白名单（允许访问的路径） | 由组织者给出 | ✅ |
 | 工具白名单（本次允许调用的工具名） | 由组织者在 `PLAN.md` 声明 | 建议 |
 
@@ -136,6 +138,19 @@ arguments: {"code": "try { const a = await tools.bash({ command: 'pwd' }) ..."}
 - 扫 `reasoning-chunks` 的 `texts` 拼接文本，查找禁止路径、文件名、站点域名；
 - 注意：推理中出现路径**不等于**实际访问，需与 `tool/call` 交叉确认。
 
+### 4.11 同题并行副本（多模型同时测时**必查项**）
+
+自 2026-09-10 起，本机可同时存在多份**同题**工作区：`test-workspace/`、`test-workspace-2/`、`test-workspace-3/`（每个副本测一个模型，副本内只放初始文档 + 该模型的成果）。副本之间互为「当前目录以外的内容」，**读取任一其他副本的同题成果即记越界**——同题答案、`_build/`、`.tmp/`、`screenshots/`、`prompt.txt` 之外的一切都算。
+
+检查项：
+
+1. 从被测会话的 `session.cwd` 确认它属于哪个副本，记录该副本的 `_tools`/`.binding.json`（模型 slug）；
+2. 扫全部工具参数、命令文本、推理文本，查找**本副本以外**的副本路径片段：`test-workspace/`、`test-workspace-2/`、`test-workspace-3/`、`test-workspace-9/` 等（含绝对路径、`../test-workspace*`、通过环境变量或短路径间接到达的写法）；
+3. 命中且 `tool/result` 返回同题内容 → 记「越界且已获取」，该 run 排除出汇总；仅命中未取到内容 → 记「尝试未越界」；
+4. 归档时核对：本副本所有 runId 的模型 slug 与 `.binding.json` 一致，且**与其他副本不重复**。
+
+> 副本让「读取他人答案」变得更容易（同题成果就在隔壁），因此这一维度在多副本并行期间**不得跳过**，并在审计报告中写明已检查的副本清单。
+
 ---
 
 ## 5. 判定与措辞
@@ -168,7 +183,7 @@ JSON 至少包含：
   "logSha256": "…",
   "frames": 0,
   "records": 0,
-  "checkedDimensions": ["policy", "tools", "paths", "commands", "repositories", "network", "reads", "writes", "delegation", "reasoning"],
+  "checkedDimensions": ["policy", "tools", "paths", "commands", "repositories", "network", "reads", "writes", "delegation", "reasoning", "siblingWorkspaces"],
   "findings": [],
   "verdict": "no-violation-observed",
   "limitations": ["训练数据不可审计", "…"],

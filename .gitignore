@@ -23,3 +23,6 @@ website/public/artifacts/
 
 # 测试脚手架中间产物（测试期间不入库；成果归档到 Test_Results/ 后才提交）
 test-workspace/phase-*/
+
+# 并行测试副本（每个副本测一个模型，整份不入库；成果同样归档到 Test_Results/ 后才提交）
+test-workspace-*/
