@@ -1,0 +1,18 @@
+Build an interactive 2D mechanical linkage designer.
+
+Users should be able to:
+- create fixed pivots
+- create rotating joints
+- create rigid links with exact lengths
+- create sliders constrained to tracks
+- connect components into mechanisms
+- choose a driving joint or motor
+- play, pause, reset, and step the simulation
+- display joint coordinates and link lengths
+- save and reload mechanisms
+
+Support at least:
+- a four-bar linkage
+- a crank-slider mechanism
+
+Rigid links must preserve their lengths throughout the simulation, and constrained joints must remain attached.

@@ -1,0 +1,15 @@
+{
+  "name": "linkage-designer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Interactive 2D mechanical linkage designer with a rigid-body constraint solver",
+  "scripts": {
+    "test": "node tests/run-tests.mjs",
+    "build": "node tools/build-single-file.mjs",
+    "serve": "node tools/serve.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

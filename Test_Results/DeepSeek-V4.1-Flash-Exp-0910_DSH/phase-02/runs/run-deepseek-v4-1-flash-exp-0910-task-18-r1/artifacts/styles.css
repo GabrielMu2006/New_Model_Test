@@ -1,0 +1,425 @@
+/* ==========================================================================
+   styles.css — dark workshop UI around the canvas.
+   Layout: header / canvas / controls / stage tracker. The canvas keeps the
+   machine's 4:3 aspect and scales with the viewport; below 900px the tracker
+   drops underneath the machine.
+   ========================================================================== */
+
+:root {
+  --bg: #070910;
+  --bg-soft: #0e1320;
+  --panel: #131a2b;
+  --panel-2: #182135;
+  --line: #24304a;
+  --text: #e8eefc;
+  --muted: #8d9bb8;
+  --accent: #63e0ff;
+  --accent-2: #ffd166;
+  --good: #7cf5a0;
+  --radius: 14px;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background:
+    radial-gradient(1100px 620px at 22% -8%, rgba(99, 224, 255, 0.10), transparent 62%),
+    radial-gradient(900px 560px at 92% 4%, rgba(255, 209, 102, 0.08), transparent 60%),
+    radial-gradient(1000px 700px at 50% 118%, rgba(124, 245, 160, 0.07), transparent 62%),
+    var(--bg);
+}
+
+.app {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 22px clamp(14px, 2.4vw, 30px) 34px;
+}
+
+/* -------------------------------------------------------------- header -- */
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.brand { display: flex; align-items: center; gap: 14px; }
+
+.brand h1 {
+  margin: 0;
+  font-size: clamp(19px, 2.3vw, 27px);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.brand .sub {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+/* small spinning gear as the logo */
+.gear {
+  flex: 0 0 auto;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, var(--bg-soft) 0 8px, transparent 8px),
+    conic-gradient(from 0deg,
+      var(--accent) 0 12deg, transparent 12deg 45deg,
+      var(--accent) 45deg 57deg, transparent 57deg 90deg,
+      var(--accent) 90deg 102deg, transparent 102deg 135deg,
+      var(--accent) 135deg 147deg, transparent 147deg 180deg,
+      var(--accent) 180deg 192deg, transparent 192deg 225deg,
+      var(--accent) 225deg 237deg, transparent 237deg 270deg,
+      var(--accent) 270deg 282deg, transparent 282deg 315deg,
+      var(--accent) 315deg 327deg, transparent 327deg 360deg);
+  box-shadow: 0 0 22px rgba(99, 224, 255, 0.35);
+  animation: spin 9s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  min-width: 118px;
+}
+
+.clock .label {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.clock span:last-child {
+  font-variant-numeric: tabular-nums;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------- board -- */
+
+.board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  grid-template-areas:
+    "canvas panel"
+    "controls panel";
+  gap: 14px;
+  align-items: start;
+}
+
+.canvas-wrap {
+  grid-area: canvas;
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #05070d;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  aspect-ratio: 4 / 3;
+}
+
+#stage {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.banner {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translate(-50%, 14px);
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: rgba(9, 13, 22, 0.86);
+  border: 1px solid rgba(99, 224, 255, 0.35);
+  color: var(--text);
+  font-size: 13.5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  backdrop-filter: blur(6px);
+}
+
+.banner.show { opacity: 1; transform: translate(-50%, 0); }
+
+.progress {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.progress .bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--good));
+  box-shadow: 0 0 12px rgba(99, 224, 255, 0.7);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------ controls -- */
+
+.controls {
+  grid-area: controls;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  box-shadow: var(--shadow);
+}
+
+.controls .spacer { flex: 1 1 auto; }
+
+button {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 16px;
+  background: linear-gradient(180deg, #1d273d, #141b2b);
+  color: var(--text);
+  font: inherit;
+  font-weight: 550;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.18s ease,
+              background 0.18s ease, box-shadow 0.18s ease;
+}
+
+button:hover:not(:disabled) {
+  border-color: rgba(99, 224, 255, 0.55);
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) { transform: translateY(0) scale(0.985); }
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+button.primary {
+  background: linear-gradient(180deg, #2b8fb8, #17627f);
+  border-color: rgba(99, 224, 255, 0.5);
+  color: #f2fbff;
+  box-shadow: 0 0 0 1px rgba(99, 224, 255, 0.12),
+              0 8px 22px rgba(23, 98, 127, 0.45);
+}
+
+button.primary:hover:not(:disabled) { background: linear-gradient(180deg, #34a6d3, #1a7396); }
+
+button.on {
+  border-color: rgba(124, 245, 160, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(124, 245, 160, 0.22);
+  color: #d7ffe6;
+}
+
+/* --------------------------------------------------------------- panel -- */
+
+.panel {
+  grid-area: panel;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  box-shadow: var(--shadow);
+  padding: 14px 14px 12px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 650;
+}
+
+#stage-now {
+  font-size: 12.5px;
+  color: var(--accent);
+  text-align: right;
+  font-weight: 550;
+}
+
+.stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stage {
+  display: flex;
+  gap: 10px;
+  padding: 8px 9px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: background 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+  opacity: 0.55;
+}
+
+.stage .num {
+  flex: 0 0 auto;
+  width: 21px; height: 21px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  background: #202b42;
+  color: var(--muted);
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stage .txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.stage .txt b { font-size: 13px; font-weight: 600; }
+.stage .txt i {
+  font-style: normal;
+  font-size: 11.5px;
+  line-height: 1.42;
+  color: var(--muted);
+}
+
+.stage.active {
+  opacity: 1;
+  border-color: rgba(99, 224, 255, 0.45);
+  background: rgba(99, 224, 255, 0.08);
+}
+
+.stage.active .num {
+  background: var(--accent);
+  color: #05202b;
+  box-shadow: 0 0 14px rgba(99, 224, 255, 0.6);
+}
+
+.stage.done {
+  opacity: 1;
+  border-color: rgba(124, 245, 160, 0.28);
+  background: rgba(124, 245, 160, 0.06);
+}
+
+.stage.done .num {
+  background: var(--good);
+  color: #04281a;
+}
+
+.stage.done .txt b::after {
+  content: " ✓";
+  color: var(--good);
+}
+
+.hint {
+  margin: 2px 0 0;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 9px;
+}
+
+kbd {
+  display: inline-block;
+  padding: 0 5px;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: #0e1420;
+  font: inherit;
+  font-size: 11px;
+  color: #c9d5ee;
+}
+
+/* --------------------------------------------------------------- modes -- */
+
+body[data-mode="complete"] .banner {
+  border-color: rgba(124, 245, 160, 0.55);
+  box-shadow: 0 0 26px rgba(124, 245, 160, 0.25);
+}
+
+body[data-mode="running"] .gear { animation-duration: 3.2s; }
+
+/* ------------------------------------------------------------ responsive */
+
+@media (max-width: 980px) {
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "canvas"
+      "controls"
+      "panel";
+  }
+
+  .panel { max-height: none; }
+
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .app { padding: 14px 12px 26px; }
+
+  .top { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .clock { align-items: flex-start; }
+
+  .controls { gap: 7px; }
+  button { padding: 9px 13px; font-size: 13.5px; flex: 1 1 auto; }
+  .controls .spacer { display: none; }
+
+  .banner { font-size: 12.5px; padding: 8px 14px; white-space: normal; max-width: 88%; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gear { animation: none; }
+  button, .banner, .progress .bar { transition: none; }
+}

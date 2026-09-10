@@ -1,0 +1,67 @@
+Headless-browser gate evidence
+==============================
+
+These two probes were executed against mechanical-watch-movement.svg with a
+local headless Chrome (Chrome 140, macOS) before this workspace stopped
+launching Chrome (Chrome touches its own profile / crashpad / keychain state
+outside the workspace, which this session's file policy denies). They are
+recorded here verbatim; re-run them with `./check.sh --with-browser`.
+
+Command: node tools/browser.mjs probe 8000
+------------------------------------------
+JS errors: none
+samples: 7
+parts that changed pose across 7 samples: 15/15
+clock  10:10:30 -> 10:10:33 -> 10:10:40 -> 10:10:43 -> 10:10:49 -> 10:10:56 -> 10:11:06
+speed  65.6x | power 100%
+hairspring rebuilt: 6 distinct path lengths
+rAF ticks: 1, 1, 1, 1, 1, 1, 1  perf.now: 413 -> 4213
+
+Note: requestAnimationFrame fires only once under Chrome's virtual-time
+headless mode, which is why the runtime also carries a 120 ms watchdog that
+steps the movement when animation frames are not delivered. All 15 animated
+parts (12 rotating groups + 3 hands) changed pose across the samples, the
+clock advanced, and the hairspring was rebuilt with distinct geometry.
+
+Command: node tools/browser.mjs controls 20000
+----------------------------------------------
+  v pause_state = paused
+  v paused_freezes_rotor = true
+  v pause_icon_shows_play = true
+  v resume_moves_rotor = true
+  v preset_60x = 60.0x
+  v second_hand_runs_at_60x = true
+  v slider_max = 600x
+  v slider_min = 0.10x
+  v space_pauses = paused
+  v reset_clock = 10:10:30
+  v wind_refills = 100%
+  v space_resumes = running
+v controls probe passed (12 signals)
+
+Command: node tools/browser.mjs shot screenshots/frozen.png "0 0 1240 920" 900 static
+------------------------------------------------------------------------------------
+shot screenshots/frozen.png 767179 bytes
+
+Command: node tools/pixels.mjs screenshots/frozen.png
+-----------------------------------------------------
+image 1240x920, 3 channels, scale 1
+
+1. jewels at the pivots
+  v ruby jewel at pivot 1..8 (barrel, third, fourth, escape, minute wheel,
+    seconds intermediate, balance, pallet fork)
+2. wheels
+  v barrel rim drawn and golden, interior openworked
+  v balance rim drawn, golden with steel screws, two crossings only
+3. tooth counts in the drawing
+  v barrel ~18.9 teeth over an 85 deg arc (80 total)
+  v third wheel ~10.0 teeth over an 80 deg arc (45 total)
+  v escape wheel ~5.4 teeth over a 130 deg arc (15 total)
+4. hands
+  v hour hand on 305.2 deg, minute hand on 63.0 deg, second hand on 180.0 deg
+  v nothing drawn where the minute hand is not
+5. case, chapter ring, panels
+  v 60 minute marks, bezel ring all the way round, all three panels have ink
+6. framing
+  v no artwork clipped at the canvas edge, aperture 27.5% lit
+v 26 pixel checks, 0 failed

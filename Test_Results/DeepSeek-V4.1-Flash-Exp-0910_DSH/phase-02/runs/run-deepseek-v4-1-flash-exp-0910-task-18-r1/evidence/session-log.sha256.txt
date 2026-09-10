@@ -1,0 +1,8 @@
+# 原始会话日志（未随公开档案入库，封存在原机）
+sessionId: session-f220eec5-8ac1-461f-bbd7-0ddb43d452ae
+path: /Users/gabrielmu/.dsh/sessions/--Users-gabrielmu-Documents-New_Model_Test-test-workspace-phase-02-task-18-rube-goldberg-machine--/session-f220eec5-8ac1-461f-bbd7-0ddb43d452ae/session.jsonl.zstd
+bytes: 4655953
+sha256: 36cd44dff30d096cf9e6e332d8ca690562e4fd2151630e6a341638b84fffca62
+frames: 11299
+records: 15356
+parseErrors: 0

@@ -1,0 +1,8 @@
+# 原始会话日志（未随公开档案入库，封存在原机）
+sessionId: session-3e6b3dce-f3b4-409c-beab-79d726832733
+path: /Users/gabrielmu/.dsh/sessions/--Users-gabrielmu-Documents-New_Model_Test-test-workspace-phase-02-task-16-animated-pelican-bicycle--/session-3e6b3dce-f3b4-409c-beab-79d726832733/session.jsonl.zstd
+bytes: 1289926
+sha256: 68cd560701b042d6a8c9159b1a80a0b56a0497ecede7ee526f5af8c1b6297fc4
+frames: 2902
+records: 4190
+parseErrors: 0

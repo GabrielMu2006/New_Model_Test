@@ -1,0 +1,10 @@
+[
+  {
+    "turn": 2,
+    "at": "2026-09-09T16:27:55+08:00",
+    "actor": "organizer (human)",
+    "verbatim": "不要再读取chrome钥匙串了",
+    "reason": "运行中观察到 Chrome 启动触碰钥匙串/默认 profile 活动，机主中途介入要求停止",
+    "effect": "模型随后为浏览器启动加上 --use-mock-keychain --password-store=basic --disable-sync，并把浏览器步骤改为 opt-in；该轮输入未提供任何题目提示或答案"
+  }
+]

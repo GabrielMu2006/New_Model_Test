@@ -1,0 +1,1245 @@
+[
+  {
+    "shot": "01-full-system",
+    "note": "the full system preset, Mercury out to Pluto",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/01-full-system.png",
+    "bytes": 19002,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": 640,
+        "y": 400,
+        "r": 26,
+        "onScreen": true
+      },
+      {
+        "id": "mercury",
+        "x": 644.1,
+        "y": 399.5,
+        "r": 8.73,
+        "onScreen": true
+      },
+      {
+        "id": "venus",
+        "x": 635.6,
+        "y": 404.5,
+        "r": 11.47,
+        "onScreen": true
+      },
+      {
+        "id": "earth",
+        "x": 644.4,
+        "y": 407.2,
+        "r": 11.64,
+        "onScreen": true
+      },
+      {
+        "id": "mars",
+        "x": 655.4,
+        "y": 402.2,
+        "r": 9.64,
+        "onScreen": true
+      },
+      {
+        "id": "jupiter",
+        "x": 643,
+        "y": 439.5,
+        "r": 23.89,
+        "onScreen": true
+      },
+      {
+        "id": "saturn",
+        "x": 616.9,
+        "y": 325.7,
+        "r": 22.62,
+        "onScreen": true
+      },
+      {
+        "id": "uranus",
+        "x": 817.9,
+        "y": 492.3,
+        "r": 17.62,
+        "onScreen": true
+      },
+      {
+        "id": "neptune",
+        "x": 914.1,
+        "y": 266.6,
+        "r": 17.47,
+        "onScreen": true
+      },
+      {
+        "id": "pluto",
+        "x": 1153.1,
+        "y": 458.9,
+        "r": 7.04,
+        "onScreen": true
+      },
+      {
+        "id": "moon",
+        "x": 644.4,
+        "y": 407.2,
+        "r": 7.89,
+        "onScreen": true
+      },
+      {
+        "id": "io",
+        "x": 643,
+        "y": 439.5,
+        "r": 8,
+        "onScreen": true
+      },
+      {
+        "id": "europa",
+        "x": 642.9,
+        "y": 439.5,
+        "r": 7.64,
+        "onScreen": true
+      },
+      {
+        "id": "ganymede",
+        "x": 643.1,
+        "y": 439.5,
+        "r": 8.93,
+        "onScreen": true
+      },
+      {
+        "id": "callisto",
+        "x": 643,
+        "y": 439.6,
+        "r": 8.7,
+        "onScreen": true
+      }
+    ]
+  },
+  {
+    "shot": "02-system-view",
+    "note": "the default view preset",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/02-system-view.png",
+    "bytes": 30239,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": 640,
+        "y": 400,
+        "r": 26,
+        "onScreen": true
+      },
+      {
+        "id": "mercury",
+        "x": 686.4,
+        "y": 394.5,
+        "r": 2.09,
+        "onScreen": true
+      },
+      {
+        "id": "venus",
+        "x": 589.9,
+        "y": 451.5,
+        "r": 4.14,
+        "onScreen": true
+      },
+      {
+        "id": "earth",
+        "x": 689.9,
+        "y": 482,
+        "r": 4.3,
+        "onScreen": true
+      },
+      {
+        "id": "mars",
+        "x": 813.9,
+        "y": 425.2,
+        "r": 2.68,
+        "onScreen": true
+      },
+      {
+        "id": "jupiter",
+        "x": 670.1,
+        "y": 800.3,
+        "r": 10.77,
+        "onScreen": false
+      },
+      {
+        "id": "saturn",
+        "x": 426.4,
+        "y": -288,
+        "r": 10.2,
+        "onScreen": false
+      },
+      {
+        "id": "uranus",
+        "x": 2146.2,
+        "y": 1181.7,
+        "r": 7.95,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 2861.8,
+        "y": -681.2,
+        "r": 7.88,
+        "onScreen": false
+      },
+      {
+        "id": "pluto",
+        "x": 4613.2,
+        "y": 855.9,
+        "r": 1.22,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": 690.2,
+        "y": 482,
+        "r": 1.62,
+        "onScreen": true
+      },
+      {
+        "id": "io",
+        "x": 670.3,
+        "y": 800.4,
+        "r": 1.68,
+        "onScreen": false
+      },
+      {
+        "id": "europa",
+        "x": 669.7,
+        "y": 800.1,
+        "r": 1.5,
+        "onScreen": false
+      },
+      {
+        "id": "ganymede",
+        "x": 670.9,
+        "y": 800.3,
+        "r": 2.22,
+        "onScreen": false
+      },
+      {
+        "id": "callisto",
+        "x": 669.9,
+        "y": 801.1,
+        "r": 2.07,
+        "onScreen": false
+      }
+    ]
+  },
+  {
+    "shot": "02b-inner",
+    "note": "inner preset: Mercury to Mars",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/02b-inner.png",
+    "bytes": 32879,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": 640,
+        "y": 400,
+        "r": 26,
+        "onScreen": true
+      },
+      {
+        "id": "mercury",
+        "x": 872.9,
+        "y": 372.6,
+        "r": 2.09,
+        "onScreen": true
+      },
+      {
+        "id": "venus",
+        "x": 387.4,
+        "y": 659.6,
+        "r": 4.14,
+        "onScreen": true
+      },
+      {
+        "id": "earth",
+        "x": 889.6,
+        "y": 810.4,
+        "r": 4.3,
+        "onScreen": false
+      },
+      {
+        "id": "mars",
+        "x": 1493.7,
+        "y": 523.9,
+        "r": 2.68,
+        "onScreen": false
+      },
+      {
+        "id": "jupiter",
+        "x": 763,
+        "y": 2034.9,
+        "r": 10.77,
+        "onScreen": false
+      },
+      {
+        "id": "saturn",
+        "x": -111,
+        "y": -2018.7,
+        "r": 10.2,
+        "onScreen": false
+      },
+      {
+        "id": "uranus",
+        "x": 5200.3,
+        "y": 2766.9,
+        "r": 7.95,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 6893.7,
+        "y": -2643.3,
+        "r": 7.88,
+        "onScreen": false
+      },
+      {
+        "id": "pluto",
+        "x": 11001.8,
+        "y": 1588.9,
+        "r": 1.22,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": 891.2,
+        "y": 810.1,
+        "r": 1.62,
+        "onScreen": false
+      },
+      {
+        "id": "io",
+        "x": 763.7,
+        "y": 2035.4,
+        "r": 1.68,
+        "onScreen": false
+      },
+      {
+        "id": "europa",
+        "x": 761.4,
+        "y": 2034.3,
+        "r": 1.5,
+        "onScreen": false
+      },
+      {
+        "id": "ganymede",
+        "x": 766.3,
+        "y": 2035,
+        "r": 2.22,
+        "onScreen": false
+      },
+      {
+        "id": "callisto",
+        "x": 761.9,
+        "y": 2037.6,
+        "r": 2.07,
+        "onScreen": false
+      }
+    ]
+  },
+  {
+    "shot": "03-jupiter-view",
+    "note": "Jupiter's Galilean moons at the local scale",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/03-jupiter-view.png",
+    "bytes": 20531,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": -2515.3,
+        "y": -41526.7,
+        "r": 26,
+        "onScreen": false
+      },
+      {
+        "id": "mercury",
+        "x": 1779.9,
+        "y": -41872.9,
+        "r": 2.09,
+        "onScreen": false
+      },
+      {
+        "id": "venus",
+        "x": -7423.4,
+        "y": -38084.6,
+        "r": 4.14,
+        "onScreen": false
+      },
+      {
+        "id": "earth",
+        "x": 2215.5,
+        "y": -36247.9,
+        "r": 4.3,
+        "onScreen": false
+      },
+      {
+        "id": "mars",
+        "x": 13837.6,
+        "y": -39259.7,
+        "r": 2.68,
+        "onScreen": false
+      },
+      {
+        "id": "jupiter",
+        "x": 640,
+        "y": 400,
+        "r": 10.77,
+        "onScreen": true
+      },
+      {
+        "id": "saturn",
+        "x": -14273.3,
+        "y": -64773.3,
+        "r": 10.2,
+        "onScreen": false
+      },
+      {
+        "id": "uranus",
+        "x": 84205.7,
+        "y": 25627.7,
+        "r": 7.95,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 105198.6,
+        "y": -66281.8,
+        "r": 7.88,
+        "onScreen": false
+      },
+      {
+        "id": "pluto",
+        "x": 169847.9,
+        "y": 6817.3,
+        "r": 1.22,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": 2246.7,
+        "y": -36252,
+        "r": 1.62,
+        "onScreen": false
+      },
+      {
+        "id": "io",
+        "x": 656.5,
+        "y": 420.1,
+        "r": 1.68,
+        "onScreen": true
+      },
+      {
+        "id": "europa",
+        "x": 597.1,
+        "y": 378.9,
+        "r": 1.5,
+        "onScreen": true
+      },
+      {
+        "id": "ganymede",
+        "x": 723.3,
+        "y": 405.1,
+        "r": 2.22,
+        "onScreen": true
+      },
+      {
+        "id": "callisto",
+        "x": 614.5,
+        "y": 501.9,
+        "r": 2.07,
+        "onScreen": true
+      }
+    ]
+  },
+  {
+    "shot": "04-earth-moon-view",
+    "note": "Earth and the Moon, Moon's orbit ring",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/04-earth-moon-view.png",
+    "bytes": 9891,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": -5696.4,
+        "y": -10016.8,
+        "r": 26,
+        "onScreen": false
+      },
+      {
+        "id": "mercury",
+        "x": 186.2,
+        "y": -10730.6,
+        "r": 2.09,
+        "onScreen": false
+      },
+      {
+        "id": "venus",
+        "x": -11901.4,
+        "y": -3461,
+        "r": 4.14,
+        "onScreen": false
+      },
+      {
+        "id": "earth",
+        "x": 640,
+        "y": 400,
+        "r": 4.3,
+        "onScreen": true
+      },
+      {
+        "id": "mars",
+        "x": 16242.4,
+        "y": -6598.7,
+        "r": 2.68,
+        "onScreen": false
+      },
+      {
+        "id": "jupiter",
+        "x": -671.1,
+        "y": 30896.9,
+        "r": 10.77,
+        "onScreen": false
+      },
+      {
+        "id": "saturn",
+        "x": -16646.9,
+        "y": -50937.3,
+        "r": 10.2,
+        "onScreen": false
+      },
+      {
+        "id": "uranus",
+        "x": 81881,
+        "y": 40266.3,
+        "r": 7.95,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 106502.5,
+        "y": -54766.5,
+        "r": 7.88,
+        "onScreen": false
+      },
+      {
+        "id": "pluto",
+        "x": 169283.3,
+        "y": 17536.7,
+        "r": 1.22,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": 680.1,
+        "y": 392.3,
+        "r": 1.62,
+        "onScreen": true
+      },
+      {
+        "id": "io",
+        "x": -655.9,
+        "y": 30908.2,
+        "r": 1.68,
+        "onScreen": false
+      },
+      {
+        "id": "europa",
+        "x": -710.2,
+        "y": 30885,
+        "r": 1.5,
+        "onScreen": false
+      },
+      {
+        "id": "ganymede",
+        "x": -595.8,
+        "y": 30900.3,
+        "r": 2.22,
+        "onScreen": false
+      },
+      {
+        "id": "callisto",
+        "x": -692.6,
+        "y": 30953.2,
+        "r": 2.07,
+        "onScreen": false
+      }
+    ]
+  },
+  {
+    "shot": "05-earth-moon-close",
+    "note": "close on Earth: the Moon should be clearly outside the disc",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/05-earth-moon-close.png",
+    "bytes": 8496,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": -13300.2,
+        "y": -22517,
+        "r": 26,
+        "onScreen": false
+      },
+      {
+        "id": "mercury",
+        "x": -358.3,
+        "y": -24087.4,
+        "r": 2.09,
+        "onScreen": false
+      },
+      {
+        "id": "venus",
+        "x": -26951,
+        "y": -8094.2,
+        "r": 4.14,
+        "onScreen": false
+      },
+      {
+        "id": "earth",
+        "x": 640,
+        "y": 400,
+        "r": 4.3,
+        "onScreen": true
+      },
+      {
+        "id": "mars",
+        "x": 34965.4,
+        "y": -14997.1,
+        "r": 2.68,
+        "onScreen": false
+      },
+      {
+        "id": "jupiter",
+        "x": -2244.4,
+        "y": 67493.3,
+        "r": 10.77,
+        "onScreen": false
+      },
+      {
+        "id": "saturn",
+        "x": -37391.1,
+        "y": -112542,
+        "r": 10.2,
+        "onScreen": false
+      },
+      {
+        "id": "uranus",
+        "x": 179370.3,
+        "y": 88105.8,
+        "r": 7.95,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 233537.5,
+        "y": -120966.3,
+        "r": 7.88,
+        "onScreen": false
+      },
+      {
+        "id": "pluto",
+        "x": 371655.3,
+        "y": 38100.7,
+        "r": 1.22,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": 728.3,
+        "y": 383.1,
+        "r": 1.62,
+        "onScreen": true
+      },
+      {
+        "id": "io",
+        "x": -2211,
+        "y": 67518.1,
+        "r": 1.68,
+        "onScreen": false
+      },
+      {
+        "id": "europa",
+        "x": -2330.4,
+        "y": 67467,
+        "r": 1.5,
+        "onScreen": false
+      },
+      {
+        "id": "ganymede",
+        "x": -2078.7,
+        "y": 67500.7,
+        "r": 2.22,
+        "onScreen": false
+      },
+      {
+        "id": "callisto",
+        "x": -2291.7,
+        "y": 67617.1,
+        "r": 2.07,
+        "onScreen": false
+      }
+    ]
+  },
+  {
+    "shot": "06-system-tilted",
+    "note": "low tilt: orbits foreshorten toward edge-on",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/06-system-tilted.png",
+    "bytes": 27727,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": 640,
+        "y": 400,
+        "r": 26,
+        "onScreen": true
+      },
+      {
+        "id": "mercury",
+        "x": 629.5,
+        "y": 435.6,
+        "r": 2.09,
+        "onScreen": true
+      },
+      {
+        "id": "venus",
+        "x": 587.3,
+        "y": 471.5,
+        "r": 4.14,
+        "onScreen": true
+      },
+      {
+        "id": "earth",
+        "x": 568.2,
+        "y": 296.6,
+        "r": 4.3,
+        "onScreen": true
+      },
+      {
+        "id": "mars",
+        "x": 525.5,
+        "y": 562.9,
+        "r": 2.68,
+        "onScreen": true
+      },
+      {
+        "id": "jupiter",
+        "x": 68.4,
+        "y": 600,
+        "r": 10.77,
+        "onScreen": true
+      },
+      {
+        "id": "saturn",
+        "x": 913.8,
+        "y": -551,
+        "r": 10.2,
+        "onScreen": false
+      },
+      {
+        "id": "uranus",
+        "x": 1922,
+        "y": 1697.7,
+        "r": 7.95,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 2998.9,
+        "y": -895,
+        "r": 7.88,
+        "onScreen": false
+      },
+      {
+        "id": "pluto",
+        "x": 4591.7,
+        "y": 1359.5,
+        "r": 1.22,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": 568.5,
+        "y": 296.4,
+        "r": 1.62,
+        "onScreen": true
+      },
+      {
+        "id": "io",
+        "x": 68.6,
+        "y": 599.8,
+        "r": 1.68,
+        "onScreen": true
+      },
+      {
+        "id": "europa",
+        "x": 68.8,
+        "y": 600.1,
+        "r": 1.5,
+        "onScreen": true
+      },
+      {
+        "id": "ganymede",
+        "x": 68.6,
+        "y": 599.3,
+        "r": 2.22,
+        "onScreen": true
+      },
+      {
+        "id": "callisto",
+        "x": 68.8,
+        "y": 601.3,
+        "r": 2.07,
+        "onScreen": true
+      }
+    ]
+  },
+  {
+    "shot": "07-neptune",
+    "note": "outer system focus",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/07-neptune.png",
+    "bytes": 7151,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": -36242.6,
+        "y": 11318.5,
+        "r": 26,
+        "onScreen": false
+      },
+      {
+        "id": "mercury",
+        "x": -36274.9,
+        "y": 10947.7,
+        "r": 2.09,
+        "onScreen": false
+      },
+      {
+        "id": "venus",
+        "x": -36136.1,
+        "y": 11942.2,
+        "r": 4.14,
+        "onScreen": false
+      },
+      {
+        "id": "earth",
+        "x": -36755.8,
+        "y": 10442.1,
+        "r": 4.3,
+        "onScreen": false
+      },
+      {
+        "id": "mars",
+        "x": -35209.7,
+        "y": 10941.8,
+        "r": 2.68,
+        "onScreen": false
+      },
+      {
+        "id": "jupiter",
+        "x": -38520.5,
+        "y": 6721.3,
+        "r": 10.77,
+        "onScreen": false
+      },
+      {
+        "id": "saturn",
+        "x": -29760.9,
+        "y": 6087.6,
+        "r": 10.2,
+        "onScreen": false
+      },
+      {
+        "id": "uranus",
+        "x": -22693.3,
+        "y": 26835.3,
+        "r": 7.95,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 640,
+        "y": 400,
+        "r": 7.88,
+        "onScreen": true
+      },
+      {
+        "id": "pluto",
+        "x": 24803.1,
+        "y": 21535.3,
+        "r": 1.22,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": -36754.4,
+        "y": 10444.1,
+        "r": 1.62,
+        "onScreen": false
+      },
+      {
+        "id": "io",
+        "x": -38521.8,
+        "y": 6719,
+        "r": 1.68,
+        "onScreen": false
+      },
+      {
+        "id": "europa",
+        "x": -38519.6,
+        "y": 6717.4,
+        "r": 1.5,
+        "onScreen": false
+      },
+      {
+        "id": "ganymede",
+        "x": -38526.1,
+        "y": 6718.5,
+        "r": 2.22,
+        "onScreen": false
+      },
+      {
+        "id": "callisto",
+        "x": -38512.6,
+        "y": 6729.8,
+        "r": 2.07,
+        "onScreen": false
+      }
+    ]
+  },
+  {
+    "shot": "08-saturn-rings",
+    "note": "Saturn: ring system",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/08-saturn-rings.png",
+    "bytes": 5307,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": 11460.9,
+        "y": 35249.1,
+        "r": 26,
+        "onScreen": false
+      },
+      {
+        "id": "mercury",
+        "x": 13292.2,
+        "y": 34836.5,
+        "r": 2.09,
+        "onScreen": false
+      },
+      {
+        "id": "venus",
+        "x": 9229.2,
+        "y": 36579.1,
+        "r": 4.14,
+        "onScreen": false
+      },
+      {
+        "id": "earth",
+        "x": 12850.6,
+        "y": 36662.2,
+        "r": 4.3,
+        "onScreen": false
+      },
+      {
+        "id": "mars",
+        "x": 17813.9,
+        "y": 34581.7,
+        "r": 2.68,
+        "onScreen": false
+      },
+      {
+        "id": "jupiter",
+        "x": 10246.9,
+        "y": 42383.7,
+        "r": 10.77,
+        "onScreen": false
+      },
+      {
+        "id": "saturn",
+        "x": 640,
+        "y": 400,
+        "r": 10.2,
+        "onScreen": true
+      },
+      {
+        "id": "uranus",
+        "x": 51491.9,
+        "y": 42564.8,
+        "r": 7.95,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 70702.8,
+        "y": -13529.7,
+        "r": 7.88,
+        "onScreen": false
+      },
+      {
+        "id": "pluto",
+        "x": 104323.5,
+        "y": 26153.9,
+        "r": 1.22,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": 12862.6,
+        "y": 36659.2,
+        "r": 1.62,
+        "onScreen": false
+      },
+      {
+        "id": "io",
+        "x": 10251.6,
+        "y": 42385.9,
+        "r": 1.68,
+        "onScreen": false
+      },
+      {
+        "id": "europa",
+        "x": 10233.1,
+        "y": 42382.2,
+        "r": 1.5,
+        "onScreen": false
+      },
+      {
+        "id": "ganymede",
+        "x": 10275.4,
+        "y": 42381.4,
+        "r": 2.22,
+        "onScreen": false
+      },
+      {
+        "id": "callisto",
+        "x": 10233.1,
+        "y": 42399,
+        "r": 2.07,
+        "onScreen": false
+      }
+    ]
+  },
+  {
+    "shot": "09-true-scale",
+    "note": "TRUE SCALE bodies: Jupiter and moons become specks (correct!)",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/09-true-scale.png",
+    "bytes": 20235,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": -2515.3,
+        "y": -41526.7,
+        "r": 74.48,
+        "onScreen": false
+      },
+      {
+        "id": "mercury",
+        "x": 1779.9,
+        "y": -41872.9,
+        "r": 0.5,
+        "onScreen": false
+      },
+      {
+        "id": "venus",
+        "x": -7423.4,
+        "y": -38084.6,
+        "r": 0.65,
+        "onScreen": false
+      },
+      {
+        "id": "earth",
+        "x": 2215.5,
+        "y": -36247.9,
+        "r": 0.68,
+        "onScreen": false
+      },
+      {
+        "id": "mars",
+        "x": 13837.6,
+        "y": -39259.7,
+        "r": 0.5,
+        "onScreen": false
+      },
+      {
+        "id": "jupiter",
+        "x": 640,
+        "y": 400,
+        "r": 7.48,
+        "onScreen": true
+      },
+      {
+        "id": "saturn",
+        "x": -14273.3,
+        "y": -64773.3,
+        "r": 6.23,
+        "onScreen": false
+      },
+      {
+        "id": "uranus",
+        "x": 84205.7,
+        "y": 25627.7,
+        "r": 2.71,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 105198.6,
+        "y": -66281.8,
+        "r": 2.63,
+        "onScreen": false
+      },
+      {
+        "id": "pluto",
+        "x": 169847.9,
+        "y": 6817.3,
+        "r": 0.5,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": 2246.7,
+        "y": -36252,
+        "r": 0.5,
+        "onScreen": false
+      },
+      {
+        "id": "io",
+        "x": 656.5,
+        "y": 420.1,
+        "r": 0.5,
+        "onScreen": true
+      },
+      {
+        "id": "europa",
+        "x": 597.1,
+        "y": 378.9,
+        "r": 0.5,
+        "onScreen": true
+      },
+      {
+        "id": "ganymede",
+        "x": 723.3,
+        "y": 405.1,
+        "r": 0.5,
+        "onScreen": true
+      },
+      {
+        "id": "callisto",
+        "x": 614.5,
+        "y": 501.9,
+        "r": 0.5,
+        "onScreen": true
+      }
+    ]
+  },
+  {
+    "shot": "10-mobile",
+    "note": "narrow viewport",
+    "file": "/Users/gabrielmu/Documents/New_Model_Test/test-workspace/phase-02/task-19-interactive-solar-system/tests/out/10-mobile.png",
+    "bytes": 14828,
+    "bodies": [
+      {
+        "id": "sun",
+        "x": 195,
+        "y": 390,
+        "r": 26,
+        "onScreen": true
+      },
+      {
+        "id": "mercury",
+        "x": 241.4,
+        "y": 384.5,
+        "r": 2.09,
+        "onScreen": true
+      },
+      {
+        "id": "venus",
+        "x": 144.9,
+        "y": 441.5,
+        "r": 4.14,
+        "onScreen": true
+      },
+      {
+        "id": "earth",
+        "x": 244.9,
+        "y": 472,
+        "r": 4.3,
+        "onScreen": true
+      },
+      {
+        "id": "mars",
+        "x": 368.9,
+        "y": 415.2,
+        "r": 2.68,
+        "onScreen": true
+      },
+      {
+        "id": "jupiter",
+        "x": 225.1,
+        "y": 790.3,
+        "r": 10.77,
+        "onScreen": false
+      },
+      {
+        "id": "saturn",
+        "x": -18.6,
+        "y": -298,
+        "r": 10.2,
+        "onScreen": false
+      },
+      {
+        "id": "uranus",
+        "x": 1701.2,
+        "y": 1171.7,
+        "r": 7.95,
+        "onScreen": false
+      },
+      {
+        "id": "neptune",
+        "x": 2416.8,
+        "y": -691.2,
+        "r": 7.88,
+        "onScreen": false
+      },
+      {
+        "id": "pluto",
+        "x": 4168.2,
+        "y": 845.9,
+        "r": 1.22,
+        "onScreen": false
+      },
+      {
+        "id": "moon",
+        "x": 245.2,
+        "y": 472,
+        "r": 1.62,
+        "onScreen": true
+      },
+      {
+        "id": "io",
+        "x": 225.3,
+        "y": 790.4,
+        "r": 1.68,
+        "onScreen": false
+      },
+      {
+        "id": "europa",
+        "x": 224.7,
+        "y": 790.1,
+        "r": 1.5,
+        "onScreen": false
+      },
+      {
+        "id": "ganymede",
+        "x": 225.9,
+        "y": 790.3,
+        "r": 2.22,
+        "onScreen": false
+      },
+      {
+        "id": "callisto",
+        "x": 224.9,
+        "y": 791.1,
+        "r": 2.07,
+        "onScreen": false
+      }
+    ]
+  }
+]

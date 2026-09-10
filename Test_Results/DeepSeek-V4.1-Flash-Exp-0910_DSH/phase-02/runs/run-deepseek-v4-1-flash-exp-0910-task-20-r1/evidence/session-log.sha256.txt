@@ -1,0 +1,8 @@
+# 原始会话日志（未随公开档案入库，封存在原机）
+sessionId: session-b84d3d60-6b52-4dda-b136-f0833e04cc89
+path: /Users/gabrielmu/.dsh/sessions/--Users-gabrielmu-Documents-New_Model_Test-test-workspace-phase-02-task-20-2d-mechanical-linkage-designer--/session-b84d3d60-6b52-4dda-b136-f0833e04cc89/session.jsonl.zstd
+bytes: 1911585
+sha256: e04d3d011b0766360d161589b5583d7977117c3805fa9836b6b83d6d1833b278
+frames: 4407
+records: 5676
+parseErrors: 0

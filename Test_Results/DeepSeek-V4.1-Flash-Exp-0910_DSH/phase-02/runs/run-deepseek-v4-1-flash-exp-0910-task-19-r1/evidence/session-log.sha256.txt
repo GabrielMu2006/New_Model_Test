@@ -1,0 +1,8 @@
+# 原始会话日志（未随公开档案入库，封存在原机）
+sessionId: session-34287563-2efd-4e37-ac24-1d35dc877a58
+path: /Users/gabrielmu/.dsh/sessions/--Users-gabrielmu-Documents-New_Model_Test-test-workspace-phase-02-task-19-interactive-solar-system--/session-34287563-2efd-4e37-ac24-1d35dc877a58/session.jsonl.zstd
+bytes: 2203785
+sha256: c64e3c260ee6074200555e014bdda65a9ea4c0cc330dbf4ef7f16b87c87fa1ba
+frames: 5285
+records: 7059
+parseErrors: 0

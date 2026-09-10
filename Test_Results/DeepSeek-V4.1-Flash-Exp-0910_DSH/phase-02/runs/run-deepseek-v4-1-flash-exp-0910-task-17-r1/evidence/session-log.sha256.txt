@@ -1,0 +1,8 @@
+# 原始会话日志（未随公开档案入库，封存在原机）
+sessionId: session-f4bf2a9f-9ea2-4642-b2e7-59de1ab1013b
+path: /Users/gabrielmu/.dsh/sessions/--Users-gabrielmu-Documents-New_Model_Test-test-workspace-phase-02-task-17-mechanical-watch-movement--/session-f4bf2a9f-9ea2-4642-b2e7-59de1ab1013b/session.jsonl.zstd
+bytes: 1895755
+sha256: 6ecf93ecce63f86e61e62cd3f60d923e0c09b2d885f9bc51355de487149a29b7
+frames: 4210
+records: 5404
+parseErrors: 0

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "runId": "run-deepseek-v4-1-flash-exp-0910-task-18-r1",
+  "phaseId": "phase-02",
+  "taskId": "task-18",
+  "taskVersion": 1,
+  "model": {
+    "id": "deepseek-v4.1-flash-expires-on-0910",
+    "name": "DeepSeek-V4.1-Flash-Exp-0910",
+    "version": "deepseek-v4.1-flash-expires-on-0910",
+    "provider": "deepseek-official",
+    "note": "harness 报告的 model id；未获供应商侧确认"
+  },
+  "prompt": {
+    "path": "PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md",
+    "sha256": "dbcbcefdf8b81ff6f1782a8dcb917a4b941e4f8828b4dbede77fe8456e6da95a",
+    "version": 1,
+    "verbatimInputPath": "prompt.txt",
+    "localScaffoldPath": "test-workspace/phase-02/task-18-rube-goldberg-machine/prompt.txt",
+    "followups": []
+  },
+  "environment": {
+    "harness": "DSH",
+    "harnessVersion": "2.0.5 (desktop app)",
+    "surface": "desktop",
+    "os": "macOS 26.6.2 (arm64)",
+    "runtime": "Node 24.19.0",
+    "sessionId": "session-f220eec5-8ac1-461f-bbd7-0ddb43d452ae",
+    "sharedContext": false,
+    "continuationTurns": 0,
+    "sampling": null,
+    "startedAt": "2026-09-09T15:49:53.116Z",
+    "endedAt": "2026-09-09T16:49:06.100Z",
+    "timezone": "Asia/Shanghai"
+  },
+  "budget": {
+    "wallClockSeconds": 7200,
+    "inputTokens": null,
+    "outputTokens": null,
+    "toolCalls": null,
+    "retries": 0,
+    "followupTurns": 0,
+    "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+  },
+  "metrics": {
+    "durationSeconds": 3553,
+    "durationBasis": "session log turn/start -> turn/end",
+    "apiCalls": 398,
+    "toolCalls": 401,
+    "failures": 0,
+    "inputTokens": 197968,
+    "outputTokens": 616694,
+    "cacheReadTokens": 144166528,
+    "totalTokens": null,
+    "note": "token 按每条 assistant 消息 usage 求和；cacheRead 为每步缓存前缀累计，非计费口径"
+  },
+  "cost": {
+    "amount": null,
+    "currency": null,
+    "scope": "task",
+    "source": null
+  },
+  "artifacts": {
+    "type": "html",
+    "entry": "index.html",
+    "files": [
+      "index.html",
+      "styles.css",
+      "js/app.js",
+      "js/audio.js",
+      "js/machine.js",
+      "js/physics.js",
+      "js/render.js",
+      "README.md"
+    ],
+    "sourcePath": "Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/runs/run-deepseek-v4-1-flash-exp-0910-task-18-r1/artifacts",
+    "fileSha256": {
+      "index.html": "c301d31fda92a98fac4f89cf601ae49584498ded953378f1098e8ee8c4061f43",
+      "styles.css": "f6af05ace41bc44ab3e42ec43d9278c8fdcf708c2096d871bd2b9e5f5cd7f1c2",
+      "js/app.js": "47a3be7f62696e0538f9ccd1ecf280af3775f78914a88dd7cbd56db91de56859",
+      "js/audio.js": "7281a22592ed1dee39875dc423c27140a528a7f57db07feb3e547ffbdfe68229",
+      "js/machine.js": "5c5bd47cf87647462568d1e4ec1b96455e2a751105c5765251a6bcc86f7eab36",
+      "js/physics.js": "b554dc58ba07b0976c0723dc732bccc26d87476c456dda1bc1eafb063093180d",
+      "js/render.js": "e6d46d0080e0f60e9202f8820c3b165ca0e7940c0f2fafe26d2cc4f8dea913ca",
+      "README.md": "04f98d34843c173c59f1e03942adc730377103f8825a50cad25ab3ea2eefaedc"
+    },
+    "cover": null,
+    "preview": {
+      "lazy": true,
+      "sandbox": "allow-scripts allow-downloads allow-forms",
+      "note": "多文件页面，需保留 js/ 与 styles.css 的相对结构"
+    }
+  },
+  "source": {
+    "commit": null,
+    "path": null
+  },
+  "runRelation": {
+    "parentRunId": null,
+    "reason": null
+  },
+  "status": "completed",
+  "isolation": {
+    "level": "workspace-only",
+    "environment": "本机同用户 macOS（用户 gabrielmu），任务目录位于仓库内 test-workspace/phase-02/ 下",
+    "readOnlyInputs": [
+      "prompt.txt"
+    ],
+    "mounts": [],
+    "network": "off (rule-level; not enforced at the network layer)",
+    "repositoryReachability": null,
+    "repositoryReachabilityBasis": "未做环境探测（本流程不跑探针，docs/audit-method.md 第 8 节）；只记录规则要求（AGENTS.md 第 2 节禁止一切仓库查询）；收尾审查维度 4.5 未发现仓库查询",
+    "repositoryBlocking": null,
+    "sharedContext": false
+  },
+  "contamination": {
+    "status": "unknown",
+    "events": [],
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/audit-2026-09-10.md"
+    ],
+    "note": "本字段与 events 属审计档案记录：按 2026-09-10 组织者规则，越界判定只影响标注、不影响成绩录入，越界尝试与嫌疑不作外显标注、不排除、不改分；只有确认作弊成功（实际读到他人答案/成果，或从仓库、网络取到题目相关内容）才标注「已确认获取外部答案」。本 run 未被确认获取外部答案。详见 docs/audit-method.md 第 5 节。",
+    "scoringEffect": "none (recorded in audit archive only)",
+    "confirmedExternalAnswers": false
+  },
+  "testEvidence": {
+    "command": "由组织者执行的收尾审查：node vt_audit2.mjs <session.jsonl.zstd> <task-dir> <runId>（脚本见 evidence/audit-2026-09-10.md 第 1 节）",
+    "cwd": "test-workspace/（组织会话）",
+    "environment": "macOS 26.6.2 arm64 / Node 24.19.0",
+    "date": "2026-09-10",
+    "passed": null,
+    "failed": null,
+    "skipped": null,
+    "evidencePaths": [
+      "evidence/audit-2026-09-10.json",
+      "evidence/session-log.sha256.txt"
+    ],
+    "limitations": "本次未由组织者在隔离环境中复跑模型自己的测试；成果内的测试结果均为作者自述，见 artifacts/README.md"
+  },
+  "reviews": []
+}

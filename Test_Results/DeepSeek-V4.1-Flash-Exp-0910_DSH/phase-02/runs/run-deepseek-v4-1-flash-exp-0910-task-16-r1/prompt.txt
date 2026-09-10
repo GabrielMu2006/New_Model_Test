@@ -1,0 +1,12 @@
+Create a standalone animated SVG of a pelican riding a bicycle from left to right.
+
+Requirements:
+- both bicycle wheels must rotate naturally
+- the pedals and crank must rotate
+- the pelican's feet must remain connected to the pedals throughout the cycle
+- its legs should move naturally with the pedals
+- the body should subtly respond to the pedaling motion
+- the background should scroll to communicate forward movement
+- include controls to pause and resume the animation
+
+The final deliverable must be a single SVG file with no external dependencies.

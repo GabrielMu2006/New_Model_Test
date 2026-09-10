@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>2D Linkage Designer — interactive mechanism editor</title>
+    <meta
+      name="description"
+      content="Design planar mechanisms: fixed pivots, rotating joints, rigid links, sliders on tracks and motors, with a live rigid-body solver."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='24' font-size='24'%3E%E2%9A%99%EF%B8%8F%3C/text%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">⚙</span>
+        <span class="brand-text">Linkage&nbsp;Designer</span>
+      </div>
+      <label class="mech-name-label">
+        <span class="sr-only">Mechanism name</span>
+        <input id="mech-name" class="mech-name" type="text" spellcheck="false" value="Untitled mechanism" />
+      </label>
+      <div class="header-actions">
+        <button id="btn-undo" class="btn btn-ghost" type="button" title="Undo (Ctrl/Cmd+Z)">↶ Undo</button>
+        <button id="btn-redo" class="btn btn-ghost" type="button" title="Redo (Ctrl/Cmd+Shift+Z)">↷ Redo</button>
+        <button id="btn-fit" class="btn btn-ghost" type="button" title="Fit the mechanism in the view (F)">⤢ Fit</button>
+        <button id="btn-help" class="btn btn-ghost" type="button" title="Keyboard shortcuts and how-to (?)">? Help</button>
+      </div>
+    </header>
+
+    <main class="app-body">
+      <!-- ------------------------------------------------------- left panel -->
+      <aside class="panel panel-left" aria-label="Tools and presets">
+        <section class="panel-section">
+          <h2 class="panel-title">Tools</h2>
+          <div id="tool-grid" class="tool-grid" role="toolbar" aria-label="Drawing tools"></div>
+          <p id="tool-hint" class="hint"></p>
+          <div class="field-row">
+            <label class="field">
+              <span>Exact link length</span>
+              <input id="link-length" type="number" step="0.5" min="0.1" placeholder="auto" />
+            </label>
+            <label class="check">
+              <input id="link-length-lock" type="checkbox" />
+              <span>use value</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h2 class="panel-title">Presets</h2>
+          <button id="btn-new" class="btn preset-btn" type="button">
+            <span>✚ Blank mechanism</span>
+            <small>Start from an empty canvas and build every part yourself.</small>
+          </button>
+          <div id="preset-list" class="preset-list"></div>
+        </section>
+
+        <section class="panel-section">
+          <h2 class="panel-title">Display</h2>
+          <div id="display-toggles" class="toggle-list"></div>
+        </section>
+
+        <section class="panel-section">
+          <h2 class="panel-title">Structure</h2>
+          <div id="structure-info" class="kv-list"></div>
+        </section>
+      </aside>
+
+      <!-- ---------------------------------------------------------- canvas -->
+      <section class="canvas-wrap">
+        <canvas id="canvas" tabindex="0" aria-label="Mechanism canvas"></canvas>
+        <div id="canvas-hint" class="canvas-hint" hidden></div>
+
+        <div class="transport" role="group" aria-label="Simulation controls">
+          <button id="btn-play" class="btn btn-primary" type="button" title="Play / pause (Space)">▶ Play</button>
+          <button id="btn-step" class="btn" type="button" title="Advance one time step (S)">⏭ Step</button>
+          <button id="btn-back-step" class="btn" type="button" title="Step the crank back 2° (Shift+←)">⟲ 2°</button>
+          <button id="btn-fwd-step" class="btn" type="button" title="Step the crank forward 2° (Shift+→)">2° ⟳</button>
+          <button id="btn-reset" class="btn" type="button" title="Reset to the design pose (R)">⏮ Reset</button>
+          <button id="btn-clear-traces" class="btn btn-ghost" type="button" title="Clear the drawn motion paths">✦ Clear paths</button>
+
+          <label class="slider-field">
+            <span>Crank angle</span>
+            <input id="crank-angle" type="range" min="0" max="360" step="1" value="0" />
+            <output id="crank-angle-out">0°</output>
+          </label>
+
+          <label class="slider-field">
+            <span>Speed</span>
+            <input id="play-speed" type="range" min="5" max="400" step="5" value="100" />
+            <output id="play-speed-out">1.00×</output>
+          </label>
+        </div>
+
+        <div id="status-bar" class="status-bar" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- ------------------------------------------------------- right panel -->
+      <aside class="panel panel-right" aria-label="Properties and readouts">
+        <section class="panel-section">
+          <h2 class="panel-title">Selection</h2>
+          <div id="inspector" class="inspector"></div>
+        </section>
+
+        <section class="panel-section">
+          <h2 class="panel-title">Live readout</h2>
+          <div class="tabs" role="tablist">
+            <button class="tab is-active" data-tab="joints" role="tab" type="button">Joints</button>
+            <button class="tab" data-tab="links" role="tab" type="button">Links</button>
+            <button class="tab" data-tab="motors" role="tab" type="button">Motors</button>
+          </div>
+          <div id="readout" class="readout"></div>
+        </section>
+
+        <section class="panel-section">
+          <h2 class="panel-title">Save &amp; load</h2>
+          <div class="field-row">
+            <label class="field grow">
+              <span class="sr-only">Slot name</span>
+              <input id="slot-name" type="text" placeholder="Mechanism name for the slot" spellcheck="false" />
+            </label>
+            <button id="btn-save-slot" class="btn btn-primary" type="button">Save</button>
+          </div>
+          <div id="slot-list" class="slot-list"></div>
+          <div class="field-row">
+            <button id="btn-export" class="btn" type="button">⭳ Export .json</button>
+            <button id="btn-import" class="btn" type="button">⭱ Import .json</button>
+            <input id="file-input" type="file" accept="application/json,.json" hidden />
+          </div>
+          <p id="storage-note" class="hint"></p>
+        </section>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <div id="help-overlay" class="overlay" hidden>
+      <div class="overlay-card" role="dialog" aria-modal="true" aria-labelledby="help-title">
+        <header class="overlay-header">
+          <h2 id="help-title">How to use the linkage designer</h2>
+          <button id="btn-help-close" class="btn btn-ghost" type="button">✕ Close</button>
+        </header>
+        <div class="overlay-body">
+          <section>
+            <h3>Build a mechanism</h3>
+            <ol>
+              <li><b>Fixed pivot</b> — click on the canvas to pin a joint to the ground.</li>
+              <li><b>Rotating joint</b> — click to place a free pin joint.</li>
+              <li><b>Rigid link</b> — click one joint, then another. Type a length and tick
+                <i>use value</i> to create a link of an exact length; leave it empty to use the
+                drawn distance. Clicking empty space creates the joint for you.</li>
+              <li><b>Track</b> — click two points to lay down a rail, then use <b>Slider</b> and
+                click near the rail to put a slider on it.</li>
+              <li><b>Motor</b> — click a joint that has a link attached; that link becomes the
+                driven crank. Change the driven link and the speed in the inspector.</li>
+              <li><b>Delete</b> — click any joint, link, track or motor to remove it.</li>
+            </ol>
+          </section>
+          <section>
+            <h3>Simulate</h3>
+            <ul>
+              <li><b>Play / Pause</b> (Space) runs the motor; <b>Step</b> (S) advances one frame;
+                <b>Reset</b> (R) returns to the design pose.</li>
+              <li><b>2°</b> buttons and the <b>crank angle</b> slider move the driven link directly.</li>
+              <li>Drag any joint with the mouse: the solver keeps every link rigid and every
+                slider on its rail while you pull.</li>
+              <li>Motion paths are drawn for every moving joint; <b>Clear paths</b> wipes them.</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Keyboard</h3>
+            <table class="keys">
+              <tr><td>Space</td><td>play / pause</td><td>S</td><td>step one frame</td></tr>
+              <tr><td>R</td><td>reset to design pose</td><td>F</td><td>fit view</td></tr>
+              <tr><td>G</td><td>toggle grid</td><td>L</td><td>toggle labels</td></tr>
+              <tr><td>C</td><td>toggle coordinates</td><td>D</td><td>toggle dimensions</td></tr>
+              <tr><td>1…8</td><td>pick a tool</td><td>Esc</td><td>cancel / select tool</td></tr>
+              <tr><td>Delete</td><td>delete selection</td><td>Ctrl/Cmd+Z</td><td>undo</td></tr>
+              <tr><td>Ctrl/Cmd+Shift+Z</td><td>redo</td><td>[ / ]</td><td>crank ∓2°</td></tr>
+              <tr><td>Arrows</td><td>nudge selected joint</td><td>Shift+Arrows</td><td>nudge ×10</td></tr>
+              <tr><td>Ctrl/Cmd+S</td><td>save to slot</td><td>?</td><td>this help</td></tr>
+            </table>
+          </section>
+          <section>
+            <h3>Good to know</h3>
+            <ul>
+              <li>Rigid links keep their exact length at every step — the status bar shows the
+                worst length error in the current pose (it should read 0.000).</li>
+              <li>Sliders stay on their rails; joints stay attached to every link that meets there.</li>
+              <li>If a motor cannot reach the commanded angle (hard stop, toggle position, jamming
+                linkage) the simulation stops and tells you which constraint blocked it.</li>
+              <li>Tracks are ground-fixed rails. A slider riding on a <i>moving</i> link is not
+                supported in this version.</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

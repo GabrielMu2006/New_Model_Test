@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rube Goldberg Machine — eight stages, one chain</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-mode="idle">
+
+<div class="app">
+
+  <!-- ---------------------------------------------------------- header -->
+  <header class="top">
+    <div class="brand">
+      <span class="gear" aria-hidden="true"></span>
+      <div>
+        <h1>Rube Goldberg Machine</h1>
+        <p class="sub">Eight stages, one continuous causal chain — every stage physically trips the next.</p>
+      </div>
+    </div>
+    <div class="clock">
+      <span class="label">Sim time</span>
+      <span id="timer">0.00 s</span>
+    </div>
+  </header>
+
+  <!-- ----------------------------------------------------------- stage -->
+  <main class="board">
+    <div class="canvas-wrap">
+      <canvas id="stage" aria-label="Animated Rube Goldberg machine"></canvas>
+      <div id="banner" class="banner show">Press Start to release the spring</div>
+      <div class="progress"><div id="progress-bar" class="bar"></div></div>
+    </div>
+
+    <!-- ------------------------------------------------------ controls -->
+    <div class="controls" role="group" aria-label="Machine controls">
+      <button id="btn-start" class="primary" type="button">Start</button>
+      <button id="btn-pause" type="button" disabled>Pause</button>
+      <button id="btn-step" type="button">Step</button>
+      <button id="btn-reset" type="button">Reset</button>
+      <span class="spacer"></span>
+      <button id="btn-slow" type="button" title="Toggle 0.25x slow motion (S)">Slow-mo</button>
+      <button id="btn-sound" class="on" type="button" title="Toggle sound (M)">Sound on</button>
+    </div>
+
+    <!-- ---------------------------------------------------- stage list -->
+    <aside class="panel">
+      <div class="panel-head">
+        <h2>Stage tracker</h2>
+        <span id="stage-now">Ready</span>
+      </div>
+      <ol id="stage-list" class="stages"></ol>
+      <p class="hint">
+        Keyboard: <kbd>Space</kbd> start / pause &middot; <kbd>&rarr;</kbd> step &middot;
+        <kbd>R</kbd> reset &middot; <kbd>S</kbd> slow-mo &middot; <kbd>M</kbd> sound
+      </p>
+    </aside>
+  </main>
+
+</div>
+
+<!-- classic scripts, no modules: the page works from file:// as well -->
+<script src="js/physics.js"></script>
+<script src="js/machine.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
