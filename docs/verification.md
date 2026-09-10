@@ -1,5 +1,17 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 归档布局改为扁平 task-NN-<slug>/，并明确评价目录接口
+
+- 组织者决定：`Test_Results/<模型>/phase-NN/` 下不再套 `runs/<run-id>/`，改用与第一阶段一致的扁平 `task-NN-<slug>/`（两个模型同题同名 slug）；`runId` 保留在 `submission.json` 内，**不再作目录名**。同一题的重复运行（r2 及以后）才放 `runs/<新run-id>/`，用 `runRelation.parentRunId` 关联首次运行。
+- 迁移：DeepSeek 与 Muse 的 phase-02 各 5 个运行目录用 `git mv` 平移到 `task-16-animated-pelican-bicycle/` … `task-20-2d-mechanical-linkage-designer/`（提交 `6c089e5`，git 识别为 rename，历史保留）；Muse 的 5 份逐题评价从 `runs/<run-id>/reviews/` 移到阶段级 `Reviews/ai/maintenance-agent-v2/task-NN.md`。
+- **评价接口写入规则文件**：根 `AGENTS.md` 新增「归档布局与评价接口」小节；`docs/result-interface.md` 目录约定改为「扁平为默认」并新增「评价目录约定」——人工评价 `Reviews/Personal_Review.md`；AI 评价 `Reviews/ai/<评委>-v<N>/`（必备 `README.md` + `phase-summary.md`，推荐逐题 `task-NN.md`）；**新增评价只新建目录或递增版本号，不得覆盖既有评价，不同口径分数不得合成排行榜**。同步更新 `docs/adding-results.md`、`docs/audit-method.md`、`test-workspace/README.md` 第 5 节与 PLAN 模板、两个阶段 README、`Test_Results/README.md`、根 README 中英目录树。
+- 补齐缺口：Muse 的 5 个任务目录此前没有 `README.md`，运行页「来源 ↗」链接指向不存在的文件；本次按 phase-01 约定补齐（含入口、指标、审查与评价链接、已知限制）。
+- 修缺陷：`ArtifactPreview.astro` 调用 `sourceUrl()` 时未传 commit，回落到全局 `archiveCommit`（第一阶段提交），phase-02 运行的成果源链接实测 404。已改为传入该运行自己的 `artifact.commit`，并在 e2e 增加「运行页所有 GitHub 源码链接必须绑定自身归档提交」断言。
+- 校验：`validate-data.mjs` 新增 `run.directory` 校验（必须形如 `Test_Results/<模型>/phase-NN/task-NN-<slug>` 或 `.../runs/<run-id>` 且真实存在）；`catalog.test.mjs` 断言 phase-02 目录为扁平命名且**不含 runId**；批次提交断言改为「批内唯一、批间可共享」（两个 phase-02 批次同在 `6c089e5`）。
+- 门禁：`import:data`、`validate:data`、`check`（0 errors）、`npm test`（**12/12**）、`build`（142 页，静态链接检查通过）全部通过；`test:e2e` 在 Chromium + WebKit 通过，**40 个成果入口全部加载**。
+- 发布与公网核验：提交 `6c089e5`（布局迁移）、`ea99120`（源链接绑定新提交）、`f352a55`（成果源链接修复）推送 `main`；回退标签 `website-rollback-20260910-825f896`。Actions run `34439074086`、`34439221582` 构建与 Pages 部署成功；匿名 HTTPS 复核首页、中英文、模型页、阶段页、phase-02 双语运行页与成果入口均返回 HTTP 200。线上抽查 4 个运行页，源链接分别绑定 `6c089e5`（phase-02 两模型）、`b8d0235`（Muse phase-01）、`5776d3a`（DeepSeek phase-01，套用历史路径映射），**此前 404 的成果链接恢复 200**。
+- 未变：runId 与既有公开 URL 不变；历史提交里的旧 `runs/<run-id>/` 路径保持原样（不可变提交下的历史路径不重写）。
+
 ## 2026-09-10 评价并接入 Muse Spark phase-02 前五题（Task 16–20）
 
 - 需求：评价 Results 中 Muse 模型最新五项任务（Task 16–20）并上传到展示站。
