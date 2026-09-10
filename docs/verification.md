@@ -1,5 +1,17 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 接入全部现有结果与评价（GPT-5.6 Sol 第一阶段 + DeepSeek phase-02 评价）
+
+- 需求：把现有全部结果及其评价上传展示站。
+- 盘点的差额：① **GPT-5.6 Sol 第一阶段 15 题**（第三个模型，归档已由另一会话提交 `a339d61`/`a5b0c7e`，但未接入网站）；② **DeepSeek phase-02 五题的评价**（评价者 Muse Spark 1.3，单文件汇总）；③ **GPT 的 AI 评价** `maintenance-agent-v3`（15 个逐题文件，当时未提交）。核查结果：`Test_Results/**/Reviews/` 下其余全部评价（DeepSeek phase-01 人工 + AI、Muse phase-01 人工 + 2 AI、Muse phase-02 AI）此前已上线。
+- 评价拆分（组织者要求）：`muse-spark-v1` 原为 101 行单文件汇总，按新约定拆成 `Reviews/ai/muse-spark-v1/{README.md, phase-summary.md, task-16..20.md}`；**逐题正文逐字取自原稿、分数与结论未改写**，仅补齐 `reviewId`/`runId`/`本题得分`/`结论（中）`/`Conclusion (EN)` 元信息行；原稿逐字保留为 `source-summary.md`。原稿为中文，`Conclusion (EN)` 按仓库既有做法记「Original Chinese conclusion (not translated)」+ 原文，未臆造英译。分数：16=92、17=94、18=83、19=90、20=96，平均 **91.0/100**。
+- GPT 接入：新增模型实体 `gpt-5-6-sol`（快照 `gpt-5.6-sol`，Codex CLI 0.147.0 / medium effort）与适配器 `gpt-5-6-sol-phase1.mjs`；该批**不产出 task 实体**（与另两个模型共用 `task-01…15@1`，重复定义会被编排器判为冲突），因此第一阶段同题现在**三模型可并排对比**。其 15 份 AI 评价（`maintenance-agent-v3`，平均 82.9/100，非盲评）随本次接入一并归档（原为未提交状态）。
+- 校验/测试：新增 GPT 回归（15 run、必须挂在 phase-01 同题、`reportedModelId=gpt-5.6-sol`、恰好 1 份 AI 评价、有完整工具遥测故 `telemetry` 不得标 `hidden`）与 DeepSeek phase-02 拆分评价用例（评价者、路径、均值 91.0）；`fixture` 用例与 e2e 搜索卡片数改为**由实体推导**（不再写死 2 模型）。
+- 数据：**3 模型 / 2 阶段 / 20 任务 / 55 运行 / 100 评价 / 5 批次 / 3 阶段评估**，**174 个生成页**（原 142）与 43 个 HTML 成果。
+- 门禁：`import:data`、`validate:data`、`check`（0 errors）、`npm test`（**17/17**）、`build`（174 页，静态链接检查通过）全部通过；`test:e2e` 在 Chromium + WebKit 通过，**55 个成果入口全部加载**。
+- 发布与公网核验：提交 `9281576`（接入与评价归档）、`a9f43cb`（把 GPT 与 DeepSeek phase-02 的源链接重绑到承载其评价文件的提交）推送 `main`；回退标签 `website-rollback-20260910-f010c37`。Actions run `34448498115` 构建与 Pages 部署成功；匿名 HTTPS 复核首页、中英文、模型索引、`/zh/models/gpt-5-6-sol/`、GPT 与 DeepSeek phase-02 运行页、成果入口均返回 HTTP 200；线上实测 GPT 运行页显示「90/100」「维护 agent v3」「运行快照：gpt-5.6-sol」且恰好 1 张评价卡片，DeepSeek task-17 显示「94/100」「Muse Spark 1.3」；抽查 GitHub 源链接（GPT 评价、拆分后的 muse-spark-v1 评价、GPT 成果）均 200。
+- 仍缺：Task 21–45 未测试；两批 phase-02 均**无人工评价**；GPT 批次的取证脚本按评价者说明为临时件、未归档。
+
 ## 2026-09-10 无工具遥测的模型：默认视为遵守规则
 
 - 决定（组织者 2026-09-10）：有的模型 / harness **不展示中间工具调用**（例如只回最终答案的 API）。这类运行，收尾审查的路径、命令、仓库查询、网络、读写越界、委派等维度**无从检查**，因此**默认视为遵守规则**，照常计入成绩。
