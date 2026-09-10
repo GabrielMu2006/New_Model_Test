@@ -142,19 +142,23 @@ try {
     for (const width of [390, 768, 1440]) { await page.setViewportSize({ width, height: 900 }); await page.goto(`${base}/zh/`); if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)) throw new Error(`${name}: horizontal overflow at ${width}`); }
 
     // 语言切换：实体深链直达 + 对比页保留查询参数
+    // 注意：点击后必须等到导航完成、面板脚本跑完再断言——`count()` 不会自动等待，
+    // 否则会变成「谁渲染快谁通过」的竞态（Firefox 首跑就是这样挂的）。
+    const comparePanels = (side) => page.locator(`[data-${side}-panel] img, [data-${side}-panel] iframe`).first();
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(`${base}/zh/tasks/task-06/`);
-    await page.locator('[data-language-switch]').click();
-    if (!page.url().includes('/en/tasks/task-06/')) throw new Error(`${name}: language switch lost the entity path (${page.url()})`);
+    await Promise.all([page.waitForURL(/\/en\/tasks\/task-06\//), page.locator('[data-language-switch]').click()]);
     if (!(await page.locator('h1').textContent())?.includes('Scissors')) throw new Error(`${name}: switched page is not the English task page`);
     await page.goto(`${base}/zh/compare/?task=task-16&left=run-deepseek-v4-1-flash-exp-0910-task-16-r1&right=run-muse-spark-1-3-xhigh-task-16-r1`);
     const switchHref = await page.locator('[data-language-switch]').getAttribute('href');
     if (!switchHref?.includes('task=task-16') || !switchHref.includes('right=run-muse-spark-1-3-xhigh-task-16-r1')) throw new Error(`${name}: language switch dropped the compare query (${switchHref})`);
-    await page.locator('[data-language-switch]').click();
+    await Promise.all([page.waitForURL(/\/en\/compare\//), page.locator('[data-language-switch]').click()]);
+    await comparePanels('left').waitFor({ timeout: 15000 });
     if (await page.locator('[data-left-panel] img, [data-left-panel] iframe').count() !== 1) throw new Error(`${name}: compare selection not restored after switching language`);
     if (await page.locator('[data-right-panel] img, [data-right-panel] iframe').count() !== 1) throw new Error(`${name}: right compare selection not restored after switching language`);
     // 直接刷新必须恢复同一次对比
     await page.reload();
+    await comparePanels('left').waitFor({ timeout: 15000 });
     if (await page.locator('[data-left-panel] img, [data-left-panel] iframe').count() !== 1) throw new Error(`${name}: compare left panel lost after refresh`);
     if (await page.locator('[data-right-panel] img, [data-right-panel] iframe').count() !== 1) throw new Error(`${name}: compare right panel lost after refresh`);
 
