@@ -84,6 +84,7 @@ for (const task of catalog.tasks) {
 
 const isolationLevels = new Set(['container', 'os-user-isolation', 'workspace-only', 'unknown']);
 const contaminationStatuses = new Set(['clean', 'suspected', 'contaminated', 'unknown']);
+const telemetryVisibilities = new Set(['visible', 'partial', 'hidden']);
 for (const run of catalog.runs) {
   if (!modelIds.has(run.modelId) || !taskIds.has(run.taskId)) fail(`${run.id}: broken relationship`);
   const task = taskById.get(run.taskId);
@@ -115,6 +116,13 @@ for (const run of catalog.runs) {
   }
   if (run.isolation && !isolationLevels.has(run.isolation.level)) fail(`${run.id}: invalid isolation level ${run.isolation.level}`);
   if (run.contamination && !contaminationStatuses.has(run.contamination.status)) fail(`${run.id}: invalid contamination status ${run.contamination.status}`);
+  if (run.contamination?.telemetry != null) {
+    if (!telemetryVisibilities.has(run.contamination.telemetry)) fail(`${run.id}: invalid contamination telemetry ${run.contamination.telemetry}`);
+    // 无工具遥测的运行必须写明「默认视为遵守规则」，不能被写成已审查结论
+    if (run.contamination.telemetry === 'hidden' && !/默认视为遵守规则/.test(run.contamination.note ?? '')) {
+      fail(`${run.id}: hidden tool-call telemetry must state the assumed-compliant rule in contamination.note`);
+    }
+  }
   for (const [key, value] of Object.entries(run.metrics)) {
     if (key === 'durationLabel') continue;
     if (value !== null && (!Number.isFinite(value) || value < 0)) fail(`${run.id}: invalid metric ${key}=${value}`);

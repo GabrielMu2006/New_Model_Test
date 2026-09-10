@@ -75,7 +75,7 @@ phase-NN/Reviews/
 | 运行关系 | parentRunId、重试/修复原因；没有则 null；不可覆写父运行 |
 | 状态 | completed/partial/failed/timeout/infrastructure-error，含失败和未完成输出 |
 | 隔离 | isolation.level、实际执行环境、只读输入清单、网络规则、共享上下文情况 |
-| 污染 | contamination.status 为 clean/suspected/contaminated/unknown，事件和证据来源；clean 只针对声明的本轮控制措施。**该状态只影响标注，不影响成绩录入**：只有 `contaminated`（确认作弊成功）需要在展示中标注「已确认获取外部答案」，`suspected` 只记入档案 |
+| 污染 | contamination.status 为 clean/suspected/contaminated/unknown，事件和证据来源；clean 只针对声明的本轮控制措施。**该状态只影响标注，不影响成绩录入**：只有 `contaminated`（确认作弊成功）需要在展示中标注「已确认获取外部答案」，`suspected` 只记入档案。另记 `contamination.telemetry`：`visible` / `partial` / `hidden`——`hidden` 表示该模型 / harness 不提供中间工具调用记录，按 `docs/audit-method.md` 4.0 **默认视为遵守规则**并在展示中标注 |
 | 测试证据 | command、cwd（不泄露私有宿主路径）、环境、日期、通过/失败/跳过、证据路径和限制；历史自述另列 |
 | 评价 | 独立 reviewId、runId、human/ai、作者、日期、双语结论/原文、评分及 scoreMethod、证据位置；译文显式标记 |
 
