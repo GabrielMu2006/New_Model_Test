@@ -22,7 +22,7 @@ const archiveRoot = 'Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02';
 const promptPath = 'PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md';
 
 // 成果发布所在提交：本批次归档入库的提交（历史目录迁移与逐批提交相互独立）。
-const archiveCommit = 'a9925d853af078d931e96ee769aa119e2f0bd997';
+const archiveCommit = '6c089e570622b1b684f5327e47183d16af668d44';
 
 // 目录名 → (taskId, 类别)。扁平 `task-NN-<slug>/` 布局（与 phase-01 一致）；同一题重复运行才进 `runs/<run-id>/`。
 const taskPlan = [

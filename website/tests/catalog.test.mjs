@@ -119,7 +119,9 @@ test('every run keeps its own archive commit and no cross-version run sneaks in'
     assert.equal(commits.size, 1, `${key}: runs of one batch must share one archive commit`);
     used.add([...commits][0]);
   }
-  assert.equal(used.size, byBatch.size, 'each batch binds its own archive commit');
+  // 每个批次内部必须只绑定一个提交；同一次提交可以同时承载多个批次
+  // （2026-09-10 两个 phase-02 批次就是在同一次提交里改为扁平布局的）。
+  assert.ok(used.size >= 1 && used.size <= byBatch.size, `distinct archive commits ${used.size} exceed batches ${byBatch.size}`);
 });
 
 test('Phase 2 runs are imported with verbatim prompts, audit evidence and unchanged scoring', () => {

@@ -22,7 +22,7 @@ const archiveRoot = 'Test_Results/Muse-Spark-1.3_Opencode/phase-02';
 const promptPath = 'PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md';
 
 // 成果发布所在提交：本批次（含评价与取证）归档入库的提交。
-const archiveCommit = '66aa028b58f17505426a6f4217b0dbf787a72218';
+const archiveCommit = '6c089e570622b1b684f5327e47183d16af668d44';
 
 // 扁平 `task-NN-<slug>/` 布局（与 phase-01 一致，两个模型同题同名）；重复运行才进 `runs/<run-id>/`。
 const taskPlan = [
