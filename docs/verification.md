@@ -1,5 +1,27 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-10 评价并接入 Muse Spark phase-02 前五题（Task 16–20）
+
+- 需求：评价 Results 中 Muse 模型最新五项任务（Task 16–20）并上传到展示站。
+- 评价（AI，**非盲评**，1 份/题）：`maintenance-agent-v2`（维护 agent，DeepSeek Harness），沿用 v1 的评分口径（需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10）：task-16 **85**、task-17 **88**、task-18 **88**、task-19 **88**、task-20 **92**，平均 **88.2/100**。归档：各 `runs/<run-id>/reviews/ai-maintenance-agent-v2.md`（逐题）+ `Reviews/ai/maintenance-agent-v2/{README,phase-summary}.md`（阶段总评）。
+- 方法升级（v2 相对 v1）：组织者自建静态服务 + Chromium 无头渲染并驱动交互，做 canvas 级像素比对、读取应用自身读数、逐元素旋转角度差、并用关节坐标**复算连杆长度**；视觉维度由视觉桥接模型描述截图。**未运行成果自带脚本**；评价者本人不具备图像输入能力。
+- 关键独立证据：task-17 在 1.5 s 内 29 个旋转元素中 14 顺 / 15 逆、角速度跨度 −179.3°/1.5 s 至 2.1°/1.5 s；task-18 暂停时 `#hudTime` 与 canvas 同时冻结、Step 0.5 s 恰好 +0.500 s、Reset 归零、8 阶段依次推进；task-19 暂停冻结模拟时钟（Day 38.7 → 38.7）而画布仍有约 0.3% 残余重绘、调速 20 → 300 天/秒不重置位置；task-20 22 次采样复算刚性连杆长度极差 **0.096–0.167 px**、暂停零变化、单步生效、Store → New → Recall 逐像素还原。5 题控制台错误均为 0、均无外部依赖。
+- 取证归档：`Test_Results/Muse-Spark-1.3_Opencode/phase-02/evidence/evaluation-2026-09-10/`（4 个可复现脚本、4 份 checks JSON、17 张截图）。
+- 接入：新增 `website/scripts/adapters/muse-spark-phase2.mjs` 并注册（共四个适配器）；以 `submission.json` 为唯一元数据来源、导入时校验 `prompt.txt` 的 SHA-256、从 `runs/<run-id>/reviews/` 解析逐题评价；Muse 模型实体补充快照声明 `muse-spark-1.3-contributor-free`。索引变为 2 模型 / 2 阶段 / 20 任务 / **40 运行** / **80 评价** / 4 批次 / **142 页**（34 个 HTML 成果），task-16…20 现在两模型同题可并排对比。
+- 门禁：`import:data`、`validate:data`、`check`（0 errors）、`npm test`（**12/12**）、`build`（142 页，静态链接检查通过）全部通过；`test:e2e` 在 Chromium + WebKit 通过，**40 个成果入口全部加载**。
+- 发布与公网核验：归档提交 `66aa028`、接入提交 `825f896` 推送 `main`；回退标签 `website-rollback-20260910-a255ed9`。Actions run `34438311121` 构建与 Pages 部署成功；匿名 HTTPS 复核 `/`、`/en/`、`/zh/models/muse-spark-1-3/`、`/zh/runs/run-muse-spark-1-3-xhigh-task-20-r1/`、task-16 的 DeepSeek↔Muse 对比深链与 Muse 的 SVG 成果入口均返回 HTTP 200；线上运行页实测显示「92/100」「维护 agent v2」「运行快照：muse-spark-1.3-contributor-free」且恰好 1 张评价卡片，模型页同时显示快照与两个批次。
+- 必须标注的限制：评价由 AI 产出且**非盲评**，不构成网站独立证明；视觉维度依赖视觉桥接模型描述；未运行成果自带脚本，未做跨浏览器 / 跨视口 / 性能 / 长时间稳定性测量；隔离为策略级约束 + 事后审查；题目 Task 16–45 已公开；**人工评价仍未产出**。
+- 并发说明：本次接入期间另有会话在评价 **DeepSeek** 的 phase-02 五题（`Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/Reviews/任务完成质量评估-muse-spark-v1.md`，截至本次提交仍未提交）；本次提交未包含该在途文件。下方「审查归档 Muse Spark phase-02 前五题」条目由该并发会话写入，随本次提交一并入库。
+
+## 2026-09-10 审查归档 Muse Spark phase-02 前五题（Task 16–20）
+
+- 范围：`test-workspace-3/phase-02/` 中 Task 16–20 五个被测会话（opencode，`muse-spark-1.3-contributor-free` / xhigh），首轮输入五题均与 `prompt.txt` 逐字一致。
+- 审查：全量 238 次工具调用——全部读写路径在各自任务目录内，无 `..` 穿越、无跨任务/跨副本/`Test_Results`/`PROMPT`/`docs` 访问，无仓库查询、无对外网络；结论**未发现越界**（程序性备注记入审计档案：task-16 `ls /Applications` 环境探测、task-17/18/19 `/tmp` 自写校验脚本，均无外部内容流入）。
+- 统计：时长 353/409/1433/134/373s；工具调用 20/32/145/7/34；工具级可恢复错误 0/1/3/0/0；任务失败 0。
+- 校验：成果物零外部引用（SVG 命名空间除外）、SVG XML 解析通过；task-20 `node run_tests.js` 组织者独立复跑 **20/20 pass**；归档前后逐文件 SHA-256 全对。
+- 归档：`Test_Results/Muse-Spark-1.3_Opencode/phase-02/runs/<run-id>/`（`prompt.txt`、`artifacts/`、`evidence/`、`submission.json`）+ 阶段 README；工作区 `SUMMARY-tasks-16-20.md` 原样记录各题最后回答的明确 limit；`docs/source-audit.md` 新增 Muse Spark 批次小节。
+- 未完成：Task 21–45 待测；网站导入、人工/AI 评价未做；`SUMMARY.md` 全量版待 30 题齐后写。
+
 ## 2026-09-10 模型身份合并：0910 实验版与正式版视为同一模型
 
 - 决定（组织者 2026-09-10）：即将退役的 0910 实验版 `DeepSeek-V4.1-Flash-Exp-0910` 与随后发布的正式版 `DeepSeek-V4.1-Flash` 视为**同一个模型**，成绩同表记录。
