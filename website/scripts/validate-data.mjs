@@ -29,6 +29,7 @@ unique(catalog.assessments, 'assessment');
 // ---- 实体级通用校验（不写死具体数量，由数据推导） ----
 const phaseById = new Map(catalog.phases.map((phase) => [phase.id, phase]));
 const taskById = new Map(catalog.tasks.map((task) => [task.id, task]));
+const modelById = new Map(catalog.models.map((model) => [model.id, model]));
 
 for (const phase of catalog.phases) {
   if (!Number.isInteger(phase.number) || phase.number < 1) fail(`phase ${phase.id}: invalid number`);
@@ -50,6 +51,23 @@ for (const phase of catalog.phases) {
   const declared = [...phase.taskVersions].map(String).sort();
   if (JSON.stringify(owned) !== JSON.stringify(declared)) {
     fail(`phase ${phase.id}: taskVersions ${JSON.stringify(declared)} do not match catalog tasks ${JSON.stringify(owned)}`);
+  }
+}
+
+// ---- 模型身份：显示名双语；同模型多快照必须显式声明，且逐运行可追溯 ----
+const snapshotStatuses = new Set(['current', 'retired', 'unknown']);
+for (const model of catalog.models) {
+  if (!model.name?.zh || !model.name?.en) fail(`model ${model.id}: name must be bilingual`);
+  if (model.snapshots == null) continue;
+  if (!Array.isArray(model.snapshots) || model.snapshots.length === 0) fail(`model ${model.id}: snapshots must be a non-empty array when present`);
+  const seen = new Set();
+  for (const snapshot of model.snapshots) {
+    if (!snapshot.label?.zh || !snapshot.label?.en) fail(`model ${model.id}: snapshot label must be bilingual`);
+    if (!snapshot.evidence?.zh || !snapshot.evidence?.en) fail(`model ${model.id}: snapshot ${snapshot.id ?? '(pending)'} needs bilingual evidence`);
+    if (!snapshotStatuses.has(snapshot.status)) fail(`model ${model.id}: invalid snapshot status ${snapshot.status}`);
+    if (snapshot.id === null) continue;
+    if (seen.has(snapshot.id)) fail(`model ${model.id}: duplicate snapshot id ${snapshot.id}`);
+    seen.add(snapshot.id);
   }
 }
 
@@ -82,6 +100,13 @@ for (const run of catalog.runs) {
   if (run.prompt) {
     if (!/^[0-9a-f]{64}$/.test(run.prompt.sha256 ?? '')) fail(`${run.id}: prompt.sha256 must be a 64-char hex digest`);
     if (!fs.existsSync(path.resolve(repoRoot, run.prompt.path))) fail(`${run.id}: missing prompt file ${run.prompt.path}`);
+  }
+  const reportedModelId = run.environment?.reportedModelId ?? null;
+  if (reportedModelId) {
+    const declared = modelById.get(run.modelId)?.snapshots ?? [];
+    if (!declared.some((snapshot) => snapshot.id === reportedModelId)) {
+      fail(`${run.id}: reported model id ${reportedModelId} is not declared as a snapshot of ${run.modelId}`);
+    }
   }
   if (run.isolation && !isolationLevels.has(run.isolation.level)) fail(`${run.id}: invalid isolation level ${run.isolation.level}`);
   if (run.contamination && !contaminationStatuses.has(run.contamination.status)) fail(`${run.id}: invalid contamination status ${run.contamination.status}`);
@@ -143,6 +168,7 @@ for (const run of phase2Runs) {
   if (run.isolation?.level !== 'workspace-only') fail(`${run.id}: phase-02 runs must record isolation.level=workspace-only`);
   if (!run.prompt?.sha256) fail(`${run.id}: phase-02 runs must record the verbatim prompt hash`);
   if (!run.evidence?.audit) fail(`${run.id}: phase-02 runs must link the boundary audit evidence`);
+  if (!run.environment?.reportedModelId) fail(`${run.id}: phase-02 runs must record the harness-reported model id (snapshot)`);
 }
 
 // 每个 Muse 运行必须同时挂人工评价与每一份已归档的 AI 评价

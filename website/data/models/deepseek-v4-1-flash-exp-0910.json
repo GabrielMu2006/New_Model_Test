@@ -1,7 +1,37 @@
 {
   "id": "deepseek-v4-1-flash-exp-0910",
-  "name": "DeepSeek-V4.1-Flash-Exp-0910",
-  "version": "0910",
+  "name": {
+    "zh": "DeepSeek-V4.1-Flash（0910 实验版 + 正式版）",
+    "en": "DeepSeek-V4.1-Flash (0910 preview + GA release)"
+  },
   "provider": "DeepSeek",
-  "notes": { "zh": "模型身份按归档目录记录。", "en": "Model identity follows the archived directory label." }
+  "version": null,
+  "versionNote": {
+    "zh": "版本以逐运行的快照记录为准；不填单一版本号，避免把两个快照合并成一个未经验证的值。",
+    "en": "Version is recorded per run as a snapshot; no single version number is claimed, to avoid merging two snapshots into an unverified value."
+  },
+  "snapshots": [
+    {
+      "id": "deepseek-v4.1-flash-expires-on-0910",
+      "label": { "zh": "0910 实验版（即将退役）", "en": "0910 experimental preview (retiring)" },
+      "status": "retired",
+      "evidence": {
+        "zh": "harness 报告值，记录在 phase-02 各运行的 submission.json；phase-01 归档未记录 model id。",
+        "en": "Harness-reported value, recorded in each Phase 2 submission.json; the Phase 1 archive does not record a model id."
+      }
+    },
+    {
+      "id": null,
+      "label": { "zh": "正式版（尚未运行）", "en": "GA release (not yet run)" },
+      "status": "current",
+      "evidence": {
+        "zh": "正式版 harness 报告的 model id 待第一次运行后回填，不据品牌名推断。",
+        "en": "The GA harness-reported model id will be filled in after the first GA run; not inferred from the brand name."
+      }
+    }
+  ],
+  "notes": {
+    "zh": "按组织者 2026-09-10 决定，0910 实验版与随后发布的正式版 DeepSeek-V4.1-Flash 视为**同一个模型**，成绩同表记录；每个运行单独记录 harness 报告的模型 id（即快照），跨快照比较必须标明差异。实体 id 与全部运行 URL 保持稳定，不因改名而变动。",
+    "en": "Per the organizer decision of 2026-09-10, the 0910 experimental preview and the subsequent GA release of DeepSeek-V4.1-Flash are treated as **one model**, with results reported in the same table. Every run records its harness-reported model id (its snapshot), and cross-snapshot comparisons must be labelled. The entity id and all run URLs stay stable and are not renamed."
+  }
 }

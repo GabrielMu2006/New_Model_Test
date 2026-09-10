@@ -1,7 +1,27 @@
 {
   "id": "model-id",
-  "name": "",
-  "version": null,
+  "name": {
+    "zh": "",
+    "en": ""
+  },
   "provider": null,
-  "notes": { "zh": "", "en": "" }
+  "version": null,
+  "snapshots": [
+    {
+      "id": "harness-reported-model-id",
+      "label": {
+        "zh": "",
+        "en": ""
+      },
+      "status": "current",
+      "evidence": {
+        "zh": "harness 报告值记录在哪个运行上",
+        "en": "which run records the harness-reported value"
+      }
+    }
+  ],
+  "notes": {
+    "zh": "",
+    "en": ""
+  }
 }

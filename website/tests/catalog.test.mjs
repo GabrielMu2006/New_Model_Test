@@ -19,6 +19,27 @@ test('production data keeps the Phase 1 regression baseline', () => {
   assert.deepEqual(catalog.reviews.filter((review) => review.runId.includes('deepseek') && review.runId.includes('task-06')).map((review) => review.type).sort(), ['ai', 'human']);
 });
 
+test('model identity is bilingual and snapshots stay traceable per run', () => {
+  for (const model of catalog.models) {
+    assert.ok(model.name.zh && model.name.en, `${model.id}: model name must be bilingual`);
+  }
+  const deepseek = catalog.models.find((model) => model.id === 'deepseek-v4-1-flash-exp-0910');
+  const snapshotIds = (deepseek.snapshots ?? []).map((snapshot) => snapshot.id);
+  assert.ok(snapshotIds.includes('deepseek-v4.1-flash-expires-on-0910'), 'the retired preview snapshot must be declared');
+  assert.ok(snapshotIds.includes(null), 'the GA snapshot stays pending until a run reports its id');
+  for (const run of catalog.runs) {
+    const model = catalog.models.find((item) => item.id === run.modelId);
+    const reported = run.environment?.reportedModelId ?? null;
+    if (reported === null) continue;
+    assert.ok((model.snapshots ?? []).some((snapshot) => snapshot.id === reported), `${run.id}: undeclared snapshot ${reported}`);
+  }
+  const phase2Runs = catalog.runs.filter((run) => phaseOf(run) === 'phase-02');
+  for (const run of phase2Runs) assert.equal(run.environment.reportedModelId, 'deepseek-v4.1-flash-expires-on-0910');
+  for (const run of runsOf('deepseek-v4-1-flash-exp-0910', 'phase-01')) assert.equal(run.environment.reportedModelId, null);
+  // 同模型多批次必须全部保留（曾只取第一个批次，导致模型页统计停留在 Phase 1）
+  assert.equal(catalog.batches.filter((batch) => batch.modelId === 'deepseek-v4-1-flash-exp-0910').length, 2);
+});
+
 test('Muse Spark Phase 1 is imported with prompts, isolation and every archived AI review', () => {
   const muse = runsOf('muse-spark-1-3');
   assert.equal(muse.length, 15);

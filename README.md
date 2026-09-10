@@ -15,7 +15,7 @@
 
 本仓库用于公开记录和展示新模型测试。每个阶段保存当期使用的原始 prompt、模型交付物、运行或测试方法、视觉证据以及复盘报告。目标不是只展示“最好看的结果”，而是尽量保留从任务输入到成果、验证和问题分析的完整链路。
 
-当前内容包括 **第一阶段（Phase 1）**：两个模型在 15 个任务上的成果、运行证据与独立评价——`DeepSeek-V4.1-Flash-Exp-0910`（DSH harness）与 `Muse Spark 1.3`（opencode harness）；以及 **第二阶段（Phase 2）的部分运行**：`DeepSeek-V4.1-Flash-Exp-0910` 的 Task 16–20（第二阶段共 30 题，其余 25 题尚未测试，且这部分尚无独立评价）。评估的能力包括：
+当前内容包括 **第一阶段（Phase 1）**：两个模型在 15 个任务上的成果、运行证据与独立评价——`DeepSeek-V4.1-Flash`（0910 实验版，DSH harness）与 `Muse Spark 1.3`（opencode harness）；以及 **第二阶段（Phase 2）的部分运行**：`DeepSeek-V4.1-Flash` 的 Task 16–20（第二阶段共 30 题，其余 25 题尚未测试，且这部分尚无独立评价）。评估的能力包括：
 
 - SVG 视觉生成与精确约束遵循；
 - 单文件网页、游戏和创作工具；
@@ -31,13 +31,15 @@
 
 | 阶段 | 被测模型 | Harness | 任务数 | 核心完成率 | 内部综合评估 | 状态 |
 | --- | --- | --- | ---: | ---: | ---: | --- |
-| Phase 1 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 15 | 15/15 | 93.6/100（历史 AI 报告引用） | 已完成 |
+| Phase 1 | DeepSeek-V4.1-Flash（0910 实验版） | DSH | 15 | 15/15 | 93.6/100（历史 AI 报告引用） | 已完成 |
 | Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 交付（2 题交付方式待改） | 84.9/100（维护 agent 非盲评 v1） | 已完成 |
-| Phase 2 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 5 / 30（部分） | 5/5 交付 | —（尚无独立评价） | 部分完成（Task 16–20） |
+| Phase 2 | DeepSeek-V4.1-Flash（0910 实验版） | DSH | 5 / 30（部分） | 5/5 交付 | —（尚无独立评价） | 部分完成（Task 16–20） |
 
 > 两行的评分来自不同评委与不同口径，**不可直接比较**；Harness、预算与隔离等级也不同。
 
 > 综合分数来自仓库内的阶段性人工与自动化评估，用于总结本次测试，不应被视为跨模型通用排行榜分数。
+
+> **模型身份与快照**（2026-09-10 组织者决定）：0910 实验版与随后发布的正式版 `DeepSeek-V4.1-Flash` 视为**同一个模型**，成绩同表记录。展示站为每个运行单独标注 harness 报告的 model id（即快照）：已归档的 20 条 DeepSeek 运行全部跑在 `deepseek-v4.1-flash-expires-on-0910` 快照上（第一阶段 归档未记录 model id，页面显示「未记录」）；正式版的快照 id 待第一次运行后回填，不据品牌名推断。模型实体 id 与全部既有 URL 保持不变，正式版运行将使用 `run-deepseek-v4-1-flash-task-NN-r1` 形式的 runId；**跨快照比较必须标明差异**。
 
 ### 第一阶段任务
 
@@ -61,7 +63,7 @@
 
 ### 后续阶段（Phase 2）
 
-Phase 2 的 30 条高级纯创造题（Task 16–45）已写入 [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)，强调从空目录起步的复杂系统创作。**Task 16–20（5 题）已由 DeepSeek-V4.1-Flash-Exp-0910 完成、审查并接入展示站**（归档见 [phase-02 运行清单](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)）；Task 21–45 尚未测试。第二阶段目前**没有人工或 AI 评价**，因此上表只列交付情况、不给分数。
+Phase 2 的 30 条高级纯创造题（Task 16–45）已写入 [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md)，强调从空目录起步的复杂系统创作。**Task 16–20（5 题）已由 `DeepSeek-V4.1-Flash` 的 0910 实验版完成、审查并接入展示站**（快照见上）（归档见 [phase-02 运行清单](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)）；Task 21–45 尚未测试。第二阶段目前**没有人工或 AI 评价**，因此上表只列交付情况、不给分数。
 
 Phase 2 的隔离等级为 `workspace-only`（`AGENTS.md` 两条绝对规则 + 收尾日志审查）：这是**策略级约束**，不是强制隔离，也不表示「无污染」。Task 16–45 的题目已在公开仓库发布（提交 `0540edf`，见 [已知问题](docs/known-issues.md)），成绩须同时标注该暴露。越界判定只影响标注、不影响成绩录入（2026-09-10 组织者决定）：`task-17`、`task-20` 记录了「越界尝试，未取得内容」，只留在审计档案与运行页说明里，不作排除。测试流程与接入步骤见[测试隔离与防答案污染](docs/testing-protocol.md)与[接入操作步骤](docs/adding-results.md)。
 
@@ -141,7 +143,7 @@ npm test
 
 ### 第一阶段结果摘要
 
-**DeepSeek-V4.1-Flash-Exp-0910（DSH harness）**
+**DeepSeek-V4.1-Flash（0910 实验版，DSH harness）**
 
 - 15 个任务均满足原始 prompt 的核心要求；
 - task-11：21 项几何测试与 52 项浏览器检查通过；
@@ -184,7 +186,7 @@ npm test
 
 This repository publicly documents and showcases new-model evaluations. Each phase preserves the original prompts, model-produced artifacts, run or test instructions, visual evidence, and retrospective reports. The goal is not to present only the most attractive outputs, but to keep a traceable path from task input to result, verification, and issue analysis.
 
-The archive covers **Phase 1**: two models — `DeepSeek-V4.1-Flash-Exp-0910` (DSH harness) and `Muse Spark 1.3` (opencode harness) — on the same 15 tasks, with run evidence and independent reviews; plus a **partial Phase 2**: Tasks 16–20 completed and archived by `DeepSeek-V4.1-Flash-Exp-0910` (5 of 30 tasks; the remaining 25 have not been run and this part has no independent review yet). The suite examines:
+The archive covers **Phase 1**: two models — `DeepSeek-V4.1-Flash` (0910 preview, DSH harness) and `Muse Spark 1.3` (opencode harness) — on the same 15 tasks, with run evidence and independent reviews; plus a **partial Phase 2**: Tasks 16–20 completed and archived by `DeepSeek-V4.1-Flash` (0910 preview; 5 of 30 tasks; the remaining 25 have not been run and this part has no independent review yet). The suite examines:
 
 - SVG generation and compliance with exact visual constraints;
 - self-contained web pages, games, and creative tools;
@@ -200,13 +202,15 @@ The repository is designed to grow. Future results can be added under Test_Resul
 
 | Phase | Model under test | Harness | Tasks | Core completion | Internal evaluation | Status |
 | --- | --- | --- | ---: | ---: | ---: | --- |
-| Phase 1 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 15 | 15/15 | 93.6/100 (quoted historical AI report) | Complete |
+| Phase 1 | DeepSeek-V4.1-Flash (0910 preview) | DSH | 15 | 15/15 | 93.6/100 (quoted historical AI report) | Complete |
 | Phase 1 | Muse Spark 1.3 | opencode 1.18.29 | 15 | 15/15 delivered (2 flagged as delivery-method issues) | 84.9/100 (maintenance-agent non-blind v1) | Complete |
-| Phase 2 | DeepSeek-V4.1-Flash-Exp-0910 | DSH | 5 / 30 (partial) | 5/5 delivered | — (no independent review yet) | Partial (Tasks 16–20) |
+| Phase 2 | DeepSeek-V4.1-Flash (0910 preview) | DSH | 5 / 30 (partial) | 5/5 delivered | — (no independent review yet) | Partial (Tasks 16–20) |
 
 > The two rows come from different reviewers and rubrics and must not be compared directly; harness, budget and isolation level also differ.
 
 > The aggregate score comes from the human and automated evaluation stored in this repository. It summarizes this phase and is not intended as a universal cross-model leaderboard score.
+
+> **Model identity and snapshots** (organizer decision, 2026-09-10): the 0910 experimental preview and the subsequent GA release of `DeepSeek-V4.1-Flash` are treated as **one model**, reported in the same table. The showcase records the harness-reported model id (the snapshot) on every run: all 20 archived DeepSeek runs used the `deepseek-v4.1-flash-expires-on-0910` snapshot (the Phase 1 archive logged no model id, shown as “Not recorded”); the GA snapshot id will be filled in after its first run and is not inferred from the brand name. The entity id and all existing URLs stay unchanged, and GA runs will use runIds of the form `run-deepseek-v4-1-flash-task-NN-r1`; **cross-snapshot comparisons must be labelled**.
 
 ### Phase 1 tasks
 
@@ -230,7 +234,7 @@ The repository is designed to grow. Future results can be added under Test_Resul
 
 ### Later phase (Phase 2)
 
-Phase 2 adds 30 advanced creation prompts (Task 16–45) in [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md), focused on complex systems built from an empty directory. **Tasks 16–20 were completed, audited and published by DeepSeek-V4.1-Flash-Exp-0910** (see the [phase-02 run index](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)); Tasks 21–45 have not been run. This phase has **no human or AI review yet**, so the table above records delivery only, with no score.
+Phase 2 adds 30 advanced creation prompts (Task 16–45) in [`PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md`](PROMPT/PHASE2_30_ADVANCED_CREATION_PROMPTS_BILINGUAL.md), focused on complex systems built from an empty directory. **Tasks 16–20 were completed, audited and published by the 0910 preview snapshot of `DeepSeek-V4.1-Flash`** (see snapshots above) (see the [phase-02 run index](Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-02/README.md)); Tasks 21–45 have not been run. This phase has **no human or AI review yet**, so the table above records delivery only, with no score.
 
 Phase 2 isolation is `workspace-only` (two absolute `AGENTS.md` rules plus a post-hoc log audit): a **policy-level constraint**, not enforced isolation, and not a claim of “no contamination”. The Task 16–45 prompts are also published in this public repository (commit `0540edf`, see [known issues](docs/known-issues.md)), which the scores must be labelled with. A boundary finding affects annotation only, never score entry (organizer decision, 2026-09-10): `task-17` and `task-20` record “boundary attempt, no external content obtained”, kept in the audit archive and on the run page, with no exclusion. See the [test isolation and anti-contamination protocol](docs/testing-protocol.md) and the [integration workflow](docs/adding-results.md).
 
@@ -310,7 +314,7 @@ See each task's `README.md` for full commands and known limitations. In particul
 
 ### Phase 1 result summary
 
-**DeepSeek-V4.1-Flash-Exp-0910 (DSH harness)**
+**DeepSeek-V4.1-Flash (0910 preview, DSH harness)**
 
 - All 15 tasks satisfy the core requirements of their original prompts.
 - Task 11: 21 geometry tests and 52 browser checks passed.

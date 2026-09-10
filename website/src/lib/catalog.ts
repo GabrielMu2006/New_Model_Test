@@ -39,6 +39,10 @@ export const runsForTask = (taskId: string, taskVersion?: number) => catalog.run
 );
 export const runsForModel = (modelId: string) => catalog.runs.filter((run) => run.modelId === modelId);
 export const batchForModel = (modelId: string) => catalog.batches.find((batch) => batch.modelId === modelId);
+/** 同一模型可能有多个批次（多阶段 / 多快照），展示时必须全部列出，不能只取第一个。 */
+export const batchesForModel = (modelId: string) => catalog.batches.filter((batch) => batch.modelId === modelId);
+/** 模型声明的快照（harness 报告的 model id）；未声明时返回空数组。 */
+export const snapshotsForModel = (modelId: string) => modelById(modelId)?.snapshots ?? [];
 export const assessmentsForModel = (modelId: string) => catalog.assessments.filter((assessment) => assessment.modelId === modelId);
 export const tasksForModel = (modelId: string) => {
   const ids = new Set(runsForModel(modelId).map((run) => run.taskId));

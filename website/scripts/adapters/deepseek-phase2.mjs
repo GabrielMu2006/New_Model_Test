@@ -113,6 +113,8 @@ export function load({ read, repoRoot }) {
         os: submission.environment.os,
         runtime: submission.environment.runtime,
         sessionId: submission.environment.sessionId,
+        // harness 报告的模型 id = 本次运行实际使用的快照（同模型不同快照必须能区分）。
+        reportedModelId: submission.model?.id ?? null,
         sharedContext: submission.environment.sharedContext,
         continuationTurns: submission.environment.continuationTurns,
         startedAt: submission.environment.startedAt,

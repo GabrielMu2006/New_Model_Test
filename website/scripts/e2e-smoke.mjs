@@ -52,6 +52,18 @@ try {
     const aiHtml = await aiCard.innerHTML();
     if (aiHtml.includes('<title>') || aiHtml.includes('<desc>')) throw new Error(`${name}: raw HTML not escaped in review body`);
 
+    // 模型身份：一个模型两个快照 + 两个批次都在模型页列出（不能只显示第一个批次）
+    await page.goto(`${base}/zh/models/deepseek-v4-1-flash-exp-0910/`);
+    const modelPage = page.locator('section.page-block').first();
+    const modelText = await modelPage.textContent();
+    for (const expected of ['0910 实验版（即将退役）', '正式版（尚未运行）', 'Phase 2（Task 16–20，部分）']) {
+      if (!modelText?.includes(expected)) throw new Error(`${name}: model page missing "${expected}"`);
+    }
+    if (await modelPage.locator('.metric-grid').count() !== 2) throw new Error(`${name}: model page must show both batches`);
+    // 运行详情必须写明本次实际使用的快照
+    await page.goto(`${base}/en/runs/run-deepseek-v4-1-flash-exp-0910-task-16-r1/`);
+    if (!(await page.locator('.detail-page').textContent())?.includes('deepseek-v4.1-flash-expires-on-0910')) throw new Error(`${name}: run page missing the harness-reported snapshot id`);
+
     // 第二阶段（Task 16–20）：阶段页、越界标注、审查证据、补充轮逐字输入与「暂无评价」说明
     await page.goto(`${base}/zh/phases/phase-02/`);
     if (await page.locator('.run-tile').count() !== 5) throw new Error(`${name}: phase-02 page did not list the 5 archived tasks`);

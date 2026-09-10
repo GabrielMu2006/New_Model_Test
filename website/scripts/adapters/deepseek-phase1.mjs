@@ -117,7 +117,11 @@ export function load({ read, siteRoot }) {
     runs.push({
       id: runId, modelId: 'deepseek-v4-1-flash-exp-0910', taskId: id, taskVersion: 1,
       status: 'completed',
-      environment: { harness: 'DSH', sessionId: sessionIds[index], continuationTurns: continuationTurns[index] },
+      environment: {
+        harness: 'DSH', sessionId: sessionIds[index], continuationTurns: continuationTurns[index],
+        // 第一阶段归档未记录 harness 报告的 model id；不据品牌名推断，留 null。
+        reportedModelId: null,
+      },
       isolation: { level: 'unknown', note: '第一阶段历史运行未记录隔离配置；见 docs/verification.md。' },
       contamination: { status: 'unknown', note: '第一阶段历史运行未执行新的污染判定流程。' },
       metrics,

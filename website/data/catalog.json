@@ -68,17 +68,53 @@
   "models": [
     {
       "id": "deepseek-v4-1-flash-exp-0910",
-      "name": "DeepSeek-V4.1-Flash-Exp-0910",
-      "version": "0910",
+      "name": {
+        "zh": "DeepSeek-V4.1-Flash（0910 实验版 + 正式版）",
+        "en": "DeepSeek-V4.1-Flash (0910 preview + GA release)"
+      },
       "provider": "DeepSeek",
+      "version": null,
+      "versionNote": {
+        "zh": "版本以逐运行的快照记录为准；不填单一版本号，避免把两个快照合并成一个未经验证的值。",
+        "en": "Version is recorded per run as a snapshot; no single version number is claimed, to avoid merging two snapshots into an unverified value."
+      },
+      "snapshots": [
+        {
+          "id": "deepseek-v4.1-flash-expires-on-0910",
+          "label": {
+            "zh": "0910 实验版（即将退役）",
+            "en": "0910 experimental preview (retiring)"
+          },
+          "status": "retired",
+          "evidence": {
+            "zh": "harness 报告值，记录在 phase-02 各运行的 submission.json；phase-01 归档未记录 model id。",
+            "en": "Harness-reported value, recorded in each Phase 2 submission.json; the Phase 1 archive does not record a model id."
+          }
+        },
+        {
+          "id": null,
+          "label": {
+            "zh": "正式版（尚未运行）",
+            "en": "GA release (not yet run)"
+          },
+          "status": "current",
+          "evidence": {
+            "zh": "正式版 harness 报告的 model id 待第一次运行后回填，不据品牌名推断。",
+            "en": "The GA harness-reported model id will be filled in after the first GA run; not inferred from the brand name."
+          }
+        }
+      ],
       "notes": {
-        "zh": "模型身份按归档目录记录。",
-        "en": "Model identity follows the archived directory label."
+        "zh": "按组织者 2026-09-10 决定，0910 实验版与随后发布的正式版 DeepSeek-V4.1-Flash 视为**同一个模型**，成绩同表记录；每个运行单独记录 harness 报告的模型 id（即快照），跨快照比较必须标明差异。实体 id 与全部运行 URL 保持稳定，不因改名而变动。",
+        "en": "Per the organizer decision of 2026-09-10, the 0910 experimental preview and the subsequent GA release of DeepSeek-V4.1-Flash are treated as **one model**, with results reported in the same table. Every run records its harness-reported model id (its snapshot), and cross-snapshot comparisons must be labelled. The entity id and all run URLs stay stable and are not renamed."
       }
     },
     {
       "id": "muse-spark-1-3",
-      "name": "Muse Spark 1.3",
+      "name": {
+        "zh": "Muse Spark 1.3",
+        "en": "Muse Spark 1.3"
+      },
       "version": "1.3",
       "provider": "Meta Superintelligence Labs",
       "notes": {
@@ -779,7 +815,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "89716f93",
-        "continuationTurns": 1
+        "continuationTurns": 1,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -829,7 +866,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "0e1e035d",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -879,7 +917,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "17e6215c",
-        "continuationTurns": 1
+        "continuationTurns": 1,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -929,7 +968,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "17e6215c",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -979,7 +1019,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "4a0d64ce",
-        "continuationTurns": 1
+        "continuationTurns": 1,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1029,7 +1070,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "4a0d64ce",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1079,7 +1121,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "4a0d64ce",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1129,7 +1172,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "2579bde9",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1179,7 +1223,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "28e77186",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1229,7 +1274,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "da8df324",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1279,7 +1325,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "2d2be5e2",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1332,7 +1379,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "f87c54e3",
-        "continuationTurns": 1
+        "continuationTurns": 1,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1386,7 +1434,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "31de8e10",
-        "continuationTurns": 1
+        "continuationTurns": 1,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1444,7 +1493,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "214420b0",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -1513,7 +1563,8 @@
       "environment": {
         "harness": "DSH",
         "sessionId": "b25a11c4",
-        "continuationTurns": 0
+        "continuationTurns": 0,
+        "reportedModelId": null
       },
       "isolation": {
         "level": "unknown",
@@ -2593,6 +2644,7 @@
         "os": "macOS 26.6.2 (arm64)",
         "runtime": "Node 24.19.0",
         "sessionId": "session-3e6b3dce-f3b4-409c-beab-79d726832733",
+        "reportedModelId": "deepseek-v4.1-flash-expires-on-0910",
         "sharedContext": false,
         "continuationTurns": 0,
         "startedAt": "2026-09-09T15:48:51.368Z",
@@ -2671,6 +2723,7 @@
         "os": "macOS 26.6.2 (arm64)",
         "runtime": "Node 24.19.0",
         "sessionId": "session-f4bf2a9f-9ea2-4642-b2e7-59de1ab1013b",
+        "reportedModelId": "deepseek-v4.1-flash-expires-on-0910",
         "sharedContext": false,
         "continuationTurns": 1,
         "startedAt": "2026-09-09T15:49:25.507Z",
@@ -2772,6 +2825,7 @@
         "os": "macOS 26.6.2 (arm64)",
         "runtime": "Node 24.19.0",
         "sessionId": "session-f220eec5-8ac1-461f-bbd7-0ddb43d452ae",
+        "reportedModelId": "deepseek-v4.1-flash-expires-on-0910",
         "sharedContext": false,
         "continuationTurns": 0,
         "startedAt": "2026-09-09T15:49:53.116Z",
@@ -2862,6 +2916,7 @@
         "os": "macOS 26.6.2 (arm64)",
         "runtime": "Node 24.19.0",
         "sessionId": "session-34287563-2efd-4e37-ac24-1d35dc877a58",
+        "reportedModelId": "deepseek-v4.1-flash-expires-on-0910",
         "sharedContext": false,
         "continuationTurns": 0,
         "startedAt": "2026-09-10T02:05:20.539Z",
@@ -2956,6 +3011,7 @@
         "os": "macOS 26.6.2 (arm64)",
         "runtime": "Node 24.19.0",
         "sessionId": "session-b84d3d60-6b52-4dda-b136-f0833e04cc89",
+        "reportedModelId": "deepseek-v4.1-flash-expires-on-0910",
         "sharedContext": false,
         "continuationTurns": 0,
         "startedAt": "2026-09-10T02:38:36.963Z",

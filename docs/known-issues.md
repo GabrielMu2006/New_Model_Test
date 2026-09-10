@@ -105,6 +105,13 @@
 - **诚实边界**：该方案挡手滑、可取证，挡不住有意读取；DSH 沙箱只限制写、不限制读（详见 `docs/testing-protocol.md` 第 8 节）。
 - **操作手册**：`test-workspace/README.md`。
 
+### 4.3 模型身份合并与快照（2026-09-10 决定，非缺陷）
+
+- 背景：0910 实验版 `DeepSeek-V4.1-Flash-Exp-0910` 即将退役，随后发布的正式版 `DeepSeek-V4.1-Flash` 与其视为**同一个模型**。
+- 做法：模型实体 id（`deepseek-v4-1-flash-exp-0910`）与全部 runId、URL **保持稳定**；显示名改为双语 `DeepSeek-V4.1-Flash（0910 实验版 + 正式版）` / `DeepSeek-V4.1-Flash (0910 preview + GA release)`；模型实体新增 `snapshots`（0910 实验版=已退役、正式版=待回填），每条运行记录 `environment.reportedModelId`。
+- 影响面：`docs/result-interface.md` 已写明该口径；后续正式版运行使用 `run-deepseek-v4-1-flash-task-NN-rN`，仍归档在同一模型目录下，**跨快照比较必须标明**。
+- 顺带修复：模型页此前只显示第一个批次（`batchForModel` 用 `find`），20 条运行却显示 Phase 1 的 15 题统计；现改为列出该模型全部批次与全部快照。
+
 ### 4.2 被测会话规则文件的写法
 
 - 给被测会话的文件只写**绝对规则**，不得包含「这是策略级约束」「技术上你其实能读到」「去探测边界」等表述；

@@ -30,6 +30,13 @@ Muse-Spark 例外（组织者 2026-09-09 决定）：`Test_Results/Muse-Spark-1.
 
 新 model-folder 使用稳定文件名，显示名称、供应商、实际模型版本和 harness 在元数据中分列。同一模型不同阶段并列，不能把阶段放到模型目录之上。
 
+**模型身份与快照（2026-09-10 组织者决定）**：同一模型的不同发布版本（如 `DeepSeek-V4.1-Flash` 的 0910 实验版与随后发布的正式版）视为**同一个模型实体**，成绩同表记录。实体 `id` 一旦公开即固定：改名只改显示名（`name` 为双语 `{zh, en}`），**不重命名目录、不重命名既有 runId、不改既有 URL**。
+
+- 每个运行必须记录 `environment.reportedModelId`：**harness 报告的模型 id，即本次运行实际使用的快照**。归档中没有该记录的运行（如第一阶段）记 `null` 并注明原因，不得据品牌名反推。
+- 模型实体用 `snapshots` 声明该模型有哪些快照：`{ id, label: {zh, en}, status: current|retired|unknown, evidence: {zh, en} }`；`id` 尚未知时写 `null` 并注明「待第一次运行后回填」。
+- **跨快照比较必须标明**：同模型的不同快照不是同一配置。展示层要在运行详情显示快照 id，在模型页列出全部快照与全部批次。
+- runId 的模型 slug 只需**全局唯一且稳定**，不要求等于模型实体 id：后续正式版运行采用 `run-deepseek-v4-1-flash-task-NN-rN`，既有的 `run-deepseek-v4-1-flash-exp-0910-task-NN-rN` 保持不变。
+
 ## 必须交接的信息
 
 下列为字段契约；submission.json 可按字段组组织，但不是当前 catalog 的直接替代。可选实测值缺失用 null，确实无项的列表用 []，不能以空字符串/0 伪造已知值。
@@ -39,7 +46,7 @@ Muse-Spark 例外（组织者 2026-09-09 决定）：`Test_Results/Muse-Spark-1.
 | 标识 | schemaVersion: 1、runId、phaseId、taskId、正整数 taskVersion、modelId；runId 全局唯一 |
 | 身份 | model.name、实际版本/供应商（未知 null），不得仅据品牌名称推断实际运行模型 |
 | 输入 | prompt.path（仓库相对路径）、prompt.sha256、prompt.version、本次逐字输入路径、按顺序排列的追加指令及资源 SHA-256 |
-| 环境 | harness/版本、OS/runtime、工具版本、sessionId、上下文是否复用、补充轮数、采样设置、开始/结束时间和时区（若已知） |
+| 环境 | harness/版本、**harness 报告的 model id（`reportedModelId`，即快照）**、OS/runtime、工具版本、sessionId、上下文是否复用、补充轮数、采样设置、开始/结束时间和时区（若已知） |
 | 预算 | 开测前固定的时间/token/工具调用/重试/补充轮上限、超时条件、联网和资源规则 |
 | 指标 | durationSeconds 及口径、apiCalls、toolCalls、failures、inputTokens、outputTokens、cacheReadTokens、totalTokens；非负有限数或 null |
 | 费用 | 金额、币种、任务或批次范围及来源；批次金额不能均分填到每题 |

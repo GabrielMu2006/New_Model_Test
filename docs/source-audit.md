@@ -36,6 +36,8 @@
 
 口径：`prompt.txt` 为**逐字存档**（组织者粘贴进对话，导入时与归档声明的 SHA-256 校验一致），不是事后补录；独立评价尚未产出，因此本批次不计综合分。
 
+模型身份：实体 `deepseek-v4-1-flash-exp-0910` 在展示站显示为 `DeepSeek-V4.1-Flash（0910 实验版 + 正式版）`（2026-09-10 组织者决定，两个发布版本视为同一模型）。本批次 5 条运行的 `environment.reportedModelId` 均为 `deepseek-v4.1-flash-expires-on-0910`；phase-01 的 15 条运行归档未记录 model id，记 `null`。实体 id 与全部运行 URL 未改动。
+
 ## 保留的分歧与边界
 
 - Task 06：人工评价认为手和剪刀“很奇怪”，历史 AI 报告给 92/100 并认为关系明确。

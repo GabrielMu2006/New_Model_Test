@@ -10,7 +10,7 @@ const labels = {
 };
 ---
 <article class="run-row">
-  <div><span class="status-dot"></span><strong>{model?.name}</strong><small>{run.id}</small></div>
+  <div><span class="status-dot"></span><strong>{model?.name[locale]}</strong><small>{run.id}</small></div>
   <dl>
     <div><dt>{labels.duration}</dt><dd>{run.metrics.durationLabel}</dd></div>
     <div><dt>Tokens</dt><dd>{compact(run.metrics.totalTokens, locale)}</dd></div>

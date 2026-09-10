@@ -1,6 +1,9 @@
 {
   "id": "muse-spark-1-3",
-  "name": "Muse Spark 1.3",
+  "name": {
+    "zh": "Muse Spark 1.3",
+    "en": "Muse Spark 1.3"
+  },
   "version": "1.3",
   "provider": "Meta Superintelligence Labs",
   "notes": {
