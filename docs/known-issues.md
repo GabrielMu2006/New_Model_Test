@@ -2,6 +2,7 @@
 
 > 本文件记录**已确认**的展示站缺陷、后续接入缺口与组织者决定。修复时按小节逐项处理，完成后更新 `verification.md` 并勾掉本文件对应条目。
 > 记录时间：2026-09-09（维护 agent 只读复核产出）。
+> **状态（2026-09-12 更新，当前口径）**：第 1 节 1.1–1.4 已全部修复并发布；第 2 节 Muse Spark 档案已入库、网站接入已完成（仅剩「无通用批次扫描器」）；第 3 节第二阶段已接入，剩余缺口见 3.0/3.2；第 6、7 节已全部结案。以下逐条旧状态行保留用于追溯，与本节冲突时**以本节为准**。
 > **状态（2026-09-09 更新）**：第 1 节的 1.1–1.4 已全部修复并发布，记录保留用于追溯；第 2、3 节仍未处理。
 > **状态（2026-09-10 更新）**：见第 6 节「2026-09-10 全站缺陷排查（已完成一轮修复）」与第 7 节「UI 改版同步修复」。
 > **状态（UI 改版）**：界面已按 `website/VibeTest Digital Museum UI Design Specification.md` 改为 Digital Museum / 编辑出版物风格（详见 `verification.md` 同日条目）；第 2、3 节的展示站待办不受影响。
@@ -126,7 +127,7 @@
 
 ### 3.2 多阶段 / 多模型接入
 
-- **多模型（同阶段）已完成**：`website/scripts/import-data.mjs` 为编排器，`scripts/adapters/deepseek-phase1.mjs` 与 `scripts/adapters/muse-spark-phase1.mjs` 分别适配；Muse 适配器按 `Reviews/ai/<评委>-vN/` **通用加载任意多份 AI 评价**。页面计数、批次统计、路由、`runsForTask()`、`validate-data.mjs`、`check-dist.mjs` 均按实体推导（当前 2 模型 / 2 阶段 / 20 任务 / 35 运行 / 75 评价 / 3 阶段评估 / 132 页）。
+- **多模型（同阶段）已完成**：`website/scripts/import-data.mjs` 为编排器，`scripts/adapters/deepseek-phase1.mjs` 与 `scripts/adapters/muse-spark-phase1.mjs` 分别适配；Muse 适配器按 `Reviews/ai/<评委>-vN/` **通用加载任意多份 AI 评价**。页面计数、批次统计、路由、`runsForTask()`、`validate-data.mjs`、`check-dist.mjs` 均按实体推导（计数随接入增长，当前值见下条，不写死在本行）。
 - **多阶段部分完成（2026-09-10）**：DeepSeek 与 Muse 的 phase-02（Task 16–20）已按扁平 `task-NN-<slug>/` 布局接入，见 3.0；其余阶段仍需要新增对应适配器，通用目录扫描器不存在，也不会自动接入。**K3 第一阶段（2026-09-12）**为第四个模型接入，同样走新增适配器 `scripts/adapters/k3-phase1.mjs` 的路径（其 `submission.json` 用 `artifacts`/`isolation`/`contamination` 字段），产出 `batch-k3-phase-01` 与 `assessment-k3-phase-01-maintenance-agent-v4`。当前生产索引为 4 模型 / 2 阶段 / 20 任务 / 70 运行 / 115 评价 / 6 批次 / **5 阶段评估** / 206 页。（2026-09-12 另补：GPT 第一阶段此前只有逐题评价、没有阶段评估，现按 K3 同一口径补出 `assessment-gpt-5-6-sol-phase-01-maintenance-agent-v3`，82.9 分；DeepSeek / Muse 的 phase-02 两批仍待补。）
 
 ## 4. 已定方案（非缺陷，供后续遵循）

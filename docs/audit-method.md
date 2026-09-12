@@ -180,7 +180,7 @@ arguments: {"code": "try { const a = await tools.bash({ command: 'pwd' }) ..."}
 
 | 档位 | 触发条件 | 记录位置 | 外显标注 | 成绩 |
 | --- | --- | --- | --- | --- |
-| 未发现越界 | 各维度无命中 | `contamination.status` 保持 `clean` / `unknown` | 无 | 照常录入 |
+| 未发现越界 | 各维度无命中 | `contamination.status` 保持 `unknown`（**不写 `clean`**，见下方措辞表） | 无 | 照常录入 |
 | 越界尝试 / 有嫌疑 | 出现越界动作但 `tool/result` 未返回外部内容；或只有嫌疑、无证据 | 审计报告 + `contamination.events`（`status` 可记 `suspected`） | **不标注** | 照常录入 |
 | 确认作弊成功 | 实际读到了他人答案 / 成果，或从仓库、网络取到了题目相关内容 | 审计报告 + `events` + `evidencePaths`，`status = contaminated` | **必须标注**「已确认获取外部答案」 | 照常录入，标注与成绩同处显示 |
 
@@ -188,9 +188,8 @@ arguments: {"code": "try { const a = await tools.bash({ command: 'pwd' }) ..."}
 
 | 情况 | `contamination.status` | 措辞 |
 | --- | --- | --- |
-| **工具调用不可见**（`telemetry: hidden`） | 保持 `unknown`（或按组织者裁定） | 「**工具调用不可见，按既定规则默认视为遵守规则**」+ 未覆盖维度清单 + 仍做过的检查 |
-| --- | --- | --- |
-| 全部维度未命中 | 保持 `unknown`（或按组织者裁定） | 「**未发现越界**」+ 覆盖范围 + 未覆盖渠道 |
+| **工具调用不可见**（`telemetry: hidden`） | 保持 `unknown` | 「**工具调用不可见，按既定规则默认视为遵守规则**」+ 未覆盖维度清单 + 仍做过的检查 |
+| 全部维度未命中 | 保持 `unknown` | 「**未发现越界**」+ 覆盖范围 + 未覆盖渠道 |
 | 有越界尝试但未取得内容 | `suspected` | **不标注**：只写入审计报告与 `contamination.events`；展示层不出现该状态（2026-09-10 组织者决定，见下） |
 | 确认作弊成功（取得外部答案/成果） | `contaminated` | 「已确认获取外部答案」+ 必须标注 |
 | 证据缺失/日志不完整 | `unknown` | 「证据不完整，无法判定」 |

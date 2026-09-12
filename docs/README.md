@@ -3,6 +3,7 @@
 - [根目录 AGENTS.md](../AGENTS.md)：协作入口、维护边界、测试门禁和自动发布。
 - [结果交接接口](result-interface.md)：模型→阶段目录、任务版本、运行字段和来源契约。
 - [Agent 接入结果步骤](adding-results.md)：当前能力、实际扩展所需改造和上线验收。
+- [网站内容维护手册](website-maintenance.md)：改什么动哪个文件、各门禁在防什么、手工触点与自检清单。
 - [隔离与防答案污染](testing-protocol.md)：禁止偷看、会话/文件/网络隔离、证据和污染处置。
 - 测试工作区启动方案（`test-workspace/README.md`，**本地目录，不入库、不推送**）：按 phase 建任务目录、逐题隔离测试、汇总归档的操作手册。
 - [会话日志审计方法](audit-method.md)：解压 DSH 多帧 zstd 日志、逐维度审计、判定与归档格式。

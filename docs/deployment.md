@@ -13,12 +13,19 @@
 至少保留**当前线上版本之前的一个已知可用版本**。发布前由维护 agent 核对上次成功 workflow、实际部署源码和公网记录，为该源码提交创建远端不可变标签，命名 website-rollback-YYYYMMDD-短SHA。若上次为手动 source_ref 回退，workflow 的 headSha 可能属于控制工作流而非实际部署源码，必须查 checkout 日志/发布记录确认。
 
 最近一次已成功部署且公网验证通过的版本（每次发布前滚动更新）：
-- 源码 SHA：726c27b（统一时长写法后的展示站版本；2026-09-10 UI 改版前的最后可用版本）
-- 成功 Actions：34459568858
-- 回退标签：website-rollback-20260910-726c27b
-- 更早的可用回退点：`website-rollback-20260909-405a957`（Actions 34337020609）、`website-rollback-20260909-dba1c39`、`website-rollback-20260909-09b10d4`（均已公网验证通过）。
-- 公网核验依据（2026-09-10，匿名 HTTPS）：线上运行页运行时长显示 `4:51`、页面不再出现「N分N秒」，与 `726c27b` 的时长统一改动一致。
-- 当前线上版本（2026-09-10 UI 改版）：源码 `6c5ad3b`，Actions run `34465095188`（build + deploy 成功），公网逐字节核验与行为复核见 `verification.md` 同日「UI 改版」条目；其回退标签按同一流程在下次发布前创建。随后的发布记录提交 `c301052` 由 Actions run `34465592022` 部署，站点内容与 `6c5ad3b` 相同（`/zh/` 线上响应 sha256 仍与本地构建一致）。最新线上版本为 `0b1ba98`（补齐 16 张归档封面，Actions run `34468215959` build + deploy 成功）。
+- 源码 SHA：a8c26f4（项目更名为 VibeTest；2026-09-12）
+- 成功 Actions：34686233003
+- 回退标签：website-rollback-20260912-a8c26f4
+- 公网核验依据（2026-09-12，匿名 HTTPS）：`/zh/`、`/en/` 返回 200 且页面出现 `VibeTest` 与 `GabrielMu2006/VibeTest`（旧仓库名 `New_Model_Test` 已消失）；`zh/index.html`、`en/index.html`、`zh/models/index.html`、`zh/tasks/task-16/index.html`、`zh/runs/run-k3-task-01-r1/index.html` 与本地同一提交构建产物 **sha256 逐字节一致**。
+- 上一可用回退点：`766d5f7`（Actions run 34685409789，回退标签 `website-rollback-20260912-298f8c4`）。
+
+2026-09-12 的其余发布（均已公网验证通过）：
+- `3b6f727`（记录 GPT 阶段评估发布）：Actions run **34685532870**；回退标签 `website-rollback-20260912-3b6f727`。
+- `922340b`（发布 K3 第一阶段与 maintenance-agent-v4 评价）：Actions run **34685008177**；发布前回退标签 `website-rollback-20260912-253d016`（指向 `253d016`，run 34683942802）；核验 `/zh/runs/run-k3-task-01-r1/` 显示 `98/100`、K3 运行页与本地构建产物逐字节一致，首页数字条为 `04 模型 / 02 阶段 / 70 运行`。
+- `6f9d5de`（测试工作区改为本地目录、不再入库）：Actions run **34668828834**；发布前回退标签 `website-rollback-20260912-6a06744`（指向 `6a06744`，run 34494992707）；本次改动不含站点源码，构建产物与线上逐字节一致。
+
+更早的可用回退点：`website-rollback-20260910-726c27b`（Actions 34459568858，2026-09-10 UI 改版前的最后可用版本）、`website-rollback-20260909-405a957`（34337020609）、`website-rollback-20260909-dba1c39`、`website-rollback-20260909-09b10d4`（均已公网验证通过）。远端现存全部回退标签可用 `git tag -l 'website-rollback-*'` 查看，本节只列最近数个，不要求与标签总数一一对应。
+- 2026-09-10 的发布链（供追溯）：UI 改版 `6c5ad3b`（Actions run 34465095188）→ 发布记录 `c301052`（34465592022）→ 补齐 16 张归档封面 `0b1ba98`（34468215959）→ 展示段落与发布记录 `7a9784c` / `859df86`；公网逐字节核验与行为复核见 `verification.md` 对应条目。
 
 标签只追加不强制覆盖；不删除唯一可用回退点。构建包保留 30 天仅辅助诊断，永久 Git 提交、标签和锁文件是重建依据。依赖源长期不可用时可能阻碍重建；需要更长期离线保障时另行保存验证过的发布包。
 

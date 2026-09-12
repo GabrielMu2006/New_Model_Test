@@ -8,7 +8,7 @@
 
 按任务选择入口：
 
-- 网站维护：`docs/data-model.md`、`docs/deployment.md`，再读涉及的源码和测试。
+- 网站维护：`docs/website-maintenance.md`（改什么动哪个文件、各门禁在防什么、手工触点与自检清单）、`docs/data-model.md`、`docs/deployment.md`，再读涉及的源码和测试。
 - 新模型或后续阶段结果：`docs/adding-results.md`、`docs/result-interface.md`。
 - 发起或复验模型测试：完整阅读 `docs/testing-protocol.md`，先确认题目版本、资源权限和预算。
 - 建站历史：`docs/WEBSITE_IMPLEMENTATION_PLAN.md` 和 `docs/WEBSITE_START_PROMPT.md` 是历史材料；当前域名、目录及授权以本文件和维护文档为准，不重复初始化网站。
