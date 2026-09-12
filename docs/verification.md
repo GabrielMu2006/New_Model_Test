@@ -1,5 +1,22 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-12 测试工作区改为本地目录 + 清空 GPT 工作区成果（组织者要求）
+
+- **触发**：组织者要求 ① `test-workspace/` 以后不再推送 GitHub；② 清空 GPT 对应的 `test-workspace-2/` 成果产物，只留初始框架文件。
+- **不入库落点**：`.gitignore` 用 `test-workspace/` 取代原先只忽略 `phase-*/` 的写法（副本 `test-workspace-*/` 条目保留），并 `git rm -r --cached test-workspace` 把 `AGENTS.md`、`README.md`、`_templates/`（3 个模板）从索引移除——**本机文件保留**，公开仓库自此不含工作区目录。
+- **文档同步**：根 `README.md`（中英目录树 + 关键文档行）、`docs/README.md`、`docs/testing-protocol.md` 第 8 节（工作区说明改为文字 + 新增「工作区不入库」两条）、根 `AGENTS.md` 隔离方案条、`docs/known-issues.md` 新增 4.5 与第 5 节。原先指向 `test-workspace/README.md` 的 4 处 Markdown 链接全部改为「本地文件，不入库」的文字说明；`grep` 复核**全仓库已无指向该目录的链接**。
+- **历史处理**：已推送的历史提交仍含这些框架文件（`phase-*/` 从未入库，**从未有任何被测成果被推送到公开仓库**）。按不重写历史处理，不 force-push。
+- **清空前核对**（`test-workspace-2/phase-01`，306 个文件）→ 与 `Test_Results/GPT-5.6-Sol_Codex/phase-01` 逐文件 SHA-256 比对：
+  - 68 个任务目录文件 + `PLAN.md` + `audit-codex-sessions.mjs` + 45 个审计产物（`audit-output/`）**全部存在字节相同的归档副本，缺失 0**。
+  - 15 份 `submission.json` 与阶段 `README.md` 的**归档版本更新**（补 `artifact.commit` / `artifact.path` 与评价行），只多不少。
+  - `audit-output/audit-summary.json` 与 15 份归档 `evidence/audit-2026-09-10.json` **逐字段完全一致（15/15）**：它是审计脚本的可再生产物，而脚本本身已归档为 `evidence/audit-codex-sessions.mjs`。
+  - `build-archive.mjs` 的工作区→归档 slug 映射，已逐运行记录在 `submission.json` 的 `prompt.localScaffoldPath`（如 `test-workspace-2/phase-01/task-01-aevum-luxury-watch/prompt.txt`）。
+  - `repo-edits/`（26 个文件）是维护会话的仓库改动暂存副本：对应内容均已在仓库提交中落地，未逐字入库的草稿已被提交版本取代；不属于被测成果。
+  - 结论：**无成果、无证据丢失**。
+- **执行结果**：删除 `test-workspace-2/phase-01/` 与 `.DS_Store`；该目录现只剩 `AGENTS.md`、`README.md`、`_templates/`（3 个模板）共 5 个文件，与另两个副本同为空白框架。顺手补齐两处框架落后：两个副本的 `_templates/PLAN.template.md` 补充轮归档位置一行仍是扁布局之前的写法，已与 `test-workspace/` 对齐；三个 `_templates/` 文件现在**仅路径头部不同**（`sed` 归一化后 `diff` 完全一致），三份 `AGENTS.md` 第 1–9 节与两份 `README.md` 一致（`cmp` 复核）。
+- **门禁实测**（本机 Node 24.19.0）：`import:data`（3 模型 / 2 阶段 / 20 任务 / 55 运行 / 100 评价 / 5 批次 / 5 适配器，确定性）、`validate:data` 通过、`astro check` **0 errors / 0 warnings / 0 hints**、`npm test` **26/26**、`build` **174 页** + 43 个 HTML 成果（静态链接与源码链接检查通过）、`E2E_BROWSERS=chromium,webkit npm run test:e2e` **通过**（55/55 成果入口）。重新导入后 `website/data/catalog.json` **无变化**——工作区与文档改动不影响站点数据。
+- **发布与公网核验**（2026-09-12）：发布前创建不可变回退标签 `website-rollback-20260912-6a06744`（指向上一已成功部署且公网验证通过的 `6a06744`，Actions run `34494992707`；核验依据：线上 `/zh/` 与本地构建产物 sha256 相同）。提交 `6f9d5de` 推送 `main`，Actions run **34668828834** 构建与 Pages 部署成功。匿名 HTTPS 复核：`/zh/`、`/en/`、`/zh/tasks/`、`/zh/models/`、`/zh/runs/run-gpt-5-6-sol-task-01-r1/` 与本地构建产物**逐字节一致**；未知路径返回 404；归档封面 `/covers/run-gpt-5-6-sol-task-01-r1.png` 返回 200。本次改动不含站点源码，构建产物预期不变，实测一致。
+
 ## 2026-09-10 UI 改版：Digital Museum / 编辑出版物风格（设计规范落地）
 
 - **触发与依据**：组织者给出设计稿与 `website/VibeTest Digital Museum UI Design Specification.md`（80 节），要求把展示站从深色「数据看板」改为「数字美术馆 + 编辑出版物 + 实验档案馆」。设计稿中的四个界面（首页、任务档案、运行档案、设计系统页）是视觉基准；本文只记录落地与验证，不改档案数据与评分口径。
