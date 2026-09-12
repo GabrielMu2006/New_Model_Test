@@ -21,8 +21,8 @@ website/public/artifacts/
 .env.*
 !.env.example
 
-# 测试脚手架中间产物（测试期间不入库；成果归档到 Test_Results/ 后才提交）
-test-workspace/phase-*/
+# 测试工作区（2026-09-10 组织者决定：整份目录不入库、不推送；成果归档到 Test_Results/ 后才由维护者提交）
+test-workspace/
 
 # 并行测试副本（每个副本测一个模型，整份不入库；成果同样归档到 Test_Results/ 后才提交）
 test-workspace-*/

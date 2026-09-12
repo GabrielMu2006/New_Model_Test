@@ -170,9 +170,16 @@
 - 隔离效力与收尾审查的说明只写在组织者文件中（`test-workspace/README.md`、`docs/testing-protocol.md`、`PLAN.md`）。
 - 被测规则必须显式禁止**查询任何仓库**（本地其他仓库、远端仓库、代码托管平台、代码搜索与包管理器源码拉取），审计也必须把「仓库查询」列为必查维度。
 
+### 4.5 测试工作区不入库（2026-09-10 组织者决定，非缺陷）
+
+- 背景：工作区（`test-workspace/` 与并行副本）此前只忽略 `phase-*/` 与副本，框架文件 `AGENTS.md`、`README.md`、`_templates/` 仍随仓库推送。
+- 做法：`.gitignore` 改为整目录忽略 + `git rm --cached` 从索引移除（本机文件保留）。工作区与副本一概**不提交、不推送**；文档中对这些文件的引用改为「本地文件，不入库」的文字说明，不再做仓库链接。
+- 影响：公开仓库不再含工作区目录；`docs/testing-protocol.md` 第 8 节、根 `AGENTS.md` 隔离方案条、根 `README.md` 目录树与关键文档、`docs/README.md`、本文件第 5 节同步更新。已推送过的历史提交仍含这些框架文件（不含任何被测成果：`phase-*/` 从未入库），不重写历史。
+- 成果去向不变：`Test_Results/` 才是归档与提交对象；工作区 `phase-NN/` 在与归档逐文件核对后清空，回到空白框架以便复用。
+
 ## 5. 相关记录
 
 - `docs/verification.md`：门禁与公网验证记录（修复后在此追加）。
 - `docs/source-audit.md`：来源映射与保留的分歧。
 - `docs/result-interface.md`、`docs/adding-results.md`：后续接入字段与步骤。
-- `test-workspace/README.md`：测试工作区标准流程（建脚手架 → 逐题测试 → 收尾审查与归档）。
+- `test-workspace/README.md`（本地文件，不入库）：测试工作区标准流程（建脚手架 → 逐题测试 → 收尾审查与归档）。

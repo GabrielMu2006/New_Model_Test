@@ -100,7 +100,7 @@ New_Model_Test/
 │           ├── README.md
 │           ├── Reviews/ai/maintenance-agent-v2/
 │           └── task-16-.../ ... task-20-.../
-├── test-workspace/            # 后续阶段测试脚手架（隔离规则、启动方案、模板）
+├── test-workspace/            # 后续阶段测试脚手架（隔离规则、启动方案、模板；本地目录，不入库）
 ├── website/                   # Astro 展示站、导入器与自动化测试
 ├── docs/                      # 数据模型、测试流程、部署与验证记录
 └── .github/workflows/
@@ -113,7 +113,7 @@ New_Model_Test/
 - [Agent 协作规范](AGENTS.md)
 - [结果交接接口](docs/result-interface.md)与[接入操作步骤](docs/adding-results.md)
 - [测试隔离与防答案污染](docs/testing-protocol.md)
-- [测试工作区启动方案](test-workspace/README.md)：按阶段建任务目录、逐题隔离测试、汇总归档。
+- 测试工作区启动方案（`test-workspace/README.md`，本地目录，不入库）：按阶段建任务目录、逐题隔离测试、汇总归档。
 - [网站维护、发布及回退](docs/deployment.md)
 - [展示站 UI 设计规范（Digital Museum / 编辑出版物）](website/VibeTest%20Digital%20Museum%20UI%20Design%20Specification.md)
 
@@ -280,7 +280,7 @@ New_Model_Test/
 │           ├── README.md
 │           ├── Reviews/ai/maintenance-agent-v2/
 │           └── task-16-.../ ... task-20-.../
-├── test-workspace/            # Test scaffolding for later phases (isolation rules, runbook, templates)
+├── test-workspace/            # Test scaffolding for later phases (isolation rules, runbook, templates; local only, untracked)
 ├── website/                   # Astro showcase site, importer and automated tests
 ├── docs/                      # Data model, test protocol, deployment and verification records
 └── .github/workflows/
@@ -293,7 +293,7 @@ Future phases live inside each model folder under Test_Results/. The root README
 - [Agent instructions](AGENTS.md)
 - [Result interface](docs/result-interface.md) and [integration workflow](docs/adding-results.md)
 - [Test isolation and anti-contamination protocol](docs/testing-protocol.md)
-- [Test workspace runbook](test-workspace/README.md): phase scaffolding, per-task isolation, summary and archiving.
+- Test workspace runbook (`test-workspace/README.md`, local only, untracked): phase scaffolding, per-task isolation, summary and archiving.
 - [Deployment and rollback](docs/deployment.md)
 - [Website UI design specification (Digital Museum / editorial archive)](website/VibeTest%20Digital%20Museum%20UI%20Design%20Specification.md)
 
