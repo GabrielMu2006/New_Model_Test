@@ -1,0 +1,180 @@
+{
+ "schemaVersion": 1,
+ "runId": "run-k3-task-13-r1",
+ "phaseId": "phase-01",
+ "taskId": "task-13",
+ "taskVersion": 1,
+ "model": {
+  "id": "k3",
+  "name": "K3",
+  "version": null,
+  "provider": "Moonshot AI",
+  "note": "reportedModelId 'k3' is the harness-reported id (alias kimi-code/k3); provider confirmed by the organizer as Kimi official; provider-side snapshot not independently confirmed"
+ },
+ "prompt": {
+  "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+  "sha256": "e6bbd33a57230bcd1a43d9b81e5d6b3d968356e9c0d8d1529a1834c52b2e432e",
+  "version": 1,
+  "verbatimInputPath": "prompt.txt",
+  "localScaffoldPath": "test-workspace-2/phase-01/task-13-weather-dashboard/prompt.txt",
+  "followups": []
+ },
+ "environment": {
+  "harness": "Kimi Code CLI",
+  "harnessVersion": "0.42.0",
+  "reportedModelId": "k3",
+  "modelAlias": "kimi-code/k3",
+  "surface": "cli",
+  "os": "macOS 26.6.2 (arm64)",
+  "runtime": "Node 24.19.0",
+  "sessionId": "c209bee5-c7e3-4d0c-b6b1-9a3a3823105a",
+  "sharedContext": false,
+  "continuationTurns": 0,
+  "sampling": {
+   "thinkingEffort": "max"
+  },
+  "permissionMode": "auto",
+  "startedAt": "2026-09-12T06:23:26.473Z",
+  "endedAt": "2026-09-12T07:15:06.347Z",
+  "timezone": "Asia/Shanghai"
+ },
+ "budget": {
+  "wallClockSeconds": null,
+  "inputTokens": null,
+  "outputTokens": null,
+  "toolCalls": null,
+  "retries": 0,
+  "followupTurns": 0,
+  "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+ },
+ "metrics": {
+  "durationSeconds": 3083,
+  "durationBasis": "wire.jsonl turn.ended durationMs",
+  "apiCalls": 65,
+  "toolCalls": 81,
+  "failures": 1,
+  "inputTokens": 103918,
+  "outputTokens": 72338,
+  "cacheReadTokens": 5498591,
+  "totalTokens": 5674847,
+  "note": "failures = failed LLM API requests (harness-retried) + tool calls that returned an error (self-test iterations). inputTokens excludes cache-read tokens, which are reported separately as cacheReadTokens."
+ },
+ "cost": {
+  "amount": null,
+  "currency": null,
+  "scope": "task",
+  "source": null
+ },
+ "artifacts": {
+  "type": "html",
+  "entry": "index.html",
+  "files": [
+   "app.js",
+   "index.html",
+   "shoot.sh",
+   "shots/01-light-sf.png",
+   "shots/02-full-sf.png",
+   "shots/03-full-sf.png",
+   "shots/04-tokyo.png",
+   "shots/05-dark-reyk.png",
+   "shots/06-london-f.png",
+   "shots/07-sydney.png",
+   "shots/08-mobile-sf.png",
+   "shots/09-mobile500.png",
+   "shots/10-tablet768.png",
+   "shots/11-final-sf.png",
+   "shots/12-final-dark.png",
+   "styles.css"
+  ],
+  "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-13-weather-dashboard/artifacts",
+  "fileSha256": {
+   "app.js": "a9e34e8fbae3b6454bcd0b7491ebc9246dd56de89c8a71d6f59d6cff28d58b3e",
+   "index.html": "742a978ae36a37e54b14c39f7d216cf06613cdd9968656f0a0d5eb43b9d7c790",
+   "shoot.sh": "98e26be7054a6c8a0f9ae867e8087aad735b0bdb17ebc1428bfe00ceb84e624b",
+   "shots/01-light-sf.png": "f85a707bdb67743a1dcdcce91f9bd6881c618091e0c35ffecf23b5a3baf49f7a",
+   "shots/02-full-sf.png": "4040d6b8b1d2f221649c36cc0f4c93094272c1540b37ec20b565d6df5f63f2d8",
+   "shots/03-full-sf.png": "8effd7ceabd4b946b94df36e5219e5e719da18555bc230d42efd469d5c2b2961",
+   "shots/04-tokyo.png": "0d5b9cbb076883da43ee51a1e18dfaf34df4efa1fd6bcde823d69c4c9f841c73",
+   "shots/05-dark-reyk.png": "2e250d1309a253a296edfd160e543ab6db9927c2d5ad9419adf41a3b803585d3",
+   "shots/06-london-f.png": "a40d2c3fe0241e97333265eb330a1df13b258c1b7678ddab84f57a46e7ed402d",
+   "shots/07-sydney.png": "b7fb2f918212fa2e28b41f85ae5298d84f1a27b7633a70d5763d59aac60507b1",
+   "shots/08-mobile-sf.png": "9973245aceefa03cbb6ecb82f5224cbbc07b09b4ff6bf91949840bfd45ef6262",
+   "shots/09-mobile500.png": "925bf2ea526b53dedfcef22482705f79f2f56d1581fe011b24d0780a0631f981",
+   "shots/10-tablet768.png": "dd30433ad31297bb60d8d95f0ecfe9f0c13d23562fee744f9c1ae5221b440199",
+   "shots/11-final-sf.png": "9f2ef592f024478ba3ad934483b891da63abefc06f2e085a02b7f05cc26ada7a",
+   "shots/12-final-dark.png": "b07bb43ecbb816c9cc4cc71944f77180bee7bf23e347d790718db89d7e4fc2b0",
+   "styles.css": "7daf28733dc8dab22235a568dc4ae722862e51be7faf4c441d282891bdeb13f4"
+  },
+  "cover": null,
+  "preview": {
+   "lazy": true,
+   "sandbox": "allow-scripts allow-downloads allow-forms",
+   "note": "HTML output; internal relative files are listed explicitly"
+  }
+ },
+ "source": {
+  "commit": null,
+  "path": null,
+  "note": "archived from local workspace; commit to be backfilled by the maintainer after ingestion"
+ },
+ "runRelation": {
+  "parentRunId": null,
+  "reason": null
+ },
+ "status": "completed",
+ "isolation": {
+  "level": "workspace-only",
+  "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-13-weather-dashboard/",
+  "readOnlyInputs": [
+   "prompt.txt"
+  ],
+  "mounts": [],
+  "network": "off (rule-level; not enforced at the network layer)",
+  "repositoryReachability": null,
+  "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+  "repositoryBlocking": null,
+  "sharedContext": false
+ },
+ "contamination": {
+  "status": "unknown",
+  "telemetry": "visible",
+  "events": [
+   {
+    "type": "procedural-deviation",
+    "dimension": "paths",
+    "status": "observed",
+    "detail": "Session listed /Applications and Chrome.app bundle paths to locate a browser (environment probe). Machine-environment listings only; no task-related external content obtained.",
+    "externalContentObtained": false
+   },
+   {
+    "type": "procedural-deviation",
+    "dimension": "writes",
+    "status": "observed",
+    "detail": "Session wrote Chrome headless DOM dumps to /tmp/domout.txt and /tmp/pagedom.html and read them back; the content was its own page output, no external content obtained.",
+    "externalContentObtained": false
+   }
+  ],
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/audit-2026-09-12.md"
+  ],
+  "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. 2 procedural deviation(s) recorded (out-of-directory temp files / machine-environment probes); per the 2026-09-10 three-tier rule these are archive-only and trigger no external label. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose.",
+  "scoringEffect": "none (recorded in audit archive only)",
+  "confirmedExternalAnswers": false
+ },
+ "testEvidence": {
+  "command": "python3 evidence/k3-audit.py  (organizer session over ~/.kimi-code session logs)",
+  "cwd": "test-workspace-2/ (organizer session)",
+  "environment": "macOS 26.6.2 arm64 / Node 24.19.0 / Kimi Code CLI 0.42.0",
+  "date": "2026-09-12",
+  "passed": null,
+  "failed": null,
+  "skipped": null,
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/session-log.sha256.txt"
+  ],
+  "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment; model-run self-test files are preserved inside artifacts/."
+ },
+ "reviews": []
+}

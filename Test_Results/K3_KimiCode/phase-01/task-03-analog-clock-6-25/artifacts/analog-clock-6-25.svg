@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="400" height="400">
+  <!-- Analog clock showing exactly 6:25:00
+       Hour hand:   (6 + 25/60) * 30 = 192.5 degrees from 12
+       Minute hand: 25 * 6          = 150 degrees from 12
+       Second hand: 0 seconds       = 0 degrees (pointing at 12) -->
+
+  <!-- Face -->
+  <circle cx="100" cy="100" r="96" fill="#fdfcf8" stroke="#222" stroke-width="4"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#bbb" stroke-width="1"/>
+
+  <!-- Hour markers: 12 ticks, cardinal ones longer -->
+  <g stroke="#222" stroke-linecap="round">
+    <line x1="100" y1="10" x2="100" y2="26" stroke-width="5" transform="rotate(0 100 100)"/>
+    <line x1="100" y1="12" x2="100" y2="24" stroke-width="3" transform="rotate(30 100 100)"/>
+    <line x1="100" y1="12" x2="100" y2="24" stroke-width="3" transform="rotate(60 100 100)"/>
+    <line x1="100" y1="10" x2="100" y2="26" stroke-width="5" transform="rotate(90 100 100)"/>
+    <line x1="100" y1="12" x2="100" y2="24" stroke-width="3" transform="rotate(120 100 100)"/>
+    <line x1="100" y1="12" x2="100" y2="24" stroke-width="3" transform="rotate(150 100 100)"/>
+    <line x1="100" y1="10" x2="100" y2="26" stroke-width="5" transform="rotate(180 100 100)"/>
+    <line x1="100" y1="12" x2="100" y2="24" stroke-width="3" transform="rotate(210 100 100)"/>
+    <line x1="100" y1="12" x2="100" y2="24" stroke-width="3" transform="rotate(240 100 100)"/>
+    <line x1="100" y1="10" x2="100" y2="26" stroke-width="5" transform="rotate(270 100 100)"/>
+    <line x1="100" y1="12" x2="100" y2="24" stroke-width="3" transform="rotate(300 100 100)"/>
+    <line x1="100" y1="12" x2="100" y2="24" stroke-width="3" transform="rotate(330 100 100)"/>
+  </g>
+
+  <!-- Numerals -->
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="16" fill="#222"
+     text-anchor="middle" dominant-baseline="central">
+    <text x="100" y="38">12</text>
+    <text x="131" y="46.5">1</text>
+    <text x="153.5" y="69">2</text>
+    <text x="162" y="100">3</text>
+    <text x="153.5" y="131">4</text>
+    <text x="131" y="153.5">5</text>
+    <text x="100" y="162">6</text>
+    <text x="69" y="153.5">7</text>
+    <text x="46.5" y="131">8</text>
+    <text x="38" y="100">9</text>
+    <text x="46.5" y="69">10</text>
+    <text x="69" y="46.5">11</text>
+  </g>
+
+  <!-- Hour hand: 192.5 deg (6:25) -->
+  <line x1="100" y1="100" x2="100" y2="52" stroke="#222" stroke-width="7"
+        stroke-linecap="round" transform="rotate(192.5 100 100)"/>
+
+  <!-- Minute hand: 150 deg (25 minutes) -->
+  <line x1="100" y1="100" x2="100" y2="28" stroke="#222" stroke-width="4.5"
+        stroke-linecap="round" transform="rotate(150 100 100)"/>
+
+  <!-- Second hand: 0 deg (0 seconds), with counterweight tail -->
+  <g transform="rotate(0 100 100)">
+    <line x1="100" y1="112" x2="100" y2="20" stroke="#c0392b" stroke-width="1.6"
+          stroke-linecap="round"/>
+    <circle cx="100" cy="112" r="3.5" fill="#c0392b"/>
+  </g>
+
+  <!-- Center cap -->
+  <circle cx="100" cy="100" r="4.5" fill="#222"/>
+  <circle cx="100" cy="100" r="1.8" fill="#fdfcf8"/>
+</svg>

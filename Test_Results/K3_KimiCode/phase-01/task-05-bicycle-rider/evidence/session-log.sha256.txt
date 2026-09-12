@@ -1,0 +1,3 @@
+24d42f1855e5d27721f2e3cfa57184f9074697ab9224dd00e65fedcec39c7a8e  ~/.kimi-code/sessions/wd_task-05-bicycle-rider_7d9a22b54d45/session_837b3e5e-e7fd-4093-a624-466bfdaeb79e/agents/main/wire.jsonl
+4b343f7e4ad110cfd9e76d81b818cde8e41e122853d5a5de669e4de990d2942f  ~/.kimi-code/sessions/wd_task-05-bicycle-rider_7d9a22b54d45/session_837b3e5e-e7fd-4093-a624-466bfdaeb79e/logs/kimi-code.log
+c2163767eb0154c539b8a3f5aaf572798bc6fc306840af73023c9311f9ec8601  ~/.kimi-code/sessions/wd_task-05-bicycle-rider_7d9a22b54d45/session_837b3e5e-e7fd-4093-a624-466bfdaeb79e/state.json

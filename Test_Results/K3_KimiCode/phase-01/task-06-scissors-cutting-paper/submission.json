@@ -1,0 +1,137 @@
+{
+ "schemaVersion": 1,
+ "runId": "run-k3-task-06-r1",
+ "phaseId": "phase-01",
+ "taskId": "task-06",
+ "taskVersion": 1,
+ "model": {
+  "id": "k3",
+  "name": "K3",
+  "version": null,
+  "provider": "Moonshot AI",
+  "note": "reportedModelId 'k3' is the harness-reported id (alias kimi-code/k3); provider confirmed by the organizer as Kimi official; provider-side snapshot not independently confirmed"
+ },
+ "prompt": {
+  "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+  "sha256": "ea28c2b4a04b6d033ab2068b79dfb64aa7d95fc0785c7f78a6a28950af9bee25",
+  "version": 1,
+  "verbatimInputPath": "prompt.txt",
+  "localScaffoldPath": "test-workspace-2/phase-01/task-06-scissors-cutting-paper/prompt.txt",
+  "followups": []
+ },
+ "environment": {
+  "harness": "Kimi Code CLI",
+  "harnessVersion": "0.42.0",
+  "reportedModelId": "k3",
+  "modelAlias": "kimi-code/k3",
+  "surface": "cli",
+  "os": "macOS 26.6.2 (arm64)",
+  "runtime": "Node 24.19.0",
+  "sessionId": "8a426487-1a53-42b8-83c5-36a21031fff0",
+  "sharedContext": false,
+  "continuationTurns": 0,
+  "sampling": {
+   "thinkingEffort": "max"
+  },
+  "permissionMode": "auto",
+  "startedAt": "2026-09-12T04:35:20.657Z",
+  "endedAt": "2026-09-12T04:47:15.199Z",
+  "timezone": "Asia/Shanghai"
+ },
+ "budget": {
+  "wallClockSeconds": null,
+  "inputTokens": null,
+  "outputTokens": null,
+  "toolCalls": null,
+  "retries": 0,
+  "followupTurns": 0,
+  "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+ },
+ "metrics": {
+  "durationSeconds": 714,
+  "durationBasis": "wire.jsonl turn.ended durationMs",
+  "apiCalls": 5,
+  "toolCalls": 4,
+  "failures": 0,
+  "inputTokens": 34011,
+  "outputTokens": 26639,
+  "cacheReadTokens": 174080,
+  "totalTokens": 234730,
+  "note": "failures = failed LLM API requests (harness-retried) + tool calls that returned an error (self-test iterations). inputTokens excludes cache-read tokens, which are reported separately as cacheReadTokens."
+ },
+ "cost": {
+  "amount": null,
+  "currency": null,
+  "scope": "task",
+  "source": null
+ },
+ "artifacts": {
+  "type": "svg",
+  "entry": "scissors-cutting-paper.svg",
+  "files": [
+   "scissors-cutting-paper.svg",
+   "scissors-cutting-paper.svg.png"
+  ],
+  "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-06-scissors-cutting-paper/artifacts",
+  "fileSha256": {
+   "scissors-cutting-paper.svg": "95a793721f391bdba6c1e5e80f24d7615d4ede96a5ee704bb17b46f3364f0bf1",
+   "scissors-cutting-paper.svg.png": "ec2ce947eb67b1ada9e72b3dc8974dd84f1e06932646745f3a7e3d5cbfff4fde"
+  },
+  "cover": null,
+  "preview": {
+   "lazy": true,
+   "sandbox": "allow-scripts allow-downloads allow-forms",
+   "note": "SVG output; opens standalone"
+  }
+ },
+ "source": {
+  "commit": null,
+  "path": null,
+  "note": "archived from local workspace; commit to be backfilled by the maintainer after ingestion"
+ },
+ "runRelation": {
+  "parentRunId": null,
+  "reason": null
+ },
+ "status": "completed",
+ "isolation": {
+  "level": "workspace-only",
+  "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-06-scissors-cutting-paper/",
+  "readOnlyInputs": [
+   "prompt.txt"
+  ],
+  "mounts": [],
+  "network": "off (rule-level; not enforced at the network layer)",
+  "repositoryReachability": null,
+  "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+  "repositoryBlocking": null,
+  "sharedContext": false
+ },
+ "contamination": {
+  "status": "unknown",
+  "telemetry": "visible",
+  "events": [],
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/audit-2026-09-12.md"
+  ],
+  "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose.",
+  "scoringEffect": "none (recorded in audit archive only)",
+  "confirmedExternalAnswers": false
+ },
+ "testEvidence": {
+  "command": "python3 evidence/k3-audit.py  (organizer session over ~/.kimi-code session logs)",
+  "cwd": "test-workspace-2/ (organizer session)",
+  "environment": "macOS 26.6.2 arm64 / Node 24.19.0 / Kimi Code CLI 0.42.0",
+  "date": "2026-09-12",
+  "passed": null,
+  "failed": null,
+  "skipped": null,
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/session-log.sha256.txt"
+  ],
+  "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment; model-run self-test files are preserved inside artifacts/."
+ },
+ "reviews": []
+}

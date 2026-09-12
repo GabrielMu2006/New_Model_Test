@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Personal banking at Meridian Bank (fictional demo): fee-free checking, 4.60% APY savings, and a 2% cash-back card.">
+  <title>Personal Banking — Meridian Bank</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Meridian Bank home">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0a2540"/><path d="M14 46 V20 l10 14 8-12 8 12 10-14 v26" fill="none" stroke="#c9a227" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="50" r="2.6" fill="#c9a227"/></svg>
+        <span>Meridian Bank</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="personal.html" aria-current="page">Personal</a></li>
+          <li><a href="business.html">Business</a></li>
+          <li><a href="loans.html">Loans</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a class="btn btn-primary btn-small" href="login.html">Sign in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <h1>Personal banking</h1>
+        <p>One page, every rate and fee. If it is not listed here, we do not charge it.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Compare accounts</span>
+          <h2>Side by side, no asterisk hunt</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col">Everyday Checking</th>
+                <th scope="col">High-Yield Savings</th>
+                <th scope="col">Rewards Card</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Monthly fee</td><td>$0</td><td>$0</td><td>$0 annual fee</td></tr>
+              <tr><td>Minimum balance</td><td>None</td><td>None</td><td>n/a</td></tr>
+              <tr><td>Earns</td><td>0.10% APY</td><td class="pos">4.60% APY</td><td>2% cash back</td></tr>
+              <tr><td>Overdraft policy</td><td>No fee under $25, then $0 with auto-transfer from savings</td><td>n/a</td><td>n/a</td></tr>
+              <tr><td>ATM access</td><td>55,000+ fee-free</td><td>Via linked checking</td><td>n/a</td></tr>
+              <tr><td>Foreign transaction fee</td><td>0%</td><td>n/a</td><td class="pos">0%</td></tr>
+              <tr><td>Opening deposit</td><td>$25</td><td>$1</td><td>Credit application</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="checking">
+      <div class="container">
+        <div class="split">
+          <div>
+            <span class="eyebrow">Everyday Checking</span>
+            <h2>The account your paycheck deserves</h2>
+            <p class="muted">Direct deposit arrives up to two days early. Your debit card locks and unlocks instantly from the app. And if you slip a few dollars negative, we cover it quietly instead of charging you $35 for the privilege.</p>
+            <ul class="feature-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Early direct deposit, up to 2 days</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Fee-free overdraft buffer to $25</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Mobile check deposit with instant availability on the first $250</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Joint accounts in one tap — both people see everything</li>
+            </ul>
+          </div>
+          <div class="card">
+            <span class="tag">At a glance</span>
+            <p class="rate-line">0.10% <small>APY on all balances</small></p>
+            <ul class="feature-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Monthly fee: $0</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Minimum balance: none</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Opening deposit: $25</li>
+            </ul>
+            <div class="card-foot"><a class="btn btn-primary btn-block" href="login.html">Open in the demo</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="savings">
+      <div class="container">
+        <div class="split">
+          <div class="card">
+            <span class="tag">At a glance</span>
+            <p class="rate-line">4.60% <small>APY, compounded daily</small></p>
+            <ul class="feature-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Same rate at every balance</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Up to 6 labeled goal buckets</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Opening deposit: $1</li>
+            </ul>
+            <div class="card-foot"><a class="btn btn-primary btn-block" href="index.html#main">Try the savings calculator</a></div>
+          </div>
+          <div>
+            <span class="eyebrow">High-Yield Savings</span>
+            <h2>A rate that does not play favorites</h2>
+            <p class="muted">Most banks reserve their best rate for balances you do not have. We pay 4.60% APY on your first dollar and your hundred-thousandth alike, and when our rate changes, yours changes the same day — automatically.</p>
+            <ul class="feature-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Round-ups sweep spare change from every debit purchase</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Scheduled transfers that pause themselves if checking runs low</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Interest compounded daily, credited monthly</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="card">
+      <div class="container">
+        <div class="split">
+          <div>
+            <span class="eyebrow">Meridian Rewards Card</span>
+            <h2>Two percent back. That is the whole pitch.</h2>
+            <p class="muted">No rotating categories, no caps, no points that expire while you are not looking. Cash back posts to your High-Yield Savings on the first of every month.</p>
+            <ul class="feature-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>2% cash back on every purchase</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>19.24%–26.24% variable APR based on creditworthiness</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>Virtual card numbers for online stores</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 7"/></svg>No annual or foreign transaction fee</li>
+            </ul>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="credit-card">
+              <div class="cc-top"><span class="cc-brand">Meridian</span><span class="cc-chip"></span></div>
+              <div class="cc-number">4021&nbsp;&nbsp;••••&nbsp;&nbsp;••••&nbsp;&nbsp;7294</div>
+              <div class="cc-bottom">
+                <span><small>CARDHOLDER</small>DE&nbsp;MO&nbsp;CARDHOLDER</span>
+                <span><small>EXPIRES</small>09/29</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">Questions</span>
+          <h2>Frequently asked</h2>
+        </div>
+        <div class="faq" style="max-width: 760px; margin: 0 auto;">
+          <details>
+            <summary>Is Meridian Bank real?</summary>
+            <p>No. Meridian Bank is a fictional demonstration website. The products, rates, and stories here are illustrative. Never enter real personal information or credentials.</p>
+          </details>
+          <details>
+            <summary>How does the 4.60% APY work?</summary>
+            <p>In this demo, the rate is simply a headline number. In a real high-yield account, interest would compound daily and post monthly, with the APY reflecting that compounding over a year.</p>
+          </details>
+          <details>
+            <summary>What does “no overdraft fees under $25” mean?</summary>
+            <p>If a purchase takes your balance no more than $25 negative, we let it through without a fee. Beyond that, purchases are declined unless you link savings for automatic, free overdraft transfers.</p>
+          </details>
+          <details>
+            <summary>Can I open a joint account?</summary>
+            <p>In a real version, yes — both owners get full visibility and either can manage the account. In this demo, everything is a front-end illustration with fictional data.</p>
+          </details>
+          <details>
+            <summary>How do virtual card numbers work?</summary>
+            <p>The app can generate a unique card number per online store, so a breach at one merchant never exposes your real card. Charges still appear on one statement.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <h2>Start with $25 and five minutes</h2>
+          <p>Open Everyday Checking in the demo environment and see the dashboard for yourself.</p>
+          <a class="btn btn-primary" href="login.html">Open the demo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#123a5f"/><path d="M14 46 V20 l10 14 8-12 8 12 10-14 v26" fill="none" stroke="#c9a227" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="50" r="2.6" fill="#c9a227"/></svg>
+            <span>Meridian Bank</span>
+          </div>
+          <p>Independent, member-owned, and fictional — a demonstration website showing what honest, plain-language banking could look like.</p>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul>
+            <li><a href="personal.html#checking">Everyday Checking</a></li>
+            <li><a href="personal.html#savings">High-Yield Savings</a></li>
+            <li><a href="personal.html#card">Rewards Card</a></li>
+            <li><a href="loans.html">Mortgages &amp; loans</a></li>
+            <li><a href="business.html">Business banking</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">Our story</a></li>
+            <li><a href="about.html#leadership">Leadership</a></li>
+            <li><a href="about.html#values">Values</a></li>
+            <li><a href="contact.html">Careers &amp; contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <ul>
+            <li><a href="contact.html">Contact us</a></li>
+            <li><a href="personal.html#faq">FAQ</a></li>
+            <li><a href="login.html">Demo sign-in</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <span>© <span data-year>2026</span> Meridian Bank — a fictional demo. No real banking services are offered.</span>
+        <span>Never enter real credentials or personal information on this site.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

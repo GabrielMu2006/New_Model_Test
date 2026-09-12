@@ -1,0 +1,4 @@
+Build a beautiful landing page for a fictional luxury watch brand called "Aevum".
+Use only HTML, CSS and JavaScript.
+Do not use external images or libraries.
+Make it feel like a real premium product website.

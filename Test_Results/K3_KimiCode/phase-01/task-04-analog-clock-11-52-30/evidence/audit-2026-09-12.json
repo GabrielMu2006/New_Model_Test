@@ -1,0 +1,90 @@
+{
+ "runId": "run-k3-task-04-r1",
+ "taskName": "task-04-analog-clock-11-52-30",
+ "sessionId": "330d08a3-a18f-409d-b27d-b979c24ffdb1",
+ "logPath": "~/.kimi-code/sessions/wd_task-04-analog-clock-11-52-30_58b1a906cb43/session_330d08a3-a18f-409d-b27d-b979c24ffdb1/agents/main/wire.jsonl",
+ "logSha256": "bd44f2c8b54b8afcbeaecd0b585b0991ebd9e068385cc58dd007a8066a5e896f",
+ "logFormat": "Kimi Code wire.jsonl (plain JSONL)",
+ "bytes": 162291,
+ "frames": null,
+ "records": 59,
+ "promptSha256": "6810781239a5abf4d0bd6e4883a741359a90646955581459a8885108fc33a1f0",
+ "promptMessageMatches": 1,
+ "environment": {
+  "model": "k3",
+  "reportedModelId": "k3",
+  "modelAlias": "kimi-code/k3",
+  "thinkingEffort": "max",
+  "harness": "Kimi Code CLI",
+  "harnessVersion": "0.42.0",
+  "surface": "cli",
+  "modelProvider": "Moonshot AI (Kimi official, per organizer)",
+  "approvalPolicy": "auto",
+  "sandboxPolicy": null,
+  "sandboxNote": "Kimi Code CLI applies no filesystem/network sandbox; isolation was policy-level only"
+ },
+ "startedAt": "2026-09-12T04:16:34.936Z",
+ "endedAt": "2026-09-12T04:21:03.623Z",
+ "durationSeconds": 269,
+ "durationBasis": "wire.jsonl turn.ended durationMs",
+ "apiCalls": 5,
+ "llmRequestFailures": 0,
+ "toolCalls": 4,
+ "failedToolCalls": 0,
+ "toolCounts": {
+  "Write": 1,
+  "Bash": 2,
+  "ReadMediaFile": 1
+ },
+ "tokenUsage": {
+  "inputTokens": 16059,
+  "outputTokens": 9196,
+  "cacheReadTokens": 147200,
+  "totalTokens": 172455,
+  "reasoningOutputTokens": null
+ },
+ "telemetry": "visible",
+ "checkedDimensions": [
+  "policy",
+  "tools",
+  "paths",
+  "commands",
+  "repositories",
+  "network",
+  "reads",
+  "writes",
+  "delegation",
+  "reasoning",
+  "siblingWorkspaces"
+ ],
+ "uncheckedDimensions": [],
+ "coverage": {
+  "sessions": "1 session / 1 user turn; state.json cwd == task directory",
+  "reasoning": "content.part think/text events are plaintext and were scanned for forbidden paths, repository hosts, other-model names and sibling workspaces: 0 hits",
+  "siblingWorkspaces": [
+   "test-workspace/",
+   "test-workspace-3/",
+   "any other copy: no reference found"
+  ],
+  "promptVerbatim": "turn.prompt input SHA-256 == task prompt.txt SHA-256"
+ },
+ "findings": [
+  {
+   "dimension": "paths",
+   "severity": "procedural-deviation",
+   "detail": "Session listed /Applications to locate an installed browser/renderer (environment probe). It received only a machine-environment directory listing; no task-related external content obtained.",
+   "externalContentObtained": false
+  }
+ ],
+ "verdict": "no-violation-observed",
+ "limitations": [
+  "Training-data exposure cannot be audited.",
+  "Harness-unlogged channels (external tools, connectors, caches) cannot be ruled out.",
+  "Policy-level workspace-only restriction; reads and network were not enforced at the environment layer.",
+  "No environment reachability probe was run; repository and network conclusions are based on recorded tool calls and results only.",
+  "Loopback (127.0.0.1) servers started by the sessions for local preview were treated as compliant local testing, not external network access."
+ ],
+ "auditedAt": "2026-09-12T00:00:00+08:00",
+ "auditor": "organizer session (Kimi Code CLI 0.42.0, test-workspace-2 workspace root); audit script archived at phase-01/evidence/k3-audit.py",
+ "auditScriptSha256": "fadbe4d6c1c97da39d686eed1b657988c81d245b19f959e6b5aa5b0cf77fed88"
+}

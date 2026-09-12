@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2D Floor Plan Editor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="toolbar">
+  <span class="brand">Floor Plan Editor</span>
+  <div class="tools" id="tools">
+    <button data-tool="select" title="Select / move objects (V)">Select</button>
+    <button data-tool="wall" title="Draw walls (W)">Wall</button>
+    <button data-tool="door" title="Add a door to a wall (D)">Door</button>
+    <button data-tool="window" title="Add a window to a wall (N)">Window</button>
+  </div>
+  <div class="actions">
+    <label class="chk"><input type="checkbox" id="chkLengths" checked> Wall lengths</label>
+    <button id="btnUndo" title="Undo (Ctrl+Z)">Undo</button>
+    <button id="btnRedo" title="Redo (Ctrl+Y)">Redo</button>
+    <button id="btnResetView">Reset view</button>
+    <button id="btnExport" title="Download plan as JSON">Export</button>
+    <button id="btnImport" title="Load plan from JSON">Import</button>
+    <input type="file" id="fileInput" accept="application/json,.json" hidden>
+    <button id="btnClear" title="Delete everything">Clear</button>
+  </div>
+</header>
+<main>
+  <div id="canvasWrap"><canvas id="canvas"></canvas></div>
+  <aside id="sidebar">
+    <section>
+      <h2>Properties</h2>
+      <div id="panel"><p class="muted">Nothing selected.</p></div>
+    </section>
+    <section>
+      <h2>Rooms</h2>
+      <ul id="roomsList"><li class="muted">No enclosed rooms yet.</li></ul>
+      <p class="muted small">Rooms are detected automatically from enclosed wall areas. Doors connect rooms; windows do not.</p>
+    </section>
+    <section class="help">
+      <h2>Help</h2>
+      <ul>
+        <li><b>W</b> — draw walls: click to start, click to finish, chain to continue, <b>Esc</b>/<b>Enter</b> stop, <b>Shift</b> forces straight</li>
+        <li><b>D</b> / <b>N</b> — place a door / window on a wall</li>
+        <li><b>V</b> — select; drag walls, endpoints, doors and windows</li>
+        <li>Double-click a door to flip its swing</li>
+        <li><b>Space</b>+drag or middle mouse — pan; wheel — zoom</li>
+        <li><b>Del</b> — delete selection; <b>Ctrl+Z</b>/<b>Ctrl+Y</b> — undo/redo</li>
+      </ul>
+    </section>
+  </aside>
+</main>
+<footer id="status"><span id="statusTool"></span><span id="statusPos"></span></footer>
+<script src="app.js"></script>
+</body>
+</html>

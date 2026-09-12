@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Meridian Bank online banking demo dashboard (fictional data, browser-only).">
+  <meta name="robots" content="noindex">
+  <title>Dashboard — Meridian Bank Online Banking Demo</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Meridian Bank home">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0a2540"/><path d="M14 46 V20 l10 14 8-12 8 12 10-14 v26" fill="none" stroke="#c9a227" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="50" r="2.6" fill="#c9a227"/></svg>
+        <span>Meridian Bank</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="personal.html">Personal</a></li>
+          <li><a href="business.html">Business</a></li>
+          <li><a href="loans.html">Loans</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="btn btn-outline-dark btn-small" id="logout-btn" type="button">Sign out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" id="dashboard">
+      <div class="container">
+        <div class="notice" role="note">
+          <strong>Demo environment</strong>
+          All balances, transactions, and transfers below are fictional and exist only in this browser tab. Refreshing the page resets transfers; closing the tab ends the demo session.
+        </div>
+
+        <div class="dash-head">
+          <div>
+            <h1 id="dash-hello">Welcome back</h1>
+            <p>Here is your money at a glance — Saturday, September 12, 2026 (demo data).</p>
+          </div>
+          <a class="btn btn-outline-dark btn-small" href="contact.html">Get help</a>
+        </div>
+
+        <div class="acct-grid">
+          <article class="acct-card">
+            <span class="label">Everyday Checking ····7294</span>
+            <div class="bal" id="bal-chk">$4,280.55</div>
+            <span class="num">Available now</span>
+          </article>
+          <article class="acct-card gold">
+            <span class="label">High-Yield Savings ····3310</span>
+            <div class="bal" id="bal-sav">$18,942.10</div>
+            <span class="num">Earning 4.60% APY (demo)</span>
+          </article>
+          <article class="acct-card">
+            <span class="label">Rewards Card ····5517</span>
+            <div class="bal" id="bal-crd">−$1,203.44</div>
+            <span class="num">Balance due Oct 1 (demo)</span>
+          </article>
+        </div>
+
+        <div class="grid-2" style="align-items: start;">
+          <div>
+            <h2 style="font-size: 1.5rem;">Move money (demo)</h2>
+            <form id="transfer-form" class="card" novalidate>
+              <div class="form-field">
+                <label for="t-from">From</label>
+                <select id="t-from">
+                  <option value="chk">Everyday Checking ····7294</option>
+                  <option value="sav">High-Yield Savings ····3310</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="t-to">To</label>
+                <select id="t-to">
+                  <option value="sav">High-Yield Savings ····3310</option>
+                  <option value="chk">Everyday Checking ····7294</option>
+                  <option value="crd">Rewards Card ····5517 (payment)</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="t-amount">Amount (USD)</label>
+                <input type="number" id="t-amount" min="0.01" step="0.01" placeholder="0.00" inputmode="decimal" required>
+                <span class="field-error">Enter an amount greater than $0.</span>
+              </div>
+              <button class="btn btn-primary btn-block" type="submit">Transfer</button>
+              <p class="form-hint">Transfers update the fictional balances on this page instantly. No real money exists here to move.</p>
+            </form>
+          </div>
+          <div>
+            <h2 style="font-size: 1.5rem;">Recent activity</h2>
+            <div class="table-wrap">
+              <table class="data">
+                <thead>
+                  <tr><th scope="col">Date</th><th scope="col">Description</th><th scope="col" class="num">Amount</th></tr>
+                </thead>
+                <tbody id="txn-body">
+                  <tr><td>Sep 11, 2026</td><td>Payroll — Harborview Unified School District</td><td class="num pos">+$2,940.00</td></tr>
+                  <tr><td>Sep 10, 2026</td><td>Blue Bottle Grocers</td><td class="num neg">−$86.12</td></tr>
+                  <tr><td>Sep 9, 2026</td><td>Round-up transfer to Savings</td><td class="num neg">−$14.63</td></tr>
+                  <tr><td>Sep 8, 2026</td><td>Cascadia Power &amp; Light — autopay</td><td class="num neg">−$142.08</td></tr>
+                  <tr><td>Sep 6, 2026</td><td>ATM withdrawal — Meridian Plaza</td><td class="num neg">−$120.00</td></tr>
+                  <tr><td>Sep 4, 2026</td><td>Rewards Card cash back to Savings</td><td class="num pos">+$61.40</td></tr>
+                  <tr><td>Sep 1, 2026</td><td>Savings interest (demo)</td><td class="num pos">+$72.31</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-legal" style="justify-content: center;">
+        <span>© <span data-year>2026</span> Meridian Bank — a fictional demo. No real banking services are offered.</span>
+        <span>Demo session lives in this tab only; nothing is transmitted.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

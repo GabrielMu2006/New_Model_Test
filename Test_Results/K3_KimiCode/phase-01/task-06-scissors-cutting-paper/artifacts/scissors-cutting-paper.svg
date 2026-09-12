@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-labelledby="title desc">
+  <title id="title">A hand cutting a sheet of paper with scissors</title>
+  <desc id="desc">A stylized right hand grips red-handled scissors; the open blades cut a tilted white sheet along a dashed guide line while the cut strip lifts away.</desc>
+
+  <defs>
+    <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef3f8"/>
+      <stop offset="0.55" stop-color="#ccd7e1"/>
+      <stop offset="1" stop-color="#a3b1bf"/>
+    </linearGradient>
+  </defs>
+
+  <!-- desk -->
+  <rect width="800" height="600" fill="#f3eee2"/>
+
+  <!-- ============ paper ============ -->
+  <g transform="rotate(-6 320 380)">
+    <!-- soft shadow under the sheet -->
+    <path d="M138 252 L412 252 L412 392 L518 392 L518 532 L138 532 Z" fill="#000000" opacity="0.07"/>
+
+    <!-- main sheet (top-right strip already cut loose) -->
+    <path d="M130 240 L404 240 L404 380 L510 380 L510 520 L130 520 Z"
+          fill="#ffffff" stroke="#c2ccd6" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- faint ruled lines on the main sheet -->
+    <g stroke="#e3e9f0" stroke-width="3" stroke-linecap="round">
+      <line x1="152" y1="290" x2="380" y2="290"/>
+      <line x1="152" y1="330" x2="380" y2="330"/>
+      <line x1="152" y1="430" x2="488" y2="430"/>
+      <line x1="152" y1="470" x2="488" y2="470"/>
+    </g>
+
+    <!-- shadow cast on the sheet by the lifting strip -->
+    <path d="M408 384 L510 384 L510 396 L410 390 Z" fill="#8b98a6" opacity="0.18"/>
+
+    <!-- dashed guide for the remaining cut -->
+    <line x1="296" y1="380" x2="392" y2="380" stroke="#8d9aa9" stroke-width="3"
+          stroke-dasharray="10 9" stroke-linecap="round"/>
+
+    <!-- the cut strip, lifting away -->
+    <g transform="translate(8 -6)">
+      <g transform="rotate(-5 406 376)">
+        <path d="M404 240 L510 240 L510 380 L404 380 Z"
+              fill="#ffffff" stroke="#c2ccd6" stroke-width="3" stroke-linejoin="round"/>
+        <g stroke="#e3e9f0" stroke-width="3" stroke-linecap="round">
+          <line x1="410" y1="290" x2="504" y2="290"/>
+          <line x1="410" y1="330" x2="504" y2="330"/>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============ hand ============ -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <!-- back of the hand -->
+    <path d="M800 316 L672 306 C610 300 568 318 560 356 C553 392 562 428 600 444 C660 468 740 476 800 478 Z"
+          fill="#f4c28e" stroke="#b57a45" stroke-width="4"/>
+
+    <!-- sleeve -->
+    <rect x="740" y="310" width="60" height="170" rx="14" fill="#6f92b8" stroke="#57718f" stroke-width="4"/>
+    <line x1="763" y1="320" x2="763" y2="470" stroke="#57718f" stroke-width="4"/>
+
+    <!-- index finger into the finger loop -->
+    <path d="M612 398 Q570 420 532 452" fill="none" stroke="#b57a45" stroke-width="37"/>
+    <path d="M612 398 Q570 420 532 452" fill="none" stroke="#f4c28e" stroke-width="29"/>
+
+    <!-- middle finger into the finger loop -->
+    <path d="M626 424 Q586 444 550 470" fill="none" stroke="#b57a45" stroke-width="37"/>
+    <path d="M626 424 Q586 444 550 470" fill="none" stroke="#f4c28e" stroke-width="29"/>
+
+    <!-- thumb into the thumb loop -->
+    <path d="M616 356 Q566 330 506 296" fill="none" stroke="#b57a45" stroke-width="41"/>
+    <path d="M616 356 Q566 330 506 296" fill="none" stroke="#f4c28e" stroke-width="33"/>
+  </g>
+
+  <!-- ============ scissors ============ -->
+  <!-- lower piece: finger loop to upper blade -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="M406 368 L290 346 L404 380 Z" fill="url(#bladeGrad)" stroke="#77848f" stroke-width="2.5"/>
+    <path d="M396 372 L310 351" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.5"/>
+    <path d="M410 378 L498 442" fill="none" stroke="#b8443c" stroke-width="15"/>
+    <path d="M410 378 L498 442" fill="none" stroke="#e25f56" stroke-width="9"/>
+    <ellipse cx="520" cy="468" rx="38" ry="30" transform="rotate(14 520 468)" fill="none" stroke="#b8443c" stroke-width="15"/>
+    <ellipse cx="520" cy="468" rx="38" ry="30" transform="rotate(14 520 468)" fill="none" stroke="#e25f56" stroke-width="9"/>
+  </g>
+
+  <!-- upper piece: thumb loop to lower blade -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="M404 364 L290 398 L406 376 Z" fill="url(#bladeGrad)" stroke="#77848f" stroke-width="2.5"/>
+    <path d="M394 368 L320 390" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.5"/>
+    <path d="M402 368 L466 306" fill="none" stroke="#b8443c" stroke-width="15"/>
+    <path d="M402 368 L466 306" fill="none" stroke="#e25f56" stroke-width="9"/>
+    <ellipse cx="492" cy="290" rx="30" ry="24" transform="rotate(-28 492 290)" fill="none" stroke="#b8443c" stroke-width="14"/>
+    <ellipse cx="492" cy="290" rx="30" ry="24" transform="rotate(-28 492 290)" fill="none" stroke="#e25f56" stroke-width="8.5"/>
+  </g>
+
+  <!-- pivot screw -->
+  <circle cx="404" cy="372" r="8.5" fill="#9aa7b4" stroke="#66727f" stroke-width="2.5"/>
+  <line x1="400" y1="368" x2="408" y2="376" stroke="#66727f" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,157 @@
+{
+ "schemaVersion": 1,
+ "runId": "run-k3-task-14-r1",
+ "phaseId": "phase-01",
+ "taskId": "task-14",
+ "taskVersion": 1,
+ "model": {
+  "id": "k3",
+  "name": "K3",
+  "version": null,
+  "provider": "Moonshot AI",
+  "note": "reportedModelId 'k3' is the harness-reported id (alias kimi-code/k3); provider confirmed by the organizer as Kimi official; provider-side snapshot not independently confirmed"
+ },
+ "prompt": {
+  "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+  "sha256": "58eef25acfaf82e9b1093693ed9fcf90266d757f178a040b1f705213ac804ba5",
+  "version": 1,
+  "verbatimInputPath": "prompt.txt",
+  "localScaffoldPath": "test-workspace-2/phase-01/task-14-bank-website/prompt.txt",
+  "followups": []
+ },
+ "environment": {
+  "harness": "Kimi Code CLI",
+  "harnessVersion": "0.42.0",
+  "reportedModelId": "k3",
+  "modelAlias": "kimi-code/k3",
+  "surface": "cli",
+  "os": "macOS 26.6.2 (arm64)",
+  "runtime": "Node 24.19.0",
+  "sessionId": "8fbce6ea-bddb-45fa-a5f4-5f951b4f0934",
+  "sharedContext": false,
+  "continuationTurns": 0,
+  "sampling": {
+   "thinkingEffort": "max"
+  },
+  "permissionMode": "auto",
+  "startedAt": "2026-09-12T07:15:22.476Z",
+  "endedAt": "2026-09-12T07:32:50.436Z",
+  "timezone": "Asia/Shanghai"
+ },
+ "budget": {
+  "wallClockSeconds": null,
+  "inputTokens": null,
+  "outputTokens": null,
+  "toolCalls": null,
+  "retries": 0,
+  "followupTurns": 0,
+  "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+ },
+ "metrics": {
+  "durationSeconds": 1048,
+  "durationBasis": "wire.jsonl turn.ended durationMs",
+  "apiCalls": 27,
+  "toolCalls": 29,
+  "failures": 1,
+  "inputTokens": 53553,
+  "outputTokens": 43537,
+  "cacheReadTokens": 1392640,
+  "totalTokens": 1489730,
+  "note": "failures = failed LLM API requests (harness-retried) + tool calls that returned an error (self-test iterations). inputTokens excludes cache-read tokens, which are reported separately as cacheReadTokens."
+ },
+ "cost": {
+  "amount": null,
+  "currency": null,
+  "scope": "task",
+  "source": null
+ },
+ "artifacts": {
+  "type": "html",
+  "entry": "index.html",
+  "files": [
+   "README.md",
+   "about.html",
+   "assets/favicon.svg",
+   "business.html",
+   "contact.html",
+   "css/style.css",
+   "dashboard.html",
+   "index.html",
+   "js/main.js",
+   "loans.html",
+   "login.html",
+   "personal.html"
+  ],
+  "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-14-bank-website/artifacts",
+  "fileSha256": {
+   "README.md": "3aec37ea141ea6821c4d37feb57b3d75e4e8bde81cd2870709e4f5657992b86d",
+   "about.html": "beaecbefb3f6078cfbdffd93412d1d2ccae3dba1dbd71ea1559750db35af9937",
+   "assets/favicon.svg": "7d88fb09a1583d31a4ea32ec9b0332d7f2893160c3a16f55dcee5b326ca6be0d",
+   "business.html": "6798c301068e9d2a4701c2e60aeb99ec6ad6cc562598cab6650a69d010fe92d8",
+   "contact.html": "91d3a6891d7f5d99d2daac1938b0355b48bac2ef1d4b503cc4aab3bb5e57a891",
+   "css/style.css": "4efa3b1598628cdde0d13e09833ca2614a18adb8e6050a58bd75d4661fe5793c",
+   "dashboard.html": "9306ae11861bc10814ee7780c721832f7af6f40e61d01915ec663e68c3c1718b",
+   "index.html": "1cbc7b4b0679fff9a2d1ae5112e84dd0863a67e61a62b42853f10c4f1b4089c4",
+   "js/main.js": "cc25e1f9ea326d4ebf7d0fa07c0eda0ad44957e948ff3d9ebfda77be89e854bb",
+   "loans.html": "3493f5c23cfa34450fde1d6485d27a162314630132fdef8f951c283fa145b82a",
+   "login.html": "9e930dcae6c09fd794a72f6c6f1d3e6e034ac4a93a3181ab6a024970b4398b83",
+   "personal.html": "88b5571700f31e1bb6da81abc76941624198e38dc67cf783b02d3c7236927bc4"
+  },
+  "cover": null,
+  "preview": {
+   "lazy": true,
+   "sandbox": "allow-scripts allow-downloads allow-forms",
+   "note": "HTML output; internal relative files are listed explicitly"
+  }
+ },
+ "source": {
+  "commit": null,
+  "path": null,
+  "note": "archived from local workspace; commit to be backfilled by the maintainer after ingestion"
+ },
+ "runRelation": {
+  "parentRunId": null,
+  "reason": null
+ },
+ "status": "completed",
+ "isolation": {
+  "level": "workspace-only",
+  "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-14-bank-website/",
+  "readOnlyInputs": [
+   "prompt.txt"
+  ],
+  "mounts": [],
+  "network": "off (rule-level; not enforced at the network layer)",
+  "repositoryReachability": null,
+  "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+  "repositoryBlocking": null,
+  "sharedContext": false
+ },
+ "contamination": {
+  "status": "unknown",
+  "telemetry": "visible",
+  "events": [],
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/audit-2026-09-12.md"
+  ],
+  "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose.",
+  "scoringEffect": "none (recorded in audit archive only)",
+  "confirmedExternalAnswers": false
+ },
+ "testEvidence": {
+  "command": "python3 evidence/k3-audit.py  (organizer session over ~/.kimi-code session logs)",
+  "cwd": "test-workspace-2/ (organizer session)",
+  "environment": "macOS 26.6.2 arm64 / Node 24.19.0 / Kimi Code CLI 0.42.0",
+  "date": "2026-09-12",
+  "passed": null,
+  "failed": null,
+  "skipped": null,
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/session-log.sha256.txt"
+  ],
+  "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment; model-run self-test files are preserved inside artifacts/."
+ },
+ "reviews": []
+}

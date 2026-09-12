@@ -1,0 +1,145 @@
+{
+ "schemaVersion": 1,
+ "runId": "run-k3-task-04-r1",
+ "phaseId": "phase-01",
+ "taskId": "task-04",
+ "taskVersion": 1,
+ "model": {
+  "id": "k3",
+  "name": "K3",
+  "version": null,
+  "provider": "Moonshot AI",
+  "note": "reportedModelId 'k3' is the harness-reported id (alias kimi-code/k3); provider confirmed by the organizer as Kimi official; provider-side snapshot not independently confirmed"
+ },
+ "prompt": {
+  "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+  "sha256": "6810781239a5abf4d0bd6e4883a741359a90646955581459a8885108fc33a1f0",
+  "version": 1,
+  "verbatimInputPath": "prompt.txt",
+  "localScaffoldPath": "test-workspace-2/phase-01/task-04-analog-clock-11-52-30/prompt.txt",
+  "followups": []
+ },
+ "environment": {
+  "harness": "Kimi Code CLI",
+  "harnessVersion": "0.42.0",
+  "reportedModelId": "k3",
+  "modelAlias": "kimi-code/k3",
+  "surface": "cli",
+  "os": "macOS 26.6.2 (arm64)",
+  "runtime": "Node 24.19.0",
+  "sessionId": "330d08a3-a18f-409d-b27d-b979c24ffdb1",
+  "sharedContext": false,
+  "continuationTurns": 0,
+  "sampling": {
+   "thinkingEffort": "max"
+  },
+  "permissionMode": "auto",
+  "startedAt": "2026-09-12T04:16:34.936Z",
+  "endedAt": "2026-09-12T04:21:03.623Z",
+  "timezone": "Asia/Shanghai"
+ },
+ "budget": {
+  "wallClockSeconds": null,
+  "inputTokens": null,
+  "outputTokens": null,
+  "toolCalls": null,
+  "retries": 0,
+  "followupTurns": 0,
+  "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+ },
+ "metrics": {
+  "durationSeconds": 269,
+  "durationBasis": "wire.jsonl turn.ended durationMs",
+  "apiCalls": 5,
+  "toolCalls": 4,
+  "failures": 0,
+  "inputTokens": 16059,
+  "outputTokens": 9196,
+  "cacheReadTokens": 147200,
+  "totalTokens": 172455,
+  "note": "failures = failed LLM API requests (harness-retried) + tool calls that returned an error (self-test iterations). inputTokens excludes cache-read tokens, which are reported separately as cacheReadTokens."
+ },
+ "cost": {
+  "amount": null,
+  "currency": null,
+  "scope": "task",
+  "source": null
+ },
+ "artifacts": {
+  "type": "svg",
+  "entry": "clock.svg",
+  "files": [
+   "clock-preview.png",
+   "clock.svg"
+  ],
+  "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-04-analog-clock-11-52-30/artifacts",
+  "fileSha256": {
+   "clock-preview.png": "bd446532b72a63d8a7f00cf886584b579b91ec632d3edd0a892edb7e897b5f2a",
+   "clock.svg": "659dd361a116dd8ad8fc677137a445bbb45b1b8ec06899e034b0214f44ecc92c"
+  },
+  "cover": null,
+  "preview": {
+   "lazy": true,
+   "sandbox": "allow-scripts allow-downloads allow-forms",
+   "note": "SVG output; opens standalone"
+  }
+ },
+ "source": {
+  "commit": null,
+  "path": null,
+  "note": "archived from local workspace; commit to be backfilled by the maintainer after ingestion"
+ },
+ "runRelation": {
+  "parentRunId": null,
+  "reason": null
+ },
+ "status": "completed",
+ "isolation": {
+  "level": "workspace-only",
+  "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-04-analog-clock-11-52-30/",
+  "readOnlyInputs": [
+   "prompt.txt"
+  ],
+  "mounts": [],
+  "network": "off (rule-level; not enforced at the network layer)",
+  "repositoryReachability": null,
+  "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+  "repositoryBlocking": null,
+  "sharedContext": false
+ },
+ "contamination": {
+  "status": "unknown",
+  "telemetry": "visible",
+  "events": [
+   {
+    "type": "procedural-deviation",
+    "dimension": "paths",
+    "status": "observed",
+    "detail": "Session listed /Applications to locate an installed browser/renderer (environment probe). It received only a machine-environment directory listing; no task-related external content obtained.",
+    "externalContentObtained": false
+   }
+  ],
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/audit-2026-09-12.md"
+  ],
+  "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. 1 procedural deviation(s) recorded (out-of-directory temp files / machine-environment probes); per the 2026-09-10 three-tier rule these are archive-only and trigger no external label. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose.",
+  "scoringEffect": "none (recorded in audit archive only)",
+  "confirmedExternalAnswers": false
+ },
+ "testEvidence": {
+  "command": "python3 evidence/k3-audit.py  (organizer session over ~/.kimi-code session logs)",
+  "cwd": "test-workspace-2/ (organizer session)",
+  "environment": "macOS 26.6.2 arm64 / Node 24.19.0 / Kimi Code CLI 0.42.0",
+  "date": "2026-09-12",
+  "passed": null,
+  "failed": null,
+  "skipped": null,
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/session-log.sha256.txt"
+  ],
+  "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment; model-run self-test files are preserved inside artifacts/."
+ },
+ "reviews": []
+}

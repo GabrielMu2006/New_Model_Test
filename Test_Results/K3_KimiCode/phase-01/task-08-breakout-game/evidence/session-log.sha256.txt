@@ -1,0 +1,3 @@
+2e3dfbac96654dafed06ddf6b7790d1b193127f15fe8532bd63e58c4c4a54ac1  ~/.kimi-code/sessions/wd_task-08-breakout-game_180a8f561358/session_911087b3-c436-4ed2-85a3-17b4820b4496/agents/main/wire.jsonl
+c02740a028dd585ad0a8d4c3fdf80ef73600301337bc400a613910912ab4438c  ~/.kimi-code/sessions/wd_task-08-breakout-game_180a8f561358/session_911087b3-c436-4ed2-85a3-17b4820b4496/logs/kimi-code.log
+9fd50d1803872d6e828a9470f9d7d055771cc3abc8a5b64970c18123e4665476  ~/.kimi-code/sessions/wd_task-08-breakout-game_180a8f561358/session_911087b3-c436-4ed2-85a3-17b4820b4496/state.json

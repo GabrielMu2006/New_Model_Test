@@ -1,0 +1,1 @@
+Build a simple 2D floor-plan editor where I can draw walls, add doors and windows, drag objects, and see room dimensions.

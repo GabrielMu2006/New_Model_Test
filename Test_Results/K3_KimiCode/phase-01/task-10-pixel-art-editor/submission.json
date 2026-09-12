@@ -1,0 +1,141 @@
+{
+ "schemaVersion": 1,
+ "runId": "run-k3-task-10-r1",
+ "phaseId": "phase-01",
+ "taskId": "task-10",
+ "taskVersion": 1,
+ "model": {
+  "id": "k3",
+  "name": "K3",
+  "version": null,
+  "provider": "Moonshot AI",
+  "note": "reportedModelId 'k3' is the harness-reported id (alias kimi-code/k3); provider confirmed by the organizer as Kimi official; provider-side snapshot not independently confirmed"
+ },
+ "prompt": {
+  "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+  "sha256": "b2c5639f49d534c5675cac5d3bc8e7d3db2d838b9de1bb4ed51d82c4c304bfaf",
+  "version": 1,
+  "verbatimInputPath": "prompt.txt",
+  "localScaffoldPath": "test-workspace-2/phase-01/task-10-pixel-art-editor/prompt.txt",
+  "followups": []
+ },
+ "environment": {
+  "harness": "Kimi Code CLI",
+  "harnessVersion": "0.42.0",
+  "reportedModelId": "k3",
+  "modelAlias": "kimi-code/k3",
+  "surface": "cli",
+  "os": "macOS 26.6.2 (arm64)",
+  "runtime": "Node 24.19.0",
+  "sessionId": "a43255e0-b266-4396-acbd-d3b63e58aabd",
+  "sharedContext": false,
+  "continuationTurns": 0,
+  "sampling": {
+   "thinkingEffort": "max"
+  },
+  "permissionMode": "auto",
+  "startedAt": "2026-09-12T05:51:53.715Z",
+  "endedAt": "2026-09-12T05:58:17.291Z",
+  "timezone": "Asia/Shanghai"
+ },
+ "budget": {
+  "wallClockSeconds": null,
+  "inputTokens": null,
+  "outputTokens": null,
+  "toolCalls": null,
+  "retries": 0,
+  "followupTurns": 0,
+  "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+ },
+ "metrics": {
+  "durationSeconds": 383,
+  "durationBasis": "wire.jsonl turn.ended durationMs",
+  "apiCalls": 9,
+  "toolCalls": 8,
+  "failures": 1,
+  "inputTokens": 23494,
+  "outputTokens": 15942,
+  "cacheReadTokens": 297216,
+  "totalTokens": 336652,
+  "note": "failures = failed LLM API requests (harness-retried) + tool calls that returned an error (self-test iterations). inputTokens excludes cache-read tokens, which are reported separately as cacheReadTokens."
+ },
+ "cost": {
+  "amount": null,
+  "currency": null,
+  "scope": "task",
+  "source": null
+ },
+ "artifacts": {
+  "type": "html",
+  "entry": "index.html",
+  "files": [
+   "app.js",
+   "index.html",
+   "style.css",
+   "test/smoke-test.mjs"
+  ],
+  "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-10-pixel-art-editor/artifacts",
+  "fileSha256": {
+   "app.js": "018b6a505a260b0fe0caaf6999a0da220070fff6acd19cc72f4c997b9b64a642",
+   "index.html": "fa059d6c22bc8399814da04c8a05d2297a0b81d3065897dd4ba21908da822565",
+   "style.css": "ff107ed336551958057be8c44f9f72b3f8a949056e5454f8d9784c53a0835461",
+   "test/smoke-test.mjs": "e4f1cf044204660c07ea62891ccd15e9dcbf170e56071ecdc275341c549a2b12"
+  },
+  "cover": null,
+  "preview": {
+   "lazy": true,
+   "sandbox": "allow-scripts allow-downloads allow-forms",
+   "note": "HTML output; internal relative files are listed explicitly"
+  }
+ },
+ "source": {
+  "commit": null,
+  "path": null,
+  "note": "archived from local workspace; commit to be backfilled by the maintainer after ingestion"
+ },
+ "runRelation": {
+  "parentRunId": null,
+  "reason": null
+ },
+ "status": "completed",
+ "isolation": {
+  "level": "workspace-only",
+  "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-10-pixel-art-editor/",
+  "readOnlyInputs": [
+   "prompt.txt"
+  ],
+  "mounts": [],
+  "network": "off (rule-level; not enforced at the network layer)",
+  "repositoryReachability": null,
+  "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+  "repositoryBlocking": null,
+  "sharedContext": false
+ },
+ "contamination": {
+  "status": "unknown",
+  "telemetry": "visible",
+  "events": [],
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/audit-2026-09-12.md"
+  ],
+  "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose.",
+  "scoringEffect": "none (recorded in audit archive only)",
+  "confirmedExternalAnswers": false
+ },
+ "testEvidence": {
+  "command": "python3 evidence/k3-audit.py  (organizer session over ~/.kimi-code session logs)",
+  "cwd": "test-workspace-2/ (organizer session)",
+  "environment": "macOS 26.6.2 arm64 / Node 24.19.0 / Kimi Code CLI 0.42.0",
+  "date": "2026-09-12",
+  "passed": null,
+  "failed": null,
+  "skipped": null,
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/session-log.sha256.txt"
+  ],
+  "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment; model-run self-test files are preserved inside artifacts/."
+ },
+ "reviews": []
+}

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="Analog clock showing 11:52:30">
+  <title>Analog clock — 11:52:30</title>
+  <desc>Static analog clock. Hour hand at 356.25° (11 + 52.5/60 h), minute hand at 315° (52.5 min), second hand at 180° (30 s), all measured clockwise from 12 o'clock.</desc>
+
+  <!-- Bezel and face -->
+  <circle cx="200" cy="200" r="194" fill="#23283b"/>
+  <circle cx="200" cy="200" r="182" fill="#fdfcf7"/>
+  <circle cx="200" cy="200" r="182" fill="none" stroke="#b9b2a0" stroke-width="1.5"/>
+
+  <!-- 60 minute ticks (dashed circle trick: circumference 2π·171.89 ≈ 1080 = 60 × 18) -->
+  <circle cx="200" cy="200" r="171.89" fill="none" stroke="#55565e" stroke-width="9"
+          stroke-dasharray="2.2 15.8" stroke-dashoffset="1.1" transform="rotate(-90 200 200)"/>
+  <!-- 12 hour ticks, drawn over the minute ticks at the same positions -->
+  <circle cx="200" cy="200" r="171.89" fill="none" stroke="#1c2030" stroke-width="20"
+          stroke-dasharray="5 85" stroke-dashoffset="2.5" transform="rotate(-90 200 200)"/>
+
+  <!-- Numerals, radius 138 -->
+  <g font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#1c2030"
+     text-anchor="middle" dominant-baseline="central">
+    <text x="200" y="62">12</text>
+    <text x="269" y="80.5">1</text>
+    <text x="319.5" y="131">2</text>
+    <text x="338" y="200">3</text>
+    <text x="319.5" y="269">4</text>
+    <text x="269" y="319.5">5</text>
+    <text x="200" y="338">6</text>
+    <text x="131" y="319.5">7</text>
+    <text x="80.5" y="269">8</text>
+    <text x="62" y="200">9</text>
+    <text x="80.5" y="131">10</text>
+    <text x="131" y="80.5">11</text>
+  </g>
+
+  <!-- Hour hand: 11:52:30 → 356.25° -->
+  <g transform="rotate(356.25 200 200)">
+    <polygon points="196,206 200,116 204,206" fill="#1c2030"/>
+  </g>
+
+  <!-- Minute hand: 52 min 30 s → 315° -->
+  <g transform="rotate(315 200 200)">
+    <polygon points="197,207 200,70 203,207" fill="#1c2030"/>
+  </g>
+
+  <!-- Second hand: 30 s → 180° -->
+  <g transform="rotate(180 200 200)">
+    <line x1="200" y1="242" x2="200" y2="50" stroke="#c0392b" stroke-width="2"/>
+    <circle cx="200" cy="224" r="6.5" fill="#c0392b"/>
+  </g>
+
+  <!-- Center cap -->
+  <circle cx="200" cy="200" r="7.5" fill="#1c2030"/>
+  <circle cx="200" cy="200" r="3" fill="#c0392b"/>
+</svg>

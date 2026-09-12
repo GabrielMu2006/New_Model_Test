@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aevum — Haute Horlogerie · Genève</title>
+  <meta name="description" content="Aevum crafts mechanical timepieces in Genève. Three hundred pieces a year, finished by hand since MCMXXVII.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230d0c0a'/%3E%3Ccircle cx='32' cy='32' r='29' fill='none' stroke='%23c8a25e' stroke-width='2'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='30' fill='%23c8a25e' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#collection">Skip to content</a>
+
+  <!-- Film-grain overlay: generated in-page, no external assets -->
+  <svg class="noise-defs" aria-hidden="true" width="0" height="0">
+    <defs>
+      <filter id="grain-filter">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+        <feColorMatrix type="saturate" values="0"/>
+      </filter>
+    </defs>
+  </svg>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Aevum — back to top">
+        <span class="brand-star" aria-hidden="true">✦</span> AEVUM
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="#collection">Collection</a>
+        <a href="#atelier">Atelier</a>
+        <a href="#heritage">Heritage</a>
+        <a href="#contact" class="nav-cta">Private Viewing</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ───────────────────────── HERO ───────────────────────── -->
+    <section class="hero">
+      <div class="hero-rings" aria-hidden="true">
+        <span class="ring ring-a"></span>
+        <span class="ring ring-b"></span>
+        <span class="ring ring-c"></span>
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="kicker reveal">Haute Horlogerie · Genève · Est. MCMXXVII</p>
+          <h1 class="reveal" style="--d:.12s">Eternity,<br><em>by hand.</em></h1>
+          <p class="lede reveal" style="--d:.24s">
+            Aevum builds three hundred mechanical timepieces a year —
+            312 components, seventy-two hours of power, one lifetime of time.
+          </p>
+          <div class="hero-ctas reveal" style="--d:.36s">
+            <a class="btn btn-solid" href="#collection">Explore the Collection</a>
+            <a class="btn btn-ghost" href="#contact">Book a Private Viewing</a>
+          </div>
+          <p class="hero-note reveal" style="--d:.48s">
+            This Aevum is keeping your local time — <span id="heroClock">––:––</span>
+          </p>
+        </div>
+
+        <div class="hero-stage reveal" style="--d:.2s">
+          <div class="hero-watch" id="heroWatch" role="img"
+               aria-label="Aevum wristwatch, rose-gold case and onyx dial, showing the current time"></div>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#collection" aria-label="Scroll to the collection">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- ───────────────────────── MARQUEE ───────────────────────── -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Haute Horlogerie ✦ Genève ✦ Est. MCMXXVII ✦ Three Hundred Pieces a Year ✦ Calibre AV-01 ✦&nbsp;</span>
+        <span>Haute Horlogerie ✦ Genève ✦ Est. MCMXXVII ✦ Three Hundred Pieces a Year ✦ Calibre AV-01 ✦&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- ───────────────────────── COLLECTION ───────────────────────── -->
+    <section class="collection section" id="collection">
+      <header class="sec-head reveal">
+        <p class="sec-index">01 — The Collection</p>
+        <h2>Three instruments.<br><em>One obsession.</em></h2>
+        <p class="sec-lede">
+          Each Aevum calibre is designed, finished and regulated in our Genève atelier.
+          No dial leaves the bench until it has run for thirty-one days.
+        </p>
+      </header>
+
+      <div class="cards" id="cards">
+        <article class="card reveal" style="--d:.05s">
+          <div class="card-watch" id="watchMeridian" role="img"
+               aria-label="Aevum Meridian — ivory dial, rose-gold case, chestnut strap"></div>
+          <div class="card-info">
+            <p class="card-no">No. I</p>
+            <h3>Meridian</h3>
+            <p class="card-desc">Ivory grand-feu dial, rose-gold case, chestnut alligator.</p>
+            <p class="card-spec">Calibre AV-01 · 38 jewels · 72 h reserve</p>
+            <div class="card-foot">
+              <span class="price">CHF 24,800</span>
+              <a class="card-link" href="#contact">Enquire <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" style="--d:.15s">
+          <div class="card-watch" id="watchNocturne" role="img"
+               aria-label="Aevum Nocturne — onyx dial, steel case, black strap, small seconds"></div>
+          <div class="card-info">
+            <p class="card-no">No. II</p>
+            <h3>Nocturne</h3>
+            <p class="card-desc">Onyx-black sunburst, brushed steel, small seconds at six.</p>
+            <p class="card-spec">Calibre AV-02 · 42 jewels · 72 h reserve</p>
+            <div class="card-foot">
+              <span class="price">CHF 31,200</span>
+              <a class="card-link" href="#contact">Enquire <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" style="--d:.25s">
+          <div class="card-watch" id="watchCeleste" role="img"
+               aria-label="Aevum Céleste — midnight-blue dial, platinum case, moonphase"></div>
+          <div class="card-info">
+            <p class="card-no">No. III</p>
+            <h3>Céleste</h3>
+            <p class="card-desc">Midnight-blue lacquer, platinum, a moonphase true for 122 years.</p>
+            <p class="card-spec">Calibre AV-03 · 46 jewels · Moonphase</p>
+            <div class="card-foot">
+              <span class="price">CHF 46,500</span>
+              <a class="card-link" href="#contact">Enquire <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── ATELIER ───────────────────────── -->
+    <section class="atelier section" id="atelier">
+      <div class="atelier-inner">
+        <div class="atelier-copy">
+          <header class="sec-head light reveal">
+            <p class="sec-index">02 — The Atelier</p>
+            <h2>Calibre AV-01.<br><em>Finished to be unseen.</em></h2>
+            <p class="sec-lede">
+              Every bridge is chamfered by hand, every wheel polished on both faces —
+              including the ones no owner will ever see. That is the point.
+            </p>
+          </header>
+
+          <dl class="stats">
+            <div class="stat reveal" style="--d:.05s">
+              <dt>Components</dt>
+              <dd><span class="num" data-count="312">0</span></dd>
+            </div>
+            <div class="stat reveal" style="--d:.15s">
+              <dt>Hours of reserve</dt>
+              <dd><span class="num" data-count="72">0</span></dd>
+            </div>
+            <div class="stat reveal" style="--d:.25s">
+              <dt>Jewels</dt>
+              <dd><span class="num" data-count="38">0</span></dd>
+            </div>
+            <div class="stat reveal" style="--d:.35s">
+              <dt>Vibrations / hour</dt>
+              <dd><span class="num" data-count="28800" data-format="1">0</span></dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="atelier-gears reveal" style="--d:.2s">
+          <div id="gearsMount" role="img"
+               aria-label="Slowly turning decorative gear train of the Aevum calibre"></div>
+          <p class="gears-caption">The going train of Calibre AV-01 — drawn to scale, turning at true ratio.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── HERITAGE ───────────────────────── -->
+    <section class="heritage section" id="heritage">
+      <header class="sec-head reveal">
+        <p class="sec-index">03 — Heritage</p>
+        <h2>Ninety-nine years.<br><em>Three hundred pieces a year.</em></h2>
+      </header>
+
+      <ol class="timeline">
+        <li class="reveal" style="--d:.05s">
+          <span class="t-year">1927</span>
+          <div>
+            <h3>The bench above the Rhône</h3>
+            <p>Aurélien Voss, twenty-six, opens a two-man atelier in Genève with one rule: never make more than can be finished properly.</p>
+          </div>
+        </li>
+        <li class="reveal" style="--d:.12s">
+          <span class="t-year">1953</span>
+          <div>
+            <h3>Calibre AV-1</h3>
+            <p>The maison's first in-house movement — 72 hours of reserve when forty was the convention.</p>
+          </div>
+        </li>
+        <li class="reveal" style="--d:.19s">
+          <span class="t-year">1978</span>
+          <div>
+            <h3>The quiet refusal</h3>
+            <p>As the quartz crisis empties the Vallée, Aevum declines to electrify. Production falls to 211 pieces. The bench survives.</p>
+          </div>
+        </li>
+        <li class="reveal" style="--d:.26s">
+          <span class="t-year">2004</span>
+          <div>
+            <h3>Céleste</h3>
+            <p>A moonphase geared to drift one day in 122 years — longer than anyone who buys one will own it.</p>
+          </div>
+        </li>
+        <li class="reveal" style="--d:.33s">
+          <span class="t-year">2026</span>
+          <div>
+            <h3>Unchanged, on purpose</h3>
+            <p>Three calibres, three hundred pieces, one waiting list. The rule from 1927 still holds.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ───────────────────────── QUOTE ───────────────────────── -->
+    <section class="quote section">
+      <blockquote class="reveal">
+        <p>«We do not count the hours.<br><em>We give them a home.</em>»</p>
+        <cite>— Aurélien Voss, Founder · Genève, 1927</cite>
+      </blockquote>
+    </section>
+
+    <!-- ───────────────────────── CONTACT ───────────────────────── -->
+    <section class="contact section" id="contact">
+      <div class="contact-inner">
+        <div class="contact-copy">
+          <header class="sec-head light reveal">
+            <p class="sec-index">04 — Private Viewing</p>
+            <h2>Time deserves<br><em>an appointment.</em></h2>
+            <p class="sec-lede">
+              The collection is never displayed in windows. It is shown, one piece at a time,
+              in our salons — with coffee, and without hurry.
+            </p>
+          </header>
+          <ul class="boutiques reveal" style="--d:.15s">
+            <li><span>Genève</span> Rue du Rhône 27 — Tue–Sat, 10h–18h</li>
+            <li><span>Paris</span> Place Vendôme 8 — Wed–Sat, 11h–19h</li>
+            <li><span>Tokyo</span> Ginza 4-6-16 — Thu–Sun, 11h–20h</li>
+          </ul>
+        </div>
+
+        <div class="contact-form-wrap reveal" style="--d:.2s">
+          <form class="contact-form" id="viewingForm" novalidate>
+            <p class="form-title">Request a private viewing</p>
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" required placeholder="Your full name">
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required placeholder="you@example.com">
+            </label>
+            <label>
+              <span>Salon</span>
+              <select name="salon" required>
+                <option value="" disabled selected>Choose a salon</option>
+                <option>Genève</option>
+                <option>Paris</option>
+                <option>Tokyo</option>
+              </select>
+            </label>
+            <label>
+              <span>Message <em>(optional)</em></span>
+              <textarea name="message" rows="3" placeholder="A reference you admire, an occasion…"></textarea>
+            </label>
+            <button type="submit" class="btn btn-solid">Send Request</button>
+            <p class="form-note" id="formNote" role="alert" aria-live="polite"></p>
+          </form>
+
+          <div class="form-done" id="formDone" hidden>
+            <svg viewBox="0 0 64 64" class="done-seal" aria-hidden="true">
+              <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M20 33.5 28.5 42 44 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <p class="done-title">Request received.</p>
+            <p class="done-text" id="doneText">Our concierge will write to you within one working day.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-brand">AEVUM <span aria-hidden="true">✦</span> GENÈVE</p>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#collection">Collection</a>
+        <a href="#atelier">Atelier</a>
+        <a href="#heritage">Heritage</a>
+        <a href="#contact">Private Viewing</a>
+      </nav>
+      <p class="footer-fine">© MMXXVI Aevum Haute Horlogerie · Crafted by hand — like our calibres — in HTML, CSS &amp; JavaScript only.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

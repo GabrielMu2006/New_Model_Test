@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Loans at Meridian Bank (fictional demo): mortgages, personal loans and auto loans — with a live monthly-payment calculator.">
+  <title>Loans &amp; Mortgages — Meridian Bank</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Meridian Bank home">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0a2540"/><path d="M14 46 V20 l10 14 8-12 8 12 10-14 v26" fill="none" stroke="#c9a227" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="50" r="2.6" fill="#c9a227"/></svg>
+        <span>Meridian Bank</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="personal.html">Personal</a></li>
+          <li><a href="business.html">Business</a></li>
+          <li><a href="loans.html" aria-current="page">Loans</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a class="btn btn-primary btn-small" href="login.html">Sign in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container">
+        <h1>Loans &amp; mortgages</h1>
+        <p>Borrow at a rate you can check against the math yourself — the calculator below is the same formula we use.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Borrow</span>
+          <h2>Three ways we lend</h2>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <span class="tag">Home</span>
+            <h3>Mortgages</h3>
+            <p class="rate-line">6.35% <small>30-yr fixed APR*</small></p>
+            <p class="card-text">Fixed and adjustable mortgages with no lender fees, a 21-day average close, and a rate lock that costs nothing.</p>
+            <div class="card-foot"><a class="btn btn-outline-dark" href="contact.html">Talk to a loan officer</a></div>
+          </article>
+          <article class="card">
+            <span class="tag">Personal</span>
+            <h3>Personal Loans</h3>
+            <p class="rate-line">9.49% <small>APR from*</small></p>
+            <p class="card-text">$2,000 to $40,000, fixed for the life of the loan, no origination fee and no prepayment penalty. Funds arrive next business day.</p>
+            <div class="card-foot"><a class="btn btn-outline-dark" href="#calculator">Estimate a payment</a></div>
+          </article>
+          <article class="card">
+            <span class="tag">Auto</span>
+            <h3>Auto Loans</h3>
+            <p class="rate-line">5.74% <small>APR from*</small></p>
+            <p class="card-text">New, used, and refinances. Get pre-approved before you shop and negotiate like a cash buyer.</p>
+            <div class="card-foot"><a class="btn btn-outline-dark" href="#calculator">Estimate a payment</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="calculator">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">Do the math</span>
+          <h2>Monthly payment calculator</h2>
+          <p>Standard amortization: the same formula printed in every loan disclosure. Adjust the numbers and watch the payment move.</p>
+        </div>
+        <form class="calc" id="loan-calc" novalidate>
+          <div>
+            <div class="form-field">
+              <label for="l-amount">Loan amount</label>
+              <input type="number" id="l-amount" min="0" step="500" value="25000" inputmode="decimal">
+            </div>
+            <div class="form-field">
+              <label for="l-apr">Interest rate (APR)</label>
+              <input type="number" id="l-apr" min="0" max="40" step="0.01" value="9.49" inputmode="decimal">
+            </div>
+            <div class="form-field">
+              <label for="l-term">Term <output id="l-term-out" for="l-term">5 years</output></label>
+              <input type="range" id="l-term" min="1" max="30" step="1" value="5">
+            </div>
+            <p class="form-hint">This illustration excludes taxes, insurance, and any fees. A real quote requires a credit application.</p>
+          </div>
+          <div class="calc-result" aria-live="polite">
+            <span>Estimated monthly payment</span>
+            <span class="big" id="l-payment">$0.00</span>
+            <dl>
+              <dt>Total interest</dt><dd id="l-interest-total">$0.00</dd>
+              <dt>Total cost of loan</dt><dd id="l-cost-total">$0.00</dd>
+            </dl>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Today's published rates</span>
+          <h2>Every rate, on the record</h2>
+          <p class="muted">Fictional demonstration rates, refreshed daily in theory.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th scope="col">Product</th><th scope="col">Term</th><th scope="col" class="num">APR from*</th><th scope="col">Notes</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>30-year fixed mortgage</td><td>360 months</td><td class="num">6.35%</td><td>No lender fees, free 60-day rate lock</td></tr>
+              <tr><td>15-year fixed mortgage</td><td>180 months</td><td class="num">5.72%</td><td>No lender fees, free 60-day rate lock</td></tr>
+              <tr><td>Personal loan</td><td>12–84 months</td><td class="num">9.49%</td><td>No origination or prepayment fee</td></tr>
+              <tr><td>New auto loan</td><td>36–72 months</td><td class="num">5.74%</td><td>Pre-approval valid 45 days</td></tr>
+              <tr><td>Used auto loan</td><td>36–72 months</td><td class="num">6.10%</td><td>Vehicles up to 10 model years old</td></tr>
+              <tr><td>Home equity line</td><td>Revolving</td><td class="num">8.25% variable</td><td>Up to 85% combined loan-to-value</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tinted">
+      <div class="container">
+        <div class="section-head center">
+          <span class="eyebrow">The process</span>
+          <h2>What borrowing here looks like</h2>
+        </div>
+        <div class="grid-4">
+          <article class="card">
+            <h3>1 · Check your rate</h3>
+            <p class="card-text">A two-minute pre-qualification with a soft credit pull that never affects your score.</p>
+          </article>
+          <article class="card">
+            <h3>2 · Lock it in</h3>
+            <p class="card-text">Like the number? Lock it. Mortgage locks are free for 60 days; personal and auto for 45.</p>
+          </article>
+          <article class="card">
+            <h3>3 · Sign online</h3>
+            <p class="card-text">Every document is e-signable. Mortgages close in person only if you want them to.</p>
+          </article>
+          <article class="card">
+            <h3>4 · Pay it off early</h3>
+            <p class="card-text">No prepayment penalty on anything we lend. Extra payments always go to principal.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <h2>Numbers first, paperwork second</h2>
+          <p>Run the calculator, then bring us the result. If our quote does not beat your best offer, we will say so.</p>
+          <a class="btn btn-primary" href="contact.html">Request a quote</a>
+        </div>
+        <p class="muted text-center mt-40" style="font-size:0.82rem; max-width: 60em; margin-left:auto; margin-right:auto;">
+          *Meridian Bank is a fictional demonstration. Rates shown are illustrative, are not tied to any market index, and do not constitute a lending offer.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#123a5f"/><path d="M14 46 V20 l10 14 8-12 8 12 10-14 v26" fill="none" stroke="#c9a227" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="50" r="2.6" fill="#c9a227"/></svg>
+            <span>Meridian Bank</span>
+          </div>
+          <p>Independent, member-owned, and fictional — a demonstration website showing what honest, plain-language banking could look like.</p>
+        </div>
+        <div>
+          <h4>Products</h4>
+          <ul>
+            <li><a href="personal.html#checking">Everyday Checking</a></li>
+            <li><a href="personal.html#savings">High-Yield Savings</a></li>
+            <li><a href="personal.html#card">Rewards Card</a></li>
+            <li><a href="loans.html">Mortgages &amp; loans</a></li>
+            <li><a href="business.html">Business banking</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">Our story</a></li>
+            <li><a href="about.html#leadership">Leadership</a></li>
+            <li><a href="about.html#values">Values</a></li>
+            <li><a href="contact.html">Careers &amp; contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <ul>
+            <li><a href="contact.html">Contact us</a></li>
+            <li><a href="personal.html#faq">FAQ</a></li>
+            <li><a href="login.html">Demo sign-in</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <span>© <span data-year>2026</span> Meridian Bank — a fictional demo. No real banking services are offered.</span>
+        <span>Never enter real credentials or personal information on this site.</span>
+      </div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

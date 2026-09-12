@@ -1,0 +1,310 @@
+:root {
+  --paper: #faf6ef;
+  --ink: #2b2620;
+  --ink-soft: #6b6255;
+  --line: #ddd3c3;
+  --accent: #7a4f2b;
+  --accent-dark: #5d3b20;
+  --danger: #a33b2e;
+  --badge-want: #e8ddc8;
+  --badge-reading: #dbe4d3;
+  --badge-finished: #d8dfe6;
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--line);
+  padding: 2rem 0 1.25rem;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+}
+
+.tagline {
+  margin: 0.25rem 0 1rem;
+  color: var(--ink-soft);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin: 0;
+}
+
+.stat {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.stat dt {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.stat dd {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.toolbar {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.toolbar-secondary {
+  margin-top: 0.5rem;
+}
+
+#search {
+  flex: 1 1 240px;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.45rem 0.6rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.btn {
+  font: inherit;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--ink);
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-dark);
+}
+
+.btn-danger {
+  color: var(--danger);
+}
+
+.btn-danger:hover {
+  border-color: var(--danger);
+}
+
+.btn-small {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.9rem;
+}
+
+.hint {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.form-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+
+.form-panel h2 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+
+.field {
+  margin-bottom: 0.75rem;
+  flex: 1 1 0;
+}
+
+.field-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.field label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+  color: var(--ink-soft);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+}
+
+.error {
+  margin: 0.2rem 0 0;
+  min-height: 1.1em;
+  font-size: 0.85rem;
+  color: var(--danger);
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--ink-soft);
+  padding: 2.5rem 1rem;
+}
+
+.book-list {
+  list-style: none;
+  margin: 1rem 0 2rem;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.book-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  padding: 0.9rem 1rem;
+}
+
+.book-title {
+  margin: 0 0 0.15rem;
+  font-size: 1.15rem;
+}
+
+.book-meta {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.book-notes {
+  margin: 0.4rem 0 0;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
+
+.book-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  border: 1px solid var(--line);
+}
+
+.badge.want-to-read {
+  background: var(--badge-want);
+}
+
+.badge.reading {
+  background: var(--badge-reading);
+}
+
+.badge.finished {
+  background: var(--badge-finished);
+}
+
+.stars {
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+.dates {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1rem 0 2rem;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 560px) {
+  .book-card {
+    flex-direction: column;
+  }
+
+  .book-side {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .card-actions {
+    margin-top: 0.25rem;
+  }
+}

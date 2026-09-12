@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atmos — Weather Dashboard</title>
+<meta name="description" content="A polished weather dashboard with hourly and 7-day forecasts. Self-contained demo with simulated data.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='46' r='22' fill='%23f5a524'/%3E%3Ccircle cx='38' cy='66' r='16' fill='%23aab7c4'/%3E%3Ccircle cx='60' cy='62' r='20' fill='%23c3cdd8'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div class="bg-scene" aria-hidden="true"></div>
+
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Atmos</span>
+      </div>
+
+      <nav class="city-tabs" id="cityTabs" aria-label="Choose city"></nav>
+
+      <div class="topbar-controls">
+        <div class="unit-toggle" role="group" aria-label="Temperature units">
+          <button type="button" id="unitC" aria-pressed="true">°C</button>
+          <button type="button" id="unitF" aria-pressed="false">°F</button>
+        </div>
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.2"/>
+            <path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5 5l1.7 1.7M17.3 17.3 19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.4 14.2A8.5 8.5 0 0 1 9.8 3.6a8.5 8.5 0 1 0 10.6 10.6Z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="app">
+      <noscript><p class="noscript">This dashboard needs JavaScript to render.</p></noscript>
+
+      <section class="hero card" id="hero" aria-label="Current conditions">
+        <div class="hero-main">
+          <div class="hero-place">
+            <h1 class="hero-city" id="heroCity">—</h1>
+            <p class="hero-meta"><span id="heroRegion">—</span> · <span id="heroClock">—</span></p>
+          </div>
+          <div class="hero-now">
+            <div class="hero-icon" id="heroIcon" aria-hidden="true"></div>
+            <div class="hero-temp-wrap">
+              <div class="hero-temp"><span id="heroTemp">–</span><span class="deg" id="heroDeg">°C</span></div>
+              <p class="hero-cond" id="heroCond">—</p>
+              <p class="hero-feels" id="heroFeels">—</p>
+            </div>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="hero-hilo">
+            <span class="hi" id="heroHigh">H:–</span>
+            <span class="lo" id="heroLow">L:–</span>
+          </div>
+          <ul class="hero-chips" id="heroChips"></ul>
+          <p class="hero-updated" id="heroUpdated">—</p>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <div class="col-main">
+          <section class="card hourly" aria-label="Hourly forecast">
+            <header class="card-head">
+              <h2>Hourly forecast</h2>
+              <span class="card-sub" id="hourlySub">Next 24 hours</span>
+            </header>
+            <div class="hourly-scroll" id="hourlyScroll" tabindex="0" aria-label="Scrollable hourly forecast">
+              <div class="hourly-track" id="hourlyTrack"></div>
+            </div>
+          </section>
+
+          <section class="card daily" aria-label="Seven day forecast">
+            <header class="card-head">
+              <h2>7-day forecast</h2>
+              <span class="card-sub" id="dailySub">—</span>
+            </header>
+            <ol class="daily-list" id="dailyList"></ol>
+          </section>
+        </div>
+
+        <div class="col-side" id="detailsGrid" aria-label="Weather details"></div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>Atmos · demonstration dashboard · simulated data, no network calls · rendered locally</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

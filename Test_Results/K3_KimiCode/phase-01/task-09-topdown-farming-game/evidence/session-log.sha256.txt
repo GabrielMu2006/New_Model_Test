@@ -1,0 +1,3 @@
+f06a5f33a31158d9696de1d8bffebdcb7ee6b62808cdc41701f87af2a768a351  ~/.kimi-code/sessions/wd_task-09-topdown-farming-game_d80cc3cf1cb0/session_f566b905-d8b8-4050-8d18-13fc2eecfdd1/agents/main/wire.jsonl
+88f84fafc638a16a54e7bb58f8d4d5401a724f001d6ea84b429a245c34586ff1  ~/.kimi-code/sessions/wd_task-09-topdown-farming-game_d80cc3cf1cb0/session_f566b905-d8b8-4050-8d18-13fc2eecfdd1/logs/kimi-code.log
+5e545da62e30084961f89ef9a365039bd1afc3be8a227922eab49bde4afde053  ~/.kimi-code/sessions/wd_task-09-topdown-farming-game_d80cc3cf1cb0/session_f566b905-d8b8-4050-8d18-13fc2eecfdd1/state.json

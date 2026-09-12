@@ -1,0 +1,3 @@
+bd44f2c8b54b8afcbeaecd0b585b0991ebd9e068385cc58dd007a8066a5e896f  ~/.kimi-code/sessions/wd_task-04-analog-clock-11-52-30_58b1a906cb43/session_330d08a3-a18f-409d-b27d-b979c24ffdb1/agents/main/wire.jsonl
+1a08161f65386f43661de4235318513393900d28f93a43e00c3c9fa25f72792f  ~/.kimi-code/sessions/wd_task-04-analog-clock-11-52-30_58b1a906cb43/session_330d08a3-a18f-409d-b27d-b979c24ffdb1/logs/kimi-code.log
+87ee16f248052d00dcc26a929b122c0f8a2d3cf2394387d859d6744fbc509b2c  ~/.kimi-code/sessions/wd_task-04-analog-clock-11-52-30_58b1a906cb43/session_330d08a3-a18f-409d-b27d-b979c24ffdb1/state.json

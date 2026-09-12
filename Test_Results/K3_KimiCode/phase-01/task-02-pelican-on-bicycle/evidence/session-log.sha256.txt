@@ -1,0 +1,3 @@
+a31ef70f13c373c38e6b8d908cddc56251a4cadfb1d79f003ccfe8caef1f5257  ~/.kimi-code/sessions/wd_task-02-pelican-on-bicycle_36589a4d60b5/session_2b8e5b47-c943-4111-9b51-5ec69ea45972/agents/main/wire.jsonl
+df1e0a38706c52c8b5f994f71a99339f5218298820fed11d28021fe0726605d2  ~/.kimi-code/sessions/wd_task-02-pelican-on-bicycle_36589a4d60b5/session_2b8e5b47-c943-4111-9b51-5ec69ea45972/logs/kimi-code.log
+a5741496fe6641c02df7cc14a7b979075213ec724928734253f15004de40b7dc  ~/.kimi-code/sessions/wd_task-02-pelican-on-bicycle_36589a4d60b5/session_2b8e5b47-c943-4111-9b51-5ec69ea45972/state.json

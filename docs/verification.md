@@ -7,6 +7,14 @@
 - **未改动**：`Test_Results/…/phase-01/Reviews/15-任务完成质量评估.md` 原文与逐题结论、分数（93.6/100 及逐题分）、`Personal_Review`、以及其余全部批次的评价；不新增、不删除评价条目，**不声明盲评状态**（该报告只评 DeepSeek 交付物，未见跨模型引用）。沿用既有历史提交 `5776d3a…`，不迁移档案文件（未按 `Reviews/ai/<评委>-vN/` 重构，属另一可选动作）。
 - **门禁实测**（Node 24.19.0，本机）：`import:data`（3 模型 / 2 阶段 / 20 任务 / 55 运行 / **100 评价** / 5 批次，评价总数与分数不变）、`validate:data` 通过、`astro check` **0 errors / 0 warnings / 0 hints**、`npm test` **26/26**、`build` **174 页** + 43 个 HTML 成果（静态链接与源码链接 1266/1266 通过）、`E2E_BROWSERS=chromium,webkit npm run test:e2e` **通过**（55/55 成果入口）。构建产物抽查：运行页显示 `AI 评价 · Codex Desktop 0.153.4 / GPT-5`，模型页显示新的评估 label。
 
+## 2026-09-12 审查归档 K3 Phase 1（15 题，test-workspace-2 → `Test_Results/K3_KimiCode`）
+
+- **范围**：K3（Kimi Code CLI 0.42.0，`kimi-code/k3`，thinkingEffort `max`）Phase 1 全量 15 题的收尾审查与本地归档；**不含提交与网站接入**（交维护者，`source.commit` 待回填）。
+- **完整性**：15 任务 × 1 会话 × 1 用户轮次；各会话 cwd 均为对应任务目录；15/15 `completed`；15/15 会话 `turn.prompt` 输入与任务 `prompt.txt` SHA-256 一致；测试结束后 `prompt.txt` 与 `AGENTS.md` 经哈希/内容比对未被改动。
+- **审计**（`docs/audit-method.md` 4.1–4.11；脚本归档 `phase-01/evidence/k3-audit.py`，逐题报告 `audit-2026-09-12.{json,md}` + 日志 SHA-256）：仓库查询、外部网络、委派、推理文本禁止特征、并行副本引用 5 个维度 0 命中；文件工具 0 次越界；5 题程序性备注（`/tmp` 自写临时文件、`/Applications` 与 `~/.cache` 环境探测），均无外部内容流入，按三档口径不作外显标注、不影响成绩。结论措辞「未发现越界（no-violation-observed）」，不声称「无污染」。
+- **归档核对**：工作区 → 归档 83 个成果/题目文件逐文件 SHA-256 比对一致（缺失 0、改动 0）；15 份 `submission.json` 的 `artifacts.fileSha256`、`prompt.sha256` 与落盘文件复核一致；Task 13 `.chrome-profile/`（约 11 MB 浏览器状态）按规则未入归档。
+- **未执行**：`import:data` / `validate:data` / `check` / `test` / `build` / E2E 等网站门禁（本次不动网站）；成果功能独立复跑；人工/AI 评价；发布与公网核验不适用。
+
 ## 2026-09-12 测试工作区改为本地目录 + 清空 GPT 工作区成果（组织者要求）
 
 - **触发**：组织者要求 ① `test-workspace/` 以后不再推送 GitHub；② 清空 GPT 对应的 `test-workspace-2/` 成果产物，只留初始框架文件。

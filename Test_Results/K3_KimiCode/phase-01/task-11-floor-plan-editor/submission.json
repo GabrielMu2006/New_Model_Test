@@ -1,0 +1,143 @@
+{
+ "schemaVersion": 1,
+ "runId": "run-k3-task-11-r1",
+ "phaseId": "phase-01",
+ "taskId": "task-11",
+ "taskVersion": 1,
+ "model": {
+  "id": "k3",
+  "name": "K3",
+  "version": null,
+  "provider": "Moonshot AI",
+  "note": "reportedModelId 'k3' is the harness-reported id (alias kimi-code/k3); provider confirmed by the organizer as Kimi official; provider-side snapshot not independently confirmed"
+ },
+ "prompt": {
+  "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+  "sha256": "b4c65fbc69eb4f56ede8383de44a27781857f43cd257e9da6e0735372741f604",
+  "version": 1,
+  "verbatimInputPath": "prompt.txt",
+  "localScaffoldPath": "test-workspace-2/phase-01/task-11-floor-plan-editor/prompt.txt",
+  "followups": []
+ },
+ "environment": {
+  "harness": "Kimi Code CLI",
+  "harnessVersion": "0.42.0",
+  "reportedModelId": "k3",
+  "modelAlias": "kimi-code/k3",
+  "surface": "cli",
+  "os": "macOS 26.6.2 (arm64)",
+  "runtime": "Node 24.19.0",
+  "sessionId": "d7dbc2b1-4544-428a-aaef-d6035ca145aa",
+  "sharedContext": false,
+  "continuationTurns": 0,
+  "sampling": {
+   "thinkingEffort": "max"
+  },
+  "permissionMode": "auto",
+  "startedAt": "2026-09-12T05:59:07.654Z",
+  "endedAt": "2026-09-12T06:18:01.815Z",
+  "timezone": "Asia/Shanghai"
+ },
+ "budget": {
+  "wallClockSeconds": null,
+  "inputTokens": null,
+  "outputTokens": null,
+  "toolCalls": null,
+  "retries": 0,
+  "followupTurns": 0,
+  "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+ },
+ "metrics": {
+  "durationSeconds": 1134,
+  "durationBasis": "wire.jsonl turn.ended durationMs",
+  "apiCalls": 19,
+  "toolCalls": 18,
+  "failures": 2,
+  "inputTokens": 53554,
+  "outputTokens": 45121,
+  "cacheReadTokens": 1075712,
+  "totalTokens": 1174387,
+  "note": "failures = failed LLM API requests (harness-retried) + tool calls that returned an error (self-test iterations). inputTokens excludes cache-read tokens, which are reported separately as cacheReadTokens."
+ },
+ "cost": {
+  "amount": null,
+  "currency": null,
+  "scope": "task",
+  "source": null
+ },
+ "artifacts": {
+  "type": "html",
+  "entry": "index.html",
+  "files": [
+   "app.js",
+   "index.html",
+   "smoke-dom.js",
+   "style.css",
+   "test.js"
+  ],
+  "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor/artifacts",
+  "fileSha256": {
+   "app.js": "0fb86529885e617f9e72e28113afd76f0ff093fdc9ff7e68bd441265ede1d939",
+   "index.html": "e04a989ca02f251fc223042e0ef06df55ab1b4f483c24d633ff97ea6ba1f4e55",
+   "smoke-dom.js": "d9a1907ad3f91d93ccb409a5ff94a1a7a67f090dea66acb39b32f35e7741af4a",
+   "style.css": "09a01d5d20ba3f8a945e4c9039055febaed2a872d4df8712096a437b6f0095c6",
+   "test.js": "a01b9c53d41066a3bea4c6fcf93dfc6a19aa6f5a070feb3f66ad3a16ddf2d786"
+  },
+  "cover": null,
+  "preview": {
+   "lazy": true,
+   "sandbox": "allow-scripts allow-downloads allow-forms",
+   "note": "HTML output; internal relative files are listed explicitly"
+  }
+ },
+ "source": {
+  "commit": null,
+  "path": null,
+  "note": "archived from local workspace; commit to be backfilled by the maintainer after ingestion"
+ },
+ "runRelation": {
+  "parentRunId": null,
+  "reason": null
+ },
+ "status": "completed",
+ "isolation": {
+  "level": "workspace-only",
+  "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-11-floor-plan-editor/",
+  "readOnlyInputs": [
+   "prompt.txt"
+  ],
+  "mounts": [],
+  "network": "off (rule-level; not enforced at the network layer)",
+  "repositoryReachability": null,
+  "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+  "repositoryBlocking": null,
+  "sharedContext": false
+ },
+ "contamination": {
+  "status": "unknown",
+  "telemetry": "visible",
+  "events": [],
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/audit-2026-09-12.md"
+  ],
+  "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose.",
+  "scoringEffect": "none (recorded in audit archive only)",
+  "confirmedExternalAnswers": false
+ },
+ "testEvidence": {
+  "command": "python3 evidence/k3-audit.py  (organizer session over ~/.kimi-code session logs)",
+  "cwd": "test-workspace-2/ (organizer session)",
+  "environment": "macOS 26.6.2 arm64 / Node 24.19.0 / Kimi Code CLI 0.42.0",
+  "date": "2026-09-12",
+  "passed": null,
+  "failed": null,
+  "skipped": null,
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/session-log.sha256.txt"
+  ],
+  "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment; model-run self-test files are preserved inside artifacts/."
+ },
+ "reviews": []
+}

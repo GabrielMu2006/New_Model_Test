@@ -1,0 +1,3 @@
+9afd60e63e4338107fa1d77e3eb85b4f6d8c8905a5a59189b921fd9c1cbf4a52  ~/.kimi-code/sessions/wd_task-11-floor-plan-editor_08a0fd1f92db/session_d7dbc2b1-4544-428a-aaef-d6035ca145aa/agents/main/wire.jsonl
+90c1cfa27d1a1288a8921a944f10a615a949b3f2ee77744550c9baf60acabf91  ~/.kimi-code/sessions/wd_task-11-floor-plan-editor_08a0fd1f92db/session_d7dbc2b1-4544-428a-aaef-d6035ca145aa/logs/kimi-code.log
+e68dbfc2a77e0b61bb96a84683552b62e438d2dc3ebcb87c4ba05f8834f034b9  ~/.kimi-code/sessions/wd_task-11-floor-plan-editor_08a0fd1f92db/session_d7dbc2b1-4544-428a-aaef-d6035ca145aa/state.json

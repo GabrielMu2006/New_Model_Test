@@ -1,0 +1,3 @@
+4c789ba38b157e9ed6e4ef524724055417db1681648892b349a14249064ffb11  ~/.kimi-code/sessions/wd_task-10-pixel-art-editor_d384cd8e6bf0/session_a43255e0-b266-4396-acbd-d3b63e58aabd/agents/main/wire.jsonl
+c0f1ce131f97c441bebe24e74d31ad9ff7d482cb8b3566b149e3d617cf6afe5b  ~/.kimi-code/sessions/wd_task-10-pixel-art-editor_d384cd8e6bf0/session_a43255e0-b266-4396-acbd-d3b63e58aabd/logs/kimi-code.log
+f612ef0cc475d852865abd8a18cf053890984af96504987d245d3dc5d41e65f1  ~/.kimi-code/sessions/wd_task-10-pixel-art-editor_d384cd8e6bf0/session_a43255e0-b266-4396-acbd-d3b63e58aabd/state.json

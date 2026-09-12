@@ -1,0 +1,155 @@
+{
+ "schemaVersion": 1,
+ "runId": "run-k3-task-15-r1",
+ "phaseId": "phase-01",
+ "taskId": "task-15",
+ "taskVersion": 1,
+ "model": {
+  "id": "k3",
+  "name": "K3",
+  "version": null,
+  "provider": "Moonshot AI",
+  "note": "reportedModelId 'k3' is the harness-reported id (alias kimi-code/k3); provider confirmed by the organizer as Kimi official; provider-side snapshot not independently confirmed"
+ },
+ "prompt": {
+  "path": "PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md",
+  "sha256": "26537263f1b65e75a2db33832d772a8d14b06d7416983db0495e1d4e53eec7b7",
+  "version": 1,
+  "verbatimInputPath": "prompt.txt",
+  "localScaffoldPath": "test-workspace-2/phase-01/task-15-book-tracker/prompt.txt",
+  "followups": []
+ },
+ "environment": {
+  "harness": "Kimi Code CLI",
+  "harnessVersion": "0.42.0",
+  "reportedModelId": "k3",
+  "modelAlias": "kimi-code/k3",
+  "surface": "cli",
+  "os": "macOS 26.6.2 (arm64)",
+  "runtime": "Node 24.19.0",
+  "sessionId": "bef945e5-cd3d-49f6-bad8-47c781719ed9",
+  "sharedContext": false,
+  "continuationTurns": 0,
+  "sampling": {
+   "thinkingEffort": "max"
+  },
+  "permissionMode": "auto",
+  "startedAt": "2026-09-12T07:54:37.601Z",
+  "endedAt": "2026-09-12T08:03:43.973Z",
+  "timezone": "Asia/Shanghai"
+ },
+ "budget": {
+  "wallClockSeconds": null,
+  "inputTokens": null,
+  "outputTokens": null,
+  "toolCalls": null,
+  "retries": 0,
+  "followupTurns": 0,
+  "networkPolicy": "off (rule-level, no allowlist; not enforced at the network layer)"
+ },
+ "metrics": {
+  "durationSeconds": 546,
+  "durationBasis": "wire.jsonl turn.ended durationMs",
+  "apiCalls": 28,
+  "toolCalls": 27,
+  "failures": 3,
+  "inputTokens": 31550,
+  "outputTokens": 20408,
+  "cacheReadTokens": 1082880,
+  "totalTokens": 1134838,
+  "note": "failures = failed LLM API requests (harness-retried) + tool calls that returned an error (self-test iterations). inputTokens excludes cache-read tokens, which are reported separately as cacheReadTokens."
+ },
+ "cost": {
+  "amount": null,
+  "currency": null,
+  "scope": "task",
+  "source": null
+ },
+ "artifacts": {
+  "type": "html",
+  "entry": "index.html",
+  "files": [
+   "README.md",
+   "app.js",
+   "core.js",
+   "index.html",
+   "styles.css",
+   "tests/app.smoke.js",
+   "tests/core.test.js"
+  ],
+  "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-15-book-tracker/artifacts",
+  "fileSha256": {
+   "README.md": "972205fbb4fe55759f376bd66844cda7d5ca731ccde306135e8a520a636f1508",
+   "app.js": "72030c685b11070c89d1d8de9807856c3a55b5428186df54ca8c51b0b121ca52",
+   "core.js": "a0c4788f73df7460d3b9ec848e722b63481b61f87d2086a02b8701d3c1b2e0fe",
+   "index.html": "483cc552a9e37791b8cdb75162b566d3374be9caf34d75e2d19fee378afeabcc",
+   "styles.css": "5b20926a6aebb4d1eb3b2b6e13bcc079c00ff1c81a7814cac22c43a99e6e7568",
+   "tests/app.smoke.js": "bf3785325bd30caacc67c916237cc5f5a4483de7bbfe716421eb495b78e05cb7",
+   "tests/core.test.js": "b38f4555c72a6f5193fd9652265af995f907eae6c4e73166fef99cad87b1a970"
+  },
+  "cover": null,
+  "preview": {
+   "lazy": true,
+   "sandbox": "allow-scripts allow-downloads allow-forms",
+   "note": "HTML output; internal relative files are listed explicitly"
+  }
+ },
+ "source": {
+  "commit": null,
+  "path": null,
+  "note": "archived from local workspace; commit to be backfilled by the maintainer after ingestion"
+ },
+ "runRelation": {
+  "parentRunId": null,
+  "reason": null
+ },
+ "status": "completed",
+ "isolation": {
+  "level": "workspace-only",
+  "environment": "same-user macOS task directory: test-workspace-2/phase-01/task-15-book-tracker/",
+  "readOnlyInputs": [
+   "prompt.txt"
+  ],
+  "mounts": [],
+  "network": "off (rule-level; not enforced at the network layer)",
+  "repositoryReachability": null,
+  "repositoryReachabilityBasis": "No reachability probe was run; the post-run audit found no repository-query tool call.",
+  "repositoryBlocking": null,
+  "sharedContext": false
+ },
+ "contamination": {
+  "status": "unknown",
+  "telemetry": "visible",
+  "events": [
+   {
+    "type": "procedural-deviation",
+    "dimension": "paths",
+    "status": "observed",
+    "detail": "Session listed ~/.cache/ms-playwright and queried globally installed npm packages (environment probe for test tooling). No task-related external content obtained.",
+    "externalContentObtained": false
+   }
+  ],
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/audit-2026-09-12.md"
+  ],
+  "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. 1 procedural deviation(s) recorded (out-of-directory temp files / machine-environment probes); per the 2026-09-10 three-tier rule these are archive-only and trigger no external label. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose.",
+  "scoringEffect": "none (recorded in audit archive only)",
+  "confirmedExternalAnswers": false
+ },
+ "testEvidence": {
+  "command": "python3 evidence/k3-audit.py  (organizer session over ~/.kimi-code session logs)",
+  "cwd": "test-workspace-2/ (organizer session)",
+  "environment": "macOS 26.6.2 arm64 / Node 24.19.0 / Kimi Code CLI 0.42.0",
+  "date": "2026-09-12",
+  "passed": null,
+  "failed": null,
+  "skipped": null,
+  "evidencePaths": [
+   "evidence/audit-2026-09-12.json",
+   "evidence/session-log.sha256.txt"
+  ],
+  "limitations": "The organizer did not re-run artifact functionality in an isolated evaluation environment; model-run self-test files are preserved inside artifacts/."
+ },
+ "reviews": []
+}

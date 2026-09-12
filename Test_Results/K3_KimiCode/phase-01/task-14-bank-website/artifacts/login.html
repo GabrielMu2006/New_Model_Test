@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Demo sign-in for Meridian Bank online banking (fictional demonstration). No real credentials accepted or stored.">
+  <title>Sign In — Meridian Bank Online Banking Demo</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Meridian Bank home">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0a2540"/><path d="M14 46 V20 l10 14 8-12 8 12 10-14 v26" fill="none" stroke="#c9a227" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="50" r="2.6" fill="#c9a227"/></svg>
+        <span>Meridian Bank</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="personal.html">Personal</a></li>
+          <li><a href="business.html">Business</a></li>
+          <li><a href="loans.html">Loans</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a class="btn btn-primary btn-small" href="login.html" aria-current="page">Sign in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="auth-wrap">
+      <div class="container" style="display: grid; place-items: center;">
+        <div class="auth-card">
+          <div class="notice" role="note">
+            <strong>Demonstration only</strong>
+            This is a fictional bank. Enter any made-up username (3+ characters) and password (4+ characters) — please do <em>not</em> use real credentials. Nothing is sent anywhere; a session flag is kept in this browser tab only.
+          </div>
+          <h1>Sign in to online banking</h1>
+          <p class="sub">Demo environment · fictional data</p>
+          <form id="login-form" novalidate>
+            <div class="form-field">
+              <label for="login-user">Username</label>
+              <input type="text" id="login-user" autocomplete="username" placeholder="e.g. demo" required>
+              <span class="field-error">Username needs at least 3 characters (invent one — do not reuse a real one).</span>
+            </div>
+            <div class="form-field">
+              <label for="login-pass">Password</label>
+              <input type="password" id="login-pass" autocomplete="off" placeholder="e.g. meridian-demo" required>
+              <span class="field-error">Password needs at least 4 characters (invent one — do not reuse a real one).</span>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+            <p class="form-hint text-center" style="margin-top: 16px;">
+              Suggested demo credentials: <b>demo</b> / <b>meridian</b>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-legal" style="justify-content: center;">
+        <span>© <span data-year>2026</span> Meridian Bank — a fictional demo. No real banking services are offered.</span>
+        <span><a href="index.html" style="color:#aebdcd;">← Back to meridian-bank home</a></span>
+      </div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

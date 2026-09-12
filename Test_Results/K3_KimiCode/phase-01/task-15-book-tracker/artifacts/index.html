@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>Book Tracker</h1>
+      <p class="tagline">Keep track of what you want to read, are reading, and have finished.</p>
+      <dl class="stats" id="stats" aria-label="Library statistics">
+        <div class="stat"><dt>Total</dt><dd id="stat-total">0</dd></div>
+        <div class="stat"><dt>Want to read</dt><dd id="stat-want">0</dd></div>
+        <div class="stat"><dt>Reading</dt><dd id="stat-reading">0</dd></div>
+        <div class="stat"><dt>Finished</dt><dd id="stat-finished">0</dd></div>
+        <div class="stat"><dt>Avg rating</dt><dd id="stat-avg">—</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="toolbar" aria-label="Library controls">
+      <div class="toolbar-row">
+        <input
+          type="search"
+          id="search"
+          placeholder="Search title, author or genre…"
+          aria-label="Search books"
+        />
+        <select id="filter-status" aria-label="Filter by status">
+          <option value="all">All statuses</option>
+          <option value="want-to-read">Want to read</option>
+          <option value="reading">Reading</option>
+          <option value="finished">Finished</option>
+        </select>
+        <select id="sort-key" aria-label="Sort by">
+          <option value="addedAt">Sort: Date added</option>
+          <option value="title">Sort: Title</option>
+          <option value="author">Sort: Author</option>
+          <option value="rating">Sort: Rating</option>
+        </select>
+        <button type="button" id="sort-dir" class="btn" aria-label="Toggle sort direction">↓ Desc</button>
+        <button type="button" id="add-book" class="btn btn-primary">+ Add book</button>
+      </div>
+      <div class="toolbar-row toolbar-secondary">
+        <button type="button" id="export" class="btn btn-small">Export JSON</button>
+        <label class="btn btn-small" for="import-file">Import JSON</label>
+        <input type="file" id="import-file" accept="application/json,.json" hidden />
+        <span class="hint" id="storage-hint"></span>
+      </div>
+    </section>
+
+    <section id="form-panel" class="form-panel" hidden aria-label="Book form">
+      <h2 id="form-title">Add a book</h2>
+      <form id="book-form" novalidate>
+        <input type="hidden" id="book-id" />
+        <div class="field">
+          <label for="f-title">Title <span aria-hidden="true">*</span></label>
+          <input type="text" id="f-title" required maxlength="300" autocomplete="off" />
+          <p class="error" id="e-title" role="alert"></p>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-author">Author</label>
+            <input type="text" id="f-author" maxlength="200" autocomplete="off" />
+            <p class="error" id="e-author" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="f-genre">Genre</label>
+            <input type="text" id="f-genre" maxlength="100" autocomplete="off" />
+            <p class="error" id="e-genre" role="alert"></p>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-status">Status</label>
+            <select id="f-status">
+              <option value="want-to-read">Want to read</option>
+              <option value="reading">Reading</option>
+              <option value="finished">Finished</option>
+            </select>
+            <p class="error" id="e-status" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="f-rating">Rating (1–5, optional)</label>
+            <select id="f-rating">
+              <option value="">No rating</option>
+              <option value="1">1 — Poor</option>
+              <option value="2">2 — Fair</option>
+              <option value="3">3 — Good</option>
+              <option value="4">4 — Very good</option>
+              <option value="5">5 — Excellent</option>
+            </select>
+            <p class="error" id="e-rating" role="alert"></p>
+          </div>
+          <div class="field" id="finished-at-field" hidden>
+            <label for="f-finished-at">Date finished</label>
+            <input type="date" id="f-finished-at" />
+            <p class="error" id="e-finishedAt" role="alert"></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-notes">Notes</label>
+          <textarea id="f-notes" rows="3" maxlength="5000"></textarea>
+          <p class="error" id="e-notes" role="alert"></p>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="form-submit">Save book</button>
+          <button type="button" class="btn" id="form-cancel">Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <p id="empty-state" class="empty-state" hidden>
+      No books yet. Click <strong>+ Add book</strong> to start your library.
+    </p>
+    <p id="no-results" class="empty-state" hidden>No books match your search or filter.</p>
+
+    <ul id="book-list" class="book-list" aria-live="polite"></ul>
+  </main>
+
+  <template id="book-card-template">
+    <li class="book-card">
+      <div class="book-main">
+        <h3 class="book-title"></h3>
+        <p class="book-meta"></p>
+        <p class="book-notes"></p>
+      </div>
+      <div class="book-side">
+        <span class="badge"></span>
+        <span class="stars" aria-label=""></span>
+        <p class="dates"></p>
+        <div class="card-actions">
+          <button type="button" class="btn btn-small action-edit">Edit</button>
+          <button type="button" class="btn btn-small btn-danger action-delete">Delete</button>
+        </div>
+      </div>
+    </li>
+  </template>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Data is stored locally in your browser (localStorage). Use Export to back it up.</p>
+    </div>
+  </footer>
+
+  <script src="core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

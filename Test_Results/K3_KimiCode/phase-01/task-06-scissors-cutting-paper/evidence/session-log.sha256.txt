@@ -1,0 +1,3 @@
+62b2ee618cd37d4ad7f16eb17dd6d5f7d283618ed200d8021f0b9fb182cd381b  ~/.kimi-code/sessions/wd_task-06-scissors-cutting-paper_5441bc9dae89/session_8a426487-1a53-42b8-83c5-36a21031fff0/agents/main/wire.jsonl
+e6fdf32c25328d2d0ee916465a0fe284be37e300836577443a82dc09f1d7379f  ~/.kimi-code/sessions/wd_task-06-scissors-cutting-paper_5441bc9dae89/session_8a426487-1a53-42b8-83c5-36a21031fff0/logs/kimi-code.log
+7c2659c973c1b3bb33886d7d45208fc32b52d2e02fbd4ce34389d34960874da4  ~/.kimi-code/sessions/wd_task-06-scissors-cutting-paper_5441bc9dae89/session_8a426487-1a53-42b8-83c5-36a21031fff0/state.json
