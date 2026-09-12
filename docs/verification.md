@@ -7,6 +7,7 @@
 - **未改动**：逐题评价内容与分数、`submission.json`、归档文件；DeepSeek / Muse 的 phase-02 两批**仍无阶段评估**（本轮未动）。
 - **断言**：`validate-data.mjs` 的 GPT 回归新增「评估存在且为 82.9」；`tests/catalog.test.mjs` 新增断言（评估分数等于逐题均分、来源与提交固定）；`e2e-smoke.mjs` 的 GPT 段新增模型页显示 `maintenance-agent-v3` 与 `82.9`。
 - **门禁实测**（Node 24.19.0，本机）：`import:data`（4 模型 / 2 阶段 / 20 任务 / 70 运行 / 115 评价 / 6 批次 / **5 阶段评估**）、`validate:data` 通过、`astro check` 0 errors / 0 warnings / 0 hints、`npm test` **27/27**、`build` **206 页** + 59 个 HTML 成果（源码链接 1604/1604 通过）、`E2E_BROWSERS=chromium,webkit npm run test:e2e` **通过**。
+- **发布与公网核验**：发布前创建不可变回退标签 `website-rollback-20260912-298f8c4`（指向上一已部署且公网验证通过的 `298f8c4`，Actions run `34685154060`）。提交 `766d5f7` 推送 `main`，Actions run **34685409789** 部署成功。匿名 HTTPS 复核：模型索引页四行均分为 `93.6/100（1）`（DeepSeek）、`86.5/100（2）`（Muse）、`82.9/100（1）`（GPT）、`93.3/100（1）`（K3），**「暂无阶段评估」已消失**；`/zh/models/gpt-5-6-sol/` 显示 `maintenance-agent-v3` 与 `82.9/100`；`/zh/models/`、`/zh/models/gpt-5-6-sol/`、`/en/models/gpt-5-6-sol/` 与本地构建产物**逐字节一致**。
 
 ## 2026-09-12 接入 K3 第一阶段（第四个模型 + maintenance-agent-v4 评价）
 
