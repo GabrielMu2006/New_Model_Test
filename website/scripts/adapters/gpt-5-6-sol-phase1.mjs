@@ -194,6 +194,11 @@ export function load({ read, repoRoot }) {
       : null;
   }
 
+  totals.totalTokens = null;
+
+  // 阶段评估分数由逐题评价求平均（不另设一个手写常数），与 K3 / Muse 批次同一口径。
+  const reviewAverage = Number((reviews.reduce((sum, review) => sum + review.score, 0) / reviews.length).toFixed(1));
+
   return {
     id,
     model,
@@ -221,6 +226,18 @@ export function load({ read, repoRoot }) {
       commit: archiveCommit,
       note: '由 15 个 run 的逐题指标求和；每题一个独立会话；任一题缺失的指标记 null，不按 0 补齐。',
     }],
-    assessments: [],
+    assessments: [{
+      id: 'assessment-gpt-5-6-sol-phase-01-maintenance-agent-v3',
+      modelId: model.id, phaseId: 'phase-01', scope: 'phase',
+      score: reviewAverage,
+      coreSummary: 'AI 评价，非盲评（评价者已读题目文档、本阶段归档与各模型同题档案）',
+      label: { zh: 'AI 评价 maintenance-agent-v3（非盲评）', en: 'AI review maintenance-agent-v3 (non-blind)' },
+      source: { path: `${reviewDir}/phase-summary.md`, lines: '1' },
+      commit: archiveCommit,
+      disclaimer: {
+        zh: '维护 agent v3——非盲评、自定五维口径；不可与其他评委、模型或阶段比较，也不合成排名。',
+        en: 'Maintenance agent v3 — non-blind, own five-dimension rubric; not comparable to other reviewers, models or phases, and never combined into a ranking.',
+      },
+    }],
   };
 }

@@ -196,6 +196,9 @@ for (const run of gptRuns) {
   if (!review.conclusion?.zh || !review.conclusion?.en) fail(`${run.id}: review conclusion must be bilingual`);
   if (run.contamination?.telemetry === 'hidden') fail(`${run.id}: Codex CLI records tool calls, telemetry must not be marked hidden`);
 }
+const gptAssessment = catalog.assessments.find((item) => item.id === 'assessment-gpt-5-6-sol-phase-01-maintenance-agent-v3');
+if (!gptAssessment) fail('GPT regression: the maintenance-agent-v3 phase assessment is missing');
+if (gptAssessment.score !== 82.9) fail(`GPT regression: phase assessment must stay 82.9, found ${gptAssessment.score}`);
 
 // K3 第一阶段：15 题与另三个模型同题（task-01…15@1），每题 1 份 AI 评价（maintenance-agent-v4）
 const k3Runs = catalog.runs.filter((run) => run.modelId === 'k3');

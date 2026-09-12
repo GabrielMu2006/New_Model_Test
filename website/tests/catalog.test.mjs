@@ -47,6 +47,7 @@ test('Muse phase-02 runs carry exactly one independent AI review and no fabricat
 test('GPT-5.6 Sol runs share the phase-1 task set and carry one independent AI review', () => {
   const gpt = catalog.runs.filter((run) => run.modelId === 'gpt-5-6-sol');
   assert.equal(gpt.length, 15);
+  const gptScores = [];
   for (const run of gpt) {
     const task = catalog.tasks.find((item) => item.id === run.taskId);
     assert.equal(task.phaseId, 'phase-01', `${run.id}: GPT must reuse the shared phase-1 tasks`);
@@ -60,7 +61,15 @@ test('GPT-5.6 Sol runs share the phase-1 task set and carry one independent AI r
     assert.equal(reviews[0].authorLabel, '维护 agent v3（AI，非盲评）');
     assert.ok(reviews[0].score > 0 && reviews[0].score <= 100);
     assert.match(reviews[0].source.path, /^Test_Results\/GPT-5\.6-Sol_Codex\/phase-01\/Reviews\/ai\/maintenance-agent-v3\/task-\d\d\.md$/);
+    gptScores.push(reviews[0].score);
   }
+  // 阶段评估：由逐题评价求平均（82.9），模型索引页据此显示 AI 均分
+  const gptAssessment = catalog.assessments.find((item) => item.id === 'assessment-gpt-5-6-sol-phase-01-maintenance-agent-v3');
+  assert.ok(gptAssessment, 'the maintenance-agent-v3 phase assessment must exist');
+  assert.equal(gptAssessment.score, 82.9);
+  assert.equal(Number((gptScores.reduce((sum, value) => sum + value, 0) / gptScores.length).toFixed(1)), gptAssessment.score);
+  assert.match(gptAssessment.source.path, /^Test_Results\/GPT-5\.6-Sol_Codex\/phase-01\/Reviews\/ai\/maintenance-agent-v3\/phase-summary\.md$/);
+  assert.equal(gptAssessment.commit, '92815760057a3b1de14b7f5a3f050e7345936e57');
   // 第一阶段同题现在有四个模型，可直接并排对比
   for (const taskId of ['task-01', 'task-12', 'task-15']) {
     const models = new Set(catalog.runs.filter((run) => run.taskId === taskId).map((run) => run.modelId));

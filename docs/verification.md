@@ -1,5 +1,13 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-12 给 GPT 第一阶段补阶段评估条目
+
+- **背景**：GPT-5.6 Sol phase-01 的 15 条逐题 AI 评价（`maintenance-agent-v3`，平均 82.9/100）早已入库并在运行页显示，但该批次**没有 `assessment` 记录**，模型索引页因此显示「暂无阶段评估」。
+- **改动**：`website/scripts/adapters/gpt-5-6-sol-phase1.mjs` 的 `assessments` 由空数组改为一条阶段评估 `assessment-gpt-5-6-sol-phase-01-maintenance-agent-v3`；分数**由 15 条逐题评价求平均**（1243/15 → 82.9，不写手写常数），来源指向 `Reviews/ai/maintenance-agent-v3/phase-summary.md`、提交固定为 `9281576…`，`disclaimer` 保留「非盲评、自定口径、不可比较、不合成排名」。口径与 K3 / Muse 批次一致。
+- **未改动**：逐题评价内容与分数、`submission.json`、归档文件；DeepSeek / Muse 的 phase-02 两批**仍无阶段评估**（本轮未动）。
+- **断言**：`validate-data.mjs` 的 GPT 回归新增「评估存在且为 82.9」；`tests/catalog.test.mjs` 新增断言（评估分数等于逐题均分、来源与提交固定）；`e2e-smoke.mjs` 的 GPT 段新增模型页显示 `maintenance-agent-v3` 与 `82.9`。
+- **门禁实测**（Node 24.19.0，本机）：`import:data`（4 模型 / 2 阶段 / 20 任务 / 70 运行 / 115 评价 / 6 批次 / **5 阶段评估**）、`validate:data` 通过、`astro check` 0 errors / 0 warnings / 0 hints、`npm test` **27/27**、`build` **206 页** + 59 个 HTML 成果（源码链接 1604/1604 通过）、`E2E_BROWSERS=chromium,webkit npm run test:e2e` **通过**。
+
 ## 2026-09-12 接入 K3 第一阶段（第四个模型 + maintenance-agent-v4 评价）
 
 - **范围**：把已归档的 K3 phase-01（15 题）与其 `Reviews/ai/maintenance-agent-v4/`（逐题 AI 评价，平均 93.3/100）接上展示站。归档提交 `1afdc8cacbb8651cd2aa3939aab2be66a77030ba`（含 15 份 `submission.json` 的 `source.commit`/`source.path` 回填）。**只新增 K3 批次**，未改动任何既有批次的数据、评价或归档文件。

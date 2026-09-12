@@ -145,6 +145,10 @@ try {
     if (!gptText?.includes('90/100')) throw new Error(`${name}: GPT run page missing its review score`);
     if (!gptText?.includes('gpt-5.6-sol')) throw new Error(`${name}: GPT run page missing the harness-reported snapshot id`);
     if (await page.locator('.review-card').count() !== 1) throw new Error(`${name}: GPT run page must show exactly one review`);
+    await page.goto(`${base}/zh/models/gpt-5-6-sol/`);
+    const gptModelText = await page.locator('section.page-block').first().textContent();
+    if (!gptModelText?.includes('maintenance-agent-v3')) throw new Error(`${name}: GPT model page missing the phase assessment`);
+    if (!gptModelText?.includes('82.9')) throw new Error(`${name}: GPT model page missing the review average`);
 
     // K3：第四模型、同题、单份 AI 评价（maintenance-agent-v4），模型页显示该阶段评估
     await page.goto(`${base}/zh/runs/run-k3-task-01-r1/`);

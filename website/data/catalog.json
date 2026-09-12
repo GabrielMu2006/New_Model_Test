@@ -9007,6 +9007,27 @@
       }
     },
     {
+      "id": "assessment-gpt-5-6-sol-phase-01-maintenance-agent-v3",
+      "modelId": "gpt-5-6-sol",
+      "phaseId": "phase-01",
+      "scope": "phase",
+      "score": 82.9,
+      "coreSummary": "AI 评价，非盲评（评价者已读题目文档、本阶段归档与各模型同题档案）",
+      "label": {
+        "zh": "AI 评价 maintenance-agent-v3（非盲评）",
+        "en": "AI review maintenance-agent-v3 (non-blind)"
+      },
+      "source": {
+        "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/phase-summary.md",
+        "lines": "1"
+      },
+      "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
+      "disclaimer": {
+        "zh": "维护 agent v3——非盲评、自定五维口径；不可与其他评委、模型或阶段比较，也不合成排名。",
+        "en": "Maintenance agent v3 — non-blind, own five-dimension rubric; not comparable to other reviewers, models or phases, and never combined into a ranking."
+      }
+    },
+    {
       "id": "assessment-k3-phase-01-maintenance-agent-v4",
       "modelId": "k3",
       "phaseId": "phase-01",
