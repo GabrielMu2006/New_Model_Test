@@ -146,6 +146,17 @@ try {
     if (!gptText?.includes('gpt-5.6-sol')) throw new Error(`${name}: GPT run page missing the harness-reported snapshot id`);
     if (await page.locator('.review-card').count() !== 1) throw new Error(`${name}: GPT run page must show exactly one review`);
 
+    // K3：第四模型、同题、单份 AI 评价（maintenance-agent-v4），模型页显示该阶段评估
+    await page.goto(`${base}/zh/runs/run-k3-task-01-r1/`);
+    const k3Text = await page.locator('.detail-page').textContent();
+    if (!k3Text?.includes('98/100')) throw new Error(`${name}: K3 run page missing its review score`);
+    if (!k3Text?.includes('维护 agent v4')) throw new Error(`${name}: K3 run page missing the review author`);
+    if (await page.locator('.review-card').count() !== 1) throw new Error(`${name}: K3 run page must show exactly one review`);
+    await page.goto(`${base}/zh/models/k3/`);
+    const k3ModelText = await page.locator('section.page-block').first().textContent();
+    if (!k3ModelText?.includes('maintenance-agent-v4')) throw new Error(`${name}: K3 model page missing the phase assessment`);
+    if (!k3ModelText?.includes('93.3')) throw new Error(`${name}: K3 model page missing the review average`);
+
     // 模型身份：一个模型两个快照 + 两个批次都在模型页列出（不能只显示第一个批次）
     await page.goto(`${base}/zh/models/deepseek-v4-1-flash-exp-0910/`);
     const modelPage = page.locator('section.page-block').first();
@@ -352,7 +363,10 @@ try {
   await browser.close();
 
   for (const run of catalog.runs) { const url = `${base}/artifacts/${run.id}/${run.artifact.entry}`; const response = await fetch(url, { signal: AbortSignal.timeout(10000) }); if (!response.ok) throw new Error(`Artifact failed: ${url}`); }
-  console.log(`Browser flows passed in ${selected.join(', ')}; all ${catalog.runs.length} artifact entries loaded (${deepseekRuns.length} DeepSeek + ${museRuns.length} Muse).`);
+  const perModel = catalog.models
+    .map((model) => `${model.id} ${catalog.runs.filter((run) => run.modelId === model.id).length}`)
+    .join(' + ');
+  console.log(`Browser flows passed in ${selected.join(', ')}; all ${catalog.runs.length} artifact entries loaded (${perModel}).`);
 } finally {
   await Promise.allSettled(browsers.map((browser) => browser.close()));
   await server.stop();

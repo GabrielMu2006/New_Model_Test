@@ -197,6 +197,28 @@ for (const run of gptRuns) {
   if (run.contamination?.telemetry === 'hidden') fail(`${run.id}: Codex CLI records tool calls, telemetry must not be marked hidden`);
 }
 
+// K3 第一阶段：15 题与另三个模型同题（task-01…15@1），每题 1 份 AI 评价（maintenance-agent-v4）
+const k3Runs = catalog.runs.filter((run) => run.modelId === 'k3');
+if (k3Runs.length !== 15) fail(`K3 regression: expected 15 K3 runs, found ${k3Runs.length}`);
+for (const run of k3Runs) {
+  const task = taskById.get(run.taskId);
+  if (task.phaseId !== 'phase-01') fail(`${run.id}: K3 runs must attach to phase-01 tasks (shared task set)`);
+  if (run.environment?.reportedModelId !== 'k3') fail(`${run.id}: missing harness-reported model id`);
+  if (run.isolation?.level !== 'workspace-only') fail(`${run.id}: K3 runs must record isolation.level=workspace-only`);
+  if (run.contamination?.telemetry === 'hidden') fail(`${run.id}: Kimi Code records tool calls, telemetry must not be marked hidden`);
+  const reviews = catalog.reviews.filter((review) => review.runId === run.id);
+  if (reviews.length !== 1) fail(`${run.id}: expected exactly one archived review, found ${reviews.length}`);
+  const [review] = reviews;
+  if (review.type !== 'ai') fail(`${run.id}: the archived review must be an AI review`);
+  if (review.score == null || !review.scoreMethod) fail(`${run.id}: AI review needs a score and a score method`);
+  if (!review.conclusion?.zh || !review.conclusion?.en) fail(`${run.id}: review conclusion must be bilingual`);
+  if (review.authorLabel !== '维护 agent v4（AI，非盲评）') fail(`${run.id}: unexpected review author ${review.authorLabel}`);
+  if (review.commit !== '1afdc8cacbb8651cd2aa3939aab2be66a77030ba') fail(`${run.id}: K3 reviews must pin the batch archive commit`);
+}
+const k3Assessment = catalog.assessments.find((item) => item.id === 'assessment-k3-phase-01-maintenance-agent-v4');
+if (!k3Assessment) fail('K3 regression: the maintenance-agent-v4 phase assessment is missing');
+if (k3Assessment.score !== 93.3) fail(`K3 regression: phase assessment must stay 93.3, found ${k3Assessment.score}`);
+
 // Muse 第二阶段：每运行恰好 1 份 AI 评价（maintenance-agent-v2），本批尚未产出人工评价
 const musePhase2Runs = catalog.runs.filter((run) => run.modelId === 'muse-spark-1-3' && phaseOfRun(run) === 'phase-02');
 if (musePhase2Runs.length === 0) fail('Muse phase-2 regression: no archived Muse phase-02 runs');

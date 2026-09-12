@@ -1,0 +1,25 @@
+{
+  "id": "k3",
+  "name": { "zh": "K3", "en": "K3" },
+  "provider": "Moonshot AI（Kimi）",
+  "version": null,
+  "versionNote": {
+    "zh": "版本以逐运行的快照记录为准（`environment.reportedModelId`）；不填单一版本号，避免把未独立确认的值写成既定事实。",
+    "en": "Version is recorded per run as a snapshot (`environment.reportedModelId`); no single version number is claimed."
+  },
+  "snapshots": [
+    {
+      "id": "k3",
+      "label": { "zh": "thinkingEffort max（Kimi Code CLI 0.42.0）", "en": "thinkingEffort max (Kimi Code CLI 0.42.0)" },
+      "status": "current",
+      "evidence": {
+        "zh": "harness 报告的 model id（alias `kimi-code/k3`），记录在 phase-01 各运行的 submission.json；供应商确认属 Kimi 官方，但 provider-side 快照标识未经独立确认。",
+        "en": "Model id reported by the harness (alias `kimi-code/k3`) and recorded in each phase-01 submission.json; the organizer confirmed the provider is Kimi official, and the provider-side snapshot identifier is not independently confirmed."
+      }
+    }
+  ],
+  "notes": {
+    "zh": "Phase 1 的 15 个任务由 Kimi Code CLI 0.42.0 以 thinkingEffort `max` 执行；每题一个全新独立单轮会话。运行有完整的工具调用记录（推理为明文），收尾审查为正常逐维度审查（非「无遥测默认遵守」）。",
+    "en": "The 15 phase-1 tasks were run by Kimi Code CLI 0.42.0 at thinkingEffort `max`, one fresh independent single-turn session per task. Tool-call telemetry is complete (reasoning in clear text), so the runs went through the normal dimension-by-dimension audit (not the no-telemetry default)."
+  }
+}

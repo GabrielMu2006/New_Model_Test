@@ -61,10 +61,41 @@ test('GPT-5.6 Sol runs share the phase-1 task set and carry one independent AI r
     assert.ok(reviews[0].score > 0 && reviews[0].score <= 100);
     assert.match(reviews[0].source.path, /^Test_Results\/GPT-5\.6-Sol_Codex\/phase-01\/Reviews\/ai\/maintenance-agent-v3\/task-\d\d\.md$/);
   }
-  // 第一阶段同题现在有三个模型，可直接并排对比
+  // 第一阶段同题现在有四个模型，可直接并排对比
   for (const taskId of ['task-01', 'task-12', 'task-15']) {
     const models = new Set(catalog.runs.filter((run) => run.taskId === taskId).map((run) => run.modelId));
-    assert.deepEqual([...models].sort(), ['deepseek-v4-1-flash-exp-0910', 'gpt-5-6-sol', 'muse-spark-1-3'], `${taskId}: three models must be comparable`);
+    assert.deepEqual([...models].sort(), ['deepseek-v4-1-flash-exp-0910', 'gpt-5-6-sol', 'k3', 'muse-spark-1-3'], `${taskId}: four models must be comparable`);
+  }
+});
+
+test('K3 runs share the phase-1 task set and carry one independent AI review', () => {
+  const k3 = runsOf('k3', 'phase-01');
+  assert.equal(k3.length, 15);
+  const scores = [];
+  for (const run of k3) {
+    const task = catalog.tasks.find((item) => item.id === run.taskId);
+    assert.equal(task.phaseId, 'phase-01', `${run.id}: K3 must reuse the shared phase-1 tasks`);
+    assert.equal(run.taskVersion, 1);
+    assert.equal(run.environment.harness, 'Kimi Code CLI');
+    assert.equal(run.environment.reasoningEffort, 'max');
+    assert.equal(run.environment.reportedModelId, 'k3');
+    assert.equal(run.isolation.level, 'workspace-only');
+    assert.equal(run.contamination.telemetry, 'visible');
+    assert.match(run.prompt.sha256, /^[0-9a-f]{64}$/);
+    const reviews = catalog.reviews.filter((review) => review.runId === run.id);
+    assert.equal(reviews.length, 1, `${run.id}: one AI review expected`);
+    assert.equal(reviews[0].type, 'ai');
+    assert.equal(reviews[0].authorLabel, '维护 agent v4（AI，非盲评）');
+    assert.ok(reviews[0].score > 0 && reviews[0].score <= 100);
+    assert.match(reviews[0].source.path, /^Test_Results\/K3_KimiCode\/phase-01\/Reviews\/ai\/maintenance-agent-v4\/task-\d\d\.md$/);
+    assert.equal(reviews[0].commit, '1afdc8cacbb8651cd2aa3939aab2be66a77030ba');
+    scores.push(reviews[0].score);
+  }
+  assert.equal(Number((scores.reduce((sum, value) => sum + value, 0) / scores.length).toFixed(1)), 93.3, 'phase average stays 93.3');
+  // 归档未自带截图的 HTML 运行按约定回落到 capture:covers 产出的封面
+  for (const run of k3) {
+    if (run.artifact.type === 'html') assert.equal(run.artifact.cover, `covers/${run.id}.png`);
+    else assert.equal(run.artifact.cover, null);
   }
 });
 

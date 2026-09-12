@@ -15,7 +15,16 @@ const catalog = JSON.parse(fs.readFileSync(path.join(siteRoot, 'data/catalog.jso
 const outputDir = path.join(siteRoot, 'public/covers');
 fs.mkdirSync(outputDir, { recursive: true });
 
-const targets = catalog.runs.filter((run) => run.artifact.type === 'html' && !run.artifact.cover);
+// 需要补封面的运行：HTML 成果，且归档没有自带截图（`artifact.cover` 为 null），
+// 或适配器按约定回落到 `covers/<runId>.png` 但该文件尚不存在。
+const needsCover = (run) => {
+  if (run.artifact.type !== 'html') return false;
+  const cover = run.artifact.cover;
+  if (!cover) return true;
+  return !fs.existsSync(path.join(siteRoot, 'public', cover));
+};
+
+const targets = catalog.runs.filter(needsCover);
 if (!targets.length) {
   console.log('No HTML runs without a cover; nothing to capture.');
   process.exit(0);

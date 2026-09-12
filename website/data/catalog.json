@@ -176,6 +176,37 @@
         "zh": "Phase 1 的 15 个任务由 Codex CLI 0.147.0 以 medium effort 执行；每题一个独立会话。运行有完整的工具调用记录，收尾审查为正常逐维度审查（非「无遥测默认遵守」）。",
         "en": "The 15 phase-1 tasks were run by Codex CLI 0.147.0 at medium effort, one independent session per task. Tool-call telemetry is complete, so the runs went through the normal dimension-by-dimension audit (not the no-telemetry default)."
       }
+    },
+    {
+      "id": "k3",
+      "name": {
+        "zh": "K3",
+        "en": "K3"
+      },
+      "provider": "Moonshot AI（Kimi）",
+      "version": null,
+      "versionNote": {
+        "zh": "版本以逐运行的快照记录为准（`environment.reportedModelId`）；不填单一版本号，避免把未独立确认的值写成既定事实。",
+        "en": "Version is recorded per run as a snapshot (`environment.reportedModelId`); no single version number is claimed."
+      },
+      "snapshots": [
+        {
+          "id": "k3",
+          "label": {
+            "zh": "thinkingEffort max（Kimi Code CLI 0.42.0）",
+            "en": "thinkingEffort max (Kimi Code CLI 0.42.0)"
+          },
+          "status": "current",
+          "evidence": {
+            "zh": "harness 报告的 model id（alias `kimi-code/k3`），记录在 phase-01 各运行的 submission.json；供应商确认属 Kimi 官方，但 provider-side 快照标识未经独立确认。",
+            "en": "Model id reported by the harness (alias `kimi-code/k3`) and recorded in each phase-01 submission.json; the organizer confirmed the provider is Kimi official, and the provider-side snapshot identifier is not independently confirmed."
+          }
+        }
+      ],
+      "notes": {
+        "zh": "Phase 1 的 15 个任务由 Kimi Code CLI 0.42.0 以 thinkingEffort `max` 执行；每题一个全新独立单轮会话。运行有完整的工具调用记录（推理为明文），收尾审查为正常逐维度审查（非「无遥测默认遵守」）。",
+        "en": "The 15 phase-1 tasks were run by Kimi Code CLI 0.42.0 at thinkingEffort `max`, one fresh independent single-turn session per task. Tool-call telemetry is complete (reasoning in clear text), so the runs went through the normal dimension-by-dimension audit (not the no-telemetry default)."
+      }
     }
   ],
   "tasks": [
@@ -4835,6 +4866,1289 @@
         "evaluation": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-15.md"
       },
       "followups": []
+    },
+    {
+      "id": "run-k3-task-01-r1",
+      "modelId": "k3",
+      "taskId": "task-01",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-01-aevum-luxury-watch-landing-page/prompt.txt",
+        "sha256": "20aaba85e5b252f2912a417840b546411adb43d66f4a70a5b3a117692db44ae9",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "b42035d1-8612-4ea5-8e81-5bd5096fa7c2",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "manual → auto",
+        "startedAt": "2026-09-12T03:32:04.343Z",
+        "endedAt": "2026-09-12T04:05:12.614Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. 1 procedural deviation(s) recorded (out-of-directory temp files / machine-environment probes); per the 2026-09-10 three-tier rule these are archive-only and trigger no external label. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 1988,
+        "apiCalls": 21,
+        "toolCalls": 22,
+        "failures": 1,
+        "inputTokens": 42602,
+        "outputTokens": 39717,
+        "cacheReadTokens": 1028951,
+        "totalTokens": 1111270
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html",
+          "script.js",
+          "styles.css"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-01-aevum-luxury-watch-landing-page/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": "covers/run-k3-task-01-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-01-aevum-luxury-watch-landing-page/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-01-aevum-luxury-watch-landing-page",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-01-aevum-luxury-watch-landing-page/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-01-aevum-luxury-watch-landing-page/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-01-aevum-luxury-watch-landing-page/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-01-aevum-luxury-watch-landing-page/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-01.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-02-r1",
+      "modelId": "k3",
+      "taskId": "task-02",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-02-pelican-on-bicycle/prompt.txt",
+        "sha256": "a38b878c5626238ac711ad0f38929304c5356fc962e2b893bf7c93eaf4b93187",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "2b8e5b47-c943-4111-9b51-5ec69ea45972",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T04:05:45.861Z",
+        "endedAt": "2026-09-12T04:12:41.358Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 415,
+        "apiCalls": 11,
+        "toolCalls": 12,
+        "failures": 0,
+        "inputTokens": 28046,
+        "outputTokens": 16288,
+        "cacheReadTokens": 408716,
+        "totalTokens": 453050
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "pelican-on-bicycle.svg",
+        "files": [
+          "pelican-on-bicycle.svg",
+          "pelican-on-bicycle.svg.png"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-02-pelican-on-bicycle/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "SVG 成果；可独立打开查看",
+            "en": "SVG output; opens standalone"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-02-pelican-on-bicycle/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-02-pelican-on-bicycle",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-02-pelican-on-bicycle/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-02-pelican-on-bicycle/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-02-pelican-on-bicycle/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-02-pelican-on-bicycle/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-02.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-03-r1",
+      "modelId": "k3",
+      "taskId": "task-03",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-03-analog-clock-6-25/prompt.txt",
+        "sha256": "b7b7f981e6b8d72e8cc7679ecc00e32268c296dc91dfaa25fa9ca2051183335f",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "45b7da3a-93d1-4544-b77b-57547078066d",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T04:13:53.142Z",
+        "endedAt": "2026-09-12T04:16:09.456Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 136,
+        "apiCalls": 5,
+        "toolCalls": 4,
+        "failures": 0,
+        "inputTokens": 10373,
+        "outputTokens": 3216,
+        "cacheReadTokens": 129792,
+        "totalTokens": 143381
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "analog-clock-6-25.svg",
+        "files": [
+          "analog-clock-6-25.svg",
+          "analog-clock-6-25.svg.png"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-03-analog-clock-6-25/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "SVG 成果；可独立打开查看",
+            "en": "SVG output; opens standalone"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-03-analog-clock-6-25/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-03-analog-clock-6-25",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-03-analog-clock-6-25/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-03-analog-clock-6-25/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-03-analog-clock-6-25/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-03-analog-clock-6-25/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-03.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-04-r1",
+      "modelId": "k3",
+      "taskId": "task-04",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-04-analog-clock-11-52-30/prompt.txt",
+        "sha256": "6810781239a5abf4d0bd6e4883a741359a90646955581459a8885108fc33a1f0",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "330d08a3-a18f-409d-b27d-b979c24ffdb1",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T04:16:34.936Z",
+        "endedAt": "2026-09-12T04:21:03.623Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. 1 procedural deviation(s) recorded (out-of-directory temp files / machine-environment probes); per the 2026-09-10 three-tier rule these are archive-only and trigger no external label. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 269,
+        "apiCalls": 5,
+        "toolCalls": 4,
+        "failures": 0,
+        "inputTokens": 16059,
+        "outputTokens": 9196,
+        "cacheReadTokens": 147200,
+        "totalTokens": 172455
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "clock.svg",
+        "files": [
+          "clock-preview.png",
+          "clock.svg"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-04-analog-clock-11-52-30/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "SVG 成果；可独立打开查看",
+            "en": "SVG output; opens standalone"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-04-analog-clock-11-52-30/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-04-analog-clock-11-52-30",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-04-analog-clock-11-52-30/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-04-analog-clock-11-52-30/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-04-analog-clock-11-52-30/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-04-analog-clock-11-52-30/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-04.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-05-r1",
+      "modelId": "k3",
+      "taskId": "task-05",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-05-bicycle-rider/prompt.txt",
+        "sha256": "736e71c9d430159b0db9a912f79cad8ed9d827a054debf15b1408b3b10ebf941",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "837b3e5e-e7fd-4093-a624-466bfdaeb79e",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T04:22:57.213Z",
+        "endedAt": "2026-09-12T04:34:53.155Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 716,
+        "apiCalls": 18,
+        "toolCalls": 17,
+        "failures": 0,
+        "inputTokens": 41243,
+        "outputTokens": 26597,
+        "cacheReadTokens": 891390,
+        "totalTokens": 959230
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "bicycle-rider.svg",
+        "files": [
+          "bicycle-rider.svg",
+          "preview.png"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-05-bicycle-rider/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "SVG 成果；可独立打开查看",
+            "en": "SVG output; opens standalone"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-05-bicycle-rider/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-05-bicycle-rider",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-05-bicycle-rider/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-05-bicycle-rider/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-05-bicycle-rider/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-05-bicycle-rider/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-05.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-06-r1",
+      "modelId": "k3",
+      "taskId": "task-06",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-06-scissors-cutting-paper/prompt.txt",
+        "sha256": "ea28c2b4a04b6d033ab2068b79dfb64aa7d95fc0785c7f78a6a28950af9bee25",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "8a426487-1a53-42b8-83c5-36a21031fff0",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T04:35:20.657Z",
+        "endedAt": "2026-09-12T04:47:15.199Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 714,
+        "apiCalls": 5,
+        "toolCalls": 4,
+        "failures": 0,
+        "inputTokens": 34011,
+        "outputTokens": 26639,
+        "cacheReadTokens": 174080,
+        "totalTokens": 234730
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "scissors-cutting-paper.svg",
+        "files": [
+          "scissors-cutting-paper.svg",
+          "scissors-cutting-paper.svg.png"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-06-scissors-cutting-paper/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "SVG 成果；可独立打开查看",
+            "en": "SVG output; opens standalone"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-06-scissors-cutting-paper/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-06-scissors-cutting-paper",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-06-scissors-cutting-paper/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-06-scissors-cutting-paper/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-06-scissors-cutting-paper/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-06-scissors-cutting-paper/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-06.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-07-r1",
+      "modelId": "k3",
+      "taskId": "task-07",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-07-pushing-wheelbarrow/prompt.txt",
+        "sha256": "c94e36e8fc420f782485dd9733acf3097d07022391a77f3be0849b7992b0b7aa",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "2c8f701c-f0d1-4ee2-93b0-fd46f514e2e0",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T05:31:54.731Z",
+        "endedAt": "2026-09-12T05:36:13.838Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 259,
+        "apiCalls": 5,
+        "toolCalls": 4,
+        "failures": 0,
+        "inputTokens": 17106,
+        "outputTokens": 8631,
+        "cacheReadTokens": 137728,
+        "totalTokens": 163465
+      },
+      "artifact": {
+        "type": "svg",
+        "entry": "wheelbarrow.svg",
+        "files": [
+          "wheelbarrow.svg",
+          "wheelbarrow.svg.png"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-07-pushing-wheelbarrow/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": null,
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "SVG 成果；可独立打开查看",
+            "en": "SVG output; opens standalone"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-07-pushing-wheelbarrow/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-07-pushing-wheelbarrow",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-07-pushing-wheelbarrow/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-07-pushing-wheelbarrow/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-07-pushing-wheelbarrow/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-07-pushing-wheelbarrow/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-07.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-08-r1",
+      "modelId": "k3",
+      "taskId": "task-08",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-08-breakout-game/prompt.txt",
+        "sha256": "c6e283f9b419499277bf74dab9201c68d051993faee24ba819854f09fed5eb51",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "911087b3-c436-4ed2-85a3-17b4820b4496",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T05:36:34.845Z",
+        "endedAt": "2026-09-12T05:39:27.940Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. 1 procedural deviation(s) recorded (out-of-directory temp files / machine-environment probes); per the 2026-09-10 three-tier rule these are archive-only and trigger no external label. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 173,
+        "apiCalls": 5,
+        "toolCalls": 4,
+        "failures": 0,
+        "inputTokens": 15313,
+        "outputTokens": 8417,
+        "cacheReadTokens": 136960,
+        "totalTokens": 160690
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "index.html"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-08-breakout-game/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": "covers/run-k3-task-08-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-08-breakout-game/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-08-breakout-game",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-08-breakout-game/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-08-breakout-game/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-08-breakout-game/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-08-breakout-game/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-08.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-09-r1",
+      "modelId": "k3",
+      "taskId": "task-09",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-09-topdown-farming-game/prompt.txt",
+        "sha256": "cae6723ab80e29eec25b5b2bcebc7a69f2fa02019bc2fa58be7adf18ddb6b207",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "f566b905-d8b8-4050-8d18-13fc2eecfdd1",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T05:39:50.638Z",
+        "endedAt": "2026-09-12T05:50:51.716Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 661,
+        "apiCalls": 15,
+        "toolCalls": 14,
+        "failures": 2,
+        "inputTokens": 33585,
+        "outputTokens": 25373,
+        "cacheReadTokens": 640768,
+        "totalTokens": 699726
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "check.js",
+          "index.html",
+          "smoke-test.js"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-09-topdown-farming-game/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": "covers/run-k3-task-09-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-09-topdown-farming-game/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-09-topdown-farming-game",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-09-topdown-farming-game/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-09-topdown-farming-game/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-09-topdown-farming-game/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-09-topdown-farming-game/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-09.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-10-r1",
+      "modelId": "k3",
+      "taskId": "task-10",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-10-pixel-art-editor/prompt.txt",
+        "sha256": "b2c5639f49d534c5675cac5d3bc8e7d3db2d838b9de1bb4ed51d82c4c304bfaf",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "a43255e0-b266-4396-acbd-d3b63e58aabd",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T05:51:53.715Z",
+        "endedAt": "2026-09-12T05:58:17.291Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 383,
+        "apiCalls": 9,
+        "toolCalls": 8,
+        "failures": 1,
+        "inputTokens": 23494,
+        "outputTokens": 15942,
+        "cacheReadTokens": 297216,
+        "totalTokens": 336652
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "app.js",
+          "index.html",
+          "style.css",
+          "test/smoke-test.mjs"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-10-pixel-art-editor/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": "covers/run-k3-task-10-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-10-pixel-art-editor/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-10-pixel-art-editor",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-10-pixel-art-editor/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-10-pixel-art-editor/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-10-pixel-art-editor/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-10-pixel-art-editor/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-10.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-11-r1",
+      "modelId": "k3",
+      "taskId": "task-11",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor/prompt.txt",
+        "sha256": "b4c65fbc69eb4f56ede8383de44a27781857f43cd257e9da6e0735372741f604",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "d7dbc2b1-4544-428a-aaef-d6035ca145aa",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T05:59:07.654Z",
+        "endedAt": "2026-09-12T06:18:01.815Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 1134,
+        "apiCalls": 19,
+        "toolCalls": 18,
+        "failures": 2,
+        "inputTokens": 53554,
+        "outputTokens": 45121,
+        "cacheReadTokens": 1075712,
+        "totalTokens": 1174387
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "app.js",
+          "index.html",
+          "smoke-dom.js",
+          "style.css",
+          "test.js"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": "covers/run-k3-task-11-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-11.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-12-r1",
+      "modelId": "k3",
+      "taskId": "task-12",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-12-calculator/prompt.txt",
+        "sha256": "6067f883282710324a29490bb869adfc974340a626c751b2fc2999a0a9e77fe6",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "03957ae1-f589-48cb-9205-436d287b2c0e",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T06:18:43.459Z",
+        "endedAt": "2026-09-12T06:22:56.255Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 245,
+        "apiCalls": 12,
+        "toolCalls": 11,
+        "failures": 1,
+        "inputTokens": 16693,
+        "outputTokens": 8724,
+        "cacheReadTokens": 357120,
+        "totalTokens": 382537
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "app.js",
+          "calculator.js",
+          "index.html",
+          "style.css",
+          "test.js"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-12-calculator/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": "covers/run-k3-task-12-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-12-calculator/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-12-calculator",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-12-calculator/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-12-calculator/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-12-calculator/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-12-calculator/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-12.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-13-r1",
+      "modelId": "k3",
+      "taskId": "task-13",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-13-weather-dashboard/prompt.txt",
+        "sha256": "e6bbd33a57230bcd1a43d9b81e5d6b3d968356e9c0d8d1529a1834c52b2e432e",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "c209bee5-c7e3-4d0c-b6b1-9a3a3823105a",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T06:23:26.473Z",
+        "endedAt": "2026-09-12T07:15:06.347Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. 2 procedural deviation(s) recorded (out-of-directory temp files / machine-environment probes); per the 2026-09-10 three-tier rule these are archive-only and trigger no external label. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 3083,
+        "apiCalls": 65,
+        "toolCalls": 81,
+        "failures": 1,
+        "inputTokens": 103918,
+        "outputTokens": 72338,
+        "cacheReadTokens": 5498591,
+        "totalTokens": 5674847
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "app.js",
+          "index.html",
+          "shoot.sh",
+          "shots/01-light-sf.png",
+          "shots/02-full-sf.png",
+          "shots/03-full-sf.png",
+          "shots/04-tokyo.png",
+          "shots/05-dark-reyk.png",
+          "shots/06-london-f.png",
+          "shots/07-sydney.png",
+          "shots/08-mobile-sf.png",
+          "shots/09-mobile500.png",
+          "shots/10-tablet768.png",
+          "shots/11-final-sf.png",
+          "shots/12-final-dark.png",
+          "styles.css"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-13-weather-dashboard/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": "covers/run-k3-task-13-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-13-weather-dashboard/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-13-weather-dashboard",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-13-weather-dashboard/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-13-weather-dashboard/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-13-weather-dashboard/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-13-weather-dashboard/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-13.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-14-r1",
+      "modelId": "k3",
+      "taskId": "task-14",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-14-bank-website/prompt.txt",
+        "sha256": "58eef25acfaf82e9b1093693ed9fcf90266d757f178a040b1f705213ac804ba5",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "8fbce6ea-bddb-45fa-a5f4-5f951b4f0934",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T07:15:22.476Z",
+        "endedAt": "2026-09-12T07:32:50.436Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. No procedural deviations recorded. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 1048,
+        "apiCalls": 27,
+        "toolCalls": 29,
+        "failures": 1,
+        "inputTokens": 53553,
+        "outputTokens": 43537,
+        "cacheReadTokens": 1392640,
+        "totalTokens": 1489730
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "README.md",
+          "about.html",
+          "assets/favicon.svg",
+          "business.html",
+          "contact.html",
+          "css/style.css",
+          "dashboard.html",
+          "index.html",
+          "js/main.js",
+          "loans.html",
+          "login.html",
+          "personal.html"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-14-bank-website/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": "covers/run-k3-task-14-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-14-bank-website/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-14-bank-website",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-14-bank-website/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-14-bank-website/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-14-bank-website/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-14-bank-website/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-14.md"
+      },
+      "followups": []
+    },
+    {
+      "id": "run-k3-task-15-r1",
+      "modelId": "k3",
+      "taskId": "task-15",
+      "taskVersion": 1,
+      "status": "completed",
+      "prompt": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-15-book-tracker/prompt.txt",
+        "sha256": "26537263f1b65e75a2db33832d772a8d14b06d7416983db0495e1d4e53eec7b7",
+        "version": 1,
+        "provenance": "verbatim-verified",
+        "note": "题目由组织者粘贴进对话；本文件为逐字存档，导入时与归档声明的 SHA-256 校验一致。"
+      },
+      "environment": {
+        "harness": "Kimi Code CLI",
+        "harnessVersion": "0.42.0",
+        "surface": "cli",
+        "os": "macOS 26.6.2 (arm64)",
+        "runtime": "Node 24.19.0",
+        "sessionId": "bef945e5-cd3d-49f6-bad8-47c781719ed9",
+        "sharedContext": false,
+        "continuationTurns": 0,
+        "reasoningEffort": "max",
+        "permissionMode": "auto",
+        "startedAt": "2026-09-12T07:54:37.601Z",
+        "endedAt": "2026-09-12T08:03:43.973Z",
+        "timezone": "Asia/Shanghai",
+        "reportedModelId": "k3"
+      },
+      "isolation": {
+        "level": "workspace-only",
+        "note": "策略级约束（AGENTS.md 两条绝对规则）+ 事后日志审查；不是强制隔离，不表示「无污染」。"
+      },
+      "contamination": {
+        "status": "unknown",
+        "telemetry": "visible",
+        "scoringEffect": "none (recorded in audit archive only)",
+        "confirmedExternalAnswers": false,
+        "note": "Post-run audit (telemetry visible) found no external answer access, no repository query, no external network request and no sibling-workspace access. 1 procedural deviation(s) recorded (out-of-directory temp files / machine-environment probes); per the 2026-09-10 three-tier rule these are archive-only and trigger no external label. Status 'unknown' follows the phase-01 archival convention; 'clean' claims are not made in prose."
+      },
+      "metrics": {
+        "durationSeconds": 546,
+        "apiCalls": 28,
+        "toolCalls": 27,
+        "failures": 3,
+        "inputTokens": 31550,
+        "outputTokens": 20408,
+        "cacheReadTokens": 1082880,
+        "totalTokens": 1134838
+      },
+      "artifact": {
+        "type": "html",
+        "entry": "index.html",
+        "files": [
+          "README.md",
+          "app.js",
+          "core.js",
+          "index.html",
+          "styles.css",
+          "tests/app.smoke.js",
+          "tests/core.test.js"
+        ],
+        "sourcePath": "Test_Results/K3_KimiCode/phase-01/task-15-book-tracker/artifacts",
+        "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+        "cover": "covers/run-k3-task-15-r1.png",
+        "preview": {
+          "lazy": true,
+          "sandbox": "allow-scripts allow-downloads allow-forms",
+          "note": {
+            "zh": "HTML 成果；引用的内部相对文件已逐项列出",
+            "en": "HTML output; internal relative files are listed explicitly"
+          }
+        }
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/task-15-book-tracker/README.md",
+        "lines": null
+      },
+      "directory": "Test_Results/K3_KimiCode/phase-01/task-15-book-tracker",
+      "evidence": {
+        "audit": "Test_Results/K3_KimiCode/phase-01/task-15-book-tracker/evidence/audit-2026-09-12.md",
+        "auditJson": "Test_Results/K3_KimiCode/phase-01/task-15-book-tracker/evidence/audit-2026-09-12.json",
+        "isolationRules": "Test_Results/K3_KimiCode/phase-01/task-15-book-tracker/evidence/isolation-rules.md",
+        "sessionLogSha256": "Test_Results/K3_KimiCode/phase-01/task-15-book-tracker/evidence/session-log.sha256.txt",
+        "evaluation": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-15.md"
+      },
+      "followups": []
     }
   ],
   "reviews": [
@@ -7107,6 +8421,351 @@
         "path": "Test_Results/GPT-5.6-Sol_Codex/phase-01/Reviews/ai/maintenance-agent-v3/task-15.md",
         "lines": "1-33"
       }
+    },
+    {
+      "id": "review-maint-agent-v4-task-01",
+      "runId": "run-k3-task-01-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "完整、精致、零外部依赖的高端腕表官网；内联 SVG 腕表、内容层级、响应式和演示表单均达到可直接展示水平。",
+        "en": "A complete, polished, dependency-free luxury watch site whose inline SVG watches, content hierarchy, responsive layout, and demo form are presentation-ready."
+      },
+      "body": {
+        "zh": "# task-01 · Aevum 奢侈腕表落地页 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-01` |\n| runId | `run-k3-task-01-r1` |\n| 本题得分 | **98/100** |\n| 结论（中） | 完整、精致、零外部依赖的高端腕表官网；内联 SVG 腕表、内容层级、响应式和演示表单均达到可直接展示水平。 |\n| Conclusion (EN) | A complete, polished, dependency-free luxury watch site whose inline SVG watches, content hierarchy, responsive layout, and demo form are presentation-ready. |\n| 评分口径 | 需求符合 40 / 完整度 20 / 正确性 20 / 视觉 10 / 工程 8 |\n\n- Chromium 与 `file://` 均无脚本错误；未发现外部图片、第三方库或外部请求。桌面首屏的品牌层级、腕表细节和金黑配色完成度极高，390px 下仍可用。\n- 导航、Collection、Atelier、Heritage、Private Viewing、页脚和表单齐全；时间显示、滚动动画、数字计数、移动菜单和表单成功反馈都有实际实现，并提供 `prefers-reduced-motion`。\n- 扣分仅在工程可验证性：57KB、1428 行的手写交付没有独立测试或成果内运行说明；本轮只做了浏览器复验，未对所有动画时序做长期测试。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 98,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-01.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-02",
+      "runId": "run-k3-task-02-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "鹈鹕、完整自行车与骑乘姿态都清楚，双脚落在踏板区域，右翼延伸到车把，动作稳定读作骑车。",
+        "en": "The pelican, complete bicycle, and riding pose are clear: both feet reach the pedal area and a wing reaches the handlebar, so the action reads reliably as riding."
+      },
+      "body": {
+        "zh": "# task-02 · 骑自行车的鹈鹕 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-02` |\n| runId | `run-k3-task-02-r1` |\n| 本题得分 | **94/100** |\n| 结论（中） | 鹈鹕、完整自行车与骑乘姿态都清楚，双脚落在踏板区域，右翼延伸到车把，动作稳定读作骑车。 |\n| Conclusion (EN) | The pelican, complete bicycle, and riding pose are clear: both feet reach the pedal area and a wing reaches the handlebar, so the action reads reliably as riding. |\n| 评分口径 | 需求符合 39 / 完整度 19 / 正确性 18 / 视觉 9 / 工程 9 |\n\n- SVG 独立、XML 合法、无外部资源；1200×800 构图完整，车轮、车架、曲柄、车座与车把均可辨。\n- 鹈鹕身体确实位于车座上方，两脚形成一高一低的踩踏关系，翼尖与车把端接触；速度线和身体前倾加强骑乘感。\n- 扣分：脚爪与踏板的接触略风格化，曲柄—脚踏的几何不如两个时钟任务可精确复算；只检查了单一渲染尺寸。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 94,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-02.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-03",
+      "runId": "run-k3-task-03-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "时针 192.5°、分针 150° 与 6:25 的连续走时完全一致，数字表盘清楚，独立读表无歧义。",
+        "en": "The 192.5° hour hand and 150° minute hand exactly match continuous motion at 6:25; the numbered dial is clear and independently readable."
+      },
+      "body": {
+        "zh": "# task-03 · 模拟时钟 6:25 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-03` |\n| runId | `run-k3-task-03-r1` |\n| 本题得分 | **98/100** |\n| 结论（中） | 时针 192.5°、分针 150° 与 6:25 的连续走时完全一致，数字表盘清楚，独立读表无歧义。 |\n| Conclusion (EN) | The 192.5° hour hand and 150° minute hand exactly match continuous motion at 6:25; the numbered dial is clear and independently readable. |\n| 评分口径 | 需求符合 40 / 完整度 20 / 正确性 20 / 视觉 9 / 工程 9 |\n\n- 源码直接给出并实际使用 `rotate(192.5)` 与 `rotate(150)`；12 个主刻度、数字和中心一致，红色秒针停在 12 点不干扰读表。\n- SVG XML 合法、离线独立、无裁切；归档 PNG 可直接读作“时针刚过 6，分针指 5”。\n- 视觉只扣 1 分：整体是高质量、克制的通用表盘，但没有更复杂的品牌或材质表达，这不影响时间正确性。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 98,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-03.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-04",
+      "runId": "run-k3-task-04-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "时、分、秒针分别为 356.25°、315°、180°，连续走时计算与 11:52:30 精确匹配。",
+        "en": "The hour, minute, and second hands are 356.25°, 315°, and 180° respectively, exactly matching continuous motion at 11:52:30."
+      },
+      "body": {
+        "zh": "# task-04 · 模拟时钟 11:52:30 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-04` |\n| runId | `run-k3-task-04-r1` |\n| 本题得分 | **98/100** |\n| 结论（中） | 时、分、秒针分别为 356.25°、315°、180°，连续走时计算与 11:52:30 精确匹配。 |\n| Conclusion (EN) | The hour, minute, and second hands are 356.25°, 315°, and 180° respectively, exactly matching continuous motion at 11:52:30. |\n| 评分口径 | 需求符合 40 / 完整度 20 / 正确性 20 / 视觉 9 / 工程 9 |\n\n- 三个角度可从源码直接复算；归档渲染图中时针接近 12、分针指向 10 与 11 之间、秒针指 6，读表一致。\n- 60 个分钟刻度与 12 个小时刻度用虚线圆周实现，数字齐全，XML 合法且无外部依赖。\n- 仅因视觉语言偏通用、单一尺寸检查而在视觉维度保留 1 分余量。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 98,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-04.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-05",
+      "runId": "run-k3-task-05-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "严格侧视、左脚下踏板、右脚上踏板和双手握把四项约束均清楚成立，左右还用 L/R 显式消歧。",
+        "en": "The strict side view, left foot on the lower pedal, right foot on the upper pedal, and both hands on the handlebar all hold clearly, with L/R labels removing ambiguity."
+      },
+      "body": {
+        "zh": "# task-05 · 侧面骑自行车的人 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-05` |\n| runId | `run-k3-task-05-r1` |\n| 本题得分 | **95/100** |\n| 结论（中） | 严格侧视、左脚下踏板、右脚上踏板和双手握把四项约束均清楚成立，左右还用 L/R 显式消歧。 |\n| Conclusion (EN) | The strict side view, left foot on the lower pedal, right foot on the upper pedal, and both hands on the handlebar all hold clearly, with L/R labels removing ambiguity. |\n| 评分口径 | 需求符合 39 / 完整度 19 / 正确性 19 / 视觉 9 / 工程 9 |\n\n- 自行车结构完整，两轮为侧视圆形；左腿垂直延伸到下踏板并标 L，弯曲右腿接上踏板并标 R。\n- 两条手臂分别延伸到车把区域，双手接触点可辨；关节、重心和遮挡顺序总体可信。\n- 扣分：姿态略偏示意图，手部与车把的两个接触点很接近，缩小后会弱化“双手分别握持”的辨识度。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 95,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-05.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-06",
+      "runId": "run-k3-task-06-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "手指进入剪刀环、双刃在转轴汇合并夹住纸张，纸上切线与分离边缘使“正在剪”成立。",
+        "en": "Fingers occupy the scissor loops, the blades meet at a pivot and engage the sheet, and the cut line/separated edge makes the active cutting action clear."
+      },
+      "body": {
+        "zh": "# task-06 · 手持剪刀剪纸 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-06` |\n| runId | `run-k3-task-06-r1` |\n| 本题得分 | **94/100** |\n| 结论（中） | 手指进入剪刀环、双刃在转轴汇合并夹住纸张，纸上切线与分离边缘使“正在剪”成立。 |\n| Conclusion (EN) | Fingers occupy the scissor loops, the blades meet at a pivot and engage the sheet, and the cut line/separated edge makes the active cutting action clear. |\n| 评分口径 | 需求符合 38 / 完整度 19 / 正确性 19 / 视觉 9 / 工程 9 |\n\n- 手、剪刀、纸三类主体与连续接触链清楚；关键动作区无遮挡，XML 合法并可离线缩放。\n- 纸张在刀尖方向有实线/虚线切割提示，明显不同于把剪刀悬停在纸旁。\n- 扣分：切口的实际分离幅度较小，虚线仍承担较多叙事作用；握姿是简化插画而非严格解剖表现。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 94,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-06.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-07",
+      "runId": "run-k3-task-07-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "前轮在右、人物在车把后方并双手前伸，步态和受力方向稳定表达“推”而非“拉”。",
+        "en": "With the front wheel to the right and the person behind the handles reaching forward with both hands, the stride and force direction reliably communicate pushing rather than pulling."
+      },
+      "body": {
+        "zh": "# task-07 · 推独轮车的人 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-07` |\n| runId | `run-k3-task-07-r1` |\n| 本题得分 | **95/100** |\n| 结论（中） | 前轮在右、人物在车把后方并双手前伸，步态和受力方向稳定表达“推”而非“拉”。 |\n| Conclusion (EN) | With the front wheel to the right and the person behind the handles reaching forward with both hands, the stride and force direction reliably communicate pushing rather than pulling. |\n| 评分口径 | 需求符合 39 / 完整度 19 / 正确性 19 / 视觉 9 / 工程 9 |\n\n- 单轮、车斗、支架、两根把手与泥土载荷完整；人物双手和把手形成明确接触，人物位置没有任何“在车前拖拽”的信号。\n- 前后分腿、身体轻度前倾和运动线增强推进方向；XML 合法、画布无裁切、无外部资源。\n- 仅因人体与手部为简化几何造型、未做多尺寸观察者盲测而保留少量扣分。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 95,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-07.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-08",
+      "runId": "run-k3-task-08-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "真正单文件、零依赖且具备完整胜负状态、音效与多输入支持；短时实测出现得分和丢命，核心玩法真实运行。",
+        "en": "A genuinely self-contained, dependency-free game with complete win/loss states, audio, and multiple inputs; short runtime testing produced both scoring and a lost life, confirming the core loop."
+      },
+      "body": {
+        "zh": "# task-08 · 单文件打砖块游戏 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-08` |\n| runId | `run-k3-task-08-r1` |\n| 本题得分 | **92/100** |\n| 结论（中） | 真正单文件、零依赖且具备完整胜负状态、音效与多输入支持；短时实测出现得分和丢命，核心玩法真实运行。 |\n| Conclusion (EN) | A genuinely self-contained, dependency-free game with complete win/loss states, audio, and multiple inputs; short runtime testing produced both scoring and a lost life, confirming the core loop. |\n| 评分口径 | 需求符合 37 / 完整度 19 / 正确性 18 / 视觉 9 / 工程 9 |\n\n- `file://` 可直接打开。开始、发球、左右键、鼠标/触摸移动、P 暂停、M 静音、3 关、生命、Game Over、胜利和重开逻辑齐全；WebAudio 为每类碰撞提供不同反馈。\n- Chromium 实测点击开始并按 Space 发球后 4 秒得分 10、生命从 3 变 2；说明球、砖块、计分、掉球和复位均真正运行。自适应子步碰撞与最大 ±60° 打板角能降低穿透和水平死循环风险。\n- 扣分：未完整通关三关或在多帧率下压力测试；窄屏画布完整但游戏区域偏小、上下留白较多；HTTP 下唯一控制台 404 是浏览器自行请求缺失 favicon，不影响游戏。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 92,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-08.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-09",
+      "runId": "run-k3-task-09-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "耕地、播种、浇水、隔日生长、收获、销售、购买和存档构成真实闭环，27 项自带冒烟测试全部通过。",
+        "en": "Tilling, planting, watering, overnight growth, harvesting, selling, buying, and saving form a real loop, with all 27 bundled smoke checks passing."
+      },
+      "body": {
+        "zh": "# task-09 · 单文件俯视角农场游戏 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-09` |\n| runId | `run-k3-task-09-r1` |\n| 本题得分 | **93/100** |\n| 结论（中） | 耕地、播种、浇水、隔日生长、收获、销售、购买和存档构成真实闭环，27 项自带冒烟测试全部通过。 |\n| Conclusion (EN) | Tilling, planting, watering, overnight growth, harvesting, selling, buying, and saving form a real loop, with all 27 bundled smoke checks passing. |\n| 评分口径 | 需求符合 38 / 完整度 19 / 正确性 18 / 视觉 9 / 工程 9 |\n\n- 入口 HTML 完全自包含；额外 `check.js` 与 `smoke-test.js` 是测试副本，不是运行依赖。角色、20×13 地图、工具、作物阶段、钱、天数、商店、存档和音效均有实现。\n- 本轮实际运行成果自带测试，覆盖胡萝卜两日生长、未浇水不生长、收获、售出 24g、购买种子、面向目标、存取档、事件路径和循环帧，27 项全部通过。\n- 390px 下全部四个工具仍可见，核心循环没有被隐藏。扣分：未做长时随机输入、真机触摸或边界碰撞压力测试；画面偏功能型像素示意，地图环境变化有限。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 93,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-09.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-10",
+      "runId": "run-k3-task-10-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "绘制、透明擦除、颜色、1–8 画笔、撤销重做、2–32× 最近邻缩放和 PNG 导出全部具备，导出文件经独立检查有效。",
+        "en": "Drawing, transparent erasing, color, 1–8px brushes, undo/redo, 2–32× nearest-neighbor zoom, and PNG export are all present, and the exported file independently validated."
+      },
+      "body": {
+        "zh": "# task-10 · 像素画编辑器 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-10` |\n| runId | `run-k3-task-10-r1` |\n| 本题得分 | **94/100** |\n| 结论（中） | 绘制、透明擦除、颜色、1–8 画笔、撤销重做、2–32× 最近邻缩放和 PNG 导出全部具备，导出文件经独立检查有效。 |\n| Conclusion (EN) | Drawing, transparent erasing, color, 1–8px brushes, undo/redo, 2–32× nearest-neighbor zoom, and PNG export are all present, and the exported file independently validated. |\n| 评分口径 | 需求符合 39 / 完整度 19 / 正确性 19 / 视觉 8 / 工程 9 |\n\n- 作品数据保存在 1:1 离屏画布；缩放只重绘视图并关闭平滑，网格和 hover 不会进入导出。快速拖动使用插值补点，撤销以整次 pointer stroke 为单位，分支编辑会清空 redo。\n- 浏览器实测绘制后 Undo/Redo 均可达；导出的 `pixel-art-32x32.png` 被识别为 32×32、8-bit/color RGBA、non-interlaced 且带 alpha 的有效 PNG。\n- 扣分：没有自带自动化测试；390px 下 512px 画布放在内部滚动区，功能可用但手机编辑需要频繁横向/纵向移动；调色板按钮主要依赖 `title`，无显式可见色值名称。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 94,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-10.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-11",
+      "runId": "run-k3-task-11-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "墙、门窗、拖拽、房间识别、尺寸、撤销、缩放、保存和导入导出均是真实现；主要缺陷是手机布局把核心画布挤到约 120px。",
+        "en": "Walls, openings, dragging, room detection, dimensions, undo, zoom, persistence, and import/export are genuinely implemented; the main defect is the mobile layout squeezing the core canvas to roughly 120px."
+      },
+      "body": {
+        "zh": "# task-11 · 2D 户型图编辑器 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-11` |\n| runId | `run-k3-task-11-r1` |\n| 本题得分 | **87/100** |\n| 结论（中） | 墙、门窗、拖拽、房间识别、尺寸、撤销、缩放、保存和导入导出均是真实现；主要缺陷是手机布局把核心画布挤到约 120px。 |\n| Conclusion (EN) | Walls, openings, dragging, room detection, dimensions, undo, zoom, persistence, and import/export are genuinely implemented; the main defect is the mobile layout squeezing the core canvas to roughly 120px. |\n| 评分口径 | 需求符合 34 / 完整度 19 / 正确性 18 / 视觉 7 / 工程 9 |\n\n- 浏览器实际绘制 4m×3m 矩形后得到 `3.85 m × 2.85 m · 11.3 m²`，并成功在墙上加门。门窗沿所属墙定位；墙、端点、门窗均可拖，支持门扇翻转、删除、Undo/Redo、平移缩放、本地保存与 JSON 导入导出。\n- 自带几何测试与 DOM 冒烟均通过，覆盖单房间、分隔双房间、门连通、边界漏口、真实事件绘墙、加门、拖门、撤销和加窗。\n- 明确缺陷：390×844 截图中固定约 270px 的属性侧栏仍与画布并排，画布可见宽度只剩约 120px；根页面虽无横向溢出，但核心编辑区事实上不可实用。房间算法使用 0.05m 栅格洪泛，复杂斜墙精度和性能未验证。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 87,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-11.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-12",
+      "runId": "run-k3-task-12-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "经典四则状态机、键盘、退格、正负号、百分比、重复等号与错误恢复均可用，31 项测试全过；主要不足是成果内缺正式运行/测试说明。",
+        "en": "The four-operation state machine, keyboard input, backspace, sign, percent, repeated equals, and error recovery all work, with 31 tests passing; the main gap is missing formal run/test documentation inside the artifact."
+      },
+      "body": {
+        "zh": "# task-12 · 计算器应用 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-12` |\n| runId | `run-k3-task-12-r1` |\n| 本题得分 | **89/100** |\n| 结论（中） | 经典四则状态机、键盘、退格、正负号、百分比、重复等号与错误恢复均可用，31 项测试全过；主要不足是成果内缺正式运行/测试说明。 |\n| Conclusion (EN) | The four-operation state machine, keyboard input, backspace, sign, percent, repeated equals, and error recovery all work, with 31 tests passing; the main gap is missing formal run/test documentation inside the artifact. |\n| 评分口径 | 需求符合 35 / 完整度 19 / 正确性 18 / 视觉 8 / 工程 9 |\n\n- HTTP 与 `file://` 都能直接运行。浏览器实测 `0.1+0.2` 得 `0.3`，`5÷0` 得 `Error`，随后输入 `7` 正常恢复；桌面和 390px 布局清楚。\n- 本轮运行 `node test.js` 得 31/31，通过基础四则、小数噪声、链式左到右、连续运算符、重复等号、错误恢复、退格、正负号、百分比、超长输入和 HTML/JS 契约。\n- 扣分：`artifacts/` 没有 README，测试命令只写在 `test.js` 注释里，修复前后证据没有单独说明；百分比是简单除以 100，而非上下文百分比（如 `200 + 10%`）；设计可靠但非常基础。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 89,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-12.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-13",
+      "runId": "run-k3-task-13-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "五城市、24 小时、7 日、八项指标、单位/主题/时区与响应式完成度很高，并有 12 张迭代截图；数据明确为模拟，但恒定更新时间和缺少异常态仍是边界。",
+        "en": "Five cities, 24-hour and 7-day forecasts, eight detail metrics, units, themes, time zones, and responsive layouts are highly polished, backed by 12 iteration screenshots; data is explicitly simulated, but the fixed update label and missing failure states remain limitations."
+      },
+      "body": {
+        "zh": "# task-13 · 天气仪表盘 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-13` |\n| runId | `run-k3-task-13-r1` |\n| 本题得分 | **92/100** |\n| 结论（中） | 五城市、24 小时、7 日、八项指标、单位/主题/时区与响应式完成度很高，并有 12 张迭代截图；数据明确为模拟，但恒定更新时间和缺少异常态仍是边界。 |\n| Conclusion (EN) | Five cities, 24-hour and 7-day forecasts, eight detail metrics, units, themes, time zones, and responsive layouts are highly polished, backed by 12 iteration screenshots; data is explicitly simulated, but the fixed update label and missing failure states remain limitations. |\n| 评分口径 | 需求符合 36 / 完整度 19 / 正确性 18 / 视觉 10 / 工程 9 |\n\n- 视觉是本批 Web 应用最高水平之一：桌面/手机层级清楚，浅/深主题、不同天气 SVG 动画、小时曲线、日温区间和指标卡统一。模型归档 12 张多城市、多主题、多视口截图，符合“反复打开并检查”的过程要求。\n- 浏览器实测 London、°F、dark theme 切换成功，URL 同步为 `city=london&units=f&theme=light` 后再切 dark；城市本地时间使用 IANA time zone，风速、能见度、气压与降水单位都随制式转换。\n- 数据从源码一开始就明确标为 `simulated data, no network calls`，页脚也公开同样说明，因此不冒充实时 API。扣分在于“Updated 5 min ago”是恒定文案；没有搜索、定位、手动刷新、加载/失败/无结果/缓存状态，也没有真实数据更新时间。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 92,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-13.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-14",
+      "runId": "run-k3-task-14-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "八页银行站、储蓄/贷款计算器、表单、演示登录与转账形成完整产品；演示声明充分，但首屏存款保护数字仍可能先被误认为真实承诺。",
+        "en": "An eight-page bank site with savings/loan calculators, forms, demo login, and transfers forms a complete product; disclaimers are substantial, but the hero-area deposit-protection number can still be mistaken for a real promise before its footnote is seen."
+      },
+      "body": {
+        "zh": "# task-14 · 银行网站 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-14` |\n| runId | `run-k3-task-14-r1` |\n| 本题得分 | **91/100** |\n| 结论（中） | 八页银行站、储蓄/贷款计算器、表单、演示登录与转账形成完整产品；演示声明充分，但首屏存款保护数字仍可能先被误认为真实承诺。 |\n| Conclusion (EN) | An eight-page bank site with savings/loan calculators, forms, demo login, and transfers forms a complete product; disclaimers are substantial, but the hero-area deposit-protection number can still be mistaken for a real promise before its footnote is seen. |\n| 评分口径 | 需求符合 35 / 完整度 19 / 正确性 18 / 视觉 10 / 工程 9 |\n\n- 首页、Personal、Business、Loans、About、Contact、Login、Dashboard 共八页，导航和移动菜单完整；视觉专业且一致，390px 首页无溢出。\n- 储蓄样例（$5,000 初始、$300/月、5 年、4.60% APY）实测输出 `$26,407.40`；演示账号登录可进入 dashboard，转账只修改内存余额。表单统一 `preventDefault()`，无 `fetch`/XHR，明确提示不要输入真实凭据。\n- 免责声明总体比同类产物严谨：首页后段写明所有利率、余额、保护声明和证言均为 illustrative，每页页脚写“fictional demo”。但首屏 trust bar 仍先展示“Deposits protected up to $250,000*”，与理论口径“不得暗示存款保障”存在张力；首页 92,000+ 成员等虚构社会证明也需要用户滚动到后文才确认性质。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 91,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-14.md",
+        "lines": "1-19"
+      }
+    },
+    {
+      "id": "review-maint-agent-v4-task-15",
+      "runId": "run-k3-task-15-r1",
+      "type": "ai",
+      "authorLabel": "维护 agent v4（AI，非盲评）",
+      "date": "2026-09-12",
+      "conclusion": {
+        "zh": "空库起步的 CRUD、搜索筛选排序、统计、完成日期、评分、持久化与 JSON 导入导出都真实可用；三态模型和重复导入策略限制了更完整的阅读进度管理。",
+        "en": "Empty-library CRUD, search/filter/sort, statistics, finish dates, ratings, persistence, and JSON import/export genuinely work; the three-state model and duplicate-import policy limit fuller reading-progress management."
+      },
+      "body": {
+        "zh": "# task-15 · 图书追踪应用 —— AI 评价（maintenance-agent-v4）\n\n| 项 | 值 |\n| --- | --- |\n| 评价者 | 维护 agent（Codex），非盲评 |\n| 评价版本 | v4 |\n| 评价日期 | 2026-09-12 |\n| reviewId | `review-maint-agent-v4-task-15` |\n| runId | `run-k3-task-15-r1` |\n| 本题得分 | **90/100** |\n| 结论（中） | 空库起步的 CRUD、搜索筛选排序、统计、完成日期、评分、持久化与 JSON 导入导出都真实可用；三态模型和重复导入策略限制了更完整的阅读进度管理。 |\n| Conclusion (EN) | Empty-library CRUD, search/filter/sort, statistics, finish dates, ratings, persistence, and JSON import/export genuinely work; the three-state model and duplicate-import policy limit fuller reading-progress management. |\n| 评分口径 | 需求符合 35 / 完整度 19 / 正确性 18 / 视觉 9 / 工程 9 |\n\n- 浏览器从空库新增 `Dune / Frank Herbert / finished / 5 stars` 后，总数、Finished、标题和无障碍评分文本同步正确；390px 布局清楚。损坏 localStorage 会显示明确警告并回到空库，不会静默播种示例数据。\n- 本轮核心测试 15/15，加 UI 冒烟测试通过；覆盖规范化、验证、完成日期、离开 finished 清日期、搜索/筛选/排序、统计、序列化、损坏导入、唯一 id，以及真实 UI 事件链。\n- 扣分：只有 want-to-read/reading/finished，没有 paused/abandoned、页数与开始日期；`Date.parse()` 会接受部分会自动归一化的非法日期；重复导入同一文件时只为冲突 id 生成新 id，语义相同的书仍会再次合并，不能真正避免重复。",
+        "en": "This review was written in Chinese; the original text is shown on the Chinese page and at the source link. No English translation is provided."
+      },
+      "translated": false,
+      "score": 90,
+      "scoreMethod": "需求符合度 40 / 功能完整度 20 / 正确性 20 / 视觉与产品感 10 / 工程组织 10；自定口径，不可与其他模型或阶段比较",
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/task-15.md",
+        "lines": "1-19"
+      }
     }
   ],
   "batches": [
@@ -7252,6 +8911,35 @@
       },
       "commit": "92815760057a3b1de14b7f5a3f050e7345936e57",
       "note": "由 15 个 run 的逐题指标求和；每题一个独立会话；任一题缺失的指标记 null，不按 0 补齐。"
+    },
+    {
+      "id": "batch-k3-phase-01",
+      "modelId": "k3",
+      "phaseId": "phase-01",
+      "label": {
+        "zh": "K3 · Phase 1",
+        "en": "K3 · Phase 1"
+      },
+      "metrics": {
+        "totalTasks": 15,
+        "sessions": 15,
+        "durationSeconds": 11770,
+        "apiCalls": 250,
+        "toolCalls": 259,
+        "failures": 12,
+        "inputTokens": 521100,
+        "outputTokens": 370144,
+        "cacheReadTokens": 13399744,
+        "totalTokens": 14290988,
+        "costCny": null,
+        "costUsd": null
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/README.md",
+        "lines": "1-40"
+      },
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "note": "由 15 个 run 的逐题指标求和；每题一个独立单轮会话；任一题缺失的指标记 null，不按 0 补齐。"
     }
   ],
   "assessments": [
@@ -7316,6 +9004,27 @@
       "disclaimer": {
         "zh": "维护 agent（DeepSeek Harness）——非盲评、自定口径；不可与其他评委或第一阶段 DeepSeek AI 报告直接比较，也不合成排名。",
         "en": "维护 agent（DeepSeek Harness） — non-blind, own rubric; not comparable to other reviewers or to the Phase 1 DeepSeek AI report."
+      }
+    },
+    {
+      "id": "assessment-k3-phase-01-maintenance-agent-v4",
+      "modelId": "k3",
+      "phaseId": "phase-01",
+      "scope": "phase",
+      "score": 93.3,
+      "coreSummary": "AI 评价，非盲评（维护 agent 的 Codex 桌面会话；评委后端快照未提供，故不猜测）",
+      "label": {
+        "zh": "AI 评价 maintenance-agent-v4（非盲评）",
+        "en": "AI review maintenance-agent-v4 (non-blind)"
+      },
+      "source": {
+        "path": "Test_Results/K3_KimiCode/phase-01/Reviews/ai/maintenance-agent-v4/phase-summary.md",
+        "lines": "1"
+      },
+      "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+      "disclaimer": {
+        "zh": "维护 agent v4——非盲评、自定五维口径；不可与其他评委、模型或阶段比较，也不合成排名。",
+        "en": "Maintenance agent v4 — non-blind, own five-dimension rubric; not comparable to other reviewers, models or phases, and never combined into a ranking."
       }
     }
   ]

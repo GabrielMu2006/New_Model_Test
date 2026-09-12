@@ -23,7 +23,7 @@
 - 几何、计算、数据状态与错误处理；
 - 响应式设计、可访问性、视觉完成度和自动化测试。
 
-公开展示站 [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) 目前收录 3 个模型 / 2 个阶段 / 20 个任务 / 55 条运行 / 100 条评价（第一阶段三模型：Human + 各 AI 评委；第二阶段每题已各挂 1 份 AI 评价）/ 3 份阶段评估，共 174 个静态页面与 55 项成果预览。界面按 [Digital Museum / 编辑出版物风格](website/VibeTest%20Digital%20Museum%20UI%20Design%20Specification.md) 设计（暖色纸质底、衬线标题、1px 分隔线，作品优先、不做排行榜），支持中英文切换、命令面板全站搜索（`⌘K` 或 `/`）、任务类型/模型/阶段 Chip 筛选、同题运行对比（选择写入 URL）、成果预览与深链；缺失值一律显示「未记录」，不推断、不补零。
+公开展示站 [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) 目前收录 4 个模型 / 2 个阶段 / 20 个任务 / 70 条运行 / 115 条评价（第一阶段四模型：Human + 各 AI 评委；第二阶段每题已各挂 1 份 AI 评价）/ 4 份阶段评估，共 206 个静态页面与 59 项成果预览。界面按 [Digital Museum / 编辑出版物风格](website/VibeTest%20Digital%20Museum%20UI%20Design%20Specification.md) 设计（暖色纸质底、衬线标题、1px 分隔线，作品优先、不做排行榜），支持中英文切换、命令面板全站搜索（`⌘K` 或 `/`）、任务类型/模型/阶段 Chip 筛选、同题运行对比（选择写入 URL）、成果预览与深链；缺失值一律显示「未记录」，不推断、不补零。
 
 仓库将保留后续阶段扩展能力。未来可在 Test_Results/ 下增加模型文件夹，并在模型目录中增加阶段文件夹，并继续沿用“任务 → 原始 prompt → 成果 → 测试 → 评估”的归档方式。
 
@@ -203,7 +203,7 @@ The archive covers **Phase 1**: three models — `DeepSeek-V4.1-Flash` (0910 pre
 - geometry, arithmetic, data state, and error handling;
 - responsive design, accessibility, visual finish, and automated testing.
 
-The public showcase [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) currently covers 3 models / 2 phases / 20 tasks / 55 runs / 100 reviews (Phase 1: three models with a human review plus one or more AI reviews each; Phase 2: one AI review per run) across 174 static pages and 55 artifact previews. It uses a [Digital Museum / editorial archive interface](website/VibeTest%20Digital%20Museum%20UI%20Design%20Specification.md) (warm paper, serif display type, 1px dividers, works first, no leaderboard) with bilingual pages, a `⌘K` command palette, type/model/phase chip filters, same-task run comparison (selection kept in the URL), artifact previews and deep links; unknown values always read "Not recorded" instead of being inferred or zero-filled.
+The public showcase [vibetest.gabrielmu2006.cn](https://vibetest.gabrielmu2006.cn/) currently covers 4 models / 2 phases / 20 tasks / 70 runs / 115 reviews (Phase 1: four models with a human review plus one or more AI reviews each; Phase 2: one AI review per run) across 206 static pages and 59 artifact previews. It uses a [Digital Museum / editorial archive interface](website/VibeTest%20Digital%20Museum%20UI%20Design%20Specification.md) (warm paper, serif display type, 1px dividers, works first, no leaderboard) with bilingual pages, a `⌘K` command palette, type/model/phase chip filters, same-task run comparison (selection kept in the URL), artifact previews and deep links; unknown values always read "Not recorded" instead of being inferred or zero-filled.
 
 The repository is designed to grow. Future results can be added under Test_Results/<model-folder>/phase-NN/ while retaining the same “task → original prompt → artifact → test → evaluation” archive pattern.
 

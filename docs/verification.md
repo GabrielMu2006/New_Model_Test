@@ -1,5 +1,14 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-12 接入 K3 第一阶段（第四个模型 + maintenance-agent-v4 评价）
+
+- **范围**：把已归档的 K3 phase-01（15 题）与其 `Reviews/ai/maintenance-agent-v4/`（逐题 AI 评价，平均 93.3/100）接上展示站。归档提交 `1afdc8cacbb8651cd2aa3939aab2be66a77030ba`（含 15 份 `submission.json` 的 `source.commit`/`source.path` 回填）。**只新增 K3 批次**，未改动任何既有批次的数据、评价或归档文件。
+- **落点**：新增 `website/data/models/k3.json`（双语名、provider Moonshot AI（Kimi）、快照 `k3` + thinkingEffort `max`、快照证据）与 `website/scripts/adapters/k3-phase1.mjs`（显式注册进 `scripts/import-data.mjs`，成为第 6 个适配器）；适配器逐题读取 `submission.json` 并校验 `prompt.txt` 的 SHA-256、入口在 `artifacts.files` 内，产出 15 个 run、15 条 AI 评价、1 个批次 `batch-k3-phase-01` 与阶段评估 `assessment-k3-phase-01-maintenance-agent-v4`（93.3）。**不重复定义 task 实体**（与第一阶段其它模型同题）。
+- **K3 归档字段差异**：`submission.json` 用 `artifacts`（复数）承载成果、`isolation.level = workspace-only`、`contamination.telemetry = visible`、`sampling.thinkingEffort = max`；适配器逐条透传，`contamination` 走「遥测可见」的常规审查路径（**不**套用「无遥测默认遵守规则」）。
+- **封面**：9 个 HTML 运行归档未自带截图，按既定口径以 `npm run capture:covers` 生成 `website/public/covers/run-k3-task-*.png`（1280×800，逐个核对为成果真实界面，如 task-01 的 Aevum 首页）。顺带修正 `scripts/capture-covers.mjs` 的目标筛选：此前只挑选 `artifact.cover` 为 null 的运行，而适配器已按约定回落到 `covers/<runId>.png`，导致文件缺失时脚本报告「无需补封面」；现改为「HTML 且（无 cover 或 cover 文件不存在）」。
+- **断言与文档**：`validate-data.mjs` 新增 K3 回归（15 个 run、`reportedModelId=k3`、`isolation=workspace-only`、telemetry 非 hidden、每题 1 份 AI 评价且署名 `维护 agent v4（AI，非盲评）`、评价与成果固定到 `1afdc8c`、阶段评估 93.3）；`tests/catalog.test.mjs` 新增 K3 用例并把「三模型同题」改为四模型；`e2e-smoke.mjs` 新增 K3 运行页（`98/100` + 评价作者 + 恰好 1 张评价卡）与模型页（评估名与均分）断言，并把结尾的成果计数改为按模型推导。文档同步：根 `README.md`（中英计数）、`docs/adding-results.md`（6 个适配器）、`docs/known-issues.md` 3.2、`docs/source-audit.md`、`Test_Results/README.md` 与 K3 阶段 README（回填归档提交、评价已产出）。
+- **门禁实测**（Node 24.19.0，本机）：`import:data`（**4 模型 / 2 阶段 / 20 任务 / 70 运行 / 115 评价 / 6 批次 / 4 阶段评估**，6 个适配器）、`validate:data` 通过、`astro check` **0 errors / 0 warnings / 0 hints**、`npm test` **27/27**、`build` **206 页** + 59 个 HTML 成果（静态链接检查通过；源码链接 **1602/1602** 存在于各自固定提交）、`E2E_BROWSERS=chromium,webkit npm run test:e2e` **通过**（70/70 成果入口；`deepseek 20 + muse 20 + gpt 15 + k3 15`）。
+
 ## 2026-09-12 修正 DeepSeek Phase 1 AI 评价的署名
 
 - **依据**：组织者指出该评价由 **GPT-5** 撰写，与 Muse Spark 1.3 phase-01 的 `Reviews/ai/codex-v1/`（元信息记为 `Codex Desktop 0.153.4 / GPT-5`）是**同一评价者**。此前档案未记作者，展示站只能以文件名代称（`15-task completion quality assessment`）。

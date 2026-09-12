@@ -12,7 +12,7 @@
 
 ## 2. 适配网站，而非仅复制模板
 
-导入器已改为「编排器 + 显式注册的批次适配器」：`scripts/import-data.mjs` 只做加载、合并、关联校验与写出，具体解析在 `scripts/adapters/<批次>.mjs`。当前已注册五个适配器——第一阶段 DeepSeek、Muse Spark phase-01、**GPT-5.6 Sol phase-01**、**DeepSeek phase-02** 与 **Muse Spark phase-02**；Muse 批次另从 `runs/<run-id>/reviews/` 解析逐题 AI 评价（沿用维护 agent v1 的表格约定）。仍然**没有通用目录扫描器**：新批次必须新增一个适配器文件并在编排器里注册，不会自动接入；仅手改 catalog.json 会被下次 check/test/build 覆盖。
+导入器已改为「编排器 + 显式注册的批次适配器」：`scripts/import-data.mjs` 只做加载、合并、关联校验与写出，具体解析在 `scripts/adapters/<批次>.mjs`。当前已注册六个适配器——第一阶段 DeepSeek、Muse Spark phase-01、**GPT-5.6 Sol phase-01**、**K3 phase-01**、**DeepSeek phase-02** 与 **Muse Spark phase-02**；Muse 批次另从 `runs/<run-id>/reviews/` 解析逐题 AI 评价（沿用维护 agent v1 的表格约定），GPT 与 K3 批次从阶段级 `Reviews/ai/<评委>-vN/task-NN.md` 解析。仍然**没有通用目录扫描器**：新批次必须新增一个适配器文件并在编排器里注册，不会自动接入；仅手改 catalog.json 会被下次 check/test/build 覆盖。
 
 Muse Spark 接入时已逐项完成的适配（可作为后续批次的参照）；`deepseek-phase2.mjs` 与 `muse-spark-phase2.mjs` 复用同一套结构，实践了扁平 `task-NN-<slug>/` 布局与「以 `submission.json` 为唯一元数据来源」的写法：
 
