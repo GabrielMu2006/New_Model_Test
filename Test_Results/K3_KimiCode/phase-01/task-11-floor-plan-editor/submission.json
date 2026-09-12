@@ -91,9 +91,9 @@
   }
  },
  "source": {
-  "commit": null,
-  "path": null,
-  "note": "archived from local workspace; commit to be backfilled by the maintainer after ingestion"
+  "commit": "1afdc8cacbb8651cd2aa3939aab2be66a77030ba",
+  "path": "Test_Results/K3_KimiCode/phase-01/task-11-floor-plan-editor/artifacts",
+  "note": "Commit 1afdc8c first contains the K3 phase-1 archive (2026-09-12); artifacts live under the stated path at that commit."
  },
  "runRelation": {
   "parentRunId": null,

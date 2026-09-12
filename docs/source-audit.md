@@ -73,13 +73,13 @@
 评价来源：`Reviews/ai/maintenance-agent-v3/task-01.md … task-15.md`（维护 agent v3，非盲评，平均 82.9/100）；该批评价文件在本次接入时尚未提交，随接入一并入库。
 任务实体不重复定义：这 15 题已由第一阶段适配器定义，GPT 批次只新增运行、评价与批次实体。
 
-## K3 · Phase 1（15 题，2026-09-12 归档，待接入）
+## K3 · Phase 1（15 题，2026-09-12 接入）
 
-来源：与既有三个模型同一份 `PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md`（`taskVersion = 1`）与 `Test_Results/K3_KimiCode/phase-01/task-NN-<slug>/`（扁平布局，slug 与既有同题目录同名）。本批由组织 agent 在本地工作区完成归档，**尚未提交**；`source.commit` 与固定版本链接待维护者入库后回填。
+来源：与既有三个模型同一份 `PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md`（`taskVersion = 1`）与 `Test_Results/K3_KimiCode/phase-01/task-NN-<slug>/`（扁平布局，slug 与既有同题目录同名）；成果与评价链接固定到该批次归档提交 `1afdc8cacbb8651cd2aa3939aab2be66a77030ba`。
 执行：Kimi Code CLI 0.42.0（`kimi-code/k3`，thinkingEffort `max`），每题一个全新独立单轮会话，共 15 个；`environment.reportedModelId = k3`（harness 报告值，供应商侧快照未独立确认）。
 口径：`prompt.txt` 为逐字存档（15/15 与既有归档 SHA-256 逐题一致；会话 `turn.prompt` 输入再与 `prompt.txt` 哈希比对一致）；统计以 Kimi Code 会话日志（wire.jsonl）为准。
 审查：遥测 `visible`（完整工具调用记录，推理为明文），15/15 未发现越界；程序性备注（`/tmp` 自写临时文件、`ls /Applications`、`ls ~/.cache/ms-playwright`、`npm ls -g` 环境探测）记入各题 `evidence/audit-2026-09-12.{json,md}` 与 `contamination.events`，无外部内容流入，按三档处置口径不作外显标注、不影响成绩。
-评价：人工与 AI 评价均未产出（`reviews: []`），按接口后续追加。Task 13 的 `.chrome-profile/`（浏览器状态目录）按规则不入公开归档，仅留工作区。
+评价来源：`Reviews/ai/maintenance-agent-v4/task-01.md … task-15.md`（维护 agent v4，非盲评，平均 **93.3/100**，自定五维口径；评价者自述为维护 agent 的 Codex 桌面会话，评委后端快照未由当前环境提供，故不猜测）。人工评价尚无。Task 13 的 `.chrome-profile/`（浏览器状态目录）按规则不入公开归档，仅留工作区。任务实体不重复定义：这 15 题已由第一阶段适配器定义，K3 批次只新增运行、评价与批次实体。
 
 ## 保留的分歧与边界
 
