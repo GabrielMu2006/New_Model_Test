@@ -72,7 +72,7 @@ Phase 2 的隔离等级为 `workspace-only`（`AGENTS.md` 两条绝对规则 + �
 ### 仓库结构
 
 ```text
-New_Model_Test/
+VibeTest/
 ├── README.md
 ├── AGENTS.md
 ├── PROMPT/
@@ -252,7 +252,7 @@ Phase 2 isolation is `workspace-only` (two absolute `AGENTS.md` rules plus a pos
 ### Repository layout
 
 ```text
-New_Model_Test/
+VibeTest/
 ├── README.md
 ├── AGENTS.md
 ├── PROMPT/

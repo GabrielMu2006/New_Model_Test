@@ -1,8 +1,8 @@
 # 模型评测展示网站实施计划
 
 状态：历史建站计划。网站已上线；以下保留原始 M0–M7 目标与当时目录示例，不作为全部能力已实现的证明。当前目录、域名、维护与授权见 [AGENTS.md](../AGENTS.md) 和 [文档索引](README.md)。多阶段自动接入尚待实际接入任务改造，见 [接入说明](adding-results.md)。
-目标仓库：`GabrielMu2006/New_Model_Test`  
-工作目录：`/Users/gabrielmu/Documents/New_Model_Test`  
+目标仓库：`GabrielMu2006/VibeTest`（当时名 New_Model_Test）  
+工作目录：`/Users/gabrielmu/Documents/VibeTest`（当时为 New_Model_Test）  
 关联启动指令：[WEBSITE_START_PROMPT.md](WEBSITE_START_PROMPT.md)
 
 ## 1. 项目位置与目标
@@ -48,10 +48,10 @@
 
 如环境或现有项目规则要求采用其他工具，可替换框架，但必须保留同仓库子目录、静态输出、数据驱动页面和公开访问要求，并在交付文档解释选择。不为框架便利新增服务器或数据库。
 
-默认部署到当前仓库的 GitHub Pages，URL 以 GitHub 实际返回值为准。构建必须支持仓库子路径 `/New_Model_Test/`。使用路径生成函数统一处理语言前缀、资源地址、动态链接与尾斜杠，不在组件里散落硬编码根路径。
+默认部署到当前仓库的 GitHub Pages，URL 以 GitHub 实际返回值为准。构建必须支持仓库子路径 `/New_Model_Test/`（历史事实：当时仓库名与 Pages 子路径均为 New_Model_Test；2026-09-12 更名为 VibeTest）。使用路径生成函数统一处理语言前缀、资源地址、动态链接与尾斜杠，不在组件里散落硬编码根路径。
 
 ```text
-New_Model_Test/
+VibeTest/
 ├── README.md
 ├── WEBSITE_IMPLEMENTATION_PLAN.md
 ├── WEBSITE_START_PROMPT.md
@@ -246,7 +246,7 @@ iframe 默认使用最少 sandbox 权限。按任务需求配置脚本、下载�
 - [ ] 对 15 项成果执行加载冒烟，记录哪些交互实际检验。
 - [ ] 在 Chromium、Firefox、WebKit 抽查展示站关键流程；记录下载受阻等环境限制。
 - [ ] 检查不同视口、焦点、控制台异常、缺失图片与重资源懒加载。
-- [ ] 用根路径和 `/New_Model_Test/` 子路径验证路由与产物链接。
+- [ ] 用根路径和 `/New_Model_Test/` 子路径验证路由与产物链接（当时的真实子路径；仓库已更名 VibeTest）。
 
 交付：`docs/verification.md`，列明命令、环境、结果、覆盖范围和未通过项。
 

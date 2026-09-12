@@ -1,5 +1,15 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-12 项目更名：New_Model_Test → VibeTest
+
+- **范围**：组织者要求把**本地文件夹名、GitHub 仓库名、DSH 项目名**统一改为 VibeTest。本轮先做仓库侧（GitHub 仓库名 + 仓库内引用），本地文件夹与 DSH 工作区条目另行处理（会终止当前会话的工作目录）。
+- **仓库名**：`gh repo rename VibeTest` 完成，`GabrielMu2006/New_Model_Test` → `GabrielMu2006/VibeTest`；本地 remote 自动更新为新地址；旧地址实测返回 **301** 跳新地址，自定义域名站点不受影响（`https://vibetest.gabrielmu2006.cn/zh/` 仍 200）。
+- **代码与配置**：`website/scripts/import-data.mjs` 与 `website/scripts/verify-source-links.mjs` 的 repository 常量、`website/package.json` 与 `package-lock.json` 包名（`new-model-test-website` → `vibetest-website`）、`docs/deployment.md` 的三条 `gh … --repo` 命令、根 `AGENTS.md` 的仓库行、根 `README.md` 中英目录树根名。
+- **文档**：`docs/WEBSITE_START_PROMPT.md`（项目名 / 工作目录 / 仓库名）、`docs/WEBSITE_IMPLEMENTATION_PLAN.md`（目标仓库与工作目录）改为新名。
+- **刻意保留原文并加注的地方**（不把没发生过的事写成史实）：当时真实存在的 Pages 子路径 `/New_Model_Test/` 与当时真实公网地址 `https://gabrielmu2006.cn/New_Model_Test/`——见 `docs/WEBSITE_IMPLEMENTATION_PLAN.md` 第 51、249 行、`docs/WEBSITE_START_PROMPT.md` 第 39 行与早期验证条目，均加了「当时名 New_Model_Test，2026-09-12 更名为 VibeTest」的注。
+- **未改动**：`Test_Results/**` 里的归档证据（会话 cwd、DSH 日志目录 `--Users-gabrielmu-Documents-New_Model_Test--`、模型自写 probe 脚本里的绝对路径等）。这些是「当时确实如此」的取证材料，改写等于伪造档案；更名后新会话的日志目录会自然改用新路径。
+- **门禁实测**（Node 24.19.0，本机）：`import:data`（`catalog.repository` 已指向新仓库）、`validate:data`（4 模型 / 2 阶段 / 20 任务 / 70 运行 / 115 评价 / 6 批次 / 5 阶段评估）、`astro check` 0 errors / 0 warnings / 0 hints、`npm test` **27/27**、`build` **206 页** + 59 个 HTML 成果，**源码链接检查针对新仓库通过（1604/1604）**。
+
 ## 2026-09-12 给 GPT 第一阶段补阶段评估条目
 
 - **背景**：GPT-5.6 Sol phase-01 的 15 条逐题 AI 评价（`maintenance-agent-v3`，平均 82.9/100）早已入库并在运行页显示，但该批次**没有 `assessment` 记录**，模型索引页因此显示「暂无阶段评估」。
@@ -298,12 +308,12 @@
 | 成果专项 | 通过 | Breakout 开始、空格发球与方向键；像素编辑器 PNG 下载事件；银行多页相对资源 |
 | 原始成果 SHA-256 | 通过 | 198 个实施前文件逐一核对，内容未变 |
 
-根路径会跳转中文首页；`/New_Model_Test/` base 下的语言页、任务/运行深链均为独立静态文件。语言切换保留当前实体与查询参数。无效实体显示归档内 404 状态，GitHub Pages 的未知物理路径使用静态 404 页面。
+根路径会跳转中文首页；`/New_Model_Test/` base（当时仓库名，2026-09-12 更名为 VibeTest）下的语言页、任务/运行深链均为独立静态文件。语言切换保留当前实体与查询参数。无效实体显示归档内 404 状态，GitHub Pages 的未知物理路径使用静态 404 页面。
 
 已知限制：iframe 使用 `allow-scripts allow-downloads allow-forms`，刻意不授予 `allow-same-origin`、弹窗或顶层导航；浏览器可能限制嵌入态存储/下载，页面提供独立打开。天气成果依赖 Open-Meteo，网络不可用时使用其自身缓存/离线模型。此次“15/15 加载”验证成果入口与关键代表交互，不等同于重跑原成果各自 README 声称的全部历史断言。
 
 扩展示例使用 `website/tests/fixtures/extension-catalog.json`，第二模型、重复运行、新任务和第二阶段均未进入生产 `catalog.json` 或 `dist`。2026-09-09 维护复核：现有测试只在内存合并数组并核对长度，并未经过真实导入、页面和路由验证；不能据此宣称多阶段自动接入完成。实际接入要求见 adding-results.md。
 
-远端 Actions run `34300161938` 首次部署成功；匿名访问根路径、中文/英文首页、task-06 详情、对比查询和 task-14 多页资源均返回 HTTP 200。GitHub Pages 返回的实际公网地址为 `https://gabrielmu2006.cn/New_Model_Test/`。
+远端 Actions run `34300161938` 首次部署成功；匿名访问根路径、中文/英文首页、task-06 详情、对比查询和 task-14 多页资源均返回 HTTP 200。GitHub Pages 返回的实际公网地址为 `https://gabrielmu2006.cn/New_Model_Test/`（当时真实地址；仓库 2026-09-12 更名为 VibeTest，现展示站为 `https://vibetest.gabrielmu2006.cn/`）。
 
 2026-09-09 域名迁移：Actions run `34302084919` 将展示站部署到独立子域名 `https://vibetest.gabrielmu2006.cn/`。公共 DNS CNAME 指向 `gabrielmu2006.github.io`；GitHub Pages 证书状态为 approved 并强制 HTTPS。匿名公网复验根路径、中英文首页、task-06 详情、对比查询、task-14 多页资源和 task-08 iframe 交互预览均通过，浏览器控制台无错误；旧项目路径返回 301 至新域名，主站 `https://gabrielmu2006.cn/` 保持 HTTP 200。

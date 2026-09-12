@@ -96,7 +96,7 @@ const catalog = {
   generatedAt: null,
   archiveCommit: deepseekPhase1.load(ctx).runs[0].artifact.commit,
   sourcePathMappings,
-  repository: 'https://github.com/GabrielMu2006/New_Model_Test',
+  repository: 'https://github.com/GabrielMu2006/VibeTest',
   phases, models, tasks, runs, reviews, batches, assessments,
 };
 

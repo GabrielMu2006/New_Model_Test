@@ -1,12 +1,12 @@
 # 网站建设启动 Prompt
 
-在当前 `New_Model_Test` 项目的新任务中粘贴下方指令即可启动。此文件本身不执行部署。
+在当前 `VibeTest` 项目的新任务中粘贴下方指令即可启动。此文件本身不执行部署。
 
 ```text
 请在当前仓库执行网站建设，从开发、验证一直完成到公开部署。
 
-工作目录：/Users/gabrielmu/Documents/New_Model_Test
-GitHub 仓库：GabrielMu2006/New_Model_Test
+工作目录：/Users/gabrielmu/Documents/VibeTest
+GitHub 仓库：GabrielMu2006/VibeTest
 详细规范：docs/WEBSITE_IMPLEMENTATION_PLAN.md（历史计划）；当前协作规范：根目录 AGENTS.md 和 docs/README.md。
 
 先完整阅读实施计划及适用的 AGENTS.md，检查当前文件和 Git 状态，再按计划推进 M0–M7。若此前已有部分实现，应检查后继续，不要重复初始化或覆盖已有成果。
@@ -36,7 +36,7 @@ GitHub 仓库：GabrielMu2006/New_Model_Test
 
 实施与发布授权：
 我授权你在本任务内添加网站源码、数据、必要依赖和锁文件、测试、文档及 GitHub Actions；修改根 README 和相关 .gitignore；提交并推送本次相关改动；配置当前仓库的 GitHub Pages，并将验证通过的网站公开发布，更新 GitHub homepage。
-使用现有 Astro 静态站点及 GitHub Pages。生产地址 https://vibetest.gabrielmu2006.cn/，base 为 /，不可恢复历史 /New_Model_Test/ 子路径。按 AGENTS.md 保留至少一次回退能力；后续阶段扩展范围以用户当前任务为准。
+使用现有 Astro 静态站点及 GitHub Pages。生产地址 https://vibetest.gabrielmu2006.cn/，base 为 /，不可恢复历史 /New_Model_Test/ 子路径（仓库当时名 New_Model_Test，2026-09-12 更名为 VibeTest）。按 AGENTS.md 保留至少一次回退能力；后续阶段扩展范围以用户当前任务为准。
 不创建付费服务、不购买域名、不修改 DNS、不添加数据库或账号系统。若现有工具规则要求不同发布方式，先判断是否已被用户指定的 GitHub Pages 路径覆盖；不要无故切换到登录后才能访问的私有网站。
 
 执行方式：

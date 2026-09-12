@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url';
 const siteRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = path.resolve(siteRoot, '..');
 const distRoot = path.join(siteRoot, 'dist');
-const repository = 'https://github.com/GabrielMu2006/New_Model_Test';
+const repository = 'https://github.com/GabrielMu2006/VibeTest';
 
 const git = (args, options = {}) => execFileSync('git', args, { cwd: repoRoot, encoding: 'utf8', stdio: options.capture === false ? 'pipe' : ['ignore', 'pipe', 'pipe'], ...options });
 

@@ -42,7 +42,7 @@ website/                                # Astro 展示站、导入器、模板�
 
 ## 网站维护边界
 
-- 唯一生产站点：`https://vibetest.gabrielmu2006.cn/`；仓库 `GabrielMu2006/New_Model_Test`；GitHub Pages Actions 发布 `website/dist`。
+- 唯一生产站点：`https://vibetest.gabrielmu2006.cn/`；仓库 `GabrielMu2006/VibeTest`；GitHub Pages Actions 发布 `website/dist`。
 - `website/astro.config.mjs` 的 site 使用该 HTTPS 域名，base 为 `/`；`website/public/CNAME` 保留 `vibetest.gabrielmu2006.cn`。不恢复旧项目子路径，不改主站 DNS/Pages。
 - 页脚保留 `mailto:limuzhi2006@stu.pku.edu.cn` 和 `https://gabrielmu2006.cn/`；不把主站统计代码直接复制过来。新增统计须单独明确范围和站点标识。
 - 沿用 Astro、TypeScript、npm 锁文件及现有界面。中英文、页面深链、对比查询参数、键盘访问和移动布局同步维护。

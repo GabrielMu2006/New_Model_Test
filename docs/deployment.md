@@ -29,11 +29,11 @@
 在仓库根目录执行一次回退，例如：
 
 ```bash
-gh workflow run website-deploy.yml --repo GabrielMu2006/New_Model_Test --ref main -f source_ref=website-rollback-20260909-09b10d4
-gh run list --repo GabrielMu2006/New_Model_Test --workflow website-deploy.yml --limit 5
+gh workflow run website-deploy.yml --repo GabrielMu2006/VibeTest --ref main -f source_ref=website-rollback-20260909-09b10d4
+gh run list --repo GabrielMu2006/VibeTest --workflow website-deploy.yml --limit 5
 ```
 
-用上一步返回的本次 run ID 执行 `gh run watch RUN_ID --repo GabrielMu2006/New_Model_Test --exit-status`。RUN_ID 是待替换参数，不能照抄。也可在 GitHub Actions 的 “Deploy evaluation website” → “Run workflow” 中填写 source_ref。
+用上一步返回的本次 run ID 执行 `gh run watch RUN_ID --repo GabrielMu2006/VibeTest --exit-status`。RUN_ID 是待替换参数，不能照抄。也可在 GitHub Actions 的 “Deploy evaluation website” → “Run workflow” 中填写 source_ref。
 
 确认回退任务排在任何正在运行的部署之后；本仓库 Pages 并发组为串行。恢复期间不要继续推送触发另一次部署，避免恢复后又被覆盖。核验根页、中英文、任务/对比深链、代表性成果、邮箱和主站链接及 HTTPS，再记录恢复时间、源 SHA、workflow run。
 
