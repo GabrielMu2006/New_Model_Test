@@ -168,7 +168,7 @@ export function load({ read, siteRoot }) {
     const ai = aiSections.get(id);
     if (!ai) throw new Error(`[deepseek-phase1] missing AI assessment for ${id}`);
     reviews.push({
-      id: `review-ai-${id}-r1`, runId, type: 'ai', authorLabel: '15-task completion quality assessment', date: '2026-09-09',
+      id: `review-ai-${id}-r1`, runId, type: 'ai', authorLabel: 'Codex Desktop 0.153.4 / GPT-5', date: '2026-09-09',
       conclusion: { zh: ai.verdict, en: `Original Chinese verdict (not translated): ${ai.verdict}` },
       body: { zh: ai.body, en: 'This historical AI assessment was written in Chinese. The original text is shown on the Chinese page and at the source link; no English translation is provided.' },
       translated: false, score: ai.score,
@@ -202,7 +202,7 @@ export function load({ read, siteRoot }) {
       id: 'assessment-deepseek-v4-1-flash-exp-0910-phase-01',
       modelId: model.id, phaseId: 'phase-01', scope: 'phase',
       score: 93.6, coreSummary: '15/15',
-      label: { zh: '历史 AI 报告结论（引用）', en: 'Quoted historical AI report conclusion' },
+      label: { zh: '历史 AI 报告结论（Codex Desktop 0.153.4 / GPT-5 撰写，引用）', en: 'Quoted historical AI report (written by Codex Desktop 0.153.4 / GPT-5)' },
       source: { path: aiPath, lines: '7-16,209-211' },
       commit: archiveCommit,
       disclaimer: {

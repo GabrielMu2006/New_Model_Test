@@ -2,7 +2,7 @@
 
 2026-09-09 目录迁移：当前题目位于 PROMPT/Phase1_TEST_PROMPTS_BILINGUAL.md，成果位于 Test_Results/DeepSeek-V4.1-Flash-Exp-0910_DSH/phase-01/。下方基线提交中的旧路径保留；通过 sourcePathMappings 生成历史源码链接。迁移不更改原始题目或成果文件内容。
 
-审计基线提交：`5776d3a1d94dc4b04d83fa94d482e04478fd4076`。15 条任务均从 `15_TEST_PROMPTS_BILINGUAL.md` 映射；会话与指标从评测复盘第 29–70 行映射；人工评价与 AI 评价分别来自 `Personal_Review.md` 和 `15-任务完成质量评估.md`。
+审计基线提交：`5776d3a1d94dc4b04d83fa94d482e04478fd4076`。15 条任务均从 `15_TEST_PROMPTS_BILINGUAL.md` 映射；会话与指标从评测复盘第 29–70 行映射；人工评价来自 `Personal_Review.md`；AI 评价来自 `15-任务完成质量评估.md`——**该报告由 Codex Desktop 0.153.4 / GPT-5 于 2026-09-09 撰写**，与 Muse phase-01 的 `Reviews/ai/codex-v1/` 是**同一评价者**（组织者 2026-09-12 确认署名；此前档案未记作者，展示站曾以文件名代称）。该报告只评 DeepSeek 的交付物，未见跨模型引用，故不据此标注盲评状态。
 
 ## 映射
 

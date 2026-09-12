@@ -1,5 +1,12 @@
 # M5/M7 验证记录 / Verification record
 
+## 2026-09-12 修正 DeepSeek Phase 1 AI 评价的署名
+
+- **依据**：组织者指出该评价由 **GPT-5** 撰写，与 Muse Spark 1.3 phase-01 的 `Reviews/ai/codex-v1/`（元信息记为 `Codex Desktop 0.153.4 / GPT-5`）是**同一评价者**。此前档案未记作者，展示站只能以文件名代称（`15-task completion quality assessment`）。
+- **改动**：`website/scripts/adapters/deepseek-phase1.mjs` 中 15 条 AI review 的 `authorLabel` 改为 `Codex Desktop 0.153.4 / GPT-5`（该字段在运行页作为 AI 评价作者名与源码链接文字显示）；阶段评估 `label` 改为「历史 AI 报告结论（Codex Desktop 0.153.4 / GPT-5 撰写，引用）」/ "Quoted historical AI report (written by Codex Desktop 0.153.4 / GPT-5)」。`docs/source-audit.md` 的来源行同步补署名与依据。
+- **未改动**：`Test_Results/…/phase-01/Reviews/15-任务完成质量评估.md` 原文与逐题结论、分数（93.6/100 及逐题分）、`Personal_Review`、以及其余全部批次的评价；不新增、不删除评价条目，**不声明盲评状态**（该报告只评 DeepSeek 交付物，未见跨模型引用）。沿用既有历史提交 `5776d3a…`，不迁移档案文件（未按 `Reviews/ai/<评委>-vN/` 重构，属另一可选动作）。
+- **门禁实测**（Node 24.19.0，本机）：`import:data`（3 模型 / 2 阶段 / 20 任务 / 55 运行 / **100 评价** / 5 批次，评价总数与分数不变）、`validate:data` 通过、`astro check` **0 errors / 0 warnings / 0 hints**、`npm test` **26/26**、`build` **174 页** + 43 个 HTML 成果（静态链接与源码链接 1266/1266 通过）、`E2E_BROWSERS=chromium,webkit npm run test:e2e` **通过**（55/55 成果入口）。构建产物抽查：运行页显示 `AI 评价 · Codex Desktop 0.153.4 / GPT-5`，模型页显示新的评估 label。
+
 ## 2026-09-12 测试工作区改为本地目录 + 清空 GPT 工作区成果（组织者要求）
 
 - **触发**：组织者要求 ① `test-workspace/` 以后不再推送 GitHub；② 清空 GPT 对应的 `test-workspace-2/` 成果产物，只留初始框架文件。
